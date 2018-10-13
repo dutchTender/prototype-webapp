@@ -6,7 +6,11 @@
     <groupId>com.thorton.grant.uspto</groupId>
     <artifactId>prototype-webapp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <modules>
+        <module>PTO-DATA</module>
+        <module>PTO-WEB</module>
+    </modules>
+    <packaging>pom</packaging>
 
     <name>prototype-webapp</name>
     <description>Demo project for Spring Boot</description>
