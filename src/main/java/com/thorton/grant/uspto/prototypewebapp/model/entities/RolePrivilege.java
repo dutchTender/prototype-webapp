@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "role_ privilege")
+@Table(name = "role_privilege")
 @Getter
 @Setter
 public class RolePrivilege  {
