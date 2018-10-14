@@ -2,6 +2,7 @@ package com.thorton.grant.uspto.prototypewebapp.controllers;
 
 import com.thorton.grant.uspto.prototypewebapp.model.entities.DTO.UserCredentialsDTO;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.UserCredentials;
+import com.thorton.grant.uspto.prototypewebapp.service.UserRegistrationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,12 @@ import javax.validation.Valid;
 @Controller
 public class RegistrationController {
 
+
+    private final UserRegistrationService service;
+
+    public RegistrationController(UserRegistrationService service) {
+        this.service = service;
+    }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String showForm(WebRequest request, Model model){
@@ -55,7 +62,7 @@ public class RegistrationController {
         System.out.println(accountDto.getFirstName());
         System.out.println(accountDto.getLastName());
         System.out.println(accountDto.getPassword());
-        System.out.println(accountDto.getUserName());
+
         System.out.println(accountDto.getPhoneNumber());
         System.out.println("####################################################################");
 
@@ -86,7 +93,7 @@ public class RegistrationController {
     private UserCredentials createUserAccount(UserCredentialsDTO accountDto, BindingResult result) {
         UserCredentials registered = null;
 
-        // /registered = service.registerNewUserAccount(accountDto);
+        registered = service.registerNewUserAccount(accountDto);
 
         return registered;
     }

@@ -20,16 +20,19 @@ public class UserCredentialsDTO {
     @NotNull
     @NotEmpty
     private String password;
+
+
     private String matchingPassword;
 
     @NotNull
     @NotEmpty
     private String email;
 
-    // will use to store email as user name
-    private String userName;
+
 
     private String phoneNumber;
+
+
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -81,11 +84,5 @@ public class UserCredentialsDTO {
         this.email = email;
     }
 
-    public String getUserName() {
-        return userName;
-    }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 }
