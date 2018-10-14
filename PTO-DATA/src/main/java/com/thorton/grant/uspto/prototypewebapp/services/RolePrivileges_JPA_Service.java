@@ -3,11 +3,13 @@ package com.thorton.grant.uspto.prototypewebapp.services;
 import com.thorton.grant.uspto.prototypewebapp.interfaces.RolePrivilegeService;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.RolePrivilege;
 import com.thorton.grant.uspto.prototypewebapp.repositories.jpa.RolePrivilegeRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+@Service
 public class RolePrivileges_JPA_Service implements RolePrivilegeService {
 
 

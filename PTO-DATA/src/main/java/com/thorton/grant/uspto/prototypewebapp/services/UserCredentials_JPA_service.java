@@ -3,11 +3,13 @@ package com.thorton.grant.uspto.prototypewebapp.services;
 import com.thorton.grant.uspto.prototypewebapp.interfaces.UserCredentialsService;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.UserCredentials;
 import com.thorton.grant.uspto.prototypewebapp.repositories.jpa.UserCredentialsRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+@Service
 public class UserCredentials_JPA_service implements UserCredentialsService {
 
 
