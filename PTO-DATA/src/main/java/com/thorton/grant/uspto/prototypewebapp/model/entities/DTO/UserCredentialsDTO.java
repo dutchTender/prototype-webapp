@@ -26,10 +26,7 @@ public class UserCredentialsDTO {
     @NotEmpty
     private String email;
 
-
-
-    @NotNull
-    @NotEmpty
+    // will use to store email as user name
     private String userName;
 
     private String phoneNumber;

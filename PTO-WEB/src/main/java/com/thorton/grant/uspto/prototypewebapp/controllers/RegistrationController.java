@@ -56,6 +56,7 @@ public class RegistrationController {
         System.out.println(accountDto.getLastName());
         System.out.println(accountDto.getPassword());
         System.out.println(accountDto.getUserName());
+        System.out.println(accountDto.getPhoneNumber());
         System.out.println("####################################################################");
 
 
