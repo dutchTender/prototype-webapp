@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org"  th:replace="~{fragments/layout2 :: layout (~{::body},'home')}"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Owners/Members Directory</title>
+</head>
+<body>
+
+<h1 th:text="'Owners/Members'">welcome to pet clinic</h1>
+
+<table>
+<tr>
+    <th>ID</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>user ID</th>
+</tr>
+<tr th:each= "owner : ${applicants}">
+    <td th:text="${owner.id}">123</td>
+    <td th:text="${owner.firstName}">Spring in Action</td>
+    <td th:text="${owner.lastName}">Wrox</td>
+    <td sec:authentication="name">[ROLE_USER, ROLE_ADMIN]</td>
+
+
+</tr>
+</table>
+
+</body>
+</html>

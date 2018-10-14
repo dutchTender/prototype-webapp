@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  th:replace="~{fragments/layout2 :: layout (~{::body},'home')}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Pet Clinic Home page</title>
+
+
+
+
+
 </head>
 <body>
-welcome to USPTO
+    <h2 th:text="#{welcome}">Welcome to Rockville Pet Clinic </h2>
+    <h1 th:text="#{address}"></h1>
+    <div class="row">
+        <div class="col-md-12">
+            <img class="img-responsive" src="../static/resources/images/usPTO_banner.png" th:src="@{/resources/images/usPTO_banner.png}"/>
+        </div>
+    </div>
 </body>
 </html>
