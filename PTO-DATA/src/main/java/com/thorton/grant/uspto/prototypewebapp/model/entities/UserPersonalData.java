@@ -8,7 +8,7 @@ import java.util.Objects;
 
 
 @Entity
-@Table(name = "user_data")
+@Table(name = "user_personal_data")
 public class UserPersonalData extends BaseEntity {
 
 

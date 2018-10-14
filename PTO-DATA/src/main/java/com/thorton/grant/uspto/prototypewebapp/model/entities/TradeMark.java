@@ -7,7 +7,7 @@ import java.sql.Blob;
 
 
 @Entity
-@Table(name = "trademarks")
+@Table(name = "trade_marks")
 public class TradeMark extends BaseEntity {
 
 

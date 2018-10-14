@@ -3,16 +3,20 @@ package com.thorton.grant.uspto.prototypewebapp.config.bootstrap;
 import com.thorton.grant.uspto.prototypewebapp.factories.ServiceBeanFactory;
 import com.thorton.grant.uspto.prototypewebapp.interfaces.PTOUserService;
 import com.thorton.grant.uspto.prototypewebapp.interfaces.UserCredentialsService;
+import com.thorton.grant.uspto.prototypewebapp.interfaces.UserRoleService;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.PTOUser;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.UserCredentials;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.UserRole;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.HashSet;
 
+@Component
 public class DataLoader implements ApplicationListener<ContextRefreshedEvent>         {
 
     private  final ServiceBeanFactory serviceBeanFactory;
@@ -21,6 +25,8 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent>   
         this.serviceBeanFactory = serviceBeanFactory;
     }
 
+    @Override
+    @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
 
@@ -28,6 +34,8 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent>   
 
 
         UserCredentialsService userCredentialsService = serviceBeanFactory.getUserCredentialsService();
+
+        UserRoleService userRoleService = serviceBeanFactory.getUserRoleService();
 
 
         PTOUser PTOUser1 = new PTOUser();
@@ -56,8 +64,9 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent>   
         ownerCreds.setUserPersonalData(PTOUser1);
         PTOUser1.setUserCredentials(ownerCreds);
         myPTOUserService.save(PTOUser1);
+        userRoleService.save(userRole);
         userCredentialsService.save(ownerCreds);
-        //myRoleService.save(userRole);
+       // userRoleService.save(userRole);
 
 
 

@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import java.util.Set;
 
 @Entity
-@Table(name = "PTOUser")
+@Table(name = "PTOUsers")
 public class PTOUser extends  UserPersonalData{
 
     @OneToMany
