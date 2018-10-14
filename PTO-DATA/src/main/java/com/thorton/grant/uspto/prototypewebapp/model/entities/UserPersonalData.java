@@ -3,16 +3,12 @@ package com.thorton.grant.uspto.prototypewebapp.model.entities;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Objects;
 
 
 @Entity
-@Getter
-@Setter
+@Table(name = "user_data")
 public class UserPersonalData extends BaseEntity {
 
 
@@ -37,6 +33,54 @@ public class UserPersonalData extends BaseEntity {
 
         @OneToOne(cascade = CascadeType.ALL)
         private UserCredentials userCredentials ;
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public UserCredentials getUserCredentials() {
+        return userCredentials;
+    }
+
+    public void setUserCredentials(UserCredentials userCredentials) {
+        this.userCredentials = userCredentials;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name="user_role")
+@Table(name="user_credentials")
 @Getter
 @Setter
 public class UserCredentials  {
