@@ -84,7 +84,7 @@ public class RegistrationController {
             return new ModelAndView("registration", "user", accountDto);
         }
         else {
-            return new ModelAndView("/owners/userHome", "users", accountDto);
+            return new ModelAndView("/account/userHome", "users", accountDto);
         }
 
 

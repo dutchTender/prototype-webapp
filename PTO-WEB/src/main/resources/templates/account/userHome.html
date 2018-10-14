@@ -7,21 +7,21 @@
 </head>
 <body>
 
-<h1 th:text="'User Profile'">welcome to pet clinic</h1>
+<h1 style="color: whitesmoke" th:text="'User Profile'">welcome to pet clinic</h1>
 
-<table>
+<table class="table table-striped">
     <tr>
-        <th>First Name</th>
+        <th >First Name</th>
         <th>Last Name</th>
         <th>Email</th>
         <th>Pass Word</th>
     </tr>
     <tr>
 
-        <td th:text="${users.firstName}">Spring in Action</td>
-        <td th:text="${users.lastName}">Wrox</td>
-        <td th:text="${users.email}">123</td>
-        <td th:text="${users.password}">Wrox</td>
+        <td style="color: whitesmoke" th:text="${users.firstName}">Spring in Action</td>
+        <td style="color: whitesmoke" th:text="${users.lastName}">Wrox</td>
+        <td style="color: whitesmoke" th:text="${users.email}">123</td>
+        <td style="color: whitesmoke" th:text="${users.password}">Wrox</td>
         <!--<td sec:authentication="email">[ROLE_USER, ROLE_ADMIN]</td>-->
 
 
