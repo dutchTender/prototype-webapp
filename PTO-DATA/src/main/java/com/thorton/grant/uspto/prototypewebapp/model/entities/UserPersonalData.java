@@ -29,6 +29,12 @@ public class UserPersonalData extends BaseEntity {
         @Column(name="telephone")
         private String telephone;
 
+
+
+        @Column(name="email")
+        private String email;
+
+
         // add image object for user profile picture
 
         @OneToOne(cascade = CascadeType.ALL)
@@ -80,6 +86,14 @@ public class UserPersonalData extends BaseEntity {
 
     public void setUserCredentials(UserCredentials userCredentials) {
         this.userCredentials = userCredentials;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override

@@ -1,7 +1,5 @@
 package com.thorton.grant.uspto.prototypewebapp.model.entities.DTO;
 
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -34,6 +32,15 @@ public class UserCredentialsDTO {
     @NotEmpty
     private String userName;
 
+    private String phoneNumber;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
     // standard getters and setters
 
 
