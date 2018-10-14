@@ -5,6 +5,7 @@ import com.thorton.grant.uspto.prototypewebapp.interfaces.PTOUserService;
 import com.thorton.grant.uspto.prototypewebapp.interfaces.UserCredentialsService;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.PTOUser;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.UserCredentials;
+import com.thorton.grant.uspto.prototypewebapp.model.entities.UserRole;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -40,28 +41,29 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent>   
         UserCredentials ownerCreds = new UserCredentials();
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         // follow the same convention from the save method and save role for test user 1
+
         ownerCreds.setUsername("zhangl");
         ownerCreds.setPassword(bCryptPasswordEncoder.encode("xxxxx"));
         ownerCreds.setPasswordConfirm(bCryptPasswordEncoder.encode("xxxxx"));
         ownerCreds.setEmail("lzhang421@gmail.com");
         ownerCreds.setActive(1);
 
-        Role userRole = new Role();
-        userRole.setRole("ROLE_ADMIN");
-        myRoleService.save(userRole);
-        ownerCreds.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        UserRole userRole = new UserRole();
+        userRole.setRoleName("ROLE_ADMIN");
+        //myRoleService.save(userRole);
+        ownerCreds.setUserRoles(new HashSet<UserRole>(Arrays.asList(userRole)));
         // create bi-directional relationship between credentials and owner
-        ownerCreds.setPerson(PTOUser1);
-        PTOUser1.setUser(ownerCreds);
+        ownerCreds.setUserPersonalData(PTOUser1);
+        PTOUser1.setUserCredentials(ownerCreds);
         myPTOUserService.save(PTOUser1);
-        myUsersService.save(ownerCreds);
-        myRoleService.save(userRole);
+        userCredentialsService.save(ownerCreds);
+        //myRoleService.save(userRole);
 
 
 
         // now add objects to repository, owner and user
 
-
+/*
 
         Privilege readPrivilege
                 = createPrivilegeIfNotFound("READ_PRIVILEGE");
@@ -86,7 +88,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent>   
 
 
 
-
+*/
 
 
 

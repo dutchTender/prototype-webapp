@@ -20,4 +20,6 @@ public class BaseEntity implements Serializable {
     private Long id;
 
 
+
+
 }

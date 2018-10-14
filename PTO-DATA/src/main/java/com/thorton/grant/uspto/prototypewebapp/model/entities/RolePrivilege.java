@@ -1,7 +1,6 @@
 package com.thorton.grant.uspto.prototypewebapp.model.entities;
 
-import lombok.Getter;
-import lombok.Setter;
+
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -9,8 +8,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "role_privileges")
-@Getter
-@Setter
 public class RolePrivilege  {
 
     @Id
@@ -35,6 +32,14 @@ public class RolePrivilege  {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<UserRole> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(Set<UserRole> userRoles) {
+        this.userRoles = userRoles;
     }
 
     @Override
