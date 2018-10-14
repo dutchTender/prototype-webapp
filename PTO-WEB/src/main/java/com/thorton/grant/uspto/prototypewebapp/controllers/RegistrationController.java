@@ -42,7 +42,7 @@ public class RegistrationController {
 
     @RequestMapping(value = "/newUser", method = RequestMethod.POST)
     public ModelAndView registerUserAccount(
-            @ModelAttribute("userCr/edentialsDTO") @Valid UserCredentialsDTO accountDto,
+            @ModelAttribute("userCredentialsDTO") @Valid UserCredentialsDTO accountDto,
             BindingResult result,
             WebRequest request,
             Errors errors) {
