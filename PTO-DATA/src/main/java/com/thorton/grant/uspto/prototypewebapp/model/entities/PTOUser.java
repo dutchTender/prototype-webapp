@@ -10,14 +10,13 @@ import java.util.Set;
 @Table(name = "PTOUsers")
 public class PTOUser extends  UserPersonalData{
 
-    @OneToMany
+    @OneToMany(mappedBy = "patentOwner")
     private Set<Patent> userPatents;
 
     @OneToMany(mappedBy = "trademarkOwner")
     private Set<TradeMark> userTrademarks;
 
 
-    @OneToMany(mappedBy = "patentOwner")
     public Set<Patent> getUserPatents() {
         return userPatents;
     }
