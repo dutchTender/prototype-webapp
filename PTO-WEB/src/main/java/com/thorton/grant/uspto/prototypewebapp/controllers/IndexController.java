@@ -13,4 +13,12 @@ public class IndexController {
         System.out.println("#############################################################");
         return "index";
     }
+
+
+    @RequestMapping({"/aboutUs"})
+    public String info(){
+
+
+        return "aboutUs";
+    }
 }

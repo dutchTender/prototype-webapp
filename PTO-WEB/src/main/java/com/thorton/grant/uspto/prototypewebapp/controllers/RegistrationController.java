@@ -41,7 +41,7 @@ public class RegistrationController {
         model.addAttribute("userCredentialsDTO", userCredentialsDTO);
 
 
-        return "/registration/index";
+        return "registration";
 
 
     }
