@@ -60,9 +60,13 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent>   
         userRole.setRoleName("ROLE_ADMIN");
         //myRoleService.save(userRole);
         ownerCreds.setUserRoles(new HashSet<UserRole>(Arrays.asList(userRole)));
+        // set credentails to active
+
+        ownerCreds.setActive(1);
         // create bi-directional relationship between credentials and owner
         ownerCreds.setUserPersonalData(PTOUser1);
         PTOUser1.setUserCredentials(ownerCreds);
+        PTOUser1.setEmail(ownerCreds.getEmail());
         myPTOUserService.save(PTOUser1);
         userRoleService.save(userRole);
         userCredentialsService.save(ownerCreds);

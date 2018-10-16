@@ -19,7 +19,9 @@ public class IndexController {
     public String info(){
 
 
-        return "aboutUs";
+       // return "aboutUs";
+
+        return "/owner/index";
     }
 
 

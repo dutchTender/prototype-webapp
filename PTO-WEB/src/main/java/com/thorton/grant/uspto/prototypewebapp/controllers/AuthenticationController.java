@@ -14,4 +14,11 @@ public class AuthenticationController {
         return "login";
     }
 
+
+    @RequestMapping({"/owner"})
+    public String dashBoard(){
+
+        return "/owner/index";
+    }
+
 }
