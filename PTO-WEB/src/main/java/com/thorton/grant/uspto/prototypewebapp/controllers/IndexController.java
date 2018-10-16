@@ -21,4 +21,11 @@ public class IndexController {
 
         return "aboutUs";
     }
+
+
+    @RequestMapping({"/contact"})
+    public String contact(){
+
+        return "/contacts/index";
+    }
 }
