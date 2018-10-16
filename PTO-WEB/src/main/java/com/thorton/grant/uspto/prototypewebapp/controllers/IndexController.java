@@ -26,6 +26,6 @@ public class IndexController {
     @RequestMapping({"/contact"})
     public String contact(){
 
-        return "/contacts/index";
+        return "/resources/templates/contacts/index";
     }
 }
