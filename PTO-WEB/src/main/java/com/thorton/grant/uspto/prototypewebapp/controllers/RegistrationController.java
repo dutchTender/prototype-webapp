@@ -81,7 +81,7 @@ public class RegistrationController {
         if (result.hasErrors()) {
             System.out.println("result has errors !!!!!!!!!!!!!!!!!!!!"+result.getAllErrors().toString());
 
-            return new ModelAndView("registration", "user", accountDto);
+            return new ModelAndView("/registration/index", "user", accountDto);
         }
         else {
             return new ModelAndView("/account/userHome", "users", accountDto);
