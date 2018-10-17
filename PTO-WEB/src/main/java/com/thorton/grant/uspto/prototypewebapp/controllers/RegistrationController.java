@@ -36,12 +36,11 @@ public class RegistrationController {
         // create owner object
         // copy over name info and user id/email
         // add owner object to model as attribute
-
         UserCredentialsDTO userCredentialsDTO = new UserCredentialsDTO();
         model.addAttribute("userCredentialsDTO", userCredentialsDTO);
 
 
-        return "registration";
+        return "/registration/index";
 
 
     }

@@ -49,7 +49,7 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers( "/resources/**", "/h2-console/**", "/console/**","/webjars/**","/registration/**","/","/home","/newUser","/aboutUs/**","/contact/**").permitAll()
+                .antMatchers( "/resources/**", "/h2-console/**", "/console/**","/webjars/**","/registration/**","/","/home","/newUser","/aboutUs/**","/contact/**","/public/**").permitAll()
                 //.antMatchers("/vets**","/owners**").hasRole("vet")
                 //.antMatchers("/owners","owner","/pet").hasRole("owner")
                 //.antMatchers("/owner**","/vet**","/pet**").hasRole("admin")
@@ -64,7 +64,7 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/home")
+                .logoutSuccessUrl("/login")
                 .permitAll();
 
 

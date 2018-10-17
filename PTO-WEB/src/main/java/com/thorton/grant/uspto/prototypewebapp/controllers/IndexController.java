@@ -11,7 +11,7 @@ public class IndexController {
     public String index(){
         // get owner info
         System.out.println("#############################################################");
-        return "index";
+        return "/public/index";
     }
 
 
@@ -21,13 +21,13 @@ public class IndexController {
 
        // return "aboutUs";
 
-        return "/owner/index";
+        return "aboutUs";
     }
 
 
     @RequestMapping({"/contact"})
     public String contact(){
 
-        return "/resources/templates/contacts/index";
+        return "/contacts/index";
     }
 }

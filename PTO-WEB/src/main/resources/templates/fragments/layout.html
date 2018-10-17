@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="shortcut icon" type="image/x-icon" th:href="@{/resources/images/favicon.png}">
+    <link rel="shortcut icon" style="-moz-border-radius: 0px;-webkit-border-radius: 0px;border-radius: 0px;" type="image/x-icon" th:href="@{/resources/images/nav_banner.png}">
 
     <title>USPTO :: webapp prototype</title>
 
@@ -56,23 +56,25 @@
 
                 <li th:replace="::menuItem ('/aboutUs','about','about','info-sign','About Us')">
                     <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                    <span>Find PTOUsers</span>
-                </li>
-
-                <li th:replace="::menuItem ('/registration','registration','register new user','registration-mark','Registration')">
-                    <span class="glyphicon glyphicon-registration-mark" aria-hidden="true"></span>
-                    <span>Error</span>
-                </li>
-
-                <li th:replace="::menuItem ('/login','login','sign in', 'log-in','login')">
-                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
-                    <span>Error</span>
+                    <span>about us</span>
                 </li>
 
                 <li th:replace="::menuItem ('/contact','contact','contact', 'phone','Contact Us')">
                     <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
-                    <span>Error</span>
+                    <span>contact us</span>
                 </li>
+
+                <li th:replace="::menuItem ('/registration','registration','register new user','registration-mark','Registration')">
+                    <span class="glyphicon glyphicon-registration-mark" aria-hidden="true"></span>
+                    <span>register</span>
+                </li>
+
+                <li th:replace="::menuItem ('/login','login','sign in', 'log-in','login')">
+                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                    <span>log in</span>
+                </li>
+
+
 
             </ul>
         </div>

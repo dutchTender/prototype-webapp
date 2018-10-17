@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"  th:replace="~{fragments/layout :: layout (~{::body},'home')}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  th:replace="~{fragments/layout :: layout (~{::body},'registration')}">
 <head >
     <meta charset="UTF-8">
     <title>Registration Home Page</title>
@@ -10,7 +10,6 @@
     <form action="/newUser" th:object="${userCredentialsDTO}" method="POST" enctype="utf8" class="form-horizontal" role="form">
 
         <h1 style="text-align: center">Account Registration</h1>
-
         <div class="form-group">
             <label for="firstName" class="col-sm-3 control-label">First Name</label>
             <div class="col-sm-9">
