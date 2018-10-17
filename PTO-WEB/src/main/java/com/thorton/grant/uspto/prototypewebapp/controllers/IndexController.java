@@ -27,4 +27,13 @@ public class IndexController {
 
         return "contacts/index";
     }
+
+
+
+    @RequestMapping({"/owner"})
+    public String testDashboard(){
+
+
+        return "owner/index";
+    }
 }
