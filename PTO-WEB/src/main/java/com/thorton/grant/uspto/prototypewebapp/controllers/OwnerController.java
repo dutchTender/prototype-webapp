@@ -39,7 +39,7 @@ public class OwnerController {
 
 
 
-        return "/account/userHome";
+        return "account/userHome";
     }
 
 }
