@@ -53,5 +53,11 @@ public class PTOUser_JPA_Service implements PTOUserService {
     }
 
 
+    public PTOUser findByEmail(String email){
+       PTOUser ptoUser =  PTOUserRepository.findByEmail(email);
+       return ptoUser;
+    }
+
+
 
 }
