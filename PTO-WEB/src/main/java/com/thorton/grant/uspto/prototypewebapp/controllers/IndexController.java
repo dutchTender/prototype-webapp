@@ -18,9 +18,6 @@ public class IndexController {
     @RequestMapping({"/aboutUs"})
     public String info(){
 
-
-       // return "aboutUs";
-
         return "aboutUs";
     }
 

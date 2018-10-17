@@ -15,10 +15,4 @@ public class AuthenticationController {
     }
 
 
-    @RequestMapping({"/owner"})
-    public String dashBoard(){
-
-        return "/owner/index";
-    }
-
 }
