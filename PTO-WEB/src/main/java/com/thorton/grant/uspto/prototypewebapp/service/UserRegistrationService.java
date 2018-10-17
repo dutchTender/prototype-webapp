@@ -50,6 +50,7 @@ public class UserRegistrationService implements IUserService {
         newUserCredentials.setPasswordConfirm(bCryptPasswordEncoder.encode(accountDto.getMatchingPassword()));
         newUserCredentials.setUserRoles(new HashSet<UserRole>(Arrays.asList(defaultRole)));
         newUserCredentials.setUserPersonalData(newUser);
+        newUserCredentials.setActive(1);
 
         userCredentialsService.save(newUserCredentials);
 

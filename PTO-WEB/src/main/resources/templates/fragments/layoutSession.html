@@ -51,28 +51,27 @@
                       </a>
                   </li>
 
-                  <li th:replace="::menuItem ('/','home','home page','home','USPTO')">
-                      <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                      <span>Home</span>
+                  <li th:replace="::menuItem ('/accounts/userHome','user home','home page','home','dashboard')">
+                      <span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span>
+                      <span>dashboard</span>
                   </li>
 
-                  <li th:replace="::menuItem ('/aboutUs','about','about','info-sign','About Us')">
-                      <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                      <span>Find PTOUsers</span>
+                  <li th:replace="::menuItem ('/accounts/mail','mail','about','inbox','message-center')">
+                      <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
+                      <span>message center</span>
                   </li>
 
-                  <li th:replace="::menuItem ('/registration','registration','register new user','registration-mark','Registration')">
-                      <span class="glyphicon glyphicon-registration-mark" aria-hidden="true"></span>
+
+
+
+                  <li th:replace="::menuItem ('/account/assets','trade marks','trade mark', 'piggy-bank','trademarks')">
+                      <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span>
                       <span>Error</span>
                   </li>
 
-                  <li th:replace="::menuItem ('/login','login','sign in', 'log-in','login')">
-                      <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                  <li th:replace="::menuItem ('/logout','logout','sign out', 'log-out','logout')">
+                      <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
 
-                      <span>Error</span>
-                  </li>
-                  <li th:replace="::menuItem ('/contact','contact','contact', 'phone','Contact Us')">
-                      <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
                       <span>Error</span>
                   </li>
               </ul>
