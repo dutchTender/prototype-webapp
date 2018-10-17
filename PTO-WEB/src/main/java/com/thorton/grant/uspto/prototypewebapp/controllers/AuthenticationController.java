@@ -16,7 +16,7 @@ public class AuthenticationController {
         //return "login";
 
         UserCredentialsDTO accountDto = new UserCredentialsDTO();
-        return new ModelAndView("/login", "user",accountDto);
+        return new ModelAndView("login", "user",accountDto);
     }
 
 

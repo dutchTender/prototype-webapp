@@ -40,7 +40,7 @@ public class RegistrationController {
         model.addAttribute("userCredentialsDTO", userCredentialsDTO);
 
 
-        return "/registration/index";
+        return "registration/index";
 
 
     }
@@ -84,7 +84,7 @@ public class RegistrationController {
         }
         else {
             //return new ModelAndView("/account/userHome", "users", accountDto);
-            return new ModelAndView("/login", "user",accountDto);
+            return new ModelAndView("login", "user",accountDto);
         }
 
 
