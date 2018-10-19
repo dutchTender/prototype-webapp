@@ -41,7 +41,7 @@ public class OwnerController {
 
 
 
-    @RequestMapping({"/dashboard","/account/dashboard"})
+    @RequestMapping({"/dashboard","/account/dashboard","account/userHome"})
     public String dashboard(){
 
         //need to add model to view
