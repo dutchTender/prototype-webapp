@@ -22,10 +22,10 @@ public class OwnerController {
 
 
 
-    @RequestMapping({"/accounts/userHome"})
-    public String dashboard(Model model){
+    @RequestMapping({"/userProfile","/account/userProfile"})
+    public String userProfile(Model model){
 
-        // retireve owner using email from the credentials ..
+        // retrieve owner using email from the credentials ..
         // add find by email methods to both personal data and credentails cass
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -36,10 +36,17 @@ public class OwnerController {
         PTOUser ptoUser = ptoUserService.findByEmail(authentication.getName());
 
         model.addAttribute("user", ptoUser);
+        return "account/userProfile";
+    }
 
 
 
-        return "account/userHome";
+    @RequestMapping({"/dashboard","/account/dashboard"})
+    public String dashboard(){
+
+        //need to add model to view
+
+        return "account/dashboard";
     }
 
 

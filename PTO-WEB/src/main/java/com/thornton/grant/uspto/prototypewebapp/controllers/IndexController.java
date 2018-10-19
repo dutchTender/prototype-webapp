@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-public class IndexController {
+public class IndexController{
 
     @RequestMapping({"", "/","/index","/index.html", "/home"})
     public String index(){
@@ -28,12 +28,4 @@ public class IndexController {
         return "contact";
     }
 
-
-
-    @RequestMapping({"/owner"})
-    public String testDashboard(){
-
-
-        return "owner/index";
-    }
 }
