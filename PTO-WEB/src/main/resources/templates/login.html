@@ -1,205 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
 
+      th:replace="~{fragments/layout :: layout (~{::body},'login')}"
+
+>
 <head>
-    <meta charset="utf-8" />
-    <!--<link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">-->
-
-    <link rel="apple-touch-icon" sizes="76x76" th:href="@{/resources/image/apple-icon.png}">
-    <!--<link rel="icon" type="image/png" href="../../assets/img/favicon.png">-->
-
-    <link rel="icon" type="image/png" th:href="@{/resources/image/favicon.png}">
-
-
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>
-       material dashboard login page
-    </title>
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
-    <!--     Fonts and icons     -->
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
-    <!-- CSS Files -->
-   <!-- <link href="../../assets/css/material-dashboard.css?v=2.0.2" rel="stylesheet" />-->
-    <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link rel="stylesheet" th:href="@{/resources/css/usPTO.css}"/>
-
-
+    <title>USPTO.gov eFile Sign In </title>
 </head>
-
-<body class="off-canvas-sidebar">
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top text-white" id="navigation-example">
-    <div class="container">
-        <div class="navbar-wrapper">
-            <b><a class="navbar-brand" href="#pablo">USPTO.gov | eFile</a></b>
-        </div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="navbar-toggler-icon icon-bar"></span>
-            <span class="navbar-toggler-icon icon-bar"></span>
-            <span class="navbar-toggler-icon icon-bar"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a href="/accounts/userHome" class="nav-link">
-                        <i class="material-icons">dashboard</i> Dashboard
-                    </a>
-                </li>
-                <li class="nav-item ">
-                    <a href="/registration" class="nav-link">
-                        <i class="material-icons">person_add</i> Register
-                    </a>
-                </li>
-                <li class="nav-item  active ">
-                    <a href="/login" class="nav-link">
-                        <i class="material-icons">fingerprint</i> Login
-                    </a>
-                </li>
-                <li class="nav-item ">
-                    <a href="/home" class="nav-link">
-                        <i class="material-icons">home</i> Home
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-<!-- End Navbar -->
-<div class="wrapper wrapper-full-page">
-    <div class="page-header login-page header-filter" filter-color="black"  >
+<body>
 
 
 
-        <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
-        <div class="container">
-            <div class="col-lg-4 col-md-6 col-sm-6 ml-auto mr-auto">
-                <!-- Login Form -->
-                <div th:if="${param.error}">
-                    Invalid username and password.
-                </div>
-                <div th:if="${param.logout}">
-                    You have been logged out.
-                </div>
+                 <div class="container" style="position: relative; bottom:20%; min-height: 800px; display: none;">
 
-                <form class="form" method="post" th:action="@{/login}">
-                    <div class="card card-login card-hidden">
-                        <div class="card-header card-header-rose text-center">
-                            <h4 class="card-title">Login</h4>
-                            <div class="social-line">
-                                <a href="#pablo" class="btn btn-just-icon btn-link btn-white">
-                                    <i class="fa fa-facebook-square"></i>
-                                </a>
-                                <a href="#pablo" class="btn btn-just-icon btn-link btn-white">
-                                    <i class="fa fa-twitter"></i>
-                                </a>
-                                <a href="#pablo" class="btn btn-just-icon btn-link btn-white">
-                                    <i class="fa fa-google-plus"></i>
-                                </a>
+                    <form th:action="@{/login}" method="post" class="form form-check-input form-control-sm "  >
+                        <div class="card card-login" style="margin: auto; position: relative;top:200px; background-color: whitesmoke; min-height: 350px; margin-left: 200px;  max-width: 55%;   border-top-left-radius: 20px; border-bottom-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px;"  >
+                            <div class=" card-header-blue text-center" style="padding-top: 10px;position:relative;top: 20px; right:-30%;">
+                                <b class="card-title" style=""><a style="font-size: x-small;margin-top: 50px;" href="/registration">New User</a></b>
                             </div>
-                        </div>
-                        <div class="card-body ">
-                            <p class="card-description text-center">Or Be Classical</p>
-                            <span class="bmd-form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">
-                        <i class="material-icons">face</i>
-                      </span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="First Name...">
-                  </div>
-                </span>
-                            <span class="bmd-form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">
-                        <i class="material-icons">email</i>
-                      </span>
-                    </div>
-                    <input type="email" class="form-control" name="username" placeholder="Email...">
-                  </div>
-                </span>
-                            <span class="bmd-form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">
-                        <i class="material-icons">lock_outline</i>
-                      </span>
-                    </div>
-                    <input type="password" class="form-control" name="password" placeholder="Password...">
-                  </div>
-                </span>
-                        </div>
-                        <div class="card-footer justify-content-center">
-                            <a href="#pablo" class="btn btn-rose btn-link btn-lg">Lets Go</a>
-                            <button  class="btn btn-default" type="submit" value="Sign In" style="margin-left: 70px"><span > <i class="material-icons">fingerprint</i></span> &nbsp;&nbsp;    Sign In&nbsp;</button>
+
+                            <div class="card-body " style="padding-top: 20px;position:relative;top: 20px; min-height: 200px;">
+                                <span class="card-description" style="position: relative; right:-35%;"><b>Existing User</b></span>
+
+                                <span class="bmd-form-group" style="position: relative; top:10%; bottom: -10px; right:-10%;" >
+                                  <div class="input-group">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" style="margin:auto; position:relative; left:38%; right:40%;">
+                                          <span class="glyphicon glyphicon-user"><b>Email Address</b></span>
+                                      </span>
+                                    </div>
+                                    <input style="min-width:200px; margin: auto; position:relative; left:40%; right:40%; border-top-right-radius: 8px; border-top-left-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px;" type="email" class="form-control" name="username" placeholder="Email...">
+                                  </div>
+                                </span>
+                                <span class="bmd-form-group" style="margin:auto; position: relative; bottom: -20px; right:-10%;">
+                                  <div class="input-group" >
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" style="margin:auto; position:relative; left:40%; right :40%;">
+                                          <span class="glyphicon glyphicon-lock"><b>Password</b></span>
+                                      </span>
+                                    </div>
+                                    <input  style="min-width:200px; margin:auto; position:relative; left:39.6%; border-top-right-radius: 8px; border-top-left-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px;" type="password" class="form-control" name="password" placeholder="Password...">
+                                  </div>
+                                </span>
+                            </div>
+                            <div class="card-footer justify-content-center" style="border-top-color:white;  padding-top: 20px; padding-bottom:50px; max-width:60%; min-width: 60%; position:relative;top: -10px; left:33px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px;">
+
+                                <div class="form-group" ><button style="min-width:196px; position:relative; left:28%; right:20%; size:auto; background-color: #004c97; color: whitesmoke;  border-top-left-radius: 8px; border-bottom-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px;" class="btn" type="submit" value="Sign In"><span  style="position: relative; left:-45px;" class="glyphicon glyphicon-log-in" ></span><b style="position: relative; left:-10px;"> &nbsp;  Sign In&nbsp;</b></button></div>
+
+                                <!-- Login Form -->
+                                <div  style="color: red; position: relative; top:20%; right:-22%;" th:if="${param.error}">
+                                    <b>Invalid username and password.</b>
+                                </div>
+                                <div  style="color: green;font:bold; position: relative; top:20%; right:-22%;" th:if="${param.logout}">
+                                    You have been logged out.
+                                </div>
+
+
+                            </div>
+
+
 
                         </div>
-                    </div>
-                </form>
-            </div>
+
+
+
+                    </form>
+
         </div>
-        <footer class="footer">
-            <div class="container">
-                <nav class="float-left">
-                    <ul>
-                        <li>
-                            <a href="https://www.uspto.gov">
-                                USPTO
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/about">
-                                About Us
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/contact">
-                                Contact Us
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/getStarted">
-                                Tour
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                <div class="copyright float-right">
-                    &copy;
-                    <script>
-                        document.write(new Date().getFullYear())
-                    </script>, made with <i class="material-icons">favorite</i> by
-                    <a href="https://www.grantthornton.com" target="_blank">Grant Thornton</a> for US public sector.
-                </div>
-            </div>
-        </footer>
-    </div>
-</div>
-
-
-
-
-<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-<!--<script src="../../assets/js/material-dashboard.min.js?v=2.0.2" type="text/javascript"></script>-->
-<script th:href="@{/resources/js/material-dashboard.min.js?v=2.0.2}" type="text/javascript"></script>
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-<script>
-
-</script>
-<script>
-    $(document).ready(function() {
-        //demo.checkFullPageBackgroundImage();
-        setTimeout(function() {
-            // after 1000 ms we add the class animated to the login/register card
-            $('.card').removeClass('card-hidden');
-        }, 700);
-    });
-</script>
+                <script>
+                    $(document).ready(function() {
+                        $('.container').hide();
+                        setTimeout(function() {
+                            // after 1000 ms we add the class animated to the login/register card
+                            $('.container').fadeIn('slow');
+                        }, 500);
+                    });
+                </script>
 </body>
-
 </html>

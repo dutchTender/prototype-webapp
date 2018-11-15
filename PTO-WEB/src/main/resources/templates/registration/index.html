@@ -1,67 +1,320 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"  th:replace="~{fragments/layout :: layout (~{::body},'registration')}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'registration')}" xmlns="http://www.w3.org/1999/html">
 <head >
     <meta charset="UTF-8">
     <title>Registration Home Page</title>
 </head>
 <body>
 
-<div class="container">
-    <form action="/newUser" th:object="${userCredentialsDTO}" method="POST" enctype="utf8" class="form-horizontal" role="form">
+<!-- End Navbar -->
+<div class="content" style="display: none;" >
+    <div class="container-fluid" style="position: relative; top:100px;">
 
-        <h1 style="text-align: center">Account Registration</h1>
-        <div class="form-group">
-            <label for="firstName" class="col-sm-3 control-label">First Name</label>
-            <div class="col-sm-9">
-                <input th:field="*{firstName}" type="text" id="firstName" placeholder="First Name" class="form-control" autofocus>
-                <p th:each="error: ${#fields.errors('firstName')}"
-                   th:text="${error}">Validation error</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="lastName" class="col-sm-3 control-label">Last Name</label>
-            <div class="col-sm-9">
-                <input th:field="*{lastName}" type="text" id="lastName" placeholder="Last Name" class="form-control" autofocus>
-                <p th:each="error : ${#fields.errors('lastName')}"
-                   th:text="${error}">Validation error</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="email" class="col-sm-3 control-label">Email* </label>
-            <div class="col-sm-9">
-                <input type="email" th:field="*{email}"  id="email" placeholder="Email" class="form-control" name= "email">
-                <p th:each="error : ${#fields.errors('email')}"
-                   th:text="${error}">Validation error</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="password" class="col-sm-3 control-label">Password*</label>
-            <div class="col-sm-9">
-                <input type="password" th:field="*{password}" id="password" placeholder="Password" class="form-control">
-                <p th:each="error : ${#fields.errors('password')}"
-                   th:text="${error}">Validation error</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="password" class="col-sm-3 control-label">Confirm Password*</label>
-            <div class="col-sm-9">
-                <input type="password" th:field="*{matchingPassword}" id="password" placeholder="Password" class="form-control">
-            </div>
-        </div>
+            <div class="col-md-14" >
+                <div class="form-container" style=" position: relative;top:10%; max-height:3000px; color: black;   margin-bottom: 100px; background-image: linear-gradient(white, whitesmoke); border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div style="position: relative;top:26px; margin-left: 40px; margin-bottom: 50px;">
+                                <h4><b style="color: black; opacity: 1; mix-blend-mode: normal; color: rgb(0, 0, 0); font-size: 36px; font-weight: normal; font-style: normal; text-decoration: none; text-align: left; width: 597px; height: 41px; transform: rotate(0deg) translate(96px, 195px) rotate(0deg);">New User Account</b></h4>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div  style="position: relative;top:26px; margin-left: 40px; margin-bottom: 50px;">
+                                <span ><h6><b style="color: red;" th:text="${message}">default test</b></h6></span>
+                            </div>
+                        </div>
 
-        <div class="form-group">
-            <label for="phoneNumber" class="col-sm-3 control-label">Phone number </label>
-            <div class="col-sm-9">
-                <input type="phoneNumber" id="phoneNumber" placeholder="Phone number" class="form-control">
-                <span class="help-block">Your phone number won't be disclosed anywhere </span>
-            </div>
-        </div>
+                    </div>
+
+                    <div class=" card-header-rose card-header-text" style="margin-top: 20px;" >
+
+                        <div class="card-text">
+
+                            <h5 class="card-title"><b style="color: black; color: rgb(0, 0, 0); font-size: 16px; text-align: left; font-weight: bold; font-style: normal; text-decoration: none;">Account Details</b></h5>
+
+                        </div>
+                        <hr style="height:3px; position:relative; top:-20px; left:-11.9%; max-width: 80.1%">
+                    </div>
+                    <div class="card-body" style=" margin-top: 20px;">
+                        <form method="post" style="" action="/newUser" class="form-horizontal" th:object="${userCredentialsDTO}">
 
 
+                            <div class="row" style="position: relative; right:-18%;">
+                                <span>
+                                    <label class="col-sm-2 col-form-label"><b style="color: red">*</b>E-Mail </label>
+                                </span>
 
-        <button type="submit" class="btn btn-primary btn-block">Register</button>
-    </form> <!-- /form -->
-    <a th:href="@{/login.html}">login</a>
-</div> <!-- ./container -->
+                            </div>
+                            <div class="row" style="position: relative; right:-20%; top: 10%;">
+
+                                <div class="col-sm-6">
+
+                                    <div class="form-group">
+                                        <span>
+
+                                           <input type="email" th:field="*{email}"  id="email" placeholder="Email" class="form-control" style="margin:auto; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px;"  th:required>
+
+                                       <b style="color: red"> <p th:each="error : ${#fields.errors('email')}"
+                                              th:text="${error}">Validation error</p></b>
+                                        </span>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="row" style="position: relative; right:-18%;">
+                             <span>
+
+                                 <label class="col-sm-2 col-form-label"><b style="color: red">*</b>First Name </label>
+                             </span>
+
+                            </div>
+
+                            <div class="row" style="position: relative; right:-20%;">
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <span>
+                                            <input type="text" th:field="*{firstName}"  name="firstName" class="form-control" style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                                           <b style="color: red">   <p th:each="error : ${#fields.errors('firstName')}"
+                                                                       th:text="${error}">Validation error</p></b>
+
+                                        </span>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="row" style="position: relative; right:-18%;">
+                                <span>
+                                     <label class="col-sm-2 col-form-label">Middle Name</label>
+
+                                </span>
+
+                            </div>
+                            <div class="row" style="position: relative; right:-20%;">
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <span>
+                                          <input type="text" name="middleName" class="form-control" style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="row" style="position: relative; right:-18%;">
+                                <span>
+                                    <label class="col-sm-2 col-form-label"><b style="color: red">*</b>Last Name </label>
+
+                                </span>
+
+                            </div>
+
+                            <div class="row" style="position: relative; right:-20%;">
+
+                                <div class="col-sm-6">
+
+                                    <div class="form-group">
+                                        <span>
+                                         <input type="text" th:field="*{lastName}" name="lastName" class="form-control" style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                                           <b style="color: red">  <p th:each="error : ${#fields.errors('lastName')}"
+                                                                      th:text="${error}">Validation error</p></b>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row" style="position: relative; right:-18%;">
+                                <span>
+
+                                    <label class="col-sm-2 col-form-label">Suffix</label>
+                                </span>
+                            </div>
+
+                            <div class="row" style="position: relative; right:-20%;">
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <span>
+                                            <select  class="form-control" name="suffix"  style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                                            <option value=""><b></b></option>
+                                            <option value="mr"><b>Mr</b></option>
+                                            <option value="mrs"><b>Mrs</b></option>
+                                            <option value="ms"><b>ms</b></option>
+                                        </select>
+
+                                        </span>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        <div class="card-text">
+                            <h5 class="card-title"><b style="color: black; color: rgb(0, 0, 0); font-size: 16px; text-align: left; font-weight: bold; font-style: normal; text-decoration: none;">Account View Preference</b></h5>
+                        </div>
+                        <hr style="height:3px; position:relative; top:-20px; left:-11.9%; max-width:80.1%;">
+
+
+                            <div class="row" style="position: relative; right:-20%; margin-bottom: 15px;">
+
+                                <b style="color: red">*</b>  <b>Select application View for new applications: </b><a  style="text-decoration: none;" data-toggle="tooltip" data-placement="right"      title="Guided User view guides the applicant through the process with questions and videos. While the Experienced User view minimizes the extra assistance. "><i  style="position: relative; bottom: -5px;"  class="material-icons">error_outline</i></a>
+                            </div>
+
+                            <div class="row" style="position: relative; right: -7%;">
+                                <label class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+
+
+                                           <div class="row">
+                                                <span>
+                                                    <input type="radio" th:field="*{viewType}"  name="viewType" value="Guided User View">&nbsp;&nbsp;<b>Guided User View</b>
+                                                </span>
+
+                                           </div>
+
+                                        <div class="row">
+                                            <span>
+
+                                                <input type="radio"  th:field="*{viewType}" name="viewType" value="Experienced User View">&nbsp;&nbsp;<b>Experienced User View</b>
+                                            </span>
+
+
+                                        </div>
+                                        <b style="color: red"> <p th:each="error : ${#fields.errors('lastName')}"
+                                                                  th:text="${error}">Validation error</p></b>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <label class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-6" style="position: relative; right: -36px;">
+                                    <div class="form-group">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input confirmDisclaimerCheckbox" type="checkbox" value=""> I understand and agree with USPTO's</input>
+                                            <a data-target="#eFileDisclaimerModal" data-toggle="modal" href="#eFileDisclaimerModal">Terms of Use </a> and
+                                            <a data-target="#eFileDisclaimerModal" data-toggle="modal" href="#eFileDisclaimerModal">Privacy Policy</a>
+                                            <span class="form-check-sign">
+                                              <span class="check"></span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="row" style="margin-bottom: 50px; position:relative; right:-57%; margin-right: 5%;">
+                                <label class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <button style="position:relative; right:-50%; min-width: 100px; background-color: #084A95; color: whitesmoke; border-top-left-radius: 7px; border-bottom-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px;" class="btn btn-default btn- registrationSubmit" type="submit" value="Register" disabled><span class="glyphicon glyphicon-log-in" ></span> &nbsp;&nbsp;submit&nbsp;</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+    </div>
+</div>
+
+
+
+<!-- Disclaimer Modal -->
+<div id="eFileDisclaimerModal" class="modal fade modal-lg" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">USPTO.gov eFile Legal Disclaimer</h4>
+            </div>
+            <div class="modal-body">
+                eTerminal Disclaimer
+                The United States Patent and Trademark Office is pleased to announce the release of eTerminal Disclaimer in EFS-Web. The new eTerminal Disclaimer provides applicants with many advantages and promotes greater efficiency in the patent examination process. This web-based eTerminal Disclaimer can be filled out completely online through web-screens and no EFS-Web fillable forms are required. eTerminal Disclaimers are auto-processed and approved immediately upon submission if the request meets all of the requirements.
+
+                Fees must be paid immediately which will then provide users more financial flexibility. A paper terminal disclaimer filing requires a fee but does not guarantee a terminal disclaimer approval. Each eTerminal Disclaimer filed requires a single terminal disclaimer fee, but can include up to 50 "reference applications" and 50 "prior patents."
+
+                The electronic Terminal Disclaimer (eTD) can only be used if:
+
+                the inventor(s) named as the applicant in the application own(s) 100% of the entire right, title and interest;
+
+                the assignee and/or obligated assignee named as the applicant in the application owns 100% of the entire right, title and interest; or
+
+                some combination of inventor(s) and partial assignee(s) named as the applicant in the application together own 100% of the entire right, title and interest.
+
+                Basic Guidelines for Filing eTerminal Disclaimers:
+
+                Must be able to access EFS-Web registered.
+                Registered eFiler users are strongly advised to transmit their electronic filings sufficiently early in the day to allow time for alternative paper filing when transmission cannot be initiated or correctly completed.
+                The ability to submit an eTerminal Disclaimer under EFS-Web Contingency is not permitted.
+                Consult the current fee schedule available at http://www.uspto.gov/about/offices/cfo/finance/fees.jsp for the correct fee amount. The fee required to be paid upon filing a request for eTerminal Disclaimer is: Statutory disclaimer, including terminal disclaimer.
+                In accordance with MPEP 1490 V and 37 CFR 1.321, Terminal Disclaimers (including eTerminal Disclaimers) will only be considered in compliance with the requirements when filed into a PENDING Nonprovisional Utility application (including national stage and reissue) or PENDING Design application (including reissue).  If an eTerminal Disclaimer is filed after payment of the issue fee but before the patent grant date, a request for Certificate of Correction must be filed requesting that the face of the patent be amended to state --This patent is subject to a terminal disclaimer.
+                Requests for terminal disclaimers for plant applications, reexaminations and terminal disclaimers based on a joint research agreement must be filed by paper.
+                For assistance with filing an eTerminal Disclaimer, or to suggest improvements, please call the Patent Electronic Business Center at 866-217-9197 (toll free) or send an email to EBC@uspto.gov (link sends e-mail)
+            </div>
+            <div class="modal-footer">
+                <div class="form-group">
+                    <button type="button" class="disclaimerDenyButton" data-dismiss="modal"><span class="glyphicon glyphicon-thumbs-down" disabled="true"></span> &nbsp;&nbsp;<b>Deny</b>&nbsp;</button>
+                    <button type="button" class="disclaimerAcceptButton" data-dismiss="modal"><span class="glyphicon glyphicon-thumbs-up" disabled="true"></span> &nbsp;&nbsp;<b>Accept</b>&nbsp;</button>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- end of disclaimer modal -->
+
+
+
+<script>
+    $(document).ready(function() {
+        //$('.content').hide();
+        setTimeout(function() {
+            // after 1000 ms we add the class animated to the login/register card
+            $('.content').fadeIn('slow');
+        }, 600);
+        //////////////////////////////////////////////////////////////
+        // show tooltip
+        //////////////////////////////////////////////////////////////
+        $('[data-toggle="tooltip"]').tooltip();
+
+
+
+        $('.disclaimerAcceptButton').click( function () {
+
+            $('.confirmDisclaimerCheckbox').prop('disabled', false)
+            $('.confirmDisclaimerCheckbox').prop('checked', true);
+            $('.registrationSubmit').prop('disabled', false);
+        });
+
+
+        $('.confirmDisclaimerCheckbox').click( function () {
+
+            $('.confirmDisclaimerCheckbox').prop('disabled', false)
+            $('.confirmDisclaimerCheckbox').prop('checked', true);
+            $('.registrationSubmit').prop('disabled', false);
+        });
+    });
+</script>
+
 </body>
 </html>

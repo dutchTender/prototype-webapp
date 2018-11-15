@@ -1,19 +1,17 @@
 <!doctype html>
 <html th:fragment="layout (template, menu)"
+       xmlns:th="http://www.w3.org/1999/xhtml">
 
-      xmlns:th="http://www.w3.org/1999/xhtml"
-      >
-
-  <head>
+<head>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="shortcut icon" type="image/x-icon" th:href="@{/resources/images/favicon.png}">
+    <link rel="shortcut icon" style="-moz-border-radius: 0px;-webkit-border-radius: 0px;border-radius: 0px;" type="image/x-icon" th:href="@{/resources/images/nav_banner.png}">
 
-    <title>USPTO :: webapp prototyp</title>
+    <title>USPTO.gov :: webapp prototype</title>
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -22,77 +20,139 @@
 
     <link rel="stylesheet" th:href="@{/resources/css/usPTO.css}"/>
 
-  </head>
+    <link rel="stylesheet" th:href="@{/webjars/datatables/1.10.15/css/dataTables.bootstrap4.css}"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-<body>
 
-  <nav class="navbar navbar-default" role="navigation">
-      <div class="container-fluid">
-          <div class="navbar-header">
-              <a class="navbar-brand" title="United States Patent and Trademark Office - An Agency of the Department of Commerce">
-                  <span>
+</head>
 
-                  </span>
-              </a>
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
-                  <span class="sr-only"><os-p>Toggle navigation</os-p></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-              </button>
-          </div>
-          <div class="navbar-collapse collapse" id="main-navbar">
-              <ul class="nav navbar-nav navbar-right">
-  
-                  <li th:fragment="menuItem (path,active,title,glyph,text)" class="active" th:class="${active==menu ? 'active' : ''}">
-                      <a th:href="@{__${path}__}" th:title="${title}">
-                        <span th:class="'glyphicon  glyphicon-'+${glyph}" class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                        <span th:text="${text}">Template</span>
+<body style="zoom:80%; ">
+
+  <div>
+
+      <!-- header section and navigation section --->
+      <header class="navbar-fixed-top" id="global-header" role="banner">
+          <div class="uspto-header-top">
+              <nav class="nav navbar">
+                  <div class="container-fluid">
+                      <a class="uspto-logo" href="http://www.uspto.gov" id="uspto-logo" target="_blank" title="United States Patent and Trademark Office - An Agency of the Department of Commerce">
+                          <span class="sr-only"> United States Patent and Trademark Office </span>
                       </a>
-                  </li>
-
-                  <li th:replace="::menuItem ('/accounts/userHome','dashboard','home page','home','dashboard')">
-                      <span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span>
-                      <span>dashboard</span>
-                  </li>
-
-                  <li th:replace="::menuItem ('/accounts/mail','mail','about','inbox','message-center')">
-                      <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
-                      <span>message center</span>
-                  </li>
+                      <button appskipfocusto="" class="sr-only sr-only-focusable skip-navigation skip-navigation-top" targetelement="skip-nav-content" type="button">Skip Navigation </button>
+                      <span class="pull-right">
 
 
 
 
-                  <li th:replace="::menuItem ('/account/assets','trade marks','trade mark', 'piggy-bank','trademarks')">
-                      <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span>
-                      <span>Error</span>
-                  </li>
+                          <div class="btn-group">
+                              <button aria-expanded="false" aria-haspopup="true" class="btn btn-default dropdown-toggle ex-btn-inverse" data-toggle="dropdown" type="button"><span class="hidden-xs ">Help&nbsp;<span class="caret"></span></span><span class="visible-xs icon-btn"><span class="icon icon-question-circle icon-inverse"></span></span></button>
+                                  <ul class="dropdown-menu dropdown-menu-right">
+                                      <li><a data-event-action="myuspto menu link clicked" data-event-category="myuspto Header: Help menu" data-event-label="FAQs" href="http://www.uspto.gov/learning-resources" target="_blank">FAQs</a></li>
+                                      <li><a data-event-action="myuspto menu link clicked" data-event-category="myuspto Header: Help menu" data-event-label="Contact us" href="http://www.uspto.gov/about-us/contact-us" target="_blank">Contact us</a>
+                                      </li>
+                                  </ul>
+                          </div><!---->
+                          <div class="btn-group">
+                              <button aria-expanded="false" aria-haspopup="true" class="btn btn-default dropdown-toggle ex-btn-inverse" data-toggle="dropdown" type="button">
+                                  <span class="hidden-xs " th:text="${account.username}">li zhang&nbsp;<span class="caret"></span>
+                                  </span>
+                                  <span class="visible-xs icon-btn">
+                                      <span class="icon icon-user icon-inverse"></span>
+                                  </span>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-right"><!---->
+                                  <li>
+                                    <a href="/accounts/Home"><em class="icon icon-inverse icon-home"></em> &nbsp;Home<span class="sr-only">&nbsp;console</span></a>
+                                  </li><!---->
+                                  <li>
+                                    <a href="/accounts/dashboard"><em class="icon icon-inverse icon-dashcube"></em> &nbsp;eFile<span class="sr-only">&nbsp;console</span></a>
+                                  </li><!---->
+                                  <li>
+                                      <a class="sso-link-profile" href="/accounts/userHome"><em class="icon icon-inverse icon-user"></em> &nbsp;<span class="sr-only">Manage your&nbsp;</span>Account </a>
+                                  </li>
+                                  <li>
+                                      <a href="/logout"><em class="icon icon-inverse icon-sign-out"></em> &nbsp;Sign out</a>
+                                  </li>
+                              </ul>
+                          </div><!---->
+                          <div class="btn-group">
+                              <a class="btn myuspto-link" href="https://my.uspto.gov" data-event-action="myuspto menu link clicked" data-event-category="myuspto Header: MyUSPTO menu" data-event-label="MyUSPTO web site" target="_blank">MyUSPTO</a>
+                          </div>
+                      </span>
+                  </div>
+              </nav>
+          </div><!---->
+          <div class="uspto-header-middle hidden-xs">
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="col-sm-12"><!----></div></div></div></div><!----><div class="uspto-header-bottom"><nav class="navbar"><div class="container-fluid"><div class="navbar-header"><span class="pull-left headerbar-smallHeading" id="headerSmallHeadingMobile"> Account </span><button class="navbar-toggle collapsed" data-target="#bottom-collapse-button" data-toggle="collapse" type="button"><span class="sr-only">Toggle navigation</span><span aria-hidden="true" class="icon icon-bars icon-inverse"></span></button></div><div class="collapse navbar-collapse" id="bottom-collapse-button"><span class="pull-left headerbar-smallHeading" id="headerSmallHeading"> Account </span><!----><ul class="nav navbar-nav"><li><a href="/home"><span class="sr-only">Go to MyUSPTO home page.</span><span class="icon icon-inverse icon-home"></span></a></li></ul><ul class="nav navbar-nav navbar-right"><li> </li></ul></li></ul></div></div></nav></div></header>
 
-                  <li th:replace="::menuItem ('/logout','logout','sign out', 'log-out','logout')">
-                      <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
 
-                      <span>Error</span>
-                  </li>
-              </ul>
-          </div>
-      </div>
-  </nav>
-  <div class="container-fluid">
-      <div class="container xd-container">
-  
-          <th:block th:include="${template}"/>
 
-        <br/>
-        <br/>
+      <!-- end of header and navigation section -->
 
-      </div>
-  </div>
 
-  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-  <script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
-  <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 
+
+    <!--jquery and web jars -->
+    <!--jquery and web jars -->
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
+      <script th:src="@{/webjars/datatables/1.10.15/js/jquery.dataTables.js}"></script>
+    <!--<script src="../resources/js/jquery.dataTables.min.js"></script>-->
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+      <script>
+
+
+
+
+      </script>
+
+    <div class="container-fluid" >
+        <div class="container xd-container" style="background-color: whitesmoke; min-width: 1200px;">
+
+            <th:block th:include="${template}"/>
+
+            <br/>
+            <br/>
+
+        </div>
+
+    </div>
+
+
+</div>
 </body>
+<footer style="max-width:300%;" >
+    <div class="container-fluid">
+        <div class="row">
+            <div class="uspto-footer-top col-sm-8">
+                <div class="uspto-footer-logo col-sm-8">
+                    <a class="logo" href="http://www.uspto.gov/" target="_blank" title="United States Patent and Trademark Office">
+                        <span class="sr-only">United States Patent and Trademark Office</span>
+                    </a>
+                </div>
+                <div class="uspto-footer-watermark col-sm-2" title="United States Patent and Trademark Office">
+                    <span class="sr-only">United States Patent and Trademark Office</span>
+                </div>
+
+            </div>
+
+
+
+
+            <div class="col-sm-4" style="position: relative; right:-40%">
+                <span><p style=" position:relative; top:-712px; left:-550px; min-width: 200px; opacity: 1; mix-blend-mode: normal; font-variant: normal; color: rgb(255, 255, 255); font-size: 18px; font-weight: normal; font-style: normal; text-decoration: none; text-align: left; width: 108px; height: 18px; transform: rotate(0deg) translate(63px, 749px) rotate(0deg);">Website Policy</p></span>
+
+            </div>
+
+            <div class="col-sm-4" style="position: relative; right:-40%">
+                <span><p style=" position:relative; top:-741px; left:-350px; min-width: 200px; opacity: 1; mix-blend-mode: normal; font-variant: normal; color: rgb(255, 255, 255); font-size: 18px; font-weight: normal; font-style: normal; text-decoration: none; text-align: left; width: 108px; height: 18px; transform: rotate(0deg) translate(63px, 749px) rotate(0deg);">Privacy Policy</p></span>
+
+            </div>
+        </div>
+    </div>
+</footer>
 
 </html>

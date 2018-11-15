@@ -1,6 +1,5 @@
 <!doctype html>
-<html th:fragment="layout (template, menu)"
-      x>
+<html th:fragment="layout (template, menu)">
 
 <head>
 
@@ -11,96 +10,324 @@
 
     <link rel="shortcut icon" style="-moz-border-radius: 0px;-webkit-border-radius: 0px;border-radius: 0px;" type="image/x-icon" th:href="@{/resources/images/nav_banner.png}">
 
-    <title>USPTO :: webapp prototype</title>
+    <title>USPTO.gov :: webapp prototype</title>
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+
+
     <link rel="stylesheet" th:href="@{/resources/css/usPTO.css}"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
 
-<body>
-
-<nav class="navbar navbar-default" role="navigation">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" title="United States Patent and Trademark Office - An Agency of the Department of Commerce">
-                  <span>
-
-                  </span>
-            </a>
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
-                <span class="sr-only"><os-p>Toggle navigation</os-p></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-        </div>
-        <div class="navbar-collapse collapse" id="main-navbar">
-            <ul class="nav navbar-nav navbar-right">
-
-                <li th:fragment="menuItem (path,active,title,glyph,text)" class="active" th:class="${active==menu ? 'active' : ''}">
-                    <a th:href="@{__${path}__}" th:title="${title}">
-                        <span th:class="'glyphicon  glyphicon-'+${glyph}" class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                        <span th:text="${text}">Template</span>
+<body style="zoom:80%;">
+<div id="page-body">
+    <header class="navbar-fixed-top" id="global-header" role="banner">
+        <div class="uspto-header-top">
+            <nav class="nav navbar">
+                <div class="container-fluid">
+                    <a class="uspto-logo" href="http://www.uspto.gov" id="uspto-logo" target="_blank" title="United States Patent and Trademark Office - An Agency of the Department of Commerce">
+                        <span class="sr-only"> United States Patent and Trademark Office </span>
                     </a>
-                </li>
+                    <button appskipfocusto="" class="sr-only sr-only-focusable skip-navigation skip-navigation-top" targetelement="skip-nav-content" type="button">Skip Navigation </button>
+                    <span class="pull-right">
 
-                <li th:replace="::menuItem ('/','home','home page','home','USPTO')">
-                    <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                    <span>Home</span>
-                </li>
+                         <div class="btn-group">
+                              <button aria-expanded="false" aria-haspopup="true" class="btn btn-default dropdown-toggle ex-btn-inverse" data-toggle="dropdown" type="button"><span class="hidden-xs ">Home&nbsp;</span><span class="visible-xs icon-btn"><span class="icon icon-question-circle icon-inverse"></span></span></button>
 
-                <li th:replace="::menuItem ('/aboutUs','about','about','info-sign','About Us')">
-                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                    <span>about us</span>
-                </li>
-
-                <li th:replace="::menuItem ('/contact','contact','contact', 'phone','Contact Us')">
-                    <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
-                    <span>contact us</span>
-                </li>
-
-                <li th:replace="::menuItem ('/registration','registration','register new user','registration-mark','Registration')">
-                    <span class="glyphicon glyphicon-registration-mark" aria-hidden="true"></span>
-                    <span>register</span>
-                </li>
-
-                <li th:replace="::menuItem ('/login','login','sign in', 'log-in','login')">
-                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
-                    <span>log in</span>
-                </li>
+                          </div><!---->
 
 
 
-            </ul>
-        </div>
-    </div>
-</nav>
-<div class="container-fluid">
-    <div class="container xd-container">
 
-        <th:block th:include="${template}"/>
 
-        <br/>
-        <br/>
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <img src="../static/resources/images/usPTO_banner.png" th:src="@{/resources/images/usPTO_banner.png}"
-                         /></div>
+
+                        <div class="btn-group">
+                          <button aria-expanded="false" aria-haspopup="true" class="btn btn-default dropdown-toggle ex-btn-inverse" data-toggle="dropdown" type="button"><span class="hidden-xs ">Resources&nbsp;</span><span class="visible-xs icon-btn"><span class="icon icon-question-circle icon-inverse"></span></span></button>
+
+                      </div><!---->
+
+
+
+                        <div class="btn-group">
+                            <button aria-expanded="false" aria-haspopup="true" class="btn btn-default dropdown-toggle ex-btn-inverse" data-toggle="dropdown" type="button">
+                                <span class="hidden-xs ">Help&nbsp;
+                                    <span class="caret"></span>
+                                </span>
+                                <span class="visible-xs icon-btn">
+                                    <span class="icon icon-question-circle icon-inverse"></span>
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li>
+                                    <a data-event-action="myuspto menu link clicked" data-event-category="myuspto Header: Help menu" data-event-label="FAQs" href="http://www.uspto.gov/learning-resources" target="_blank">FAQs</a>
+                                </li>
+                                <li>
+                                    <a data-event-action="myuspto menu link clicked" data-event-category="myuspto Header: Help menu" data-event-label="Contact us" href="http://www.uspto.gov/about-us/contact-us" target="_blank">Contact us</a>
+                                </li>
+                            </ul>
+                        </div><!----><!---->
+                        <div class="btn-group">
+                            <button class="btn btn-default ex-btn-inverse" data-backdrop="static" data-keyboard="false" data-target="#sign-in-modal" data-toggle="modal" type="button">Sign in</button>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn myuspto-link" href="https://my.uspto.gov"  data-event-action="myuspto menu link clicked" data-event-category="myuspto Header: MyUSPTO menu" data-event-label="MyUSPTO web site"  target="_blank">MyUSPTO</a>
+                        </div>
+                    </span>
+                </div>
+            </nav>
+        </div><!---->
+        <div class="uspto-header-middle hidden-xs" style="">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="pull-left header-middle-label">
+                            <b style=" font-family: 'Segoe UI Light', Helvetica Neue, Tahoma, Arial, sans-serif; font-weight: bolder; "></b>
+                        </span><!---->
+                    </div>
+                </div>
             </div>
+        </div><!---->
+        <div class="uspto-header-bottom">
+            <nav class="navbar">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <span class="pull-left headerbar-smallHeading" id="headerSmallHeadingMobile"> MyUSPTO </span>
+                        <button class="navbar-toggle collapsed" data-target="#bottom-collapse-button" data-toggle="collapse" type="button">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span aria-hidden="true" class="icon icon-bars icon-inverse"></span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bottom-collapse-button">
+                        <span class="pull-left headerbar-smallHeading" id="headerSmallHeading"> MyUSPTO </span><!---->
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a class="btn-default" data-event-action="myuspto menu link clicked" data-event-category="myuspto Header: What's new menu" data-event-label="What's new" href="/whatsnew">What's new</a>
+                            </li>
+                            <li class="dropdown">
+                                <button class="btn-default dropdown-toggle" data-toggle="dropdown" id="nav-dropdown-right"> MyUSPTO help&nbsp;
+                                    <span class="caret"></span>
+                                </button>
+                                <ul aria-labelledby="nav-dropdown-right" class="dropdown-menu" role="menu">
+                                    <li role="presentation">
+                                        <a data-event-action="myuspto menu link clicked" data-event-category="myuspto Header: MyUSPTO help menu" data-event-label="Feedback" href="http://usptoglobalsignon.ideascale.com" role="menuitem" target="_blank" onmousedown="dataLayer.push({'event': 'eventTracker', 'eventCat': 'Outbound Links', 'eventAct':'Click', 'eventLbl': 'usptoglobalsignon.ideascale.com/', 'eventVal': 0, 'nonInteraction': 0});">Feedback</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a data-event-action="myuspto menu link clicked" data-event-category="myuspto Header: MyUSPTO help menu" data-event-label="FAQs" href="https://www.uspto.gov/learning-and-resources/account-faqs" role="menuitem" target="_blank">FAQs</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a data-event-action="myuspto menu link clicked" data-event-category="myuspto Header: MyUSPTO help menu" data-event-label="Tutorial" href="javascript:void(0);" role="menuitem">Tutorial</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!--jquery and web jars -->
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
+    <script src="../resources/js/jquery.dataTables.min.js"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+    <div class="container-fluid">
+        <div class="container xd-container">
+
+            <th:block th:include="${template}"/>
+
+            <br/>
+            <br/>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+    $(document).ready(function() {
+
+        setTimeout(function() {
+            // after 1000 ms we add the class animated to the login/register card
+            $('.content').fadeIn(500);
+        }, 500);
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        // password modal update actions
+        // passowrd update on click
+        ////////////////////////////////////////////////////////////////////////////////////////////
+
+        $('#webPolicy').click( function () {
+
+            $('#web-policy-card').fadeIn();
+
+        });
+
+
+        $(function() {
+            $('*').click(function(e) {
+                if(e.target.id != 'webPolicy')   {
+                    $('#web-policy-card').fadeOut();
+                }
+            });
+        });
+
+
+
+
+        //////////////////////////////////////////////////////////////////////////
+
+    });
+</script>
+</body>
+
+<!--login modal -->
+<div id="sign-in-modal" class="modal fade modal-lg" role="dialog" tabindex="-1"  style="min-width: 1500px;" >
+    <div class="modal-dialog" id="sign-in-modal-dialog"  style="position: relative; left:130px; right:-130px;">
+
+        <!-- Modal content-->
+        <div class="modal-content" style="max-width:900px; max-height: 900px; background-color: rgb(246, 246, 246); border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;">
+            <div class="modal-header" style="background-color: #383A3C; color: whitesmoke; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+                <button type="button" class="close" data-dismiss="modal" style="color: whitesmoke;">&times;</button>
+                <h4 class="modal-title" style="color: whitesmoke;"><b>USPTO.gov | eFile <i>Reimagined</i></b> </h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="container-fluid" >
+                    <form th:action="@{/login}" method="post" class="form form-check-input form-control-sm"  >
+                        <div class="card card-login" style="margin: auto; color: #383A3C; background-color: white; min-height: 250px; margin-left: 20px;  max-width: 90%;   border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;"  >
+                            <div class=" card-header-blue text-center" style="padding-top: 10px;position:relative;top: 20px; right:-30%;">
+                                <b class="card-title" style=""><a style="font-size: x-small;margin-top: 50px;" href="/registration">New User?</a></b>
+                            </div>
+
+                            <div class="card-body " style="padding-top: 20px;position:relative;top: 20px;  min-height: 200px;">
+                                <span class="card-description" style="position: relative; right:-22%; top:-10px; "><h5><b>Existing User</b></h5></span>
+
+                                <span class="bmd-form-group" style="position: relative; top:-10%;" >
+                                  <div class="input-group">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" style="margin:auto; position:relative; left:40%; right:40%; margin-bottom: 10px">
+                                          <span class="glyphicon glyphicon-user"><b>Email Address</b></span>
+                                      </span>
+                                    </div>
+                                    <input style="margin: auto; min-width: 265px; position:relative; left:40%; right:40%; margin-top: 10px; margin-bottom: 10px; border-top-right-radius: 10px; border-top-left-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px;" type="email" class="form-control" name="username" placeholder="Email...">
+                                  </div>
+                                </span>
+                                <span class="bmd-form-group" style="margin:auto;">
+                                  <div class="input-group" >
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" style="margin:auto; position:relative; left:40%; right :40%; margin-bottom: 10px; margin-top: 10px;">
+                                          <span class="glyphicon glyphicon-lock"><b>Password</b></span>
+                                      </span>
+                                    </div>
+                                    <input  style="margin:auto; min-width: 265px; position:relative; left:40%; margin-top: 10px; border-top-right-radius: 10px; border-top-left-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px;" type="password" class="form-control" name="password" placeholder="Password...">
+                                  </div>
+                                </span>
+                            </div>
+                            <div class="card-footer justify-content-center" style="padding-top: 20px; padding-bottom:50px; margin-bottom: 10px; background-color: white; border-top: none; position:relative;top: 12px;  border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+
+
+
+                                <div class="form-group" ><button style="position:relative; left:20.7%; right:30%; min-width: 262px; background-color: #004c97; color: whitesmoke; border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;" class="btn" type="submit" value="Sign In"><span style="position: relative; left:-75px;" class="glyphicon glyphicon-log-in" ></span><b style="position: relative; left:-20px;"> &nbsp;  Sign In&nbsp;</b></button></div>
+
+                                <!-- Login Form -->
+                                <div  style="color: red; position: relative; top:20%; right:-22%;" th:if="${param.error}">
+                                    <b>Invalid username and password.</b>
+                                </div>
+                                <div  style="color: green; position: relative; top:20%; right:-22%;" th:if="${param.logout}">
+                                    You have been logged out.
+                                </div>
+
+
+                            </div>
+
+
+
+                        </div>
+
+
+
+                    </form>
+                </div>
+
+            </div>
+            <div class="modal-footer" style="  background-color: rgb(246, 246, 246); color: whitesmoke; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;">
+
+
+
+
+            </div>
+
         </div>
     </div>
 </div>
+<!-- end of login modal -->
 
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<div>
+    <div class="row">
+        <div class="card-body" id="web-policy-card" style=" display:none; margin-top:10px; margin-right:10px; margin-left:10px; position:relative;top: -477px; right:-525px; min-height: 300px; max-width: 670px; background-color: #323232; opacity: 1; mix-blend-mode: normal; font-variant: normal; color: rgb(255, 255, 255); font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; text-align: left; width: 612px; height: 173px; transform: rotate(0deg) translate(17px, 496px) rotate(0deg);">
 
-</body>
+
+                    <span class="bmd-form-group" style="margin-top: 10px;" >
+                        <p style="max-height: 10px;">&nbsp;&nbsp;</p>
+                        <p style="margin-top: 15px; margin-left: 15px; margin-right: 15px;">This is a United States Patent and Trademark Office (USPTO) computer system, which may be accessed and used only for official Government business by authorized personnel. Unauthorized access, actions, use, modification, or disclosure of the data contained herein or in transit to/from this system constitutes a violation of the Computer Fraud and Abuse Act, Pub. L. No. 99-474, codified at 18 U.S.C. §1030, state criminal and civil laws, and may subject violators to criminal, civil, and/or administrative action and penalties. Regardless of geographic location, authorized use of this system must comply with USPTO policy, as documented in the USPTO AAO 202-737 (Limited Personal Use of Government Equipment), AAO 212-4 (Information Technology Security Policy) and the USPTO Rules of the Road. Unauthorized use or actions exceeding authorized use of USPTO systems will be investigated, and, when appropriate, official sanctions will be imposed. All data contained on USPTO computer systems is owned by the USPTO, and may be monitored, intercepted, recorded, read, copied, captured, and disclosed in any manner by authorized personnel. THERE IS NO RIGHT OF PRIVACY IN THIS SYSTEM. System personnel may give to law enforcement officials, for investigation and prosecution, any potential evidence of crime found on USPTO computer systems. USE OF THIS SYSTEM BY ANY USER, AUTHORIZED OR UNAUTHORIZED, CONSTITUTES CONSENT TO THIS MONITORING, INTERCEPTION, RECORDING, READING, COPYING, CAPTURING, AND DISCLOSURE. Suspected access violations or policy infractions should be reported to the USPTO Service Desk at (571) 272-9000.</p>
+
+                    </span>
+
+        </div>
+
+    </div>
+</div>
+
+
+<footer>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="uspto-footer-top col-sm-8">
+                <div class="uspto-footer-logo col-sm-8">
+                    <a class="logo" href="http://www.uspto.gov/" target="_blank" title="United States Patent and Trademark Office">
+                        <span class="sr-only">United States Patent and Trademark Office</span>
+                    </a>
+                </div>
+                <div class="uspto-footer-watermark col-sm-2" title="United States Patent and Trademark Office">
+                    <span class="sr-only">United States Patent and Trademark Office</span>
+                </div>
+
+            </div>
+
+            <div class="col-sm-4" style="position: relative; right:-40%">
+                <span id="webPolicy"><p  style=" position:relative; top:-712px; left:-550px; min-width: 200px; opacity: 1; mix-blend-mode: normal; font-variant: normal; color: rgb(255, 255, 255); font-size: 18px; font-weight: normal; font-style: normal; text-decoration: none; text-align: left; width: 108px; height: 18px; transform: rotate(0deg) translate(63px, 749px) rotate(0deg);">Website Policy</p></span>
+
+            </div>
+
+            <div class="col-sm-4" style="position: relative; right:-40%">
+                <span><p style=" position:relative; top:-742px; left:-350px; min-width: 200px; opacity: 1; mix-blend-mode: normal; font-variant: normal; color: rgb(255, 255, 255); font-size: 18px; font-weight: normal; font-style: normal; text-decoration: none; text-align: left; width: 108px; height: 18px; transform: rotate(0deg) translate(63px, 749px) rotate(0deg);">Privacy Policy</p></span>
+
+            </div>
+
+
+
+
+
+        </div>
+
+
+
+    </div>
+</footer>
+
+
+
 
 </html>

@@ -1,2 +1,1 @@
-# prototype-webapp
-#grant thorton USPTO prototype project 
+# ETSIprototype_tm
