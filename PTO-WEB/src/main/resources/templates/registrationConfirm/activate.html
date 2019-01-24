@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/lynnFragmentNoSession :: layout (~{::body},'about')}"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="content" style="display: none;">
+    <div class="container-fluid" style="position: relative; top:-100px;">
+
+        <div class="col-md-14" >
+            <div class="form-container" style=" position: relative;top:10%; max-height:3000px; color: black;   margin-bottom: 100px; background-image: linear-gradient(white, white); border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+                <div style="position: relative;top:26px; margin-left: 40px;">
+                    <h4><b style="color: black; ">Set User Account Password</b></h4>
+                </div>
+                <div class=" card-header-rose card-header-text" style="margin-top: 20px;" >
+
+                    <div class="card-text">
+
+                        <h5 class="card-title"><b style="color: black; font-weight: bold;">Account Details</b></h5>
+                    </div>
+                    <hr style="height:3px; position:relative; top:-20px; left:-11.9%; max-width: 80.1%">
+                    <div class="row">
+                        <span>
+                            <h3 STYLE="color: black; position:relative; right: -10%;"> <b>Your account is now activated. </br> Set your password to complete registration.</b></h3>
+                        </span>
+
+                    </div>
+                </div>
+                <div class="card-body" style=" margin-top: 20px;">
+                    <form id="setAccountPW" method="post" style="" action="/CompleteRegistration" class="form-horizontal" th:object="${passwordSetDTO}">
+
+
+                        <div class="row" style="position: relative; right:-18%; font-weight: bold;">
+                                <span>
+                                    <label class="col-sm-2 col-form-label"><b style="color: red">*</b>Password</label>
+                                </span>
+
+                        </div>
+                        <div class="row" style="position: relative; right:-20%; top: 10%; ">
+
+                            <div class="col-sm-6">
+
+                                <div class="form-group">
+                                        <span>
+
+                                           <input id="password" type="password"  th:field="*{password}"   placeholder="Password" class="form-control" style="margin:auto; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;"  th:required>
+                                             <b style="color: red"> <p th:each="error : ${#fields.errors('password')}"
+                                                                       th:text="${error}">Validation error</p></b>
+
+                                        </span>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="row" style="position: relative; right:-18%; font-weight: bold;">
+                             <span>
+
+                                 <label class="col-sm-2 col-form-label"><b style="color: red">*</b>Confirm Password </label>
+                             </span>
+
+                        </div>
+
+                        <div class="row" style="position: relative; right:-20%;">
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                        <span>
+                                            <input id="password-confirm" type="password"   th:field="*{password_confirm}" name="password-confirm" class="form-control" placeholder="Confirm Password" style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+
+                                                 <b style="color: red"> <p th:each="error : ${#fields.errors('password_confirm')}"
+                                                                           th:text="${error}">Validation error</p></b>
+                                        </span>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+                        <div class="row" style="margin-bottom: 50px; position:relative; right:-57%;">
+                            <label class="col-sm-2 col-form-label"></label>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <button style="position:relative; right:-20%; min-width: 100px; background-color: #084A95; color: whitesmoke; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; font-weight: bold;" class="btn  btn- registrationSubmit" type="submit" value="Register" ><span class="glyphicon glyphicon-log-in" disabled="true"></span> &nbsp;&nbsp;Complete Set up&nbsp;</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<script>
+        $(document).ready(function() {
+           // $('.content').hide();
+            setTimeout(function() {
+                // after 600 ms we add the class animated to the login/register card
+                $('.content').fadeIn('slow');
+            }, 600);
+
+            var allowsubmit = false;
+
+                //on keypress
+            $('#password-confirm').keyup(function(e){
+                //get values
+                var pass = $('#password').val();
+                var confpass = $(this).val();
+
+                //check the strings
+                if(pass == confpass){
+                    //if both are same remove the error and allow to submit
+                    $('.autoSaveMessageArea').text('');
+                    allowsubmit = true;
+                }else{
+                    //if not matching show error and not allow to submit
+                    $('.autoSaveMessageArea').text('Password and Password confirm do not match.');
+                    allowsubmit = false;
+                }
+            });
+
+            //jquery form submit
+            $('#setAccountPW').submit(function(){
+
+                var pass = $('#password').val();
+                var confpass = $('#password-confirm').val();
+
+                //just to make sure once again during submit
+                //if both are true then only allow submit
+                if(pass == confpass){
+                    allowsubmit = true;
+                }
+                if(allowsubmit){
+                    return true;
+                }else{
+                    return false;
+                }
+            });
+
+
+
+
+});
+</script>
+</body>
+</html>

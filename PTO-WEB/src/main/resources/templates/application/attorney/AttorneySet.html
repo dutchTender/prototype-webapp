@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/efileApplicationAttorneyFragment :: layout (~{::body},'user')}" >
+<head >
+    <meta charset="UTF-8">
+    <title>Attorney Information</title>
+</head>
+<body>
+
+
+<!-- End Navbar -->
+<div class="row content" id="attorney" style="display: none;">
+    <main class="col-xs-12 col-sm-8 col-md-8 col-lg-7">
+        <!--START Content Div-->
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row">
+                    <section class="col-xs-12 steps breadcrumb-steps" aria-label="progress tracker">
+                        <div class="row displaycell">
+                            <div class="col-xs-2 one" id="bs-header1">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-4 number">
+                                        <span>1</span>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-7 col-md-8 col-lg-8" id="bs-link1">
+                                        <p class="first">Your details</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 two" id="bs-header2">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-4 number">
+                                        <span>2</span>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-7 col-md-8 col-lg-8" id="bs-link2">
+                                        <p>Trademark details</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 three" id="bs-header3">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-4 number">
+                                        <span>3</span>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-7 col-md-8 col-lg-8" id="bs-link3">
+                                        <p>Goods and services</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 four" id="bs-header4">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-4 number">
+                                        <span>4</span>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-7 col-md-8 col-lg-8" id="bs-link4">
+                                        <p>Basis</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 five" id="bs-header5">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-4 number">
+                                        <span>5</span>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-7 col-md-8 col-lg-8" id="bs-link5">
+                                        <p>Additional info</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 six" id="bs-header6">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-4 number">
+                                        <span>6</span>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-7 col-md-8 col-lg-8" id="bs-link6">
+                                        <p>Confirm and pay</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <h1>Attorney Information</h1>
+                    </div>
+
+                </div>
+
+                <!--START Attorney Information Form-->
+
+
+                    <div class="row" >
+                        <div class="col-sm-4">
+                            <h5><b>Select one of the following attorneys to be the primary attorney.</b></h5>
+                        </div>
+                        <div class="col-sm-2">
+                        </div>
+                        <div class="col-sm-3" style="position: relative; right:-11px; top:-10px;">
+                            <span class="btn-sm btn"  id="confirm-link-widget"  style=" padding:5px; max-width: 170px; color: white; background-color: rgb(128, 128, 128); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-right-radius: 5px; border-top-left-radius: 5px; position: relative; top:20px;"><i class="material-icons" style="position: relative;left:-5px;bottom:-5px;">how_to_reg</i><b style="position: relative; top:-5px;">Confirm<br> Primary Attorney</b></span>
+                        </div>
+
+                        <div class="col-sm-3" style="position: relative; top: -10px; right:-11px;  ">
+                            <span id="addAttorneyConfirm" class=" btn-sm btn"  type="button"  style=" padding:5px; max-width: 170px; padding:5px;  color: white; background-color: rgb(52, 152, 219); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-right-radius: 5px; border-top-left-radius: 5px;  position: relative;top:20px;"><i class="material-icons" style="position: relative; left: -10px;">person_add</i><b style="position: relative; top:-5px;"><a id="addAttorneyLink" style="color: white; text-decoration: none;" >Add<br> Additional Attorney</a></b></span>
+                        </div>
+                    </div>
+
+                    <div class="accordion" id="accordionExample" style="position: relative; right:-10px; margin-top: 30px;word-wrap:break-word; ">
+
+
+
+                        <th:block th:each="lawyer : ${lawyerPool}">
+                            <!--item 1 -->
+                            <div class="card" id="contact" style=" background-color: white;">
+                                <div class="card-header" id="headingTwo"  style="background-color: white;">
+                                    <div class="row">
+                                        <div class="col-sm-1">
+                                            <input  th:if="${lawyer.isPrimary() == true}" class="primaryLawyer" style="position: relative; bottom: -5px;"  type="radio" name="primaryAttorney" checked>
+                                            <input  th:if="${lawyer.isPrimary() == false}" class="primaryLawyer" style="position: relative; bottom: -5px;"  type="radio" name="primaryAttorney" >
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <i class="material-icons collapsed" data-toggle="collapse" th:attr="data-target='#'+${lawyer.collapseID}"  aria-expanded="false" aria-controls="collapseTwo" style="position: relative; bottom:-5px;">keyboard_arrow_right</i>
+                                        </div>
+                                        <div class="col-sm-2 col-sm-3 col-sm-4">
+
+                                            <b style="position: relative;" th:text="${lawyer.firstName}+' '+${lawyer.lastName}">Attorney Name</b>
+
+                                        </div>
+
+                                        <div class="col-sm-3 col-sm-4 col-sm-5">
+                                            <b style="position: relative; bottom: -5px;" th:text="${lawyer.email}">Attorney@Email.com</b>
+                                        </div>
+
+                                        <div class="col-sm-2 col-sm-3 col-sm-4">
+                                            <b style="position: relative; bottom: -5px;" th:text="${lawyer.getLawFirmName()}">Attorney Firm, LLC </b>
+                                        </div>
+
+                                        <div class="col-sm-1" style="position: relative; margin-left:8%"  th:attr="primary-attorney=${lawyer.isPrimary()}" >
+                                            <button th:attr="contact-email=${lawyer.email}" type="button" class="close btn remove-attorney"  aria-label="Close" style="position: relative; bottom: -9px;"><span class="glyphicon glyphicon-remove" aria-hidden="true" style=""></span></button>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div  th:attr="id=${lawyer.collapseID}"  class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample" style=" margin-bottom: 10px;">
+
+                                <div class="card-body">
+
+                                    <div class="row" style="position: relative;  margin-left: 5%; margin-top: 10px; ;">
+                                        <span class="collapsed"  data-toggle="collapse"  th:attr="data-target='#'+${lawyer.collapseID}+'1'" aria-expanded="false" aria-controls="collapseTwoAddress">
+                                            <i class="material-icons">keyboard_arrow_right</i><b style="position: relative; top:-7px;"> Address</b>
+                                        </span>
+
+                                        <div th:attr="id=${lawyer.collapseID}+'1'" class="collapse" aria-labelledby="headingTwoAddress" data-parent="#accordionExample" style="">
+                                            <div class="card-body"  style="max-width: 85%;" >
+
+                                                <span style="position: relative; right:-30px;" th:text="${lawyer.address}+' '+${lawyer.city}+', '+${lawyer.state}+' '+${lawyer.zipcode}"> 1115 Reserve Champion Drive, Rockville MD 20850</span>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="position: relative;  margin-left: 5%; margin-top: 10px;">
+                                            <span class="collapsed"  data-toggle="collapse" th:attr="data-target='#'+${lawyer.collapseID}+'2'" aria-expanded="false" aria-controls="collapseTwoAffiliation">
+                                                <i class="material-icons">keyboard_arrow_right</i> <b style="position: relative; top:-7px;">Affiliation </b>
+                                            </span>
+
+                                        <div th:attr="id=${lawyer.collapseID}+'2'" class="collapse" aria-labelledby="headingTwoAffiliation" data-parent="#accordionExample" >
+                                            <div class="card-body " style="max-width: 85%;" >
+                                                <span> Bar Standing: </span>
+                                                <span th:text="${lawyer.affiliationStatus}"></span> <br>
+                                                <span> Bar Membership Number: </span>
+                                                <span th:text="${lawyer.membershipNumber}"></span> <br>
+                                                <span> Bar Jurisdiction: </span>
+                                                <span th:text="${lawyer.barJurisdiction}"></span> <br>
+                                                <span> Bar Admission Date: </span>
+                                                <span th:text="${lawyer.barAdmissionDate}"></span><br>
+                                                <span> Bar Certificate:</span><br>
+                                                <img th:attr="src=${lawyer.getBarCertificateImageKey()}"/>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="position: relative;  margin-left: 9%; margin-top: 10px;">
+                                        <b>Docket Number:</b> <span  th:text="${lawyer.docketNumber}" ></span>
+                                    </div>
+
+                                </div> <!-- end of outter card body -->
+                            </div> <!--end of collapse two -->
+
+                            <!-- end of item 1 -->
+
+                        </th:block>
+
+
+
+
+
+                    </div> <!~- end of accordian -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+        <div class="inlinebuttons btn-group btn-group-justified  owner-paging-buttons" role="nav" aria-label="view previous or next page" id="prevnxt">
+            <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-default fill prev" id="prevButton" value="previous">Previous</button>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-primary fill next" id="nextButton" value="next" disabled>Next
+                    <div class="round"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></div></button>
+            </div>
+        </div>
+    </main>
+</div>
+<!--END container-fluid-->
+
+<div class="container-fluid stickycomponents">
+    <div id="chats">
+        <div class="row">
+
+            <section class="col-xs-7 col-sm-6 col-md-6 col-lg-6 col-xs-offset-5 col-sm-offset-6 col-md-offset-6 col-lg-offset-6 weight600" aria-label="your data" id="mydata2">
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" id="contacts">
+                            <h4 class="panel-title">
+                                <button type="button" class="btn btn-link Accordion-trigger" data-toggle="collapse" data-target="#collapse2" aria-controls="collapse2" aria-expanded="false" id="contactsbtn" aria-label="toggle contacts panel"><span id="toggleglyphone" class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span><span id="toggleglyph" class="glyphicon glyphicon-triangle-top visuallyremoved" aria-hidden="true"></span>Contacts</button>
+                            </h4>
+                            <button type="button" id="closecontacts" class="close" data-target="#mydata2" aria-label="Close"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                        </div>
+                        <div id="collapse2" class="panel-collapse collapse" aria-labelledby="contactsbtn">
+                            <table class="list-group table">
+                                <tr class="row">
+                                    <td class="list-group-item col-xs-6"><a href="#" class="fromcontact" id="clearform">Clear Form</a></td>
+                                    <td class="list-group-item inner-addon right-addon col-xs-6"><i class="glyphicon glyphicon-search" aria-hidden="true"></i><input type="text" class="form-control" id="contactsearch" placeholder="" aria-label="search"></td>
+                                </tr>
+
+
+
+                                <th:block th:each="contact : ${user.getAttorneyManagedContact()}">
+
+                                    <tr class="row">
+                                        <td class="list-group-item col-xs-6"><a href="#" class="fromcontact" id="managedContactFillFormAction" ><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span><span class="glyphicon glyphicon-ok-sign visuallyremoved" aria-hidden="true"></span></a> <b th:text="${contact.displayName}">Avo Reed</b></td>
+                                        <td class="list-group-item col-xs-6" th:text="${contact.email}">avo.reid@us.gt.com</td>
+                                    </tr>
+
+                                </th:block>
+                            </table>
+                        </div>
+                    </div>
+                </div><!--END contacts-->
+            </section>
+        </div><!--END row-->
+    </div><!--END chats-->
+</div><!--END div container-fluid-->
+
+
+
+
+
+
+
+<!--load model attribute for Jquery consumption  -->
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+
+
+    var appInternalID = /*[[${baseTrademarkApplication.applicationInternalID}]]*/ 'User Name';
+    var attorneyOpt = /*[[${baseTrademarkApplication.isAttorneyFiling()}]]*/ 'User Name';
+    var collapseID = /*[[${baseTrademarkApplication.attorneyCollapseID}]]*/ 'User Name';
+
+
+
+    var isAttorneyOptionSet = /*[[${isAttorneyOptionSet}]]*/ 'User Name';
+    var isAttorneyFiling = /*[[${isAttorneyFiling}]]*/ 'User Name';
+
+    var isAttorneyPoolEmpty = /*[[${baseTrademarkApplication.isAttorneyPoolEmpty()}]]*/ 'User Name';
+    var host_name= /*[[${hostBean.host}]]*/ 'User Name';
+    var host_port= /*[[${hostBean.port}]]*/ 'User Name';
+
+
+
+    var contactNames = /*[[${myManagedContacts.ContactNames}]]*/ 'User Name';
+    var contactEmails = /*[[${myManagedContacts.ContactEmails}]]*/ 'User Name';
+    var contactTypes = /*[[${myManagedContacts.contactEntitySubType}]]*/ 'User Name';
+
+    var selectedContactNames = /*[[${selectedAttorneys.ContactNames}]]*/ 'User Name';
+    var host = host_name+":"+host_port;
+
+    var breadCrumbStatus = /*[[${breadCrumbStatus}]]*/ 'User Name';
+    /*]]>*/
+</script>
+
+
+<script>
+
+    var prevLinkURL = "../../application/start/?trademarkID="+appInternalID;
+    var nextLinkURL = "../../application/OwnerStart/?trademarkID="+appInternalID;
+
+    //var bsLink1 = "../../application/OwnerSetView/?trademarkID="+appInternalID;
+
+    var bsLink2_active =  "../../application/MarkDetails/?trademarkID="+appInternalID;
+    var bsLink2_done =  "../../mark/designWithTextDisclaimer/?trademarkID="+appInternalID;
+
+    var bsLink3_active =  "../../application/goodsAndServicesStart/?trademarkID="+appInternalID;
+    var bsLink3_done =  "../../application/goodsAndServicesReview/?trademarkID="+appInternalID;
+
+
+
+
+    var bsLink4_active = "../../application/filingBasisStart/?trademarkID="+appInternalID;
+    var bsLink4_done = "../../application/filingBasisStart/?trademarkID="+appInternalID;
+
+
+
+    var bsLink5_active =  "../../application/additionalInfoUpload/?trademarkID="+appInternalID;
+    var bsLink5_done =  "../../application/additionalInfoUpload/?trademarkID="+appInternalID;
+
+
+
+
+    var bsLink6_active =  "../../application/confirmInfo/?trademarkID="+appInternalID;
+    var bsLink6_done =  "../../application/confirmInfo/?trademarkID="+appInternalID;
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+<!-- end of main content-->
+
+
+
+
+
+
+
+<script>
+
+
+    // next link url to enable  for u.s individual href="http://localhost:8080/application/owner/info"
+    $(document).ready(function() {
+
+        setTimeout(function() {
+            // after 1000 ms we add the class animated to the login/register card
+            $('.content').fadeIn(500);
+        }, 500);
+
+
+        setTimeout(function() {
+            // after 1000 ms we add the class animated to the login/register card
+            $('#contacts-ui').fadeIn(500);
+
+
+
+        }, 500);
+
+
+        setBreadCrumb(breadCrumbStatus);
+
+        $('#bs-link1').click(function () {
+            var url = $(this).attr("href");
+            if(url != "undefined"){
+                //location.href=url;
+            }
+
+        });
+
+        $('#bs-link2').click(function () {
+            var url = $(this).attr("href");
+            if(url != "undefined"){
+                location.href=url;
+            }
+
+        });
+
+        $('#bs-link3').click(function () {
+            var url = $(this).attr("href");
+            if(url != "undefined"){
+                location.href=url;
+            }
+
+        });
+
+        $('#bs-link4').click(function () {
+            var url = $(this).attr("href");
+            if(url != "undefined"){
+                location.href=url;
+            }
+
+        });
+
+        $('#bs-link5').click(function () {
+            var url = $(this).attr("href");
+            if(url != "undefined"){
+                location.href=url;
+            }
+
+        });
+
+        $('#bs-link6').click(function () {
+            var url = $(this).attr("href");
+            if(url != "undefined"){
+                location.href=url;
+            }
+
+        });
+
+
+        // this will be replaced ... with new persistence logic
+
+        //////////////////////////////////////////////////////////////
+        // check if attorneyFillingFalse is set
+        /////////////////////////////////////////////////////////////
+
+
+        // enable next page link bas[{
+        // {
+        // ed on if attorney is set
+
+
+
+        $('#prevButton').click(function () {
+            location.href=prevLinkURL;
+        });
+
+        $('#nextButton').click(function () {
+            location.href=nextLinkURL;
+        });
+
+        $('input:radio').each(function () {
+
+            if ($(this).prop('checked')) {
+                var new_html=   $(this).parent().next().html();
+                new_html = new_html.replace("aria-expanded=\"false\"", "aria-expanded=\"true\"");
+                new_html = new_html.replace("material-icons collapsed", "material-icons");
+                //alert(new_html);
+                $(this).parent().next().html(new_html);
+                $('#'+collapseID).addClass("in");
+
+            }
+
+        });
+
+
+        //////////////////////////////////////////
+        // show drop downs
+        //////////////////////////////////////////
+
+
+        ////////////////////////////////////////////////////
+        // enable next button on select drop down completion
+        ////////////////////////////////////////////////////
+
+        ///////////////////////////////////////////////////////////
+
+        /////////////////////////////////////////////////////////////////////////////
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        // set overflow hidden for horizontal scroll bar created by y-scroll options on data tables
+        // that keeps the data tables view port height constant
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        $('.dataTables_scrollBody').css('overflow',  'hidden');
+
+
+
+        $('[data-toggle="tooltip"]').tooltip();
+        // widget actions
+
+
+
+        $('#managedContactFillFormAction').click(function () {
+            var contactEmail = $(this).parent().next().html();
+            setformWithManagedContact(contactEmail);
+
+
+        });
+
+
+// show attorney affiliation area
+        // sort and redraw to line up columns
+        $('[data-toggle="tooltip"]').tooltip();
+
+
+
+
+
+        /////////////////////////////////////////////////
+        // check each radio button in accordian..
+        // if any is checked .. enable confirm and next buttons
+        /////////////////////////////////////////////////
+        $('#accordionExample input').each(function () {
+            //alert("##############")
+            if($(this).is(':checked')){
+
+                // confirm link only activated oin new primary set
+                $('#nextButton').attr("disabled",false);
+            }
+
+        });
+
+
+
+
+        $('#accordionExample').on('click', 'input.primaryLawyer', function () {
+
+            var field_value =  $(this).parent().next().next().next().children().html();
+
+
+            if(field_value != "") {
+                // set email to confirm button property
+                $('#confirm-link-widget').attr("primary-attorney-email", field_value);
+
+            }
+            enableConfirmWidgetLink();
+        });
+        $('#confirm-link-widget').click( function () {
+            // alert("!!!!!!!!!!!!!");
+            //alert($(this).attr("primary-attorney-email"));
+            var contact_email = $(this).attr("primary-attorney-email");
+            setPrimaryAttorneyApplication(contact_email, appInternalID);
+            // enable next link ..
+            // enable next url ...
+            $('#nextButton').attr("disabled",false);
+
+
+
+        });
+
+        $('#addAttorneyLink').click(function () {
+
+            location.href=prevLinkURL;
+        });
+
+
+
+
+        $('.glyphicon-remove').click();
+
+
+
+         // remove attorney hide and auto save
+         $('.remove-attorney').click(function () {
+            //alert($(this).parent().parent().parent().html());
+             $(this).parent().parent().parent().fadeOut(500);
+             $(this).parent().parent().parent().parent().next().fadeOut(500);
+             var contactEmail = $(this).attr("contact-email");
+             //alert(contactEmail);
+             // make call to remove attorney from application
+             removeAttorneyFromApplication(contactEmail,appInternalID);
+
+             // check if primary attr set ..if set . disable next button
+             if($(this).parent().attr("primary-attorney") == "true"){
+                 $('#nextButton').attr("disabled", true);
+             }
+
+
+         });
+
+
+
+
+
+
+
+    }); // end of document ready()
+
+    function enableConfirmWidgetLink() {
+
+        $('#confirm-link-widget').css("background-color", "rgb(52, 152, 219)");
+
+    }
+
+    function removeAttorneyFromApplication(contact_email, project_ID) {
+
+        //////////////////////////////////////////////////////////////////////////////////////
+        // we need REST controller of finding a contact by its email
+        // this needs to be implemented on the PTOUser object
+        //////////////////////////////////////////////////////////////////////////////////////
+        var contact_field_name = "application-contact-add-confirm";
+        $.ajax({
+            //url: host+"/REST/apiGateway/application/update/"+field_name_prefix+"/"+field_value+"/"+applicaiton_internal_id,
+            url: "../../REST/apiGateway/application/contacts/attorney/delete/"+contact_email+"/"+project_ID,
+
+            type: 'GET',
+            success: function(data){
+
+
+
+                // parse out status msg:
+                var s_code = data.substring(data.indexOf("status:")+7, data.indexOf("status:")+4+7);
+
+                var s_msg = data.substring(data.indexOf("msg:")+4, data.length-2);
+
+                if(s_code.trim() == "200"){
+                    //if(data.contains("status: 200")){
+                    // show confirmation check mark on form
+                    //$('#toggle').delay(1000).click();
+                    $(".autoSaveMessageArea span").fadeOut(500);
+                    setTimeout(function() {
+                        // after 1000 ms we add the class animated to the login/register card
+                        $(".autoSaveMessageArea span").text(s_msg);
+                        $(".autoSaveMessageArea span").fadeIn(1000);
+                    }, 500);
+
+
+
+
+
+                }
+                else{
+                    //$('.circle-loader').fadeOut(100);
+                    //$('.x-mark').fadeIn(500);
+                    //$(".validationMsgArea span").text(s_msg);
+                    //$(".validationMsgArea span").css('color','red');
+                }
+
+            },
+            error: function(data) {
+
+                //$('.circle-loader').fadeOut(100);
+                //$('.x-mark').fadeIn(500);
+
+                console.log(data);
+                // set message to div area ...fields can not be left null
+                //$(".validationMsgArea span").text("You can not leave any fields empty.");
+                //$(".validationMsgArea span").css('color','red');
+            }
+
+        });
+
+    } // end of function
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+    function setPrimaryAttorneyApplication(contact_email, project_ID) {
+
+        //////////////////////////////////////////////////////////////////////////////////////
+        // we need REST controller of finding a contact by its email
+        // this needs to be implemented on the PTOUser object
+        //////////////////////////////////////////////////////////////////////////////////////
+        var contact_field_name = "application-contact-add-confirm";
+        $.ajax({
+            //url: host+"/REST/apiGateway/application/update/"+field_name_prefix+"/"+field_value+"/"+applicaiton_internal_id,
+            url: "../../REST/apiGateway/application/Attorney/Primary/set/"+contact_email+"/"+project_ID,
+
+            type: 'GET',
+            success: function(data){
+
+
+
+                // parse out status msg:
+                var s_code = data.substring(data.indexOf("status:")+7, data.indexOf("status:")+4+7);
+
+                var s_msg = data.substring(data.indexOf("msg:")+4, data.length-2);
+
+                if(s_code.trim() == "200"){
+                    //if(data.contains("status: 200")){
+                    // show confirmation check mark on form
+                    //$('#toggle').delay(1000).click();
+                    $(".autoSaveMessageArea span").fadeOut(500);
+                    setTimeout(function() {
+                        // after 1000 ms we add the class animated to the login/register card
+                        $(".autoSaveMessageArea span").text(s_msg);
+                        $(".autoSaveMessageArea span").fadeIn(1000);
+                    }, 500);
+
+
+
+
+
+                }
+                else{
+                    //$('.circle-loader').fadeOut(100);
+                    //$('.x-mark').fadeIn(500);
+                    //$(".validationMsgArea span").text(s_msg);
+                    //$(".validationMsgArea span").css('color','red');
+                }
+
+            },
+            error: function(data) {
+
+                //$('.circle-loader').fadeOut(100);
+                //$('.x-mark').fadeIn(500);
+
+                console.log(data);
+                // set message to div area ...fields can not be left null
+                //$(".validationMsgArea span").text("You can not leave any fields empty.");
+                //$(".validationMsgArea span").css('color','red');
+            }
+
+        });
+
+    } // end of function
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+    function setformWithManagedContact(email) {
+
+        //////////////////////////////////////////////////////////////////////////////////////
+        // we need REST controller of finding a contact by its email
+        // this needs to be implemented on the PTOUser object
+        //////////////////////////////////////////////////////////////////////////////////////
+
+        $.ajax({
+            //url: host+"/REST/apiGateway/application/update/"+field_name_prefix+"/"+field_value+"/"+applicaiton_internal_id,
+            url: "../../REST/apiGateway/user/managedContact/get/"+email,
+
+            type: 'GET',
+            success: function(data){
+
+
+
+                // parse out status msg:
+                var s_code = data.substring(data.indexOf("status:")+7, data.indexOf("status:")+4+7);
+
+                var s_msg = data.substring(data.indexOf("msg:")+4, data.length-2);
+
+
+
+
+                if(s_code.trim() == "200"){
+                    //if(data.contains("status: 200")){
+                    // show confirmation check mark on form
+                    //$('#toggle').delay(1000).click();
+                    //$(".autoSaveMessageArea span").fadeOut(500);
+
+                    var firstName = getFieldValueFromResponse(s_msg,"firstName");
+                    if(firstName != "null"){
+                        $('#attorney-first-name').val(firstName);
+
+                    }
+                    var middleName = getFieldValueFromResponse(s_msg,"middleName");
+                    if(middleName != "null"){
+                        $('#attorney-middle-name').val(middleName);
+
+                    }
+                    var lastName = getFieldValueFromResponse(s_msg,"lastName");
+                    if(lastName != "null"){
+                        $('#attorney-last-name').val(lastName);
+
+                    }
+                    var suffix = getFieldValueFromResponse(s_msg,"suffix");
+                    if(suffix != "null"){
+                        $('#suffix').val(suffix);
+
+                    }
+                    var country = getFieldValueFromResponse(s_msg,"country");
+                    if(country != "null"){
+                        $('#attorney-country').val(country);
+
+                    }
+
+                    var address1 = getFieldValueFromResponse(s_msg,"address");
+                    if(address1 != "null"){
+                        $('#attorney-address1').val(address1);
+                    }
+
+                    var city = getFieldValueFromResponse(s_msg,"city");
+                    if(city != "null"){
+                        $('#attorney-city').val(city);
+                    }
+                    var state = getFieldValueFromResponse(s_msg,"state");
+                    if(state != "null"){
+                        $('#attorney-state').val(state);
+                    }
+                    var zipcode = getFieldValueFromResponse(s_msg,"zipcode");
+                    if(zipcode != "null"){
+                        $('#attorney-zipcode').val(zipcode);
+                    }
+                    var email = getFieldValueFromResponse(s_msg,"email");
+                    if(email != "null"){
+                        $('#attorney-email').val(email);
+                    }
+                    var phone = getFieldValueFromResponse(s_msg,"phone");
+                    if(phone != "null"){
+                        $('#attorney-phone').val(phone);
+                    }
+
+
+
+                    //alert(firstName);
+
+
+                    setTimeout(function() {
+                        // after 1000 ms we add the class animated to the login/register card
+                        //  $(".autoSaveMessageArea span").text(s_msg);
+                        // $(".autoSaveMessageArea span").fadeIn(1000);
+                    }, 500);
+
+
+
+                }
+                else{
+                    //$('.circle-loader').fadeOut(100);
+                    //$('.x-mark').fadeIn(500);
+                    //$(".validationMsgArea span").text(s_msg);
+                    //$(".validationMsgArea span").css('color','red');
+                }
+
+            },
+            error: function(data) {
+
+                //$('.circle-loader').fadeOut(100);
+                //$('.x-mark').fadeIn(500);
+
+                console.log(data);
+                // set message to div area ...fields can not be left null
+                //$(".validationMsgArea span").text("You can not leave any fields empty.");
+                //$(".validationMsgArea span").css('color','red');
+            }
+
+        });
+
+    } // end of function
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    /////////////////////////////////////////////////////
+    // aJAX
+    /////////////////////////////////////////////////////
+    function saveProjectInfo(field_name_prefix, field_value, application_internal_id) {
+        //alert(field_name_prefix);
+        // send state, and token to server
+        // token will be generated in the controller and added to the view
+        // similar to how access token works ...a token is tied to a user
+        // access token will be passed in through model
+        //
+        // var tokenValue = '${token}';  // token is the model attribute name
+        // we are not using secured tokens for the prototype
+        // we will secure it by adding ssl and https support
+        //var field_value = $(this).val();
+        //alert(field_value);
+        $.ajax({
+            //url: host+"/REST/apiGateway/application/update/"+field_name_prefix+"/"+field_value+"/"+applicaiton_internal_id,
+            url: "../../REST/apiGateway/application/update/"+field_name_prefix+"/"+field_value+"/"+application_internal_id,
+            type: 'GET',
+            success: function(data){
+                // parse out status msg:
+                var s_code = data.substring(data.indexOf("status:")+7, data.indexOf("status:")+4+7);
+                var s_msg = data.substring(data.indexOf("msg:")+4, data.length-2);
+                if(s_code.trim() == "200"){
+                    //if(data.contains("status: 200")){
+                    // show confirmation check mark on form
+                    //$('#toggle').delay(1000).click();
+                    // add time stamp from server side
+                    $(".autoSaveMessageArea span").fadeOut(500);
+                    setTimeout(function() {
+                        // after 1000 ms we add the class animated to the login/register card
+                        $(".autoSaveMessageArea span").text(s_msg);
+                        $(".autoSaveMessageArea span").fadeIn(1000);
+                    }, 500);
+                    // animation rendering control
+                    //if($('.state-checkmark').css('display') == 'block'){
+                    if($( "."+field_name_prefix.toLowerCase()+"-animation").css('display') == 'block'){
+                        $("."+field_name_prefix.toLowerCase()+"-animation").fadeOut(100);
+                        // now we need to create an java back end service that saves this value.
+                        // also add validation on the html  similar to password save
+                        //$('#toggle-'+field_name_prefix.toLowerCase()).delay(100).click();
+                        // alert($(this).val());
+                        $("."+field_name_prefix.toLowerCase()+"-animation").fadeIn(1000);
+                        // now we need to create an java back end service that saves this value.
+                        // also add validation on the html  similar to password save
+                        //$("."+field_name_prefix.toLowerCase()+"-animation").delay(1000).click();
+                    }
+                    else {
+                        $("."+field_name_prefix.toLowerCase()+"-animation").fadeIn(1000);
+                        // now we need to create an java back end service that saves this value.
+                        // also add validation on the html  similar to password save
+                        //$('#toggle-'+field_name_prefix.toLowerCase()).delay(1000).click();
+                    }
+                }
+                else{
+                    //$('.circle-loader').fadeOut(100);
+                    //$('.x-mark').fadeIn(500);
+                    //$(".validationMsgArea span").text(s_msg);
+                    //$(".validationMsgArea span").css('color','red');
+                }
+            },
+            error: function(data) {
+                //$('.circle-loader').fadeOut(100);
+                //$('.x-mark').fadeIn(500);
+                console.log(data);
+                // set message to div area ...fields can not be left null
+                //$(".validationMsgArea span").text("You can not leave any fields empty.");
+                //$(".validationMsgArea span").css('color','red');
+            }
+        });
+    } // end of function
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // helper functions
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    function getContactName(cell) {
+        var contact_name = cell.substring(3, cell.length-4);
+        return contact_name;
+    }
+
+
+    function getFieldValueFromResponse(response, fieldName){
+
+        // find starting index of fieldName
+        // find the next colon
+        var indexStart = response.indexOf(fieldName+":")+fieldName.length;
+        response = response.substring(indexStart+1);
+        var indexEnd = response.indexOf("}");
+        response = response.substring(0, indexEnd);
+
+        // find the next right closing bracket
+        return response;
+
+    }
+
+    function setBreadCrumb(bsStatusArrayList){
+
+        for(var a=0; a< bsStatusArrayList.length; a++){
+            if(a==0){
+                if(bsStatusArrayList[a] != "NA"){
+
+                    $('#bs-header1').addClass(bsStatusArrayList[a]);
+
+                }
+
+            }
+            if(a==1){
+                if(bsStatusArrayList[a] != "NA"){
+                    $('#bs-header2').addClass(bsStatusArrayList[a]);
+                    if(bsStatusArrayList[a] == "active"){
+                        $('#bs-link2').attr("href", bsLink2_active);
+
+                    }
+                    if(bsStatusArrayList[a] == "done"){
+                        $('#bs-link2').attr("href", bsLink2_done);
+                    }
+                    //$('#bs-link2').attr("href", bsLink2);
+                }
+
+            }
+            if(a==2){
+                if(bsStatusArrayList[a] != "NA"){
+
+                    $('#bs-header3').addClass(bsStatusArrayList[a]);
+                    if(bsStatusArrayList[a] == "active"){
+                        $('#bs-link3').attr("href", bsLink3_active);
+
+                    }
+                    if(bsStatusArrayList[a] == "done"){
+                        $('#bs-link3').attr("href", bsLink3_done);
+                    }
+
+                }
+
+            }
+            if(a==3){
+                if(bsStatusArrayList[a] != "NA"){
+
+                    $('#bs-header4').addClass(bsStatusArrayList[a]);
+                    if(bsStatusArrayList[a] == "active"){
+                        $('#bs-link4').attr("href", bsLink4_active);
+
+                    }
+                    if(bsStatusArrayList[a] == "done"){
+                        $('#bs-link4').attr("href", bsLink4_done);
+                    }
+
+                }
+
+            }
+            if(a==4){
+                if(bsStatusArrayList[a] != "NA"){
+                    $('#bs-header5').addClass(bsStatusArrayList[a]);
+                    if(bsStatusArrayList[a] == "active"){
+                        $('#bs-link5').attr("href", bsLink5_active);
+
+                    }
+                    if(bsStatusArrayList[a] == "done"){
+                        $('#bs-link5').attr("href", bsLink5_done);
+                    }
+
+                }
+
+            }
+            if(a==5){
+                if(bsStatusArrayList[a] != "NA"){
+                    $('#bs-header6').addClass(bsStatusArrayList[a]);
+                    if(bsStatusArrayList[a] == "active"){
+                        $('#bs-link6').attr("href", bsLink6_active);
+
+                    }
+                    if(bsStatusArrayList[a] == "done"){
+                        $('#bs-link6').attr("href", bsLink6_done);
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+
+
+</script>
+
+</body>
+</html>

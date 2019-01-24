@@ -1,0 +1,11 @@
+package com.thorton.grant.uspto.prototypewebapp.repositories.jpa.USPTO;
+
+import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.user.PTOUser;
+import org.springframework.data.repository.CrudRepository;
+
+public interface PTOUserRepository extends CrudRepository<PTOUser, Long> {
+
+    PTOUser findByEmail(String email);
+
+
+}

@@ -14,7 +14,7 @@
 
         <!-- Web dependencies -->
         <webjars-bootstrap.version>3.3.6</webjars-bootstrap.version>
-        <webjars-jquery-ui.version>1.11.4</webjars-jquery-ui.version>
+        <webjars-jquery-ui.version>1.12.1</webjars-jquery-ui.version>
         <webjars-jquery.version>2.2.4</webjars-jquery.version>
         <wro4j.version>1.8.0</wro4j.version>
 
@@ -32,7 +32,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>1.5.9.RELEASE</version>
+        </dependency>
 
 
         <dependency>
@@ -84,7 +89,43 @@
             <version>1.10.15</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.webjars.bower/popper.js -->
+        <!-- https://mvnrepository.com/artifact/org.webjars/font-awesome -->
+
+
+
+
+        <!-- https://mvnrepository.com/artifact/org.webjars/material-design-icons -->
+
+
+
         <!-- end of webjars -->
+
+        <!--AWS Cognito + s3 access  -->
+        <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-cognitoidentity -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-cognitoidentity</artifactId>
+            <version>1.11.455</version>
+        </dependency>
+        <!--end of AWS dependencies -->
+
+        <!--add OAuth2 support-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-client</artifactId>
+        </dependency>
+        <!-- end of OAuth2 jars -->
+
+        <!--pdf utils -->
+
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.10</version>
+        </dependency>
+
+
 
         <!-- enable spring security -->
         <!-- spring security
@@ -120,6 +161,18 @@
             <artifactId>android-json</artifactId>
             <version>0.0.20131108.vaadin1</version>
             <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.interceptor</groupId>
+            <artifactId>javax.interceptor-api</artifactId>
+            <version>1.2</version>
         </dependency>
 
     </dependencies>

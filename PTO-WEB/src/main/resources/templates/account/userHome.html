@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/LynnFragment :: layout (~{::body},'user')}" xmlns="http://www.w3.org/1999/html">
+<head >
+    <meta charset="UTF-8">
+    <title>User Home Page</title>
+</head>
+<body>
+
+<!-- End Navbar -->
+<div class="content" style="display: none; background-color: white;" >
+    <div class="container-fluid"  >
+
+        <div class="col-sm-16" >
+            <div class="form-container base-page" style="position: relative; top:-120px;">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div style="position: relative;  margin-left: 40px; margin-bottom: 5px; margin-top: 20px; min-height: 90px;">
+                            <h1><b style="opacity: 1; mix-blend-mode: normal; color: rgb(0, 0, 0); font-size: 36px; font-weight: normal; font-style: normal; text-decoration: none; text-align: left; text-shadow: rgba(0, 0, 0, 0.2) 0px 1px 1.16667px; width: 597px; height: 41px; transform: rotate(0deg) translate(37px, 138px) rotate(0deg);">User Profile</b></h1>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="banner-message"  style="position: relative;top:80px; margin-left: 40px; margin-bottom: 50px;">
+                            <span ><h6><b style="color: red;" th:text="${message}">Oopsss!!</b></h6></span>
+                        </div>
+                    </div>
+                </div>
+
+
+              <div class="row" style="margin-left:15px;">
+                  <div class="col-sm-3">
+
+
+                      <div class="card-body " id="alert-card" style="position:relative;top: 5px; min-height: 130px; top:20px; left:-10px; margin-left: 10px; margin-bottom: 20px; margin-top: 20px; min-height: 80px; min-width: 400px;" th:if="${user.isProfileComplete() == false}">
+                          <div class="contextual-alert clearfix sso-alert-warning form-control-width-lg"><p class="contextual-msg" role="alert" tabindex="-1" id="app-account-activate-alert-message"><span class="pull-left msg-text"><span class="glyphicon glyphicon-alert" style="position: relative; left:-5px;" ></span><span>Please complete the required fields to continue.</span><!----><!----></span><!----><button aria-label="Close alert" class="close" type="button"><span aria-hidden="true"></span></button></p><!----></div>
+                      </div>
+                  </div>
+              </div>
+
+
+
+
+
+
+
+                <div class="card-text" style="margin-left:15px;">
+                    <h2 class="card-title weight600" id="accountInfo">Account information</h2>
+                </div>
+
+
+
+
+
+                <div class="row" style="margin-left:15px; ">
+
+                    <div class="col-sm-4">
+
+                        <div class="form-group">
+                            <label class="small" style="margin-top: 10px;"><b>First Name</b></label>
+                            <input type="text"   id="firstName" placeholder="first name" class="form-control" th:value="${user.firstName}" style="border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;"  >
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row" style="margin-left:15px; position: relative;">
+
+                    <div class="col-sm-4">
+
+                        <div class="form-group">
+                            <label class="small" style="margin-top: 10px;"><b>Middle Name</b></label>
+                            <input type="text"   id="middleName" placeholder="" class="form-control" th:value="${user.midlleName}" style="border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;"  >
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row" style="margin-left:15px;">
+
+                    <div class="col-sm-4">
+
+                        <div class="form-group">
+                            <label class="small" style="margin-top: 10px;"><b>Last Name</b></label>
+                            <input type="text"   id="lastName" placeholder="lastName" class="form-control"  th:value="${user.lastName}" style="border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;"  >
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row" style="margin-left:15px;">
+
+                    <div class="col-sm-4">
+
+                        <div class="form-group">
+                            <label class="small" style="margin-top: 10px;"><b>Suffix</b></label>
+                            <input type="text" class="form-control" name="suffix"  style="border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;"/>
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <div class="card-text" style="margin-left:15px;">
+                    <h2 class="card-title weight600" id="contactInfo">Contact Information</h2>
+                </div>
+
+
+                <div class="row" style="margin-left:15px;">
+
+                    <div class="col-sm-4">
+
+                        <div class="form-group">
+                            <label class="small" style="margin-top: 10px;"><b>Country</b><b style="color: red;">*</b></label>
+                            <select class="form-control custom-select" id="country" name="country" th:field="*{user.country}"  style="border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;">
+                                <option value="">Select</option>
+                                <option value="X1">UNITED STATES OF AMERICA</option>
+                                <option value="B2">AFGHANISTAN</option>
+                                <option value="B3">ALBANIA</option>
+                                <option value="B4">ALGERIA</option>
+                                <option value="B5">AMERICAN SAMOA</option>
+                                <option value="B6">ANDORRA</option>
+                                <option value="B7">ANGOLA</option>
+                                <option value="1A">ANGUILLA</option>
+                                <option value="B8">ANTARCTICA</option>
+                                <option value="B9">ANTIGUA AND BARBUDA</option>
+                                <option value="C1">ARGENTINA</option>
+                                <option value="1B">ARMENIA</option>
+                                <option value="1C">ARUBA</option>
+                                <option value="C3">AUSTRALIA</option>
+                                <option value="C4">AUSTRIA</option>
+                                <option value="1D">AZERBAIJAN</option>
+                                <option value="C5">BAHAMAS</option>
+                                <option value="C6">BAHRAIN</option>
+                                <option value="C7">BANGLADESH</option>
+                                <option value="C8">BARBADOS</option>
+                                <option value="1F">BELARUS</option>
+                                <option value="C9">BELGIUM</option>
+                                <option value="D1">BELIZE</option>
+                                <option value="G6">BENIN</option>
+                                <option value="D0">BERMUDA</option>
+                                <option value="D2">BHUTAN</option>
+                                <option value="D3">BOLIVIA</option>
+                                <option value="1E">BOSNIA AND HERZEGOVINA</option>
+                                <option value="B1">BOTSWANA</option>
+                                <option value="D4">BOUVET ISLAND</option>
+                                <option value="D5">BRAZIL</option>
+                                <option value="D6">BRITISH INDIAN OCEAN TERRITORY</option>
+                                <option value="D9">BRUNEI DARUSSALAM</option>
+                                <option value="E0">BULGARIA</option>
+                                <option value="X2">BURKINA FASO</option>
+                                <option value="E2">BURUNDI</option>
+                                <option value="E3">CAMBODIA</option>
+                                <option value="E4">CAMEROON</option>
+                                <option value="E8">CAPE VERDE</option>
+                                <option value="E9">CAYMAN ISLANDS</option>
+                                <option value="F0">CENTRAL AFRICAN REPUBLIC</option>
+                                <option value="F2">CHAD</option>
+                                <option value="F3">CHILE</option>
+                                <option value="F4">CHINA</option>
+                                <option value="F6">CHRISTMAS ISLAND</option>
+                                <option value="F7">COCOS (KEELING) ISLANDS</option>
+                                <option value="F8">COLOMBIA</option>
+                                <option value="F9">COMOROS</option>
+                                <option value="G0">CONGO</option>
+                                <option value="Y3">CONGO, THE DEMOCRATIC REPUBLIC OF THE</option>
+                                <option value="G1">COOK ISLANDS</option>
+                                <option value="G2">COSTA RICA</option>
+                                <option value="L7">COTE D'IVOIRE</option>
+                                <option value="1M">CROATIA</option>
+                                <option value="G3">CUBA</option>
+                                <option value="G4">CYPRUS</option>
+                                <option value="2N">CZECH REPUBLIC</option>
+                                <option value="G7">DENMARK</option>
+                                <option value="1G">DJIBOUTI</option>
+                                <option value="G9">DOMINICA</option>
+                                <option value="G8">DOMINICAN REPUBLIC</option>
+                                <option value="2F">EAST TIMOR</option>
+                                <option value="H1">ECUADOR</option>
+                                <option value="H2">EGYPT</option>
+                                <option value="H3">EL SALVADOR</option>
+                                <option value="H4">EQUATORIAL GUINEA</option>
+                                <option value="1J">ERITREA</option>
+                                <option value="1H">ESTONIA</option>
+                                <option value="H5">ETHIOPIA</option>
+                                <option value="H7">FALKLAND ISLANDS (MALVINAS)</option>
+                                <option value="H6">FAROE ISLANDS</option>
+                                <option value="H8">FIJI</option>
+                                <option value="H9">FINLAND</option>
+                                <option value="I0">FRANCE</option>
+                                <option value="I3">FRENCH GUIANA</option>
+                                <option value="I4">FRENCH POLYNESIA</option>
+                                <option value="2C">FRENCH SOUTHERN TERRITORIES</option>
+                                <option value="I5">GABON</option>
+                                <option value="I6">GAMBIA</option>
+                                <option value="2Q">GEORGIA</option>
+                                <option value="2M">GERMANY</option>
+                                <option value="J0">GHANA</option>
+                                <option value="J1">GIBRALTAR</option>
+                                <option value="J3">GREECE</option>
+                                <option value="J4">GREENLAND</option>
+                                <option value="J5">GRENADA</option>
+                                <option value="J6">GUADELOUPE</option>
+                                <option value="GU">GUAM</option>
+                                <option value="J8">GUATEMALA</option>
+                                <option value="J9">GUINEA</option>
+                                <option value="S0">GUINEA-BISSAU</option>
+                                <option value="K0">GUYANA</option>
+                                <option value="K1">HAITI</option>
+                                <option value="K4">HEARD ISLAND AND MCDONALD ISLANDS</option>
+                                <option value="X4">HOLY SEE (VATICAN CITY STATE)</option>
+                                <option value="K2">HONDURAS</option>
+                                <option value="K3">HONG KONG</option>
+                                <option value="K5">HUNGARY</option>
+                                <option value="K6">ICELAND</option>
+                                <option value="K7">INDIA</option>
+                                <option value="K8">INDONESIA</option>
+                                <option value="K9">IRAN, ISLAMIC REPUBLIC OF</option>
+                                <option value="L0">IRAQ</option>
+                                <option value="L2">IRELAND</option>
+                                <option value="L3">ISRAEL</option>
+                                <option value="L6">ITALY</option>
+                                <option value="L8">JAMAICA</option>
+                                <option value="M0">JAPAN</option>
+                                <option value="M2">JORDAN</option>
+                                <option value="1P">KAZAKSTAN</option>
+                                <option value="M3">KENYA</option>
+                                <option value="J2">KIRIBATI</option>
+                                <option value="M4">KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF</option>
+                                <option value="M5">KOREA, REPUBLIC OF</option>
+                                <option value="M6">KUWAIT</option>
+                                <option value="1N">KYRGYZSTAN</option>
+                                <option value="M7">LAO PEOPLE'S DEMOCRATIC REPUBLIC</option>
+                                <option value="1R">LATVIA</option>
+                                <option value="M8">LEBANON</option>
+                                <option value="M9">LESOTHO</option>
+                                <option value="N0">LIBERIA</option>
+                                <option value="N1">LIBYAN ARAB JAMAHIRIYA</option>
+                                <option value="N2">LIECHTENSTEIN</option>
+                                <option value="1Q">LITHUANIA</option>
+                                <option value="N4">LUXEMBOURG</option>
+                                <option value="N5">MACAU</option>
+                                <option value="1U">MACEDONIA, FORMER YUGOSLAV REP. OF</option>
+                                <option value="N6">MADAGASCAR</option>
+                                <option value="N7">MALAWI</option>
+                                <option value="N8">MALAYSIA</option>
+                                <option value="N9">MALDIVES</option>
+                                <option value="O0">MALI</option>
+                                <option value="O1">MALTA</option>
+                                <option value="1T">MARSHALL ISLANDS</option>
+                                <option value="O2">MARTINIQUE</option>
+                                <option value="O3">MAURITANIA</option>
+                                <option value="O4">MAURITIUS</option>
+                                <option value="2P">MAYOTTE</option>
+                                <option value="O5">MEXICO</option>
+                                <option value="1K">MICRONESIA, FEDERATED STATES OF</option>
+                                <option value="1S">MOLDOVA, REPUBLIC OF</option>
+                                <option value="O9">MONACO</option>
+                                <option value="P0">MONGOLIA</option>
+                                <option value="P1">MONTSERRAT</option>
+                                <option value="P2">MOROCCO</option>
+                                <option value="P3">MOZAMBIQUE</option>
+                                <option value="E1">MYANMAR</option>
+                                <option value="T6">NAMIBIA</option>
+                                <option value="P5">NAURU</option>
+                                <option value="P6">NEPAL</option>
+                                <option value="P7">NETHERLANDS</option>
+                                <option value="P8">NETHERLANDS ANTILLES</option>
+                                <option value="1W">NEW CALEDONIA</option>
+                                <option value="Q2">NEW ZEALAND</option>
+                                <option value="Q3">NICARAGUA</option>
+                                <option value="Q4">NIGER</option>
+                                <option value="Q5">NIGERIA</option>
+                                <option value="Q6">NIUE</option>
+                                <option value="Q7">NORFOLK ISLAND</option>
+                                <option value="1V">NORTHERN MARIANA ISLANDS</option>
+                                <option value="Q8">NORWAY</option>
+                                <option value="P4">OMAN</option>
+                                <option value="R0">PAKISTAN</option>
+                                <option value="1Y">PALAU</option>
+                                <option value="1X">PALESTINIAN TERRITORY, OCCUPIED</option>
+                                <option value="R1">PANAMA</option>
+                                <option value="R2">PAPUA NEW GUINEA</option>
+                                <option value="R4">PARAGUAY</option>
+                                <option value="R5">PERU</option>
+                                <option value="R6">PHILIPPINES</option>
+                                <option value="R8">PITCAIRN</option>
+                                <option value="R9">POLAND</option>
+                                <option value="S1">PORTUGAL</option>
+                                <option value="PR">PUERTO RICO</option>
+                                <option value="S3">QATAR</option>
+                                <option value="S4">REUNION</option>
+                                <option value="S5">ROMANIA</option>
+                                <option value="1Z">RUSSIAN FEDERATION</option>
+                                <option value="S6">RWANDA</option>
+                                <option value="U8">SAINT HELENA</option>
+                                <option value="U7">SAINT KITTS AND NEVIS</option>
+                                <option value="U9">SAINT LUCIA</option>
+                                <option value="V0">SAINT PIERRE AND MIQUELON</option>
+                                <option value="V1">SAINT VINCENT AND THE GRENADINES</option>
+                                <option value="Y0">SAMOA</option>
+                                <option value="S8">SAN MARINO</option>
+                                <option value="S9">SAO TOME AND PRINCIPE</option>
+                                <option value="T0">SAUDI ARABIA</option>
+                                <option value="T1">SENEGAL</option>
+                                <option value="T2">SEYCHELLES </option>
+                                <option value="T8">SIERRA LEONE</option>
+                                <option value="U0">SINGAPORE</option>
+                                <option value="2B">SLOVAKIA</option>
+                                <option value="2A">SLOVENIA</option>
+                                <option value="D7">SOLOMON ISLANDS</option>
+                                <option value="U1">SOMALIA</option>
+                                <option value="T3">SOUTH AFRICA</option>
+                                <option value="1L">SOUTH GEORGIA/SO. SANDWICH ISLANDS</option>
+                                <option value="U3">SPAIN</option>
+                                <option value="F1">SRI LANKA</option>
+                                <option value="V2">SUDAN</option>
+                                <option value="V3">SURINAME</option>
+                                <option value="L9">SVALBARD AND JAN MAYEN</option>
+                                <option value="V6">SWAZILAND</option>
+                                <option value="V7">SWEDEN</option>
+                                <option value="V8">SWITZERLAND</option>
+                                <option value="V9">SYRIAN ARAB REPUBLIC</option>
+                                <option value="F5">TAIWAN</option>
+                                <option value="2D">TAJIKISTAN</option>
+                                <option value="W0">TANZANIA, UNITED REPUBLIC OF</option>
+                                <option value="W1">THAILAND</option>
+                                <option value="W2">TOGO</option>
+                                <option value="W3">TOKELAU</option>
+                                <option value="W4">TONGA</option>
+                                <option value="W5">TRINIDAD AND TOBAGO</option>
+                                <option value="W6">TUNISIA</option>
+                                <option value="W8">TURKEY</option>
+                                <option value="2E">TURKMENISTAN</option>
+                                <option value="W7">TURKS AND CAICOS ISLANDS</option>
+                                <option value="2G">TUVALU</option>
+                                <option value="W9">UGANDA</option>
+                                <option value="2H">UKRAINE</option>
+                                <option value="C0">UNITED ARAB EMIRATES</option>
+                                <option value="X0">UNITED KINGDOM</option>
+                                <option value="2J">UNITED STATES MINOR OUTLYING ISLANDS</option>
+                                <option value="X3">URUGUAY</option>
+                                <option value="2K">UZBEKISTAN</option>
+                                <option value="2L">VANUATU</option>
+                                <option value="X5">VENEZUELA</option>
+                                <option value="Q1">VIET NAM</option>
+                                <option value="D8">VIRGIN ISLANDS, BRITISH</option>
+                                <option value="VI">VIRGIN ISLANDS, U.S.</option>
+                                <option value="X8">WALLIS AND FUTUNA</option>
+                                <option value="U5">WESTERN SAHARA</option>
+                                <option value="T7">YEMEN</option>
+                                <option value="Y2">YUGOSLAVIA</option>
+                                <option value="Y4">ZAMBIA</option>
+                                <option value="Y5">ZIMBABWE</option>
+                                <option value="XX">UNKNOWN</option>
+                            </select>
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-1">
+                        <div class="country-animation" style="display: none; position: relative; top:20px;">
+                            <div  style="position: relative; bottom: -15px;"> <span><i class="material-icons" style="color: green">check_circle</i></span></div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-1">
+
+                    </div>
+
+                    <div class="col-sm-4" style="position: relative; bottom:-35px;">
+                        <div class="form-group countryFieldMsgArea" style="position: relative; left:-15%;">
+                            <b><span></span></b>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row" style="margin-left:15px; ">
+
+                    <div class="col-sm-4">
+
+                        <div class="form-group">
+                            <label class="small" style="margin-top: 10px;"><b>Address Line 1</b><b style="color: red;">*</b></label>
+                            <input id="address1" type="text" name="address" class="form-control" th:value="${user.address}" style="border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;">
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-1">
+                        <div class="address-animation" style="display: none; position: relative; top:20px;">
+                            <div  style="position: relative; bottom: -15px;"> <span><i class="material-icons" style="color: green">check_circle</i></span></div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-1">
+
+                    </div>
+
+                    <div class="col-sm-4" style="position: relative; bottom:-35px;">
+                        <div class="form-group addressFieldMsgArea" style="position: relative; left:-15%;">
+                            <b><span></span></b>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row" style="margin-left:15px;">
+
+                    <div class="col-sm-4">
+
+                        <div class="form-group">
+                            <label class="small" style="margin-top: 10px;"><b>Address Line 2</b></label>
+                            <input type="text" name="address2" class="form-control"  style="border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;">
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row" style="margin-left:15px; ">
+
+                    <div class="col-sm-4">
+
+                        <div class="form-group">
+                            <label class="small" style="margin-top: 10px;"><b>Address Line 3</b></label>
+                            <input type="text" name="address3" class="form-control"  style="border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;">
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row" style="margin-left:15px; ">
+
+                    <div class="col-sm-4">
+
+                        <div class="form-group">
+                            <label class="small" style="margin-top: 10px;"><b>City</b><b style="color: red;">*</b></label>
+                            <input type="text" id="city" name="City" class="form-control" th:value="${user.city}" style="border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;">
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-1">
+                        <div class="city-animation" style="display: none; position: relative; top:20px;">
+                            <div  style="position: relative; bottom: -15px;"> <span><i class="material-icons" style="color: green">check_circle</i></span></div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-1">
+
+                    </div>
+
+                    <div class="col-sm-4" style="position: relative; bottom:-35px;">
+                        <div class="form-group cityFieldMsgArea" style="position: relative; left:-15%;">
+                            <b><span></span></b>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row" style="margin-left:15px; ">
+
+                    <div class="col-sm-4">
+
+                        <div class="form-group">
+                            <label class="small" style="margin-top: 10px;"><b>State</b><b style="color: red;">*</b></label>
+                            <select  class="form-control custom-select" name="State" th:field="*{user.state}" style="border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;">
+                                <option  value="">Select</option>
+                                <option  value="AL">Alabama</option>
+                                <option  value="AK">Alaska</option>
+                                <option value="AZ">Arizona</option>
+                                <option value="AR">Arkansas</option>
+                                <option value="CA">California</option>
+                                <option value="CO">Colorado</option>
+                                <option value="CT">Connecticut</option>
+                                <option value="DE">Delaware</option>
+                                <option value="DC">District of Columbia</option>
+                                <option value="FL">Florida</option>
+                                <option value="GA">Georgia</option>
+                                <option value="HI">Hawaii</option>
+                                <option value="ID">Idaho</option>
+                                <option value="IL">Illinois</option>
+                                <option value="IN">Indiana</option>
+                                <option value="IA">Iowa</option>
+                                <option value="KS">Kansas</option>
+                                <option value="KY">Kentucky</option>
+                                <option value="LA">Louisiana</option>
+                                <option value="ME">Maine</option>
+                                <option value="MD">Maryland</option>
+                                <option value="MA">Massachusetts</option>
+                                <option value="MI">Michigan</option>
+                                <option value="MN">Minnesota</option>
+                                <option value="MS">Mississippi</option>
+                                <option value="MO">Missouri</option>
+                                <option value="MT">Montana</option>
+                                <option value="NE">Nebraska</option>
+                                <option value="NV">Nevada</option>
+                                <option value="NH">New Hampshire</option>
+                                <option value="NJ">New Jersey</option>
+                                <option value="NM">New Mexico</option>
+                                <option value="NY">New York</option>
+                                <option value="NC">North Carolina</option>
+                                <option value="ND">North Dakota</option>
+                                <option value="OH">Ohio</option>
+                                <option value="OK">Oklahoma</option>
+                                <option value="OR">Oregon</option>
+                                <option value="PA">Pennsylvania</option>
+                                <option value="RI">Rhode Island</option>
+                                <option value="SC">South Carolina</option>
+                                <option value="SD">South Dakota</option>
+                                <option value="TN">Tennessee</option>
+                                <option value="TX">Texas</option>
+                                <option value="UT">Utah</option>
+                                <option value="VT">Vermont</option>
+                                <option value="VA">Virginia</option>
+                                <option value="WA">Washington</option>
+                                <option value="WV">West Virginia</option>
+                                <option value="WI">Wisconsin</option>
+                                <option value="WY">Wyoming</option>
+
+                            </select>
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-1">
+                        <div class="state-animation" style="display: none; position: relative; top:20px;">
+                            <div  style="position: relative; bottom: -15px;"> <span><i class="material-icons" style="color: green">check_circle</i></span></div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-1">
+
+                    </div>
+
+                    <div class="col-sm-4" style="position: relative; bottom:-35px;">
+                        <div class="form-group stateFieldMsgArea" style="position: relative; left:-15%;">
+                            <b><span></span></b>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="row" style="margin-left:15px; ">
+
+                    <div class="col-sm-4">
+
+                        <div class="form-group">
+                            <label class="small" style="margin-top: 10px;"><b>Zipcode</b><b style="color: red;">*</b></label>
+                            <input type="text" id="zipcode" name="Zipcode" class="form-control" th:value="${user.zipcode}"  style="border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;">
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-1">
+                        <div class="zipcode-animation" style="display: none; position: relative; top:20px;">
+                            <div  style="position: relative; bottom: -15px;"> <span><i class="material-icons" style="color: green">check_circle</i></span></div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-1">
+
+                    </div>
+
+
+                    <div class="col-sm-4" style="position: relative; bottom:-35px;">
+                        <div class="form-group zipcodeFieldMsgArea" style="position: relative; left:-15%;">
+                            <b><span></span></b>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row" style="margin-left:15px; ">
+
+                    <div class="col-sm-4">
+
+                        <div class="form-group">
+                            <label class="small" style="margin-top: 10px;"><b>Alternate E-Mail Address</b></label>
+                            <input type="text" name="alternate-email" class="form-control"  style="border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;">
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+                <div class="row" style="margin-left:15px;">
+
+                    <div class="col-sm-6">
+
+                        <div class="form-group">
+                            <label class="small" style="margin-top: 10px;"><b>Phone Number</b><b style="color: red;">*</b></label>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <select  class="form-control" name="phone-type"  value="Type" style="border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;">
+                                        <option value="cell"><b>Cell</b></option>
+                                        <option value="home"><b>Home</b></option>
+                                        <option value="work"><b>Work</b></option>
+                                        <option value="fax"><b>Fax</b></option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="text" id="phone" name="Phone" class="form-control"  th:value="${user.primaryPhonenumber}" style="min-width: 275px; border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-1">
+                        <div class="phone-animation" style="display: none; position: relative; top:25px; left:-195px;">
+                            <div  style="position: relative; bottom: -15px;"> <span><i class="material-icons" style="color: green">check_circle</i></span></div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-1">
+
+                    </div>
+
+
+                    <div class="col-sm-4" style="position: relative; bottom:-15px; left:-120px;">
+                        <div class="form-group phoneFieldMsgArea" style="position: relative; left:-35%; top:25px;">
+                            <b><span></span></b>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+
+
+
+                <div class="row" style="position: relative; left:-30px; margin-bottom: 33px;">
+
+
+                </div>
+
+                <div class="row" style="margin-left:15px;">
+
+                    <div class="col-sm-4">
+
+                        <div class="form-group">
+
+                            <div class="form-group" ><button type="button" data-toggle="modal" data-target="#addPhoneNumber"  style=" position:relative; top: -20px; margin-right: 15px; margin-top: 10px; max-height:40px;  min-width: 370px; color:whitesmoke; background-color: #004c97; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;" class="btn"  value="Update Password"><span class="glyphicon glyphicon-log-in" ></span><b>&nbsp;&nbsp;&nbsp;&nbsp;Add Additional Phone Number&nbsp;</b></button></div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class=" card-header-rose card-header-text" >
+
+                    <div class="card-text">
+                        <h2 class="card-title weight600" id="attorneyinfo">System Account Preferences</h2>
+                    </div>
+
+
+
+                </div>
+
+                        <div class="row" style="margin-left:15px;">
+
+                            <div class="col-sm-4">
+
+                                <div class="form-group">
+                                    <label class="small" style="margin-top: 10px;"><b>E-Mail Address</b></label>
+                                    <input type="email"   id="emailuser" placeholder="Email" class="form-control" style="border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;"  th:value="${user.email}" disabled>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                <!-- row 1 -->
+                        <div class="row" style="margin-left:15px; margin-bottom:111px;">
+
+                            <!-- column 1 row 1 -->
+                            <div class="col-sm-4">
+
+
+                                <div class="card card-menu" style="position:relative; top:20px; height:auto;  border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; opacity: 1; mix-blend-mode: normal; padding: 0px; ;"  >
+
+
+                                    <div class="card-header card-header-blue " style="background-color: rgb(217, 217, 214);">
+                                        <b class="card-title" style="position: relative; left:2%;"> Change Email Address</b>
+                                    </div>
+                                    <div class="card-body " style="position:relative;top: 5px; min-height: 130px;">
+                                        <p class="card-description text-center"><b>You will need to sign in with your new email address after this change.</b></p>
+
+
+                                        <div class="form-group" ><button data-toggle="modal" data-target="#updateEmail" style="float:right; margin-right: 15px; margin-top: 10px;  min-width: 100px; color:whitesmoke; background-color: #004c97; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;" class="btn"  ><span class="glyphicon glyphicon-log-in" ></span><b>&nbsp;&nbsp;&nbsp;&nbsp; Change&nbsp;</b></button></div>
+
+                                    </div>
+
+
+
+
+                                </div>
+
+
+                            </div> <!-- end of column 1 element in row -->
+                            <!-- column 2 row 1 -->
+                            <div class="col-sm-4">
+
+                                <div class="card card-menu" style="position:relative; top:20px; height:auto; max-width: 80%; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; opacity: 1; mix-blend-mode: normal; padding: 0px; "  >
+
+
+                                    <div class="card-header card-header-blue " style="background-color: rgb(217, 217, 214);">
+                                        <b class="card-title" style="position: relative; left:2%;">Change Security Questions</b>
+                                    </div>
+
+
+                                    <div class="card-body " style="position:relative;top: 5px; min-height: 130px;">
+                                        <p class="card-description text-center"><b>You can change your security question. Helps verify your identity.</b></p>
+
+                                        <span class="bmd-form-group">
+
+                                        </span>
+                                        <div class="form-group" ><button type="button" data-target="#updateSecurityQuestions" data-toggle="modal" style="float:right; margin-right: 15px; margin-top: 10px;  min-width: 100px; color:whitesmoke; background-color: #004c97; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;" class="btn"  value="Update Security Question"><span class="glyphicon glyphicon-log-in" ></span><b>&nbsp;&nbsp;&nbsp;&nbsp; Change&nbsp;</b></button></div>
+
+                                    </div>
+
+
+
+
+                                </div>
+
+                            </div>
+                            <!-- column 3 row 1 -->
+                            <div class="col-sm-4" style="position: relative; left:-75px;">
+
+                                <div class="card card-menu" style="position:relative; top:20px; height:auto; max-width: 80%; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;  " >
+
+
+                                    <div class="card-header card-header-blue " style="background-color: rgb(217, 217, 214);" >
+                                        <b class="card-title" style="position: relative; left:2%;">Change Account Password</b>
+                                    </div>
+
+
+                                    <div class="card-body " style="position:relative;top: 5px; min-height: 130px;">
+                                        <p class="card-description text-center"><b>Your password will expire on January 5, 2019. in 180 days.</b></p>
+
+                                        <span class="bmd-form-group">
+
+                                        </span>
+
+                                        <div class="form-group" ><button type="button" data-toggle="modal" data-target="#updatePassword"  style="float:right; margin-right: 15px; margin-top: 10px;  min-width: 100px; color:whitesmoke; background-color: #004c97; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;" class="btn"  value="Update Password"><span class="glyphicon glyphicon-log-in" ></span><b>&nbsp;&nbsp;&nbsp;&nbsp; Change&nbsp;</b></button></div>
+
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+
+
+
+
+                        </div>
+
+
+
+                <div class="card-text">
+                    <h2 class="card-title weight600" id="2-step-authentication">Two-Step Authentication</h2>
+                </div>
+
+                        <div class="row" style="position: relative;  right:-30px;">
+
+                            <div class="col-sm-10">
+                                <div class="form-group" style="margin-left: 25px;">
+                                    <p style="position: relative; left:-3%;">Some sections of uspto.gov requires a two-step authentication to confirm your identity. this provides an extra layer of security </p>
+                                    <P style="position: relative; left:-3%;">to your account by requiring you to enter a random generated authentication code.</p>
+                                    <p style="position: relative; left:-3%;"><b>Select the default of your second level of authentication</b></p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                       <div class="row" style="position: relative;" >
+                           <div class="col-md-14" >
+                               <div class="col-sm-5">
+
+
+                                   <div class="card card-menu" style="position:relative; top:20px; height:auto; max-width: 80%; left:20px; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; opacity: 1; mix-blend-mode: normal; "  >
+
+
+                                       <div class="card-header card-header-blue " style="background-color: rgb(217, 217, 214); ;">
+                                           <input   th:if="${user.isUseTwoFactorAuthentication() == true}" style="position: relative; left:1%;" type="radio" name="two-factor" id="emailAuthenticator" checked>
+                                           <input   th:if="${user.isUseTwoFactorAuthentication() == false}" style="position: relative; left:1%;" type="radio" name="two-factor" id="emailAuthenticator">
+                                           <b class="card-title" style="position: relative; left:1%;">Email</b>
+
+                                       </div>
+
+
+                                       <div class="card-body " style="position:relative;top: 5px; min-height: 130px;">
+                                           <p class="card-description text-center"><b>6 digit code sent to e-mail lasts for twenty minutes.</b></p>
+
+                                           <span class="bmd-form-group">
+
+                                        </span>
+
+                                       </div>
+
+
+
+                                   </div>
+
+                               </div>
+
+                               <div class="col-sm-6">
+
+                                   <div class="card card-menu" style="position:relative; top:20px; left:-77px; height:auto; max-width: 80%; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; opacity: 1; mix-blend-mode: normal; padding: 0px; "  >
+
+
+                                       <div class="card-header card-header-blue " style="background-color: rgb(217, 217, 214);">
+                                           <input  style="position: relative; left:1%;"   type="radio" name="two-factor" id="googleAuthentidcator">
+                                           <b class="card-title" style="position: relative; left:1%;" > Code Generator (Mobile App)</b>
+                                       </div>
+
+
+                                       <div class="card-body " style="position:relative;top: 5px; min-height: 130px;">
+                                           <p class="card-description text-center"><b>6 digit code generated by mobile app. One-time set up required. Your mobile app must be set up before using this option.</b></p>
+
+                                            <span class="bmd-form-group">
+
+                                            </span>
+                                            <button  style="position:relative; top: 10px; float:right; margin-right: 15px;  min-width: 100px;background-color: #004c97; color:whitesmoke;border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;" class="btn" type="button" ><span class="glyphicon glyphicon-log-in" ></span><b>&nbsp;&nbsp;&nbsp;&nbsp; Enable and Set Up&nbsp;</b></button></div>
+
+                                       </div>
+
+
+
+                                   </div>
+
+
+                               </div>
+
+                           </div>
+                       </div>
+
+                        <!-- check box field to select if two factor authentication is required.  -->
+                        <div class="row" style="margin-left:15px; margin-top: 15px; position: relative; top:-111px;">
+
+                            <div class="col-sm-8">
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <span style="position: relative; bottom:-2px; left:5px;">
+                                            <input  class="form-check-input checkmark fa-check" type="checkbox"  value="" role="checkbox" aria-checked="true" tabindex="0" aria-labelledby="2factorcheck-label" th:if="${user.isUseTwoFactorAuthentication() == true}"id="useTwoFactor" name="useTwoFactor" checked>
+                                             <input class="form-check-input checkmark" type="checkbox"  value="" role="checkbox" aria-checked="false" tabindex="0" aria-labelledby="2factorcheck-label" th:if="${user.isUseTwoFactorAuthentication() == false}"id="useTwoFactor" name="useTwoFactor">
+                                            <label class="form-check-label form-check" for="useTwoFactor" id="2factorcheck-label"><span class="radio notspecial">I want to use the two-step authentication method every time I sign in.</span></label>
+                                        </span>&nbsp;&nbsp;<span><b></b></span>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="card-text" style="position: relative; top:-111px;">
+                            <h2 class="card-title weight600" id="accountViewPreference">Account View Preference</h2>
+                        </div>
+
+
+
+                        <div class="row" style="margin-left:15px; position: relative; top:-111px;right: -22px;">
+
+                            <b style="color: red">*</b>  <b>Select application View for new applications: </b><a  style="text-decoration: none;" data-toggle="tooltip" data-placement="right"      title="Guided User view guides the applicant through the process with questions and videos. While the Experienced User view minimizes the extra assistance. "><i  style="position: relative; bottom: -5px;"  class="material-icons">info_outline</i></a>
+                        </div>
+
+                        <div class="row" style="margin-left:15px; margin-bottom: 100px; position: relative; top:-111px;">
+                            <label class="col-sm-2 col-form-label"></label>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+
+
+                                    <div class="row" style="position: relative; left:-111px;">
+                                                                    <span>
+                                                                        <input type="radio"  name="viewType" value="Guided User View" checked>&nbsp;&nbsp;<b>Guided User View</b>
+                                                                    </span>
+
+                                    </div>
+
+                                    <div class="row" style="position: relative; left:-111px;">
+                                                                <span>
+
+                                                                    <input type="radio"  name="viewType" value="Experienced User View" disabled>&nbsp;&nbsp;<b>Experienced User View</b>
+                                                                </span>
+
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+            </form>
+                </div>
+            </div>
+        </div>
+
+
+
+</div>
+<!-- end of main content-->
+
+
+<!--update email modal -->
+        <div id="updateEmail" class="modal modal-email fade modal-lg" role="dialog" tabindex="-1">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Change Email Address</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <form method="post" action="/updateUserEmail" class="form-horizontal">
+
+                            <div class="row">
+                                <label class="col-sm-2"><b style="margin-left: 10px; padding-top: 10px;">e-Mail:</b></label>
+                                <div class="col-sm-6">
+
+                                    <div class="form-group">
+                                        <input type="email"  id="email" placeholder="Email" class="form-control" style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px;"  th:value="${user.email}">
+                                        <small id="emailHelp" class="form-text text-muted">Update the email associated with this account.</small>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <button type="button" class="disclaimerDenyButton" data-dismiss="modal"><span class="glyphicon glyphicon-thumbs-down" disabled="true"></span> &nbsp;&nbsp;<b>Cancel</b>&nbsp;</button>
+                            <button type="button" class="disclaimerAcceptButton" data-dismiss="modal"><span class="glyphicon glyphicon-thumbs-up" disabled="true"></span> &nbsp;&nbsp;<b>Update</b>&nbsp;</button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+<!-- end of update email modal -->
+
+
+<!--update security questions modal -->
+<div id="updateSecurityQuestions" class="modal modal-password fade modal-lg" role="dialog" tabindex="-1" >
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Change Security Question</h4>
+            </div>
+            <div class="modal-body">
+
+                <form method="post" action="/updateUserQuestions" class="form-horizontal">
+
+                    <div class="row">
+                        <label class="col-sm-3"><b style="margin-left: 10px; padding-top: 10px;">Question 1:</b></label>
+                        <div class="col-sm-6">
+
+                            <div class="form-group">
+                                <select   id="questions1" placeholder="Password" class="form-control" style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                                            <option>what was your first car?</option>
+                                            <option>what is the name of your favourite pet?</option>
+                                            <option>what city were you in new years eve 1999?</option>
+                                </select>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label class="col-sm-3"><b style="margin-left: 10px; padding-top: 10px;">Answer:</b></label>
+                        <div class="col-sm-6">
+
+                            <div class="form-group">
+                                <input type="text"  id="answer1" placeholder="spot" class="form-control" style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                                <small id="answerhelp" class="form-text text-muted">answer to your security question. this also help us secure and recover your account.</small>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label class="col-sm-3"><b style="margin-left: 10px; padding-top: 10px;">Question 2:</b></label>
+                        <div class="col-sm-6">
+
+                            <div class="form-group">
+                                <select   id="questions12" placeholder="Password" class="form-control" style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                                    <option>what was your first car?</option>
+                                    <option>what is the name of your favourite pet?</option>
+                                    <option>what city were you in new years eve 1999?</option>
+                                </select>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label class="col-sm-3"><b style="margin-left: 10px; padding-top: 10px;">Answer:</b></label>
+                        <div class="col-sm-6">
+
+                            <div class="form-group">
+                                <input type="text"  id="answer2" placeholder="spot" class="form-control" style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                                <small id="answerhelp2" class="form-text text-muted">answer to your security question. this also help us secure and recover your account.</small>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <div class="form-group">
+                    <button type="button" class="disclaimerDenyButton" data-dismiss="modal"><span class="glyphicon glyphicon-thumbs-down" disabled="true"></span> &nbsp;&nbsp;<b>Cancel</b>&nbsp;</button>
+                    <button type="button" class="disclaimerAcceptButton" data-dismiss="modal"><span class="glyphicon glyphicon-thumbs-up" disabled="true"></span> &nbsp;&nbsp;<b>Update</b>&nbsp;</button>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end of update security questions modal -->
+
+
+
+
+<!--update password modal -->
+            <div id="updatePassword" class="modal modal-password fade modal-lg" role="dialog" tabindex="-1" >
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title" style="font-weight: bold;">Change your password</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <form method="post" action="/updateUserPassword" class="form-horizontal">
+
+                                <div class="row">
+                                    <label class="col-sm-4"><b style="margin-left: 10px; padding-top: 10px; position: relative; bottom:-15px;">Current password</b></label>
+                                    <div class="col-sm-6">
+
+                                        <div class="form-group">
+
+                                            <input type="password"  id="current-password" placeholder="" class="form-control" style="border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;" required >
+                                            <small id="passwordHelp1" class="form-text text-muted">Your current password is required for this type of account update.</small>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="row">
+                                    <label class="col-sm-4"><b style="margin-left: 10px; padding-top: 10px;position: relative; bottom:-15px;">New password</b></label>
+                                    <div class="col-sm-6">
+
+                                        <div class="form-group">
+                                            <input type="password"  id="new-password" placeholder="" class="form-control" style="border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;" required >
+                                            <small id="passwordHelp2" class="form-text text-muted">Enter your new password here.</small>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-1">
+                                        <div class="password-animation-success" style="display: none; position: relative; top:-10px;">
+                                            <div  style="position: relative; bottom: -15px;"> <span><i class="material-icons" style="color: green">check_circle</i></span></div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <div class="password-animation-failure" style="display: none; position: relative; top:-10px;">
+                                            <div  style="position: relative; bottom: -15px;"> <span><i class="material-icons" style="color: red">error</i></span></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group validationMsgArea" style="position: relative; left:30%;">
+                                            <b><span></span></b>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <div class="form-group">
+                                <button type="button" class="closePasswordModalButton btn-sm btn btn-primary" data-dismiss="modal" style="background-color: whitesmoke; float: left; min-width: 111px;"> &nbsp;&nbsp;<b style="color: black; font-weight: bold;">Cancel</b>&nbsp;</button>
+                                <button type="button" class="updatePasswordButton btn-sm btn btn-primary"  style="float: right; min-width: 111px;"> &nbsp;&nbsp;<b style="font-weight: bold; ">Save</b>&nbsp;</button>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+<!-- end of update password modal -->
+
+<script>
+    $(document).ready(function() {
+
+        setTimeout(function() {
+            // after 1000 ms we add the class animated to the login/register card
+            $('.content').fadeIn(500);
+        }, 500);
+
+
+
+        // save two factor authentication
+
+        //$('#emailAuthenticator').click( function () {
+        $('#useTwoFactor').click( function () {
+            // call save contacts on use two factor email
+
+            if($(this).is(":checked")){
+
+                saveContactInfo("TwoFactorEmail", "true");
+
+                $('#emailAuthenticator').prop("checked", true);
+
+            }
+            else{
+
+                saveContactInfo("TwoFactorEmail", "false");
+                $('#emailAuthenticator').prop("checked", false);
+
+
+            }
+
+
+
+
+        });
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////
+        // contact information 'State' auto save ////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////
+        $('#state').focusout( function () {
+
+
+
+            // send state, and token to server
+            // token will be generated in the controller and added to the view
+            // similar to how access token works ...a token is tied to a user
+            // access token will be passed in through model
+            //
+            // var tokenValue = '${token}';  // token is the model attribute name
+            // we are not using secured tokens for the prototype
+            // we will secure it by adding ssl and https support
+            //
+            $('.state-animation').fadeOut();
+
+            var field_value = $(this).val();
+            saveContactInfo("State", field_value);
+
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////
+        // end of contact information 'State' auto save ////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+
+
+        /////////////////////////////////////////////////////////////////////////////////
+        // contact information 'State' auto save ////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////
+        $('#city').focusout( function () {
+
+
+
+            // send state, and token to server
+            // token will be generated in the controller and added to the view
+            // similar to how access token works ...a token is tied to a user
+            // access token will be passed in through model
+            //
+            // var tokenValue = '${token}';  // token is the model attribute name
+            // we are not using secured tokens for the prototype
+            // we will secure it by adding ssl and https support
+            //
+
+            $('.city-animation').fadeOut();
+
+            var field_value = $(this).val();
+            saveContactInfo("City", field_value);
+
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////
+        // end of contact information 'State' auto save ////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+
+        /////////////////////////////////////////////////////////////////////////////////
+        // contact information 'Zipcode' auto save ////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////
+        $('#zipcode').focusout( function () {
+
+
+
+            // send state, and token to server
+            // token will be generated in the controller and added to the view
+            // similar to how access token works ...a token is tied to a user
+            // access token will be passed in through model
+            //
+            // var tokenValue = '${token}';  // token is the model attribute name
+            // we are not using secured tokens for the prototype
+            // we will secure it by adding ssl and https support
+            //
+            $('.zipcode-animation').fadeOut();
+
+            var field_value = $(this).val();
+            saveContactInfo("Zipcode", field_value);
+
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////
+        // end of contact information 'Zipcode' auto save ////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+
+        /////////////////////////////////////////////////////////////////////////////////
+        // contact information 'Address1' auto save ////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////
+        $('#address1').focusout( function () {
+
+
+
+            // send state, and token to server
+            // token will be generated in the controller and added to the view
+            // similar to how access token works ...a token is tied to a user
+            // access token will be passed in through model
+            //
+            // var tokenValue = '${token}';  // token is the model attribute name
+            // we are not using secured tokens for the prototype
+            // we will secure it by adding ssl and https support
+            //
+            $('.address-animation').fadeOut();
+
+            var field_value = $(this).val();
+            saveContactInfo("Address", field_value);
+
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////
+        // end of contact information 'Address1' auto save /////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+
+
+        /////////////////////////////////////////////////////////////////////////////////
+        // contact information 'Country' auto save //////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////
+        $('#country').focusout( function () {
+
+
+
+            // send state, and token to server
+            // token will be generated in the controller and added to the view
+            // similar to how access token works ...a token is tied to a user
+            // access token will be passed in through model
+            //
+            // var tokenValue = '${token}';  // token is the model attribute name
+            // we are not using secured tokens for the prototype
+            // we will secure it by adding ssl and https support
+            //
+            $('.country-animation').fadeOut();
+
+            var field_value = $(this).val();
+            saveContactInfo("Country", field_value);
+
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////
+        // end of contact information 'Country' auto save //////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+
+        /////////////////////////////////////////////////////////////////////////////////
+        // contact information 'phone' auto save ///////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////
+        $('#phone').focusout( function () {
+
+
+
+            // send state, and token to server
+            // token will be generated in the controller and added to the view
+            // similar to how access token works ...a token is tied to a user
+            // access token will be passed in through model
+            //
+            // var tokenValue = '${token}';  // token is the model attribute name
+            // we are not using secured tokens for the prototype
+            // we will secure it by adding ssl and https support
+            //
+            $('.phone-animation').fadeOut();
+
+            var field_value = $(this).val();
+            saveContactInfo("Phone", field_value);
+
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////
+        // end of contact information 'State' auto save ////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        // password modal update actions
+        // passowrd update on click
+        ////////////////////////////////////////////////////////////////////////////////////////////
+
+        $('.updatePasswordButton').click( function () {
+
+            $('.password-animation-success').fadeOut();
+            $('.password-animation-failure').fadeOut();
+
+            //$('.circle-loader').fadeIn(100);
+
+            // get input from modal form input
+            var currentPW;
+            var newPW;
+
+            currentPW = $('#current-password').val();
+            newPW =  $('#new-password').val();
+
+
+            $.ajax({
+                url: "../../REST/apiGateway/user/update/pw/"+currentPW+"/"+newPW,
+                type: 'GET',
+                success: function(data){
+
+                    // parse out status msg:
+                    var s_code = data.substring(data.indexOf("status:")+7, data.indexOf("status:")+4+7);
+
+                    var s_msg = data.substring(data.indexOf("msg:")+4, data.length-2);
+
+                    if(s_code.trim() == "200"){
+                    //if(data.contains("status: 200")){
+                    // show confirmation check mark on form
+                        $('.password-animation-success').fadeIn(500);
+                        $(".validationMsgArea span").fadeIn().text(s_msg);
+                        $(".validationMsgArea span").css('color','green');
+                    }
+                    else{
+                        //$('.circle-loader').fadeOut(100);
+                        $('.password-animation-failure').fadeIn(500);
+
+                        $(".validationMsgArea span").fadeIn().text(s_msg);
+                        $(".validationMsgArea span").css('color','red');
+                    }
+
+                },
+                error: function(data) {
+
+                    //$('.circle-loader').fadeOut(100);
+                    $('.password-animation-failure').fadeIn(500);
+
+                    console.log(data);
+                    // set message to div area ...fields can not be left null
+                    $(".validationMsgArea span").text("You can not leave any fields empty.");
+                    $(".validationMsgArea span").css('color','red');
+                }
+            });
+
+
+
+
+
+
+        });
+
+        // animate success check mark
+
+
+
+        // on password modal close
+        $('#updatePassword').on('hidden.bs.modal', function () {
+            // do something…
+            $('.password-animation-success').fadeOut();
+            $('.password-animation-failure').fadeOut();
+            // check if x-mark is loaded
+
+            $(".validationMsgArea span").text(" ");
+
+            // clear user passwords
+            $('#current-password').val('');
+            $('#new-password').val('');
+
+
+        })
+        /////////////////////////////////////////////////////////////////////////
+        // password modal actions complete
+       //////////////////////////////////////////////////////////////////////////
+
+    });
+
+
+
+
+
+
+
+
+    function saveContactInfo(field_name_prefix, field_value) {
+
+
+
+
+
+            //alert(field_name_prefix);
+            // send state, and token to server
+            // token will be generated in the controller and added to the view
+            // similar to how access token works ...a token is tied to a user
+            // access token will be passed in through model
+            //
+            // var tokenValue = '${token}';  // token is the model attribute name
+            // we are not using secured tokens for the prototype
+            // we will secure it by adding ssl and https support
+
+            //var field_value = $(this).val();
+            //alert(field_value);
+
+            $.ajax({
+                url: "../../REST/apiGateway/user/update/"+field_name_prefix+"/"+field_value,
+                type: 'GET',
+                success: function(data){
+
+                    // parse out status msg:
+                    var s_code = data.substring(data.indexOf("status:")+7, data.indexOf("status:")+4+7);
+
+                    var s_msg = data.substring(data.indexOf("msg:")+4, data.length-2);
+
+                    if(s_code.trim() == "200"){
+                        //if(data.contains("status: 200")){
+                        // show confirmation check mark on form
+                        //$('#toggle').delay(1000).click();
+                        $(".autoSaveMessageArea span").fadeOut(500);
+                        setTimeout(function() {
+                            // after 1000 ms we add the class animated to the login/register card
+                            $(".autoSaveMessageArea span").text(s_msg);
+                            $(".autoSaveMessageArea span").fadeIn(1000);
+                        }, 500);
+
+                        // animation rendering control
+                        // we are no longer rendering check marks next to the field. auto save displayed in header areaa.
+
+                        /*
+                        if($( "."+field_name_prefix.toLowerCase()+"-animation").css('display') == 'block'){
+
+
+                                $("."+field_name_prefix.toLowerCase()+"-animation").fadeOut(100);
+                                // now we need to create an java back end service that saves this value.
+                                // also add validation on the html  similar to password save
+                                //$('#toggle-'+field_name_prefix.toLowerCase()).delay(100).click();
+
+                                // alert($(this).val());
+                                $("."+field_name_prefix.toLowerCase()+"-animation").fadeIn(1000);
+                                // now we need to create an java back end service that saves this value.
+                                // also add validation on the html  similar to password save
+                                //$("."+field_name_prefix.toLowerCase()+"-animation").delay(1000).click();
+                        }
+                        else {
+
+                                $("."+field_name_prefix.toLowerCase()+"-animation").fadeIn(1000);
+                                // now we need to create an java back end service that saves this value.
+                                // also add validation on the html  similar to password save
+                                //$('#toggle-'+field_name_prefix.toLowerCase()).delay(1000).click();
+                        }*/
+
+
+
+
+                    }
+                    else{
+                        //$('.circle-loader').fadeOut(100);
+                        //$('.x-mark').fadeIn(500);
+                        //$(".validationMsgArea span").text(s_msg);
+                        //$(".validationMsgArea span").css('color','red');
+                    }
+
+                },
+                error: function(data) {
+
+                    //$('.circle-loader').fadeOut(100);
+                    //$('.x-mark').fadeIn(500);
+
+                    console.log(data);
+                    // set message to div area ...fields can not be left null
+                    //$(".validationMsgArea span").text("You can not leave any fields empty.");
+                    //$(".validationMsgArea span").css('color','red');
+                }
+
+            });
+
+
+
+            setTimeout(function() {
+                // after 1000 ms we add the class animated to the login/register card
+                checkProfileComplete();
+            }, 500);
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////
+        // end of contact information 'State' auto save ////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+
+
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////
+    // helper functions
+    /////////////////////////////////////////////////////////////////////////////
+    // checks if current user's profile is complete, then updates page accordingly
+    /////////////////////////////////////////////////////////////////////////////
+    function checkProfileComplete() {
+
+
+        // check if profile complete
+
+        $.ajax({
+            //url: "http://efile-reimagined.com/REST/apiGateway/user/complete/",
+            url: "../../REST/apiGateway/user/complete/",
+            type: 'GET',
+            success: function(data){
+
+                // parse out status msg:
+                var s_code = data.substring(data.indexOf("status:")+7, data.indexOf("status:")+4+7);
+
+                var s_msg = data.substring(data.indexOf("msg:")+4, data.length-2);
+
+                if(s_code.trim() == "200"){
+                    //if(data.contains("status: 200")){
+                    // show confirmation check mark on form
+                    //$('#toggle').delay(1000).click();
+
+                    //alert(s_msg);
+
+                    // set messege to screen
+                    $(".banner-message span").text(s_msg);
+                    $(".banner-message span").css('color','green');
+                    $(".banner-message span").focus();
+                    $('#alert-card').fadeOut();
+                    //$('.contextual-alert').css('display', 'none');
+
+                }
+                else {
+                    //alert(s_msg);
+                }
+
+            },
+            error: function(data) {
+
+                //$('.circle-loader').fadeOut(100);
+                //$('.x-mark').fadeIn(500);
+
+                console.log(data);
+                // set message to div area ...fields can not be left null
+                //$(".validationMsgArea span").text("You can not leave any fields empty.");
+                //$(".validationMsgArea span").css('color','red');
+            }
+        });
+
+
+
+    }
+</script>
+
+</body>
+</html>

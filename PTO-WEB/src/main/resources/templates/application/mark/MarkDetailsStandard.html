@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/efileApplicationMarkFragment :: layout (~{::body},'user')}" xmlns="http://www.w3.org/1999/html">
+<head >
+    <meta charset="UTF-8">
+    <title></title>
+</head>Mark Details
+<body>
+<div class="row content" style="position: relative; display: none; ">
+    <main class="col-xs-12 col-sm-8 col-md-8 col-lg-7" >
+
+        <!--START Content Div-->
+        <div class="row" style="position: relative;">
+            <div class="col-xs-12 ">
+
+                <div class="row">
+                    <section class="col-xs-12 steps breadcrumb-steps" aria-label="progress tracker">
+                        <div class="row displaycell">
+                            <div class="col-xs-2 one" id="bs-header1">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-4 number">
+                                        <span>1</span>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-7 col-md-8 col-lg-8" id="bs-link1">
+                                        <p class="first">Your details</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 two" id="bs-header2">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-4 number">
+                                        <span>2</span>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-7 col-md-8 col-lg-8" id="bs-link2">
+                                        <p>Trademark details</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 three" id="bs-header3">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-4 number">
+                                        <span>3</span>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-7 col-md-8 col-lg-8" id="bs-link3">
+                                        <p>Goods and services</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 four" id="bs-header4">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-4 number">
+                                        <span>4</span>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-7 col-md-8 col-lg-8" id="bs-link4">
+                                        <p>Basis</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 five" id="bs-header5">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-4 number">
+                                        <span>5</span>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-7 col-md-8 col-lg-8" id="bs-link5">
+                                        <p>Additional info</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 six" id="bs-header6">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-4 number">
+                                        <span>6</span>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-7 col-md-8 col-lg-8" id="bs-link6">
+                                        <p>Confirm and pay</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+
+                <!--END Application Type-->
+            </div><!--END RADIO container-->
+
+        </div><!--END row-->
+
+
+        <div class="row" style="position: relative;  ">
+            <div class="row" style="position: relative; right:-15px;">
+                <div class="col-xs-12">
+                    <h1 th:text="${baseTrademarkApplication.tradeMark.getTradeMarkPageTitle()}"></h1>
+                    <p class="required" style="position: relative; right:-15px;"><span class="weight600">&#42; = Required</span></p>
+                </div>
+
+            </div>
+            <!--START Trademark Examples-->
+            <!--START Standard Character-->
+            <div class="row">
+                <div class="col-xs-12" id="uploaded1" >
+                    <div class="card-text" >
+                        <h2 class="card-title weight600">Mark Information</h2>
+                    </div>
+
+                    <fieldset>
+                        <div class="form-group form-group-md col-xs-12">
+
+                            <div class="row">
+                                <section aria-label="mark text">
+                                    <div class="col-xs-12">
+                                        <p><span class="required weight600">&#42;</span> Enter the word(s), letter(s) and/or number(s) you wish to register, e.g., <span class="uppercase">the cat&#8217;s meow</span>. Entries in this field must be found in the <a href="https://www.uspto.gov/trademark/standard-character-set">USPTO standard character set</a>.</p>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6 form-group form-group-md">
+                                        <label for="ta2" class="sr-only">Enter mark text</label>
+                                        <textarea id="ta2" rows="6" cols="20" wrap="hard" class="form-control" th:text="${baseTrademarkApplication.tradeMark.trademarkStandardCharacterText}" required></textarea>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6 form-group form-group-md" id="displaytext">
+                                        <p id="showmarktxt"></p>
+                                    </div>
+                                </section>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <section aria-label="translation">
+                                        <div class="card-text">
+                                            <div role="heading" aria-level="2">
+                                                <button type="button" class="btn btn-link Accordion-trigger" data-toggle="collapse" data-target="#translation" aria-controls="translation" aria-expanded="false" id="translatesbtn"><span class="glyphicon glyphicon-triangle-right"></span> Translation</button>
+                                            </div>
+                                        </div>
+                                        <div id="translation" class="collapse Accordion-panel" role="region" aria-labelledby="translationbtn">
+                                            <div class="Accordion">
+                                                <p>A translation of a trademark is the meaning in English of any non-English wording. Every application to register a trademark that includes non-English wording must include a translation of that wording. <a href="https://tmep.uspto.gov/RDMS/TMEP/current#/current/TMEP-800d1e2300.html" target="_blank">More information</a>.</p>
+                                            </div>
+                                        </div>
+
+                                        <th:block th:if="${baseTrademarkApplication.tradeMark.isTranslationSet() == false}">
+                                            <div class="col-xs-12">
+                                                <p id="foreign">Does your mark contain foreign wording?</p>
+                                                <div  aria-labelledby="foreign">
+
+
+                                                    <label for="inlineRadio3" class="radio-inline radiocontainer" id="1">Yes<input type="radio" name="foreignradio" id="inlineRadio3" value="yes"><span class="checkmark"></span></label>
+
+                                                    <label for="inlineRadio4" class="radio-inline radiocontainer" id="2">No<input type="radio" name="foreignradio" id="inlineRadio4" value="no"><span class="checkmark"></span></label>
+
+
+
+
+                                                </div><!--END radiogroup-->
+                                                <div id="yestranslation" style="display: none;"><!--toggle 'yes' radio-->
+                                                    <h3 class="weight600">Enter the foreign language and the translation.</h3>
+                                                    <div class="form-group form-group-md col-xs-12 col-md-3">
+                                                        <b for="language">Language</b>
+                                                        <select class="form-control" id="language" th:field="${baseTrademarkApplication.tradeMark.foreignLanguageType_translation}">
+                                                            <option value="Select">Select</option>
+                                                            <option value="Spanish">Spanish</option>
+                                                            <option value="German">German</option>
+                                                            <option value="French">French</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group form-group-md col-xs-12 col-md-5">
+                                                        <b>The English Translation of</b>
+                                                        <input type="text" class="form-control" id="engtranslation" th:value="${baseTrademarkApplication.tradeMark.foreignLanguageTranslationOriginalText}" >
+                                                    </div>
+                                                    <div class="form-group form-group-md col-xs-12 col-md-4">
+                                                        <b >in the mark is</b>
+                                                        <input type="text" class="form-control" id="inthemark" th:value="${baseTrademarkApplication.tradeMark.foreignLanguageTranslationUSText}">
+                                                    </div>
+                                                </div>
+                                                <div id="notranslation"><!--toggle 'no' radio-->
+
+                                                </div>
+
+                                            </div>
+                                        </th:block>
+                                        <th:block th:if="${baseTrademarkApplication.tradeMark.isTranslationSet() == true}">
+                                            <th:block th:if="${baseTrademarkApplication.tradeMark.foreignLanguageTranslationWording == true}">
+                                                <div class="col-xs-12">
+                                                    <p id="foreign">Does your mark contain foreign wording?</p>
+                                                    <div  aria-labelledby="foreign">
+                                                        <label for="inlineRadio3" class="radio-inline radiocontainer" id="1">Yes<input type="radio" name="foreignradio" id="inlineRadio3" value="yes" checked><span class="checkmark"></span></label>
+
+                                                        <label for="inlineRadio4" class="radio-inline radiocontainer" id="2">No<input type="radio" name="foreignradio" id="inlineRadio4" value="no"><span class="checkmark"></span></label>
+
+                                                    </div><!--END radiogroup-->
+                                                    <div id="yestranslation"><!--toggle 'yes' radio-->
+                                                        <h3 class="weight600">Enter the foreign language and the translation.</h3>
+                                                        <div class="form-group form-group-md col-xs-12 col-md-3">
+                                                            <b for="language">Language</b>
+                                                            <select class="form-control" id="language" th:field="${baseTrademarkApplication.tradeMark.foreignLanguageType_translation}">
+                                                                <option value="Select">Select</option>
+                                                                <option value="Spanish">Spanish</option>
+                                                                <option value="German">German</option>
+                                                                <option value="French">French</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group form-group-md col-xs-12 col-md-5">
+                                                            <b>The English Translation of</b>
+                                                            <input type="text" class="form-control" id="engtranslation" th:value="${baseTrademarkApplication.tradeMark.foreignLanguageTranslationOriginalText}" >
+                                                        </div>
+                                                        <div class="form-group form-group-md col-xs-12 col-md-4">
+                                                            <b >in the mark is</b>
+                                                            <input type="text" class="form-control" id="inthemark" th:value="${baseTrademarkApplication.tradeMark.foreignLanguageTranslationUSText}">
+                                                        </div>
+                                                    </div>
+                                                    <div id="notranslation"><!--toggle 'no' radio-->
+
+                                                    </div>
+
+                                                </div>
+                                            </th:block>
+                                            <th:block th:if="${baseTrademarkApplication.tradeMark.foreignLanguageTranslationWording == false}">
+                                                <div class="col-xs-12">
+                                                    <p id="foreign">Does your mark contain foreign wording?</p>
+                                                    <div  aria-labelledby="foreign">
+                                                        <label for="inlineRadio3" class="radio-inline radiocontainer" id="1">Yes<input type="radio" name="foreignradio" id="inlineRadio3" value="yes"><span class="checkmark"></span></label>
+
+                                                        <label for="inlineRadio4" class="radio-inline radiocontainer" id="2">No<input type="radio" name="foreignradio" id="inlineRadio4" value="no" checked><span class="checkmark"></span></label>
+
+                                                    </div><!--END radiogroup-->
+                                                    <div id="yestranslation" style="display: none;"><!--toggle 'yes' radio-->
+                                                        <h3 class="weight600">Enter the foreign language and the translation.</h3>
+                                                        <div class="form-group form-group-md col-xs-12 col-md-3">
+                                                            <b for="language">Language</b>
+                                                            <select class="form-control" id="language" th:field="${baseTrademarkApplication.tradeMark.foreignLanguageType_translation}">
+                                                                <option value="Select">Select</option>
+                                                                <option value="Spanish">Spanish</option>
+                                                                <option value="German">German</option>
+                                                                <option value="French">French</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group form-group-md col-xs-12 col-md-5">
+                                                            <b>The English Translation of</b>
+                                                            <input type="text" class="form-control" id="engtranslation" th:value="${baseTrademarkApplication.tradeMark.foreignLanguageTranslationOriginalText}" >
+                                                        </div>
+                                                        <div class="form-group form-group-md col-xs-12 col-md-4">
+                                                            <b >in the mark is</b>
+                                                            <input type="text" class="form-control" id="inthemark" th:value="${baseTrademarkApplication.tradeMark.foreignLanguageTranslationUSText}">
+                                                        </div>
+                                                    </div>
+                                                    <div id="notranslation"><!--toggle 'no' radio-->
+
+                                                    </div>
+
+                                                </div>
+                                            </th:block>
+                                        </th:block>
+
+
+
+                                    </section>
+                                </div>
+                            </div><!--END translation-->
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <section aria-label="transliteration">
+                                        <div class="card-text">
+                                            <div role="heading" aria-level="2">
+                                                <button type="button" class="btn btn-link Accordion-trigger" data-toggle="collapse" data-target="#transliteration" aria-controls="transliteration" aria-expanded="false" id="translitbtn"><span class="glyphicon glyphicon-triangle-right"></span> Transliteration</button>
+                                            </div>
+                                        </div>
+                                        <div id="transliteration" class="collapse Accordion-panel" role="region" aria-labelledby="translitbtn">
+                                            <div class="Accordion">
+                                                <p>If a name(s) shown in the mark identifies a particular living individual, enter the name of the individual being identified. In addition, attach a .jpg or .pdf file showing the actual consent of the named individual to the use and registration of his or her name. Select &#8220;No&#8221; if the mark includes a name(s) but this does NOT identify a particular living person. <a href="https://tmep.uspto.gov/RDMS/TMEP/current#/current/TMEP-1200d1e4891.html" target="_blank">More information</a>.</p>
+                                            </div>
+                                        </div>
+
+                                        <th:block th:if="${baseTrademarkApplication.tradeMark.isTranlierationSet() == false}">
+                                            <div class="col-xs-12">
+                                                <p id="translit">Does your mark contain foreign wording in non-Latin characters that requires transliteration?</p>
+                                                <div role="radiogroup" aria-labelledby="translit">
+                                                    <label for="inlineRadio5" class="radio-inline radiocontainer" id="3">Yes<input type="radio" name="nonlatradio" id="inlineRadio5" value="yes"><span class="checkmark"></span></label>
+                                                    <label for="inlineRadio6" class="radio-inline radiocontainer" id="4">No<input type="radio" name="nonlatradio" id="inlineRadio6" value="no"><span class="checkmark"></span></label>
+                                                </div>
+                                                <div id="yestransliteration" style="display: none"><!--toggle 'yes' radio-->
+                                                    <h3 class="weight600">Enter the transliteration of the mark.</h3>
+                                                    <div class="form-group form-group-md col-xs-12 col-md-3">
+                                                        <b>Language</b>
+                                                        <select class="form-control" id="languagetranslit" th:field="${baseTrademarkApplication.tradeMark.foreignLanguageType_transliteration}">
+                                                            <option value="Select">Select</option>
+                                                            <option value="German">German</option>
+                                                            <option value="Korean">Korean</option>
+                                                            <option value="French">French</option>
+                                                            <option value="Spanish">Spanish</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group form-group-md col-xs-12 col-md-9">
+                                                        <b >The non-Latin characters in the mark transliterate to</b>
+                                                        <input type="text" class="form-control" id="nonlatranslation" th:value="${baseTrademarkApplication.tradeMark.foreignLanguateTransliterationOriginalText}">
+                                                    </div>
+                                                    <div class="form-group form-group-md col-xs-12 col-md-12">
+                                                        <b for="inenglish">and this, in English, means</b>
+                                                        <input type="text" class="form-control" id="inenglish" th:value="${baseTrademarkApplication.tradeMark.foreignLanguateTransliterationUSText}">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </th:block>
+                                        <th:block th:if="${baseTrademarkApplication.tradeMark.isTranlierationSet()== true}">
+                                            <th:block th:if="${baseTrademarkApplication.tradeMark.foreignLanguateTransliterationWording == true}">
+                                                <div class="col-xs-12">
+                                                    <p id="translit">Does your mark contain foreign wording in non-Latin characters that requires transliteration?</p>
+                                                    <div role="radiogroup" aria-labelledby="translit">
+                                                        <label for="inlineRadio5" class="radio-inline radiocontainer" id="3">Yes<input type="radio" name="nonlatradio" id="inlineRadio5" value="yes" checked><span class="checkmark"></span></label>
+
+                                                        <label for="inlineRadio6" class="radio-inline radiocontainer" id="4">No<input type="radio" name="nonlatradio" id="inlineRadio6" value="no"><span class="checkmark"></span></label>
+                                                    </div>
+                                                    <div id="yestransliteration" style=""><!--toggle 'yes' radio-->
+                                                        <h3 class="weight600">Enter the transliteration of the mark.</h3>
+                                                        <div class="form-group form-group-md col-xs-12 col-md-3">
+                                                            <b>Language</b>
+                                                            <select class="form-control" id="languagetranslit" th:field="${baseTrademarkApplication.tradeMark.foreignLanguageType_transliteration}">
+                                                                <option value="Select">Select</option>
+                                                                <option value="German">German</option>
+                                                                <option value="Korean">Korean</option>
+                                                                <option value="French">French</option>
+                                                                <option value="Spanish">Spanish</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group form-group-md col-xs-12 col-md-9">
+                                                            <b >The non-Latin characters in the mark transliterate to</b>
+                                                            <input type="text" class="form-control" id="nonlatranslation" th:value="${baseTrademarkApplication.tradeMark.foreignLanguateTransliterationOriginalText}">
+                                                        </div>
+                                                        <div class="form-group form-group-md col-xs-12 col-md-12">
+                                                            <b for="inenglish">and this, in English, means</b>
+                                                            <input type="text" class="form-control" id="inenglish" th:value="${baseTrademarkApplication.tradeMark.foreignLanguateTransliterationUSText}">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </th:block>
+                                            <th:block th:if="${baseTrademarkApplication.tradeMark.foreignLanguateTransliterationWording == false}">
+                                                <div class="col-xs-12">
+                                                    <p id="translit">Does your mark contain foreign wording in non-Latin characters that requires transliteration?</p>
+                                                    <div role="radiogroup" aria-labelledby="translit">
+                                                        <label for="inlineRadio5" class="radio-inline radiocontainer" id="3">Yes<input type="radio" name="nonlatradio" id="inlineRadio5" value="yes"><span class="checkmark"></span></label>
+
+                                                        <label for="inlineRadio6" class="radio-inline radiocontainer" id="4">No<input type="radio" name="nonlatradio" id="inlineRadio6" value="no" checked><span class="checkmark"></span></label>
+                                                    </div>
+                                                    <div id="yestransliteration" style="display: none;"><!--toggle 'yes' radio-->
+                                                        <h3 class="weight600">Enter the transliteration of the mark.</h3>
+                                                        <div class="form-group form-group-md col-xs-12 col-md-3">
+                                                            <b>Language</b>
+                                                            <select class="form-control" id="languagetranslit" th:field="${baseTrademarkApplication.tradeMark.foreignLanguageType_transliteration}">
+                                                                <option value="Select">Select</option>
+                                                                <option value="German">German</option>
+                                                                <option value="Korean">Korean</option>
+                                                                <option value="French">French</option>
+                                                                <option value="Spanish">Spanish</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group form-group-md col-xs-12 col-md-9">
+                                                            <b >The non-Latin characters in the mark transliterate to</b>
+                                                            <input type="text" class="form-control" id="nonlatranslation" th:value="${baseTrademarkApplication.tradeMark.foreignLanguateTransliterationOriginalText}">
+                                                        </div>
+                                                        <div class="form-group form-group-md col-xs-12 col-md-12">
+                                                            <b for="inenglish">and this, in English, means</b>
+                                                            <input type="text" class="form-control" id="inenglish" th:value="${baseTrademarkApplication.tradeMark.foreignLanguateTransliterationUSText}">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </th:block>
+                                        </th:block>
+
+                                    </section>
+                                </div>
+                            </div><!--END transliteration-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <section aria-label="name portrait signature">
+                                        <div class="card-text">
+                                            <div role="heading" aria-level="2">
+                                                <button type="button" class="btn btn-link Accordion-trigger" data-toggle="collapse" data-target="#nps" aria-controls="nps" aria-expanded="false" id="npsbtn"><span class="glyphicon glyphicon-triangle-right"></span><span id="toggleglyph" class="glyphicon glyphicon-triangle-bottom visuallyremoved"></span> Name / Portrait / Signature</button>
+                                            </div>
+                                        </div>
+                                        <div id="nps" class="collapse Accordion-panel" role="region" aria-labelledby="npsbtn">
+                                            <div class="Accordion">
+                                                <p>If a name(s) shown in the mark identifies a particular living individual, enter the name of the individual being identified. In addition, attach a .jpg or .pdf file showing the actual consent of the named individual to the use and registration of his or her name. Select &#8220;No&#8221; if the mark includes a name(s) but this does NOT identify a particular living person. <a href="https://tmep.uspto.gov/RDMS/TMEP/current#/current/TMEP-1200d1e4891.html" target="_blank">More information</a>.</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <p id="nps">Does your mark contain a name, portrait, or signature?</p>
+
+                                            <th:block th:if="${baseTrademarkApplication.tradeMark.isNamePortraitSet() == false}">
+                                                <div role="radiogroup" aria-labelledby="nps">
+                                                    <label for="inlineRadio7" class="radio-inline radiocontainer">Yes<input type="radio" name="npsradio" id="inlineRadio7" value="yes"><span class="checkmark"></span></label>
+                                                    <label for="inlineRadio8" class="radio-inline radiocontainer">No<input type="radio" name="npsradio" id="inlineRadio8" value="no"><span class="checkmark"></span></label>
+                                                </div><!--END radiogroup-->
+
+
+                                                <div id="yesnps" role="region" aria-labelledby="translit" style="display: none;">
+                                                    <p id="whichnps">Identify which of the following it contains:</p>
+
+                                                    <input class="form-check-input checkmark" type="checkbox" value="" role="checkbox" aria-checked="false" tabindex="0" aria-labelledby="checkname" id="namechecked">
+                                                    <label class="form-check-label form-check" for="namechecked" id="checkname"><span class="radio notspecial">Name</span></label>
+
+
+
+                                                    <div id="yescontainsname" role="region" aria-labelledby="whichnps" class="form-group form-group-md">
+                                                        <div class="row">
+                                                            <div class="form-group form-group-md col-xs-12 col-md-8 col-lg-3">
+                                                                <label for="name-firstname">First Name</label>
+                                                                <input type="text" class="form-control" id="name-firstname" th:value="${baseTrademarkApplication.tradeMark.nameFirstName}">
+                                                            </div>
+                                                            <div class="form-group form-group-md col-xs-12 col-md-4 col-lg-3">
+                                                                <label for="name-middlename">Middle Name</label>
+                                                                <input type="text" class="form-control" id="name-middlename" th:value="${baseTrademarkApplication.tradeMark.nameMiddleName}">
+                                                            </div>
+                                                            <div class="form-group form-group-md col-xs-12 col-md-12 col-lg-3">
+                                                                <label for="name-lastname">Last Name</label>
+                                                                <input type="text" class="form-control" id="name-lastname" th:value="${baseTrademarkApplication.tradeMark.nameLastName}">
+                                                            </div>
+                                                            <div class="form-group form-group-md col-xs-12 col-md-3">
+                                                                <button type="button" class="btn-sm btn-success add ctr">Add Additional</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <input class="form-check-input checkmark" type="checkbox" value="portrait" aria-checked="false" tabindex="0" id="portraitchecked" aria-labelledby="checkportrait">
+                                                    <label class="form-check-label form-check" for="portraitchecked" id="checkportrait"><span class="radio notspecial" id="collect">Portrait</span></label>
+
+                                                    <div id="yescontainsportrait" role="region" aria-labelledby="whichnps" class="form-group form-group-md">
+                                                        <div class="row">
+                                                            <div class="form-group form-group-md col-xs-12 col-md-8 col-lg-3">
+                                                                <label for="portrait-firstname">First Name</label>
+                                                                <input type="text" class="form-control" id="portrait-firstname" th:value="${baseTrademarkApplication.tradeMark.portraitFirstName}">
+                                                            </div>
+                                                            <div class="form-group form-group-md col-xs-12 col-md-4 col-lg-3">
+                                                                <label for="portrait-middlename">Middle Name</label>
+                                                                <input type="text" class="form-control" id="portrait-middlename" th:value="${baseTrademarkApplication.tradeMark.portraitMiddleName}">
+                                                            </div>
+                                                            <div class="form-group form-group-md col-xs-12 col-md-12 col-lg-3">
+                                                                <label for="portrait-lastname">Last Name</label>
+                                                                <input type="text" class="form-control" id="portrait-lastname" th:value="${baseTrademarkApplication.tradeMark.portraitLastName}">
+                                                            </div>
+                                                            <div class="form-group form-group-md col-xs-12 col-md-3">
+                                                                <button type="button" class="btn-sm btn-success add ctr">Add Additional</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <input class="form-check-input checkmark" type="checkbox" value="signature" aria-checked="false" tabindex="0" aria-labelledby="checksignature" id="signaturechecked">
+                                                    <label class="form-check-label form-check" for="signaturechecked" id="checksignature"><span class="radio notspecial" id="collectm">Signature</span></label>
+
+                                                    <div id="yescontainssignature" role="region" aria-labelledby="whichnps" class="form-group form-group-md">
+                                                        <div class="row">
+                                                            <div class="form-group form-group-md col-xs-12 col-md-8 col-lg-3">
+                                                                <label for="signature-firstname">First Name</label>
+                                                                <input type="text" class="form-control" id="signature-firstname" th:value="${baseTrademarkApplication.tradeMark.signatureFirstName}">
+                                                            </div>
+                                                            <div class="form-group form-group-md col-xs-12 col-md-4 col-lg-3">
+                                                                <label for="signature-middlename">Middle Name</label>
+                                                                <input type="text" class="form-control" id="signature-middlename" th:value="${baseTrademarkApplication.tradeMark.signatureMiddleName}">
+                                                            </div>
+                                                            <div class="form-group form-group-md col-xs-12 col-md-12 col-lg-3">
+                                                                <label for="signature-lastname">Last Name</label>
+                                                                <input type="text" class="form-control" id="signature-lastname" th:value="${baseTrademarkApplication.tradeMark.signatureLastName}">
+                                                            </div>
+                                                            <div class="form-group form-group-md col-xs-12 col-md-3">
+                                                                <button type="button" class="btn-sm btn-success add ctr">Add Additional</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <p id="individualiving">Is this of a living individual?</p>
+                                                    <div role="radiogroup" class="form-group form-group-md" aria-labelledby="individualiving">
+                                                        <label for="inlineRadio17" class="radio-inline"><input type="radio" name="livindividualradio" id="inlineRadio17" value="yes">Yes</label>
+                                                        <label for="inlineRadio18" class="radio-inline"><input type="radio" name="livindividualradio" id="inlineRadio18" value="no">No</label>
+                                                    </div><!--END radiogroup-->
+
+                                                    <div th:if="${baseTrademarkApplication.tradeMark.consentFileUploaded == false}">
+                                                        <h4 class="weight600">Upload Consent <i class="material-icons" style="position: relative; bottom: -5px;">cloud_upload</i></h4>
+                                                        <p><a th:href="@{/resources/documents/Consent_template.docx}"><span class="glyphicon glyphicon-download" aria-hidden="true"></span>Download Consent Template</a></p>
+                                                        <form action="/Mark/consent/add" method="post" enctype="multipart/form-data" id="markConsentForm" class="form-horizontal">
+                                                            <div class="form-group form-group-md">
+                                                                <label class="small upload-drop-zone" for="consentfile"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> <br>
+                                                                    Upload Consent</label>
+                                                                <input type="file" id="consentfile" name="file" class="form-control">
+                                                            </div><!-- Drop Zone -->
+                                                            <div class="row">
+                                                                <div class="js-upload-finished col-xs-12 col-md-10 col-lg-8">
+                                                                    <p id="uploaded">Processed files</p>
+                                                                    <div class="list-group">
+                                                                        <a href="#" class="list-group-item list-group-item-success" aria-labelledby="uploaded"></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <input  style=" position:relative; display: none; width: 1px; height:1px;" name="AppInternalID" id="appInternalIDForm"   value="" />
+                                                            <div class="col-xs-12">
+                                                                <button type="submit" id="consentSubmit" class="btn btn-sm" >Upload file</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
+                                                    <div th:if="${baseTrademarkApplication.tradeMark.consentFileUploaded == true}">
+                                                        <h4 class="weight600">Consent Uploaded <i class="material-icons" style="position: relative; bottom: -5px;">check_circle</i></h4>
+
+                                                    </div>
+                                                </div>
+                                            </th:block>
+                                            <th:block th:if="${baseTrademarkApplication.tradeMark.isNamePortraitSet() == true}">
+                                                <th:block th:if="${baseTrademarkApplication.tradeMark.containNamePortaitSignature == true}">
+                                                    <div role="radiogroup" aria-labelledby="nps">
+                                                        <label for="inlineRadio7" class="radio-inline radiocontainer">Yes<input type="radio" name="npsradio" id="inlineRadio7" value="yes" checked><span class="checkmark"></span></label>
+
+                                                        <label for="inlineRadio8" class="radio-inline radiocontainer">No<input type="radio" name="npsradio" id="inlineRadio8" value="no"><span class="checkmark"></span></label>
+                                                    </div><!--END radiogroup-->
+
+
+                                                    <div id="yesnps" role="region" aria-labelledby="translit" style="">
+                                                        <p id="whichnps">Identify which of the following it contains:</p>
+
+                                                        <input class="form-check-input checkmark" type="checkbox" value="" role="checkbox" aria-checked="false" tabindex="0" aria-labelledby="checkname" id="namechecked">
+                                                        <label class="form-check-label form-check" for="namechecked" id="checkname"><span class="radio notspecial">Name</span></label>
+
+
+
+                                                        <div id="yescontainsname" role="region" aria-labelledby="whichnps" class="form-group form-group-md">
+                                                            <div class="row">
+                                                                <div class="form-group form-group-md col-xs-12 col-md-8 col-lg-3">
+                                                                    <label for="name-firstname">First Name</label>
+                                                                    <input type="text" class="form-control" id="name-firstname" th:value="${baseTrademarkApplication.tradeMark.nameFirstName}">
+                                                                </div>
+                                                                <div class="form-group form-group-md col-xs-12 col-md-4 col-lg-3">
+                                                                    <label for="name-middlename">Middle Name</label>
+                                                                    <input type="text" class="form-control" id="name-middlename" th:value="${baseTrademarkApplication.tradeMark.nameMiddleName}">
+                                                                </div>
+                                                                <div class="form-group form-group-md col-xs-12 col-md-12 col-lg-3">
+                                                                    <label for="name-lastname">Last Name</label>
+                                                                    <input type="text" class="form-control" id="name-lastname" th:value="${baseTrademarkApplication.tradeMark.nameLastName}">
+                                                                </div>
+                                                                <div class="form-group form-group-md col-xs-12 col-md-3">
+                                                                    <button type="button" class="btn-sm btn-success add ctr">Add Additional</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <input class="form-check-input checkmark" type="checkbox" value="portrait" aria-checked="false" tabindex="0" id="portraitchecked" aria-labelledby="checkportrait">
+                                                        <label class="form-check-label form-check" for="portraitchecked" id="checkportrait"><span class="radio notspecial" id="collect">Portrait</span></label>
+
+                                                        <div id="yescontainsportrait" role="region" aria-labelledby="whichnps" class="form-group form-group-md">
+                                                            <div class="row">
+                                                                <div class="form-group form-group-md col-xs-12 col-md-8 col-lg-3">
+                                                                    <label for="portrait-firstname">First Name</label>
+                                                                    <input type="text" class="form-control" id="portrait-firstname" th:value="${baseTrademarkApplication.tradeMark.portraitFirstName}">
+                                                                </div>
+                                                                <div class="form-group form-group-md col-xs-12 col-md-4 col-lg-3">
+                                                                    <label for="portrait-middlename">Middle Name</label>
+                                                                    <input type="text" class="form-control" id="portrait-middlename" th:value="${baseTrademarkApplication.tradeMark.portraitMiddleName}">
+                                                                </div>
+                                                                <div class="form-group form-group-md col-xs-12 col-md-12 col-lg-3">
+                                                                    <label for="portrait-lastname">Last Name</label>
+                                                                    <input type="text" class="form-control" id="portrait-lastname" th:value="${baseTrademarkApplication.tradeMark.portraitLastName}">
+                                                                </div>
+                                                                <div class="form-group form-group-md col-xs-12 col-md-3">
+                                                                    <button type="button" class="btn-sm btn-success add ctr">Add Additional</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <input class="form-check-input checkmark" type="checkbox" value="signature" aria-checked="false" tabindex="0" aria-labelledby="checksignature" id="signaturechecked">
+                                                        <label class="form-check-label form-check" for="signaturechecked" id="checksignature"><span class="radio notspecial" id="collectm">Signature</span></label>
+
+                                                        <div id="yescontainssignature" role="region" aria-labelledby="whichnps" class="form-group form-group-md">
+                                                            <div class="row">
+                                                                <div class="form-group form-group-md col-xs-12 col-md-8 col-lg-3">
+                                                                    <label for="signature-firstname">First Name</label>
+                                                                    <input type="text" class="form-control" id="signature-firstname" th:value="${baseTrademarkApplication.tradeMark.signatureFirstName}">
+                                                                </div>
+                                                                <div class="form-group form-group-md col-xs-12 col-md-4 col-lg-3">
+                                                                    <label for="signature-middlename">Middle Name</label>
+                                                                    <input type="text" class="form-control" id="signature-middlename" th:value="${baseTrademarkApplication.tradeMark.signatureMiddleName}">
+                                                                </div>
+                                                                <div class="form-group form-group-md col-xs-12 col-md-12 col-lg-3">
+                                                                    <label for="signature-lastname">Last Name</label>
+                                                                    <input type="text" class="form-control" id="signature-lastname" th:value="${baseTrademarkApplication.tradeMark.signatureLastName}">
+                                                                </div>
+                                                                <div class="form-group form-group-md col-xs-12 col-md-3">
+                                                                    <button type="button" class="btn-sm btn-success add ctr">Add Additional</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <p id="individualiving">Is this of a living individual?</p>
+                                                        <div role="radiogroup" class="form-group form-group-md" aria-labelledby="individualiving">
+                                                            <label for="inlineRadio17" class="radio-inline"><input type="radio" name="livindividualradio" id="inlineRadio17" value="yes">Yes</label>
+                                                            <label for="inlineRadio18" class="radio-inline"><input type="radio" name="livindividualradio" id="inlineRadio18" value="no">No</label>
+                                                        </div><!--END radiogroup-->
+
+                                                        <div th:if="${baseTrademarkApplication.tradeMark.consentFileUploaded == false}">
+                                                            <h4 class="weight600">Upload Consent <i class="material-icons" style="position: relative; bottom: -5px;">cloud_upload</i></h4>
+                                                            <p><a th:href="@{/resources/documents/Consent_template.docx}"><span class="glyphicon glyphicon-download" aria-hidden="true"></span>Download Consent Template</a></p>
+                                                            <form action="/Mark/consent/add" method="post" enctype="multipart/form-data" id="markConsentForm" class="form-horizontal">
+                                                                <div class="form-group form-group-md">
+                                                                    <label class="small upload-drop-zone" for="consentfile"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> <br>
+                                                                        Upload Consent</label>
+                                                                    <input type="file" id="consentfile" name="file" class="form-control">
+                                                                </div><!-- Drop Zone -->
+                                                                <div class="row">
+                                                                    <div class="js-upload-finished col-xs-12 col-md-10 col-lg-8">
+                                                                        <p id="uploaded">Processed files</p>
+                                                                        <div class="list-group">
+                                                                            <a href="#" class="list-group-item list-group-item-success" aria-labelledby="uploaded"></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <input  style=" position:relative; display: none; width: 1px; height:1px;" name="AppInternalID" id="appInternalIDForm"   value="" />
+                                                                <div class="col-xs-12">
+                                                                    <button type="submit" id="consentSubmit" class="btn btn-sm" >Upload file</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+
+                                                        <div th:if="${baseTrademarkApplication.tradeMark.consentFileUploaded == true}">
+                                                            <h4 class="weight600">Consent Uploaded <i class="material-icons" style="position: relative; bottom: -5px;">check_circle</i></h4>
+
+                                                        </div>
+                                                    </div>
+                                                </th:block>
+                                                <th:block th:if="${baseTrademarkApplication.tradeMark.containNamePortaitSignature == false}">
+                                                    <div role="radiogroup" aria-labelledby="nps">
+                                                        <label for="inlineRadio7" class="radio-inline radiocontainer">Yes<input type="radio" name="npsradio" id="inlineRadio7" value="yes"><span class="checkmark"></span></label>
+
+                                                        <label for="inlineRadio8" class="radio-inline radiocontainer">No<input type="radio" name="npsradio" id="inlineRadio8" value="no" checked><span class="checkmark"></span></label>
+                                                    </div><!--END radiogroup-->
+
+
+                                                    <div id="yesnps" role="region" aria-labelledby="translit" style="display: none;">
+                                                        <p id="whichnps">Identify which of the following it contains:</p>
+
+                                                        <input class="form-check-input checkmark" type="checkbox" value="" role="checkbox" aria-checked="false" tabindex="0" aria-labelledby="checkname" id="namechecked">
+                                                        <label class="form-check-label form-check" for="namechecked" id="checkname"><span class="radio notspecial">Name</span></label>
+
+
+
+                                                        <div id="yescontainsname" role="region" aria-labelledby="whichnps" class="form-group form-group-md">
+                                                            <div class="row">
+                                                                <div class="form-group form-group-md col-xs-12 col-md-8 col-lg-3">
+                                                                    <label for="name-firstname">First Name</label>
+                                                                    <input type="text" class="form-control" id="name-firstname" th:value="${baseTrademarkApplication.tradeMark.nameFirstName}">
+                                                                </div>
+                                                                <div class="form-group form-group-md col-xs-12 col-md-4 col-lg-3">
+                                                                    <label for="name-middlename">Middle Name</label>
+                                                                    <input type="text" class="form-control" id="name-middlename" th:value="${baseTrademarkApplication.tradeMark.nameMiddleName}">
+                                                                </div>
+                                                                <div class="form-group form-group-md col-xs-12 col-md-12 col-lg-3">
+                                                                    <label for="name-lastname">Last Name</label>
+                                                                    <input type="text" class="form-control" id="name-lastname" th:value="${baseTrademarkApplication.tradeMark.nameLastName}">
+                                                                </div>
+                                                                <div class="form-group form-group-md col-xs-12 col-md-3">
+                                                                    <button type="button" class="btn-sm btn-success add ctr">Add Additional</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <input class="form-check-input checkmark" type="checkbox" value="portrait" aria-checked="false" tabindex="0" id="portraitchecked" aria-labelledby="checkportrait">
+                                                        <label class="form-check-label form-check" for="portraitchecked" id="checkportrait"><span class="radio notspecial" id="collect">Portrait</span></label>
+
+                                                        <div id="yescontainsportrait" role="region" aria-labelledby="whichnps" class="form-group form-group-md">
+                                                            <div class="row">
+                                                                <div class="form-group form-group-md col-xs-12 col-md-8 col-lg-3">
+                                                                    <label for="portrait-firstname">First Name</label>
+                                                                    <input type="text" class="form-control" id="portrait-firstname" th:value="${baseTrademarkApplication.tradeMark.portraitFirstName}">
+                                                                </div>
+                                                                <div class="form-group form-group-md col-xs-12 col-md-4 col-lg-3">
+                                                                    <label for="portrait-middlename">Middle Name</label>
+                                                                    <input type="text" class="form-control" id="portrait-middlename" th:value="${baseTrademarkApplication.tradeMark.portraitMiddleName}">
+                                                                </div>
+                                                                <div class="form-group form-group-md col-xs-12 col-md-12 col-lg-3">
+                                                                    <label for="portrait-lastname">Last Name</label>
+                                                                    <input type="text" class="form-control" id="portrait-lastname" th:value="${baseTrademarkApplication.tradeMark.portraitLastName}">
+                                                                </div>
+                                                                <div class="form-group form-group-md col-xs-12 col-md-3">
+                                                                    <button type="button" class="btn-sm btn-success add ctr">Add Additional</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <input class="form-check-input checkmark" type="checkbox" value="signature" aria-checked="false" tabindex="0" aria-labelledby="checksignature" id="signaturechecked">
+                                                        <label class="form-check-label form-check" for="signaturechecked" id="checksignature"><span class="radio notspecial" id="collectm">Signature</span></label>
+
+                                                        <div id="yescontainssignature" role="region" aria-labelledby="whichnps" class="form-group form-group-md">
+                                                            <div class="row">
+                                                                <div class="form-group form-group-md col-xs-12 col-md-8 col-lg-3">
+                                                                    <label for="signature-firstname">First Name</label>
+                                                                    <input type="text" class="form-control" id="signature-firstname" th:value="${baseTrademarkApplication.tradeMark.signatureFirstName}">
+                                                                </div>
+                                                                <div class="form-group form-group-md col-xs-12 col-md-4 col-lg-3">
+                                                                    <label for="signature-middlename">Middle Name</label>
+                                                                    <input type="text" class="form-control" id="signature-middlename" th:value="${baseTrademarkApplication.tradeMark.signatureMiddleName}">
+                                                                </div>
+                                                                <div class="form-group form-group-md col-xs-12 col-md-12 col-lg-3">
+                                                                    <label for="signature-lastname">Last Name</label>
+                                                                    <input type="text" class="form-control" id="signature-lastname" th:value="${baseTrademarkApplication.tradeMark.signatureLastName}">
+                                                                </div>
+                                                                <div class="form-group form-group-md col-xs-12 col-md-3">
+                                                                    <button type="button" class="btn-sm btn-success add ctr">Add Additional</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <p id="individualiving">Is this of a living individual?</p>
+                                                        <div role="radiogroup" class="form-group form-group-md" aria-labelledby="individualiving">
+                                                            <label for="inlineRadio17" class="radio-inline"><input type="radio" name="livindividualradio" id="inlineRadio17" value="yes">Yes</label>
+                                                            <label for="inlineRadio18" class="radio-inline"><input type="radio" name="livindividualradio" id="inlineRadio18" value="no">No</label>
+                                                        </div><!--END radiogroup-->
+
+                                                        <div th:if="${baseTrademarkApplication.tradeMark.consentFileUploaded == false}">
+                                                            <h4 class="weight600">Upload Consent <i class="material-icons" style="position: relative; bottom: -5px;">cloud_upload</i></h4>
+                                                            <p><a th:href="@{/resources/documents/Consent_template.docx}"><span class="glyphicon glyphicon-download" aria-hidden="true"></span>Download Consent Template</a></p>
+                                                            <form action="/Mark/consent/add" method="post" enctype="multipart/form-data" id="markConsentForm" class="form-horizontal">
+                                                                <div class="form-group form-group-md">
+                                                                    <label class="small upload-drop-zone" for="consentfile"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> <br>
+                                                                        Upload Consent</label>
+                                                                    <input type="file" id="consentfile" name="file" class="form-control">
+                                                                </div><!-- Drop Zone -->
+                                                                <div class="row">
+                                                                    <div class="js-upload-finished col-xs-12 col-md-10 col-lg-8">
+                                                                        <p id="uploaded">Processed files</p>
+                                                                        <div class="list-group">
+                                                                            <a href="#" class="list-group-item list-group-item-success" aria-labelledby="uploaded"></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <input  style=" position:relative; display: none; width: 1px; height:1px;" name="AppInternalID" id="appInternalIDForm"   value="" />
+                                                                <div class="col-xs-12">
+                                                                    <button type="submit" id="consentSubmit" class="btn btn-sm" >Upload file</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+
+                                                        <div th:if="${baseTrademarkApplication.tradeMark.consentFileUploaded == true}">
+                                                            <h4 class="weight600">Consent Uploaded <i class="material-icons" style="position: relative; bottom: -5px;">check_circle</i></h4>
+
+                                                        </div>
+                                                    </div>
+                                                </th:block>
+                                            </th:block>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div><!--END nameportraitsignature-->
+                        </div><!--END formgroup-->
+                    </fieldset>
+
+                </div><!--END col-->
+            </div><!--END row-->
+        </div>
+
+        <div class="inlinebuttons btn-group btn-group-justified  owner-paging-buttons" role="nav" aria-label="view previous or next page" id="prevnxt">
+            <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-default fill prev" id="prevButton" value="previous">Previous</button>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-primary fill next" id="nextButton" value="next" disabled>Next
+                    <div class="round"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></div></button>
+            </div>
+        </div>
+
+
+    </main>
+</div><!--END Tiles row-->
+
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+
+
+    var appInternalID = /*[[${baseTrademarkApplication.applicationInternalID}]]*/ 'User Name';
+
+    var host_name= /*[[${hostBean.host}]]*/ 'User Name';
+    var host_port= /*[[${hostBean.port}]]*/ 'User Name';
+    var  image_path = /*[[${markImagePath}]]*/ 'User Name';
+
+    var  image_pathBW = /*[[${markImagePathBW}]]*/ 'User Name';
+
+    var colorClaim = /*[[${markColorClaim}]]*/ 'User Name';
+
+    var acceptBW = /*[[${markColorClaimBW}]]*/ 'User Name';
+
+    var translationFW = /*[[${translationFW}]]*/ 'User Name';
+
+    var translitFW = /*[[${translitFW}]]*/ 'User Name';
+    var containsSignatureName = /*[[${containsSignatureName}]]*/ 'User Name';
+
+    var isName = /*[[${isName}]]*/ 'User Name';
+    var isSignature = /*[[${isSignature}]]*/ 'User Name';
+    var isPortrait = /*[[${isPortrait}]]*/ 'User Name';
+
+    var isNPSLivingPerson = /*[[${isNPSLivingPerson}]]*/ 'User Name';
+
+
+    var host = host_name+":"+host_port;
+    var breadCrumbStatus = /*[[${breadCrumbStatus}]]*/ 'User Name';
+
+
+    /*]]>*/
+</script>
+
+
+
+<script>
+
+    var nextLinkURL = "../../mark/designWithTextDisclaimer/?trademarkID="+appInternalID;
+    var prevLinkURL = "../../application/MarkDetails/?trademarkID="+appInternalID;
+    ////////////////////////////////////////////////////////////////////////////////////
+    // bred crumb links
+    ////////////////////////////////////////////////////////////////////////////////////
+    var bsLink1 = "../../application/OwnerSetView/?trademarkID="+appInternalID;
+
+    var bsLink2_active =  "../../application/MarkDetails/?trademarkID="+appInternalID;
+    var bsLink2_done =  "../../mark/designWithTextDisclaimer/?trademarkID="+appInternalID;
+
+    var bsLink3_active =  "../../application/goodsAndServicesStart/?trademarkID="+appInternalID;
+    var bsLink3_done =  "../../application/goodsAndServicesReview/?trademarkID="+appInternalID;
+
+
+
+
+    var bsLink4_active = "../../application/filingBasisStart/?trademarkID="+appInternalID;
+    var bsLink4_done = "../../application/filingBasisStart/?trademarkID="+appInternalID;
+
+
+
+    var bsLink5_active =  "../../application/additionalInfoUpload/?trademarkID="+appInternalID;
+    var bsLink5_done =  "../../application/additionalInfoUpload/?trademarkID="+appInternalID;
+
+
+
+
+    var bsLink6_active =  "../../application/confirmInfo/?trademarkID="+appInternalID;
+    var bsLink6_done =  "../../application/confirmInfo/?trademarkID="+appInternalID;
+    ////////////////////////////////////////////////////////////////////////////////////
+
+
+
+</script>
+
+
+<script>
+
+
+
+    // next link url to enable  for u.s individual href="http://localhost:8080/application/owner/info"
+    $(document).ready(function() {
+
+
+        setTimeout(function () {
+            $('.content').fadeIn(500);
+        }, 500);
+
+        setTimeout(function () {
+            // after 1000 ms we add the class animated to the login/register card
+            $('#panels').fadeIn(500);
+        }, 500);
+
+
+        setTimeout(function () {
+            // after 1000 ms we add the class animated to the login/register card
+            $('#contacts-ui').fadeIn(500);
+
+
+        }, 500)
+
+        //////////////////////////////////////////////////////////////////////
+        // set mark image based on persisted values
+        //////////////////////////////////////////////////////////////////////
+
+        // initialize standard character pop over
+
+        $('[data-toggle="popover"]').popover({
+            title : false,
+            html : true,
+            content : '<div class="media"><span id="showmarktxt" style="min-width:77px;width:80px;margin:0 auto;" class="media-object" alt="my trademark">Mark</span></div>'
+        });
+
+
+
+
+        $( '#togglepop' ).click(function() {
+            $( this ).toggleClass( 'focus' );
+            $(this).html() === '<span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Hide My Mark'
+                ? $(this).html('<span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Show My Mark')
+                : $(this).html('<span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Hide My Mark');
+        });
+
+
+
+        //////////////////////////////////////////////////////////////////////
+        // added for integration
+        // right triang\le accodian toggle
+        //////////////////////////////////////////////////////////////////////
+        $('.glyphicon').click(function () {
+            $(this).toggleClass("glyphicon-triangle-right").toggleClass("glyphicon-triangle-bottom");
+        });
+        //////////////////////////////////////////////////////////////////////
+        // activate tool tip
+        //////////////////////////////////////////////////////////////////////
+
+        $('[data-toggle="tooltip"]').tooltip();
+
+        setBreadCrumb(breadCrumbStatus);
+
+        $('#bs-link1').click(function () {
+            var url = $(this).attr("href");
+            if(url != "undefined"){
+                location.href=url;
+            }
+
+        });
+
+        $('#bs-link2').click(function () {
+            var url = $(this).attr("href");
+            if(url != "undefined"){
+                //location.href=url;
+            }
+
+        });
+
+        $('#bs-link3').click(function () {
+            var url = $(this).attr("href");
+            if(url != "undefined"){
+                location.href=url;
+            }
+
+        });
+
+        $('#bs-link4').click(function () {
+            var url = $(this).attr("href");
+            if(url != "undefined"){
+                location.href=url;
+            }
+
+        });
+
+        $('#bs-link5').click(function () {
+            var url = $(this).attr("href");
+            if(url != "undefined"){
+                location.href=url;
+            }
+
+        });
+
+        $('#bs-link6').click(function () {
+            var url = $(this).attr("href");
+            if(url != "undefined"){
+                location.href=url;
+            }
+
+        });
+
+
+
+
+
+
+        ////////////////////////////////////////
+        // set link click events
+        /////////////////////////////////////////
+
+        $('#prevButton').click(function () {
+            location.href=prevLinkURL;
+        });
+
+        $('#nextButton').click(function () {
+            location.href=nextLinkURL;
+        });
+
+
+
+
+
+        if($('#ta2').val()!= ""){
+            $('#nextButton').attr("disabled",false);
+
+        }
+        $('#ta2').focusout( function () {
+
+            var markText = $(this).val();
+            if(markText != ""){
+                saveMarkTextdetails("mark-standard-text", markText, appInternalID);
+
+                $('#nextButton').attr("disabled",false);
+
+                $( '#togglepop' ).attr('data-content', '<div class="media"><span id="showmarktxt" style="min-width:77px;width:80px;margin:0 auto;font-family: Palatino, Garamond, Bookman, Avant Garde; font-size:.9em;text-align:center;margin-bottom:0;" class="media-object" alt="my trademark">'+markText+'</span></div>');
+
+            }
+
+
+        });
+
+
+        //////////////////////////////////////////////////////////////////////
+        // toggle between color or bw local
+        //////////////////////////////////////////////////////////////////////
+        $('#inlineRadio2').click(function () {
+
+            $( '#togglepop' ).attr('data-content', '<div class="media"><img src='+image_pathBW+' style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>');
+
+
+            $('#colorMarkBWInline').attr("src",image_pathBW );
+
+        });
+        //////////////////////////////////////////////////////////////////////
+        // toggle between color or bw local
+        //////////////////////////////////////////////////////////////////////
+        $('#inlineRadio1').click(function () {
+            $( '#togglepop' ).attr('data-content', '<div class="media"><img src='+image_path+' style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>');
+
+            $('#colorMarkInline').attr("src",image_path );
+        });
+
+
+
+
+
+        //////////////////////////////////////////////////////////////////////
+        // field auto save translation foreign wording "yes"
+        //////////////////////////////////////////////////////////////////////
+
+        $('#inlineRadio3').click( function () {
+
+
+            saveMarkTextdetails("mark-fw-translation", "yes", appInternalID);
+
+        });
+
+        //////////////////////////////////////////////////////////////////////
+        // field auto save translation foreign wording "no"
+        //////////////////////////////////////////////////////////////////////
+
+        $('#inlineRadio4').click( function () {
+
+
+            saveMarkTextdetails("mark-fw-translation", "no", appInternalID);
+
+        });
+
+        //////////////////////////////////////////////////////////////////////
+        // field auto save translation foreign wording  language type
+        //////////////////////////////////////////////////////////////////////
+
+        $('#language').change( function () {
+
+            var languageType = $(this).val();
+            saveMarkTextdetails("mark-fw-languageType", languageType, appInternalID);
+
+        });
+
+
+        //////////////////////////////////////////////////////////////////////
+        // field auto save translation foreign wording  fw text
+        //////////////////////////////////////////////////////////////////////
+
+        $('#engtranslation').focusout( function () {
+
+            var fwText = $(this).val();
+            saveMarkTextdetails("mark-fw-fwText", fwText, appInternalID);
+
+        });
+
+        //////////////////////////////////////////////////////////////////////
+        // field auto save translation foreign wording  english text
+        //////////////////////////////////////////////////////////////////////
+
+        $('#inthemark').focusout( function () {
+
+            var engText = $(this).val();
+            saveMarkTextdetails("mark-fw-engText", engText, appInternalID);
+
+        });
+
+
+
+        //////////////////////////////////////////////////////////////////////
+        // field auto save transliteration foreign wording "yes"
+        //////////////////////////////////////////////////////////////////////
+
+        $('#inlineRadio5').click( function () {
+
+
+            saveMarkTextdetails("mark-fw-transliteration", "yes", appInternalID);
+
+        });
+
+        //////////////////////////////////////////////////////////////////////
+        // field auto save transliteration foreign wording "no"
+        //////////////////////////////////////////////////////////////////////
+
+        $('#inlineRadio6').click( function () {
+
+
+            saveMarkTextdetails("mark-fw-transliteration", "no", appInternalID);
+
+        });
+
+
+        //////////////////////////////////////////////////////////////////////
+        // field auto save transliteration foreign wording  language type
+        //////////////////////////////////////////////////////////////////////
+
+        $('#languagetranslit').change( function () {
+
+            var languageType = $(this).val();
+            saveMarkTextdetails("mark-fw-translit-languageType", languageType, appInternalID);
+
+        });
+
+        //////////////////////////////////////////////////////////////////////
+        // field auto save transliteration foreign wording  fw text
+        //////////////////////////////////////////////////////////////////////
+
+        $('#nonlatranslation').focusout( function () {
+
+            var fwText = $(this).val();
+            saveMarkTextdetails("mark-fw-translit-fwText", fwText, appInternalID);
+
+        });
+
+        //////////////////////////////////////////////////////////////////////
+        // field auto save transliteration foreign wording  fw text
+        //////////////////////////////////////////////////////////////////////
+
+        $('#inenglish').focusout( function () {
+
+            var engText = $(this).val();
+            saveMarkTextdetails("mark-fw-translit-engText", engText, appInternalID);
+
+        });
+
+
+        //////////////////////////////////////////////////////////////////////
+        // field auto save name portrait signature radio "yes"
+        //////////////////////////////////////////////////////////////////////
+
+
+        $('#inlineRadio7').click( function () {
+
+
+            saveMarkTextdetails("mark-name-sig-portrait", "yes", appInternalID);
+
+        });
+
+        //////////////////////////////////////////////////////////////////////
+        // field auto save name portrait signature radio "no"
+        //////////////////////////////////////////////////////////////////////
+
+        $('#inlineRadio8').click( function () {
+
+
+            saveMarkTextdetails("mark-name-sig-portrait", "no", appInternalID);
+
+        });
+
+
+
+
+        //////////////////////////////////////////////////////////////////////
+        // field auto save name / portrai/ signature BS check boxes
+        //////////////////////////////////////////////////////////////////////
+
+
+
+        $('#namechecked').click(function () {
+
+            if($(this).is(":checked")) {
+
+                saveMarkTextdetails("mark-NPS-name", "yes", appInternalID);
+            }
+            else{
+                saveMarkTextdetails("mark-NPS-name", "no", appInternalID);
+            }
+        });
+
+        $('#portraitchecked').click(function () {
+
+            if($(this).is(":checked")) {
+
+                saveMarkTextdetails("mark-NPS-portrait", "yes", appInternalID);
+            }
+            else{
+                saveMarkTextdetails("mark-NPS-portrait", "no", appInternalID);
+            }
+        });
+
+        $('#signaturechecked').click(function () {
+
+            if($(this).is(":checked")) {
+
+                saveMarkTextdetails("mark-NPS-signature", "yes", appInternalID);
+            }
+            else{
+                saveMarkTextdetails("mark-NPS-signature", "no", appInternalID);
+            }
+        });
+
+
+
+        //////////////////////////////////////////////////////////////////////
+        // field auto save mark NPS - name-firstName
+        //////////////////////////////////////////////////////////////////////
+
+        $('#name-firstname').focusout( function () {
+
+            var field_value = $(this).val();
+            if(field_value != ""){
+                saveMarkTextdetails("mark-NPS-name-firstName", field_value, appInternalID);
+            }
+
+        });
+
+
+        //////////////////////////////////////////////////////////////////////
+        // field auto save mark NPS - name-middleName
+        //////////////////////////////////////////////////////////////////////
+
+        $('#name-middlename').focusout( function () {
+
+            var field_value = $(this).val();
+            if(field_value != ""){
+                saveMarkTextdetails("mark-NPS-name-middleName", field_value, appInternalID);
+            }
+
+        });
+
+        //////////////////////////////////////////////////////////////////////
+        // field auto save mark NPS - name-lastName
+        //////////////////////////////////////////////////////////////////////
+
+        $('#name-lastname').focusout( function () {
+
+            var field_value = $(this).val();
+            if(field_value != ""){
+                saveMarkTextdetails("mark-NPS-name-lastName", field_value, appInternalID);
+            }
+
+        });
+
+
+        $('#signature-firstname').focusout( function () {
+
+            var field_value = $(this).val();
+            if(field_value != ""){
+                saveMarkTextdetails("mark-NPS-signature-firstName", field_value, appInternalID);
+            }
+
+        });
+
+        $('#signature-middlename').focusout( function () {
+
+            var field_value = $(this).val();
+            if(field_value != ""){
+                saveMarkTextdetails("mark-NPS-signature-middleName", field_value, appInternalID);
+            }
+
+        });
+
+        $('#signature-lastname').focusout( function () {
+
+            var field_value = $(this).val();
+            if(field_value != ""){
+                saveMarkTextdetails("mark-NPS-signature-lastName", field_value, appInternalID);
+            }
+
+        });
+
+        $('#portrait-firstname').focusout( function () {
+
+            var field_value = $(this).val();
+            if(field_value != ""){
+                saveMarkTextdetails("mark-NPS-portrait-firstName", field_value, appInternalID);
+            }
+
+        });
+
+        $('#portrait-middlename').focusout( function () {
+
+            var field_value = $(this).val();
+            if(field_value != ""){
+                saveMarkTextdetails("mark-NPS-portrait-middleName", field_value, appInternalID);
+            }
+
+        });
+
+
+        $('#portrait-lastname').focusout( function () {
+
+            var field_value = $(this).val();
+            if(field_value != ""){
+                saveMarkTextdetails("mark-NPS-portrait-lastName", field_value, appInternalID);
+            }
+
+        });
+
+
+        //////////////////////////////////////////////////////////////////////
+        // field auto save Mark is NPS living  "yes"
+        //////////////////////////////////////////////////////////////////////
+
+        $('#inlineRadio17').click( function () {
+
+
+            saveMarkTextdetails("mark-nps-living", "yes", appInternalID);
+
+        });
+
+        //////////////////////////////////////////////////////////////////////
+        // field auto save Mark is NPS living "no"
+        //////////////////////////////////////////////////////////////////////
+
+        $('#inlineRadio18').click( function () {
+
+
+            saveMarkTextdetails("mark-nps-living", "no", appInternalID);
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }); // end of document ready
+
+
+
+
+    function saveMarkTextdetails(field_name_prefix, field_value, appInternalID) {
+
+
+
+
+
+        //alert(field_name_prefix);
+        // send state, and token to server
+        // token will be generated in the controller and added to the view
+        // similar to how access token works ...a token is tied to a user
+        // access token will be passed in through model
+        //
+        // var tokenValue = '${token}';  // token is the model attribute name
+        // we are not using secured tokens for the prototype
+        // we will secure it by adding ssl and https support
+
+        //var field_value = $(this).val();
+        //alert(field_value);
+
+        $.ajax({
+            url: "../../REST/apiGateway/mark/update/"+field_name_prefix+"/"+field_value+"/"+appInternalID,
+            type: 'GET',
+            success: function(data){
+
+                // parse out status msg:
+                var s_code = data.substring(data.indexOf("status:")+7, data.indexOf("status:")+4+7);
+
+                var s_msg = data.substring(data.indexOf("msg:")+4, data.length-2);
+
+                if(s_code.trim() == "200"){
+                    //if(data.contains("status: 200")){
+                    // show confirmation check mark on form
+                    //$('#toggle').delay(1000).click();
+                    $(".autoSaveMessageArea span").fadeOut(500);
+                    setTimeout(function() {
+                        // after 1000 ms we add the class animated to the login/register card
+                        $(".autoSaveMessageArea span").text(s_msg);
+                        $(".autoSaveMessageArea span").fadeIn(1000);
+                    }, 500);
+
+                }
+
+
+            },
+            error: function(data) {
+
+                console.log(data);
+
+            }
+
+        });
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////
+        // end of contact information 'State' auto save ////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+
+
+    }
+
+    function setBreadCrumb(bsStatusArrayList){
+
+        for(var a=0; a< bsStatusArrayList.length; a++){
+            if(a==0){
+                if(bsStatusArrayList[a] != "NA"){
+
+                    $('#bs-header1').addClass(bsStatusArrayList[a]);
+                    $('#bs-link1').attr("href", bsLink1);
+
+                }
+
+            }
+            if(a==1){
+                if(bsStatusArrayList[a] != "NA"){
+                    $('#bs-header2').addClass(bsStatusArrayList[a]);
+
+
+                }
+
+            }
+            if(a==2){
+                if(bsStatusArrayList[a] != "NA"){
+
+                    $('#bs-header3').addClass(bsStatusArrayList[a]);
+                    if(bsStatusArrayList[a] == "active"){
+                        $('#bs-link3').attr("href", bsLink3_active);
+
+                    }
+                    if(bsStatusArrayList[a] == "done"){
+                        $('#bs-link3').attr("href", bsLink3_done);
+                    }
+
+                }
+
+            }
+            if(a==3){
+                if(bsStatusArrayList[a] != "NA"){
+
+                    $('#bs-header4').addClass(bsStatusArrayList[a]);
+                    if(bsStatusArrayList[a] == "active"){
+                        $('#bs-link4').attr("href", bsLink4_active);
+
+                    }
+                    if(bsStatusArrayList[a] == "done"){
+                        $('#bs-link4').attr("href", bsLink4_done);
+                    }
+
+                }
+
+            }
+            if(a==4){
+                if(bsStatusArrayList[a] != "NA"){
+                    $('#bs-header5').addClass(bsStatusArrayList[a]);
+                    if(bsStatusArrayList[a] == "active"){
+                        $('#bs-link5').attr("href", bsLink5_active);
+
+                    }
+                    if(bsStatusArrayList[a] == "done"){
+                        $('#bs-link5').attr("href", bsLink5_done);
+                    }
+
+                }
+
+            }
+            if(a==5){
+                if(bsStatusArrayList[a] != "NA"){
+                    $('#bs-header6').addClass(bsStatusArrayList[a]);
+                    if(bsStatusArrayList[a] == "active"){
+                        $('#bs-link6').attr("href", bsLink6_active);
+
+                    }
+                    if(bsStatusArrayList[a] == "done"){
+                        $('#bs-link6').attr("href", bsLink6_done);
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+</script>
+
+</body>
+</html>

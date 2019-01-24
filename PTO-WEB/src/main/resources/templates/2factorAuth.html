@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'about')}"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="content" style="display: none;">
+    <div class="container-fluid" style="position: relative; top:100px;">
+
+        <div class="col-md-14" >
+            <div class="form-container" style=" position: relative;top:10%; max-height:3000px; color: black;   margin-bottom: 100px; background-image: linear-gradient(white, whitesmoke); border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+                <div style="position: relative;top:26px; margin-left: 40px;">
+                    <h4><b style="color: black">Two Factor Authentication</b></h4>
+                </div>
+                <div class=" card-header-rose card-header-text" style="margin-top: 20px;" >
+
+                    <div class="card-text">
+
+                        <h5 class="card-title"><b style="color: black;">Security Details</b></h5>
+                    </div>
+                    <hr style="height:3px; position:relative; top:-20px; left:-11.9%; max-width: 80.1%">
+                    <div class="row">
+                        <span>
+                            <h3 STYLE="color: black; position:relative; right: -10%;"> <b>PLEASE USE THE 6 DIGIT TOKEN THAT WAS SENT TO YOUR REGISTERED EMAIL TO LOGIN. </b></h3>
+                        </span>
+
+                    </div>
+                </div>
+                <div class="card-body" style=" margin-top: 20px;">
+                    <form method="post" style="" action="/2factorSubmit" class="form-horizontal" th:object="${twoFactorDTO}">
+
+
+                        <div class="row" style="position: relative; right:-18%;">
+
+
+                        </div>
+                        <div class="row" style="position: relative; right:-20%; top: 10%;">
+
+                            <div class="col-sm-6">
+
+                                <div class="form-group">
+                                        <span>
+
+                                           <input type="password"  th:field="*{token}"  id="token" placeholder="6 DIGIT TOKEN" class="form-control" style="margin:auto; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;"  th:required>
+                                             <b style="color: red"> <p th:each="error : ${#fields.errors('token')}"
+                                                                       th:text="${error}">Validation error</p></b>
+
+                                        </span>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+                        <div class="row" style="margin-bottom: 50px; position:relative; right:-57%;">
+                            <label class="col-sm-2 col-form-label"></label>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <button style="position:relative; right:-20%; min-width: 100px; background-color: #084A95; color: whitesmoke; border-top-left-radius: 7px; border-bottom-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px;" class="btn btn-default btn- registrationSubmit" type="submit" value="Register" ><span class="glyphicon glyphicon-log-in" ></span> &nbsp;&nbsp;Login&nbsp;</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function() {
+        // $('.content').hide();
+        setTimeout(function() {
+            // after 600 ms we add the class animated to the login/register card
+            $('.content').fadeIn('slow');
+        }, 600);
+
+
+
+
+    });
+</script>
+</body>
+</html>

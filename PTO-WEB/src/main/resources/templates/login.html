@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
 
-      th:replace="~{fragments/layout :: layout (~{::body},'login')}"
+      th:replace="~{fragments/lynnFragmentNoSession :: layout (~{::body},'login')}"
 
 >
 <head>
@@ -11,62 +11,66 @@
 
 
 
-                 <div class="container" style="position: relative; bottom:20%; min-height: 800px; display: none;">
+                 <div class="container" style="position: relative; top:-155px; bottom:20%; min-height: 800px; display: none;">
 
                     <form th:action="@{/login}" method="post" class="form form-check-input form-control-sm "  >
                         <div class="card card-login" style="margin: auto; position: relative;top:200px; background-color: whitesmoke; min-height: 350px; margin-left: 200px;  max-width: 55%;   border-top-left-radius: 20px; border-bottom-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px;"  >
                             <div class=" card-header-blue text-center" style="padding-top: 10px;position:relative;top: 20px; right:-30%;">
-                                <b class="card-title" style=""><a style="font-size: x-small;margin-top: 50px;" href="/registration">New User</a></b>
+                                <b class="card-title" style=""><a style="font-weight: bold;margin-top: 50px;" href="/registration">New User</a></b>
                             </div>
 
-                            <div class="card-body " style="padding-top: 20px;position:relative;top: 20px; min-height: 200px;">
-                                <span class="card-description" style="position: relative; right:-35%;"><b>Existing User</b></span>
+                            <div class="card-body " style="padding-top: 20px;position:relative;top: 20px; min-height: 200px; border: none;">
+                                <!-- Login Form -->
+
+
+                                <span class="card-description" style="position: relative; right:-35%;"><b style="font-weight: bold;">Sign In</b></span>
 
                                 <span class="bmd-form-group" style="position: relative; top:10%; bottom: -10px; right:-10%;" >
                                   <div class="input-group">
                                     <div class="input-group-prepend">
                                       <span class="input-group-text" style="margin:auto; position:relative; left:38%; right:40%;">
-                                          <span class="glyphicon glyphicon-user"><b>Email Address</b></span>
+                                         <i class="material-icons">face</i><b style="padding-left: 10px; position: relative; top:-5px;font-weight: bold">Email Address</b>
                                       </span>
                                     </div>
-                                    <input style="min-width:200px; margin: auto; position:relative; left:40%; right:40%; border-top-right-radius: 8px; border-top-left-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px;" type="email" class="form-control" name="username" placeholder="Email...">
+                                    <input style="min-width:200px; margin: auto; position:relative; left:40%; right:40%; border-top-right-radius: 2px; border-top-left-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px;" type="email" class="form-control" name="username" placeholder="">
                                   </div>
                                 </span>
                                 <span class="bmd-form-group" style="margin:auto; position: relative; bottom: -20px; right:-10%;">
                                   <div class="input-group" >
                                     <div class="input-group-prepend">
                                       <span class="input-group-text" style="margin:auto; position:relative; left:40%; right :40%;">
-                                          <span class="glyphicon glyphicon-lock"><b>Password</b></span>
+                                          <i class="material-icons">vpn_key</i><b style="padding-left: 10px; position: relative; top:-5px;font-weight: bold;">Password</b>
                                       </span>
                                     </div>
-                                    <input  style="min-width:200px; margin:auto; position:relative; left:39.6%; border-top-right-radius: 8px; border-top-left-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px;" type="password" class="form-control" name="password" placeholder="Password...">
+                                    <input  style="min-width:200px; margin:auto; position:relative; left:39.6%; border-top-right-radius: 2px; border-top-left-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px;" type="password" class="form-control" name="password" placeholder="">
                                   </div>
                                 </span>
-                            </div>
-                            <div class="card-footer justify-content-center" style="border-top-color:white;  padding-top: 20px; padding-bottom:50px; max-width:60%; min-width: 60%; position:relative;top: -10px; left:33px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px;">
 
-                                <div class="form-group" ><button style="min-width:196px; position:relative; left:28%; right:20%; size:auto; background-color: #004c97; color: whitesmoke;  border-top-left-radius: 8px; border-bottom-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px;" class="btn" type="submit" value="Sign In"><span  style="position: relative; left:-45px;" class="glyphicon glyphicon-log-in" ></span><b style="position: relative; left:-10px;"> &nbsp;  Sign In&nbsp;</b></button></div>
-
-                                <!-- Login Form -->
-                                <div  style="color: red; position: relative; top:20%; right:-22%;" th:if="${param.error}">
-                                    <b>Invalid username and password.</b>
-                                </div>
-                                <div  style="color: green;font:bold; position: relative; top:20%; right:-22%;" th:if="${param.logout}">
-                                    You have been logged out.
-                                </div>
-
-
+                                <span class="bmd-form-group" style="margin:auto; position: relative; bottom: -40px; right:-10%;">
+                                     <div class="input-group" >
+                                        <button style="min-width:200px; margin:auto; position:relative; left:80px; border-top-right-radius: 5px; border-top-left-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;background-color: #004c97; color: whitesmoke; " class="btn" type="submit" value="Sign In"><i class="material-icons" style="padding-right: 70px; ">input</i><b style="position: relative; left:-45px; top:-5px; font-weight: bold;"> &nbsp;  Sign In&nbsp;</b>
+                                        </button>
+                                     </div>
+                                </span>
                             </div>
 
+                            </div>
+                            <div class="card-footer justify-content-center" style="border-top-color:white;  padding-top: 20px; padding-bottom:50px; max-width:60%; min-width: 60%; position:relative;left:33px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px;">
 
 
-                        </div>
+
+
+                            </div>
+
+
+
+
 
 
 
                     </form>
 
-        </div>
+                    </div>
                 <script>
                     $(document).ready(function() {
                         $('.container').hide();

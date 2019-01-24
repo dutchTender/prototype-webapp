@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/efileApplicationMarkFragment :: layout (~{::body},'user')}" xmlns="http://www.w3.org/1999/html">
+<head >
+    <meta charset="UTF-8">
+    <title></title>
+</head>Mark Details
+<body>
+<div class="row content" style="display: none;">
+    <main class="col-xs-12 col-sm-8 col-lg-7">
+        <!--START Content Div-->
+        <div class="row">
+            <div class="col-xs-12 text-left">
+                <div class="row">
+                    <section class="col-xs-12 steps breadcrumb-steps" aria-label="progress tracker">
+                        <div class="row displaycell">
+                            <div class="col-xs-2 one" id="bs-header1">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-4 number">
+                                        <span>1</span>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-7 col-md-8 col-lg-8" id="bs-link1">
+                                        <p class="first">Your details</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 two" id="bs-header2">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-4 number">
+                                        <span>2</span>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-7 col-md-8 col-lg-8" id="bs-link2">
+                                        <p>Trademark details</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 three" id="bs-header3">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-4 number">
+                                        <span>3</span>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-7 col-md-8 col-lg-8" id="bs-link3">
+                                        <p>Goods and services</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 four" id="bs-header4">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-4 number">
+                                        <span>4</span>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-7 col-md-8 col-lg-8" id="bs-link4">
+                                        <p>Basis</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 five" id="bs-header5">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-4 number">
+                                        <span>5</span>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-7 col-md-8 col-lg-8" id="bs-link5">
+                                        <p>Additional info</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 six" id="bs-header6">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-4 number">
+                                        <span>6</span>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-7 col-md-8 col-lg-8" id="bs-link6">
+                                        <p>Confirm and pay</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <h1>Trademark Details</h1>
+                <p class="required"><span class="weight600">&#42; = Required</span></p>
+                <!--START Application Type-->
+                <div class="card-text">
+                    <h2 class="card-title weight600" id="applicationtype">Mark Type</h2>
+                </div>
+                <p id="typemark"><span class="weight600">&#42;</span> What type of mark are you applying for? <a href="#" data-toggle="tooltip" title="" class="glyphicon glyphicon-info-sign test" data-placement="right" data-original-title="Trademarks and service marks: Are generally words, symbols, designs, or combinations of these.  Marks are often brand names; they work to identify the sources of goods or services, showing that they come from particular manufacturers or sellers.  Trademarks are for goods, which are physical things that are sold to others, like shoes.  Service marks are for services that are provided to others, like tax preparation services.
+
+Certification Mark:  A certification mark is a type of trademark that is used to show consumers that particular goods and/or services, or their providers, have met certain standards.  (See the Certification Marks webpage)
+
+Collective Mark:  A collective mark is mark used by members of a collective organization to identify their goods and/or services and distinguish them from the goods and/or services of non-members.  (See TMEP Section 1303)
+
+Collective Membership Mark:  A collective membership mark is a mark used by the members of a particular organization to signify that they are members of that organization (e.g., a social club or labor union:  See TMEP Section 1304)."></a></p>
+                <fieldset>
+                    <legend>Select the type of mark you are applying for</legend>
+                    <div>
+                        <input class="form-check-input checkmark" type="checkbox" value="Trademark / Servicemark" role="checkbox" aria-checked="false" tabindex="0" aria-labelledby="tradeserv2" id="tradeserv">
+                        <label class="form-check-label form-check" for="tradeserv" id="tradeserv2"><span class="radio notspecial">Trademark / Servicemark</span></label>
+                    </div>
+                    <div role="heading" aria-level="3">
+                        <button type="button" class="btn btn-link Accordion-trigger" data-toggle="collapse" data-target="#markoptions" aria-controls="markoptions" aria-expanded="false" id="optionsbtn"><span class="glyphicon glyphicon-triangle-right"></span><span  class="toggleglyph glyphicon glyphicon-triangle-bottom visuallyremoved"></span> Expand for Uncommon Mark Types</button>
+                    </div>
+                    <div id="markoptions" class="collapse Accordion-panel" role="region" aria-labelledby="optionsbtn">
+                        <div class="Accordion">
+                            <p><span class="weight600">&#42;</span> Which of the following types best describes the mark you want to apply for?</p>
+                            <input class="form-check-input checkmark" type="checkbox" value="Certification" aria-checked="false" tabindex="0" aria-labelledby="cert" id="certcheck">
+                            <label class="form-check-label form-check" for="certcheck" id="cert"><span class="radio notspecial">Certification</span></label>
+                            <input class="form-check-input checkmark" type="checkbox" value="Collective" aria-checked="false" tabindex="0" id="collectcheck" aria-labelledby="collect">
+                            <label class="form-check-label form-check" for="collectcheck" id="collect2"><span class="radio notspecial" id="collect">Collective</span></label>
+                            <input class="form-check-input checkmark" type="checkbox" value="Collective Membership" aria-checked="false" tabindex="0" aria-labelledby="collectm" id="collectmember">
+                            <label class="form-check-label form-check" for="collectmember" id="collectmemb"><span class="radio notspecial" id="collectm">Collective Membership</span></label>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!--END Application Type-->
+            </div><!--END RADIO container-->
+        </div><!--END row-->
+        <!--START Tiles-->
+        <div class="container-fluid">
+            <div class="row" id="panels">
+                <div class="row">
+
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-xs-8">
+                                                <h3>Standard Character</h3>
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <a href="/application/MarkExamples/?anchorID=top" target="_blank" class="right">Examples</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body nocontent match" id="design-standard-panel" role="button" aria-label="select standard character mark" URI="/mark/standard/?trademarkID=" mark-type="Standard%20Character">
+                                        <div class="col-xs-5">
+                                            <img th:src="@{/resources/images/FontAwesome47-2.png}" alt="" class="img-responsive">
+                                        </div>
+                                        <div class="col-xs-7">
+                                            <p class="right">Text only, with no particular stylization or font</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-xs-8">
+                                                <h3>Stylized</h3>
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <a href="/application/MarkExamples/?anchorID=stylized" target="_blank" class="right">Examples</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body nocontent" id="design-stylized-panel" role="button" aria-label="select stylized mark" URI="/mark/designWithText/?trademarkID=" mark-type="Stylized">
+                                        <div class="col-xs-5">
+                                            <img th:src="@{/resources/images/abc_lobster.gif}" alt="" class="img-responsive">
+                                        </div>
+                                        <div class="col-xs-7">
+                                            <p class="right">Text in a particular style or font</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-xs-8">
+                                                <h3>Design Only</h3>
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <a href="/application/MarkExamples/?anchorID=designonly" target="_blank" class="right align-middle">Examples</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body nocontent" id="design-only-panel" role="button" aria-label="select design only mark" URI="/mark/designWithText/?trademarkID=" mark-type="Design%20Only">
+                                        <div class="col-xs-12">
+                                            <img th:src="@{/resources/images/RetinaIcon-2.png}" alt="" class="img-responsive">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-xs-8">
+                                                <h3>Design with Text</h3>
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <a href="/application/MarkExamples/?anchorID=designwithtext" target="_blank" class="right align-middle" >Examples</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body nocontent" id="design-with-text-panel" role="button"  aria-label="select design with text mark" URI="/mark/designWithText/?trademarkID=" mark-type="Design%20with%20Text">
+                                        <div>
+                                            <img th:src="@{/resources/images/RetinaIcon-3.png}" alt="" class="img-responsive">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--START Hide / Show Additional Mark Examples-->
+                        <div class="row">
+                            <div class="col-xs-12 text-left">
+                                <div id="moremarkoptions" class="collapse Accordion-panel" role="region" aria-labelledby="moreoptionsbtn">
+                                    <div class="Accordion">
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <div class="row">
+                                                            <div class="col-xs-8">
+                                                                <h3>Configuration 3D</h3>
+                                                            </div>
+                                                            <div class="col-xs-4">
+                                                                <a href="/application/MarkExamples/?anchorID=configuration3d" target="_blank" class="right align-middle">Examples</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-body nocontent" role="button" aria-label="select design only mark">
+                                                        <div>
+                                                            <img th:src="@{/resources/images/RetinaIcon_1.svg}"alt="" class="img-responsive">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <div class="row">
+                                                            <div class="col-xs-8" style="padding-right: 0;">
+                                                                <h3>Configuration 3D with Text</h3>
+                                                            </div>
+                                                            <div class="col-xs-4">
+                                                                <a href="/application/MarkExamples/?anchorID=configuration3dtext" target="_blank" class="right align-middle">Examples</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-body nocontent" role="button" aria-label="select design only mark">
+                                                        <div>
+                                                            <img th:src="@{/resources/images/RetinaIcon_2.svg}" alt="" class="img-responsive">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <div class="row">
+                                                            <div class="col-xs-8">
+                                                                <h3>Sound</h3>
+                                                            </div>
+                                                            <div class="col-xs-4">
+                                                                <a href="/application/MarkExamples/?anchorID=sound" target="_blank" class="right align-middle">Examples</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-body nocontent" role="button" aria-label="select design only mark">
+                                                        <div>
+                                                            <img th:src="@{/resources/images/PixleIcon_1.svg}" alt="" class="img-responsive">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <div class="row">
+                                                            <div class="col-xs-8">
+                                                                <h3>Sound Composite</h3>
+                                                            </div>
+                                                            <div class="col-xs-4">
+                                                                <a href="/application/MarkExamples/?anchorID=soundcomposite" target="_blank" class="right align-middle">Examples</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-body nocontent" role="button" aria-label="select design only mark">
+                                                        <div>
+                                                            <img th:src="@{/resources/images/PixleIcon_2.svg}" alt="" class="img-responsive">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <div class="row">
+                                                            <div class="col-xs-8">
+                                                                <h3>Scent</h3>
+                                                            </div>
+                                                            <div class="col-xs-4">
+                                                                <a href="/application/MarkExamples/?anchorID=scent" target="_blank" class="right align-middle">Examples</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-body nocontent" role="button" aria-label="select design only mark">
+                                                        <div>
+                                                            <img th:src="@{/resources/images/nose-c-52601-jpg.jpg}" alt="" class="img-responsive">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <div class="row">
+                                                            <div class="col-xs-8">
+                                                                <h3>Tactile</h3>
+                                                            </div>
+                                                            <div class="col-xs-4">
+                                                                <a href="/application/MarkExamples/?anchorID=tactile" target="_blank" class="right align-middle">Examples</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-body nocontent" role="button" aria-label="select design only mark">
+                                                        <div>
+                                                            <img th:src="@{/resources/images/yuo-04-e-11-d-jpg.jpg}" alt="" class="img-responsive">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <div class="row">
+                                                            <div class="col-xs-8">
+                                                                <h3>Color Only</h3>
+                                                            </div>
+                                                            <div class="col-xs-4">
+                                                                <a href="/application/MarkExamples/?anchorID=coloronly" target="_blank" class="right align-middle">Examples</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-body nocontent" role="button" aria-label="select design only mark">
+                                                        <div>
+                                                            <img th:src="@{/resources/images/col-7864-bc-jpg.jpg}" alt="" class="img-responsive">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <div class="row">
+                                                            <div class="col-xs-8">
+                                                                <h3>Motion</h3>
+                                                            </div>
+                                                            <div class="col-xs-4">
+                                                                <a href="/application/MarkExamples/?anchorID=motion" target="_blank" class="right align-middle">Examples</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-body nocontent" role="button" aria-label="select design only mark">
+                                                        <div>
+                                                            <img th:src="@{/resources/images/adf-d-8-e-123-jpg.jpg}"alt="" class="img-responsive">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <div class="row">
+                                                            <div class="col-xs-8">
+                                                                <h3>Motion with Text</h3>
+                                                            </div>
+                                                            <div class="col-xs-4">
+                                                                <a href="/application/MarkExamples/?anchorID=motionwithtext" target="_blank" class="right align-middle">Examples</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-body nocontent" role="button" aria-label="select design only mark">
+                                                        <div>
+                                                            <img th:src="@{/resources/images/adf-d-8-e-123-jpg_2.jpg}" alt="" class="img-responsive">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <div class="row">
+                                                            <div class="col-xs-8">
+                                                                <h3>Other</h3>
+                                                            </div>
+                                                            <div class="col-xs-4">
+                                                                <a href="/application/MarkExamples/?anchorID=other" target="_blank" class="right align-middle">Examples</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-body nocontent" role="button" aria-label="select design only mark">
+                                                        <div class="col-xs-5">
+                                                            <!--<img src="images/RetinaIcon-3.png" alt="" class="img-responsive">-->
+                                                        </div>
+                                                        <div class="col-xs-7">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div role="heading" aria-level="3">
+                                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#moremarkoptions" aria-controls="markoptions" aria-expanded="false" id="moreoptionsbtn">See More Types</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--END row-->
+            </div><!--END panels row-->
+        </div>
+        <div class="inlinebuttons btn-group btn-group-justified  owner-paging-buttons" role="nav" aria-label="view previous or next page" id="prevnxt">
+            <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-default fill prev" id="prevButton" value="previous">Previous</button>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-primary fill next" id="nextButton" value="next" disabled>Next
+                    <div class="round"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></div></button>
+            </div>
+        </div>
+    </main>
+</div><!--END Tiles row-->
+
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+
+
+    var appInternalID = /*[[${baseTrademarkApplication.applicationInternalID}]]*/ 'User Name';
+
+    var host_name= /*[[${hostBean.host}]]*/ 'User Name';
+    var host_port= /*[[${hostBean.port}]]*/ 'User Name';
+
+
+    var host = host_name+":"+host_port;
+    var markType = /*[[${baseTrademarkApplication.tradeMark.trademarkDesignType}]]*/ 'User Name';
+    var breadCrumbStatus = /*[[${breadCrumbStatus}]]*/ 'User Name';
+
+    /*]]>*/
+</script>
+
+
+
+<script>
+
+    var nextLinkURL ="";
+    var prevLinkURL = "../../application/OwnerSetView/?trademarkID="+appInternalID;
+
+
+    // bread crumb links
+    // tab 1 application_start_id
+    ////////////////////////////////////////////////////////////////////////////////////
+    // bred crumb links
+    ////////////////////////////////////////////////////////////////////////////////////
+    var bsLink1 = "../../application/OwnerSetView/?trademarkID="+appInternalID;
+
+    var bsLink2_active =  "../../application/MarkDetails/?trademarkID="+appInternalID;
+    var bsLink2_done =  "../../mark/designWithTextDisclaimer/?trademarkID="+appInternalID;
+
+    var bsLink3_active =  "../../application/goodsAndServicesStart/?trademarkID="+appInternalID;
+    var bsLink3_done =  "../../application/goodsAndServicesReview/?trademarkID="+appInternalID;
+
+
+
+
+    var bsLink4_active = "../../application/filingBasisStart/?trademarkID="+appInternalID;
+    var bsLink4_done = "../../application/filingBasisStart/?trademarkID="+appInternalID;
+
+
+
+    var bsLink5_active =  "../../application/additionalInfoUpload/?trademarkID="+appInternalID;
+    var bsLink5_done =  "../../application/additionalInfoUpload/?trademarkID="+appInternalID;
+
+
+
+
+    var bsLink6_active =  "../../application/confirmInfo/?trademarkID="+appInternalID;
+    var bsLink6_done =  "../../application/confirmInfo/?trademarkID="+appInternalID;
+    ////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+</script>
+
+
+<script>
+
+
+    // next link url to enable  for u.s individual href="http://localhost:8080/application/owner/info"
+    $(document).ready(function() {
+        setTimeout(function () {
+            $('.content').fadeIn(500);
+        }, 500);
+
+        setTimeout(function () {
+            // after 1000 ms we add the class animated to the login/register card
+            $('#panels').fadeIn(500);
+        }, 500);
+
+
+        setTimeout(function () {
+            // after 1000 ms we add the class animated to the login/register card
+            $('#contacts-ui').fadeIn(500);
+
+
+        }, 500);
+
+        $('.glyphicon').click(function () {
+            $(this).toggleClass("glyphicon-triangle-right").toggleClass("glyphicon-triangle-bottom");
+        });
+
+        $('[data-toggle="popover"]').popover({
+            title : false,
+            html : true,
+            content : '<div class="media"><img src="../../resources/images/placeholder-icon.jpg" style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>'
+        });
+
+        $( '#togglepop' ).click(function() {
+            $( this ).toggleClass( 'focus' );
+            $(this).html() === '<span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Hide My Mark'
+                ? $(this).html('<span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Show My Mark')
+                : $(this).html('<span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Hide My Mark');
+        });
+
+
+        $('[data-toggle="tooltip"]').tooltip();
+
+        setBreadCrumb(breadCrumbStatus);
+
+        $('#bs-link1').click(function () {
+            var url = $(this).attr("href");
+            if(url != "undefined"){
+                location.href=url;
+            }
+
+        });
+
+        $('#bs-link2').click(function () {
+            var url = $(this).attr("href");
+            if(url != "undefined"){
+                //location.href=url;
+            }
+
+        });
+
+        $('#bs-link3').click(function () {
+            var url = $(this).attr("href");
+            if(url != "undefined"){
+                location.href=url;
+            }
+
+        });
+
+        $('#bs-link4').click(function () {
+            var url = $(this).attr("href");
+            if(url != "undefined"){
+                location.href=url;
+            }
+
+        });
+
+        $('#bs-link5').click(function () {
+            var url = $(this).attr("href");
+            if(url != "undefined"){
+                location.href=url;
+            }
+
+        });
+
+        $('#bs-link6').click(function () {
+            var url = $(this).attr("href");
+            if(url != "undefined"){
+                location.href=url;
+            }
+
+        });
+
+
+
+
+        ////////////////////////////////////////
+        // set link click events
+        /////////////////////////////////////////
+
+        $('#prevButton').click(function () {
+            location.href=prevLinkURL;
+        });
+
+        $('#nextButton').click(function () {
+            location.href=nextLinkURL;
+        });
+
+
+
+
+
+
+
+        if(markType == "Design with Text"){
+            $('#design-with-text-panel').addClass("highlight");
+            $('#design-with-text-panel').addClass("focus");
+
+            nextLinkURL="/mark/designWithText/?trademarkID="+appInternalID;
+            $('#nextButton').attr("disabled",false);
+
+        }
+        if(markType == "Design Only"){
+
+            $('#design-only-panel').addClass("highlight");
+            $('#design-only-panel').addClass("focus");
+
+            nextLinkURL="/mark/designWithText/?trademarkID="+appInternalID;
+            $('#nextButton').attr("disabled",false);
+
+        }
+        if(markType == "Stylized"){
+
+            $('#design-stylized-panel').addClass("highlight");
+            $('#design-stylized-panel').addClass("focus");
+
+            nextLinkURL="/mark/designWithText/?trademarkID="+appInternalID;
+            $('#nextButton').attr("disabled",false);
+
+        }
+
+        if(markType == "Standard Character"){
+
+            $('#design-standard-panel').addClass("highlight");
+            $('#design-standard-panel').addClass("focus");
+
+            nextLinkURL="/mark/standard/?trademarkID="+appInternalID;
+            $('#nextButton').attr("disabled",false);
+
+        }
+
+
+        $('.panel-body').click(function () {
+            nextLinkURL = $(this).attr("URI")+appInternalID;
+            var designType = $(this).attr("mark-Type");
+            $('#nextButton').attr("disabled",false);
+            savemarkDesignType(designType,appInternalID);
+
+
+        });
+
+
+
+
+
+
+        // aJAX
+        /////////////////////////////////////////////////////
+        function savemarkDesignType( field_value,application_internal_id) {
+            //alert(field_name_prefix);
+            // send state, and token to server
+            // token will be generated in the controller and added to the view
+            // similar to how access token works ...a token is tied to a user
+            // access token will be passed in through model
+            //
+            // var tokenValue = '${token}';  // token is the model attribute name
+            // we are not using secured tokens for the prototype
+            // we will secure it by adding ssl and https support
+            //var field_value = $(this).val();
+            //alert(field_value);
+            $.ajax({
+                //url: host+"/REST/apiGateway/application/update/"+field_name_prefix+"/"+field_value+"/"+applicaiton_internal_id,
+                url: "../../REST/apiGateway/mark/designType/"+field_value+"/"+application_internal_id,
+                type: 'GET',
+                success: function(data){
+                    // parse out status msg:
+                    var s_code = data.substring(data.indexOf("status:")+7, data.indexOf("status:")+4+7);
+                    var s_msg = data.substring(data.indexOf("msg:")+4, data.length-2);
+                    if(s_code.trim() == "200"){
+                        //if(data.contains("status: 200")){
+                        // show confirmation check mark on form
+                        //$('#toggle').delay(1000).click();
+                        // add time stamp from server side
+                        $(".autoSaveMessageArea span").fadeOut(500);
+                        setTimeout(function() {
+                            // after 1000 ms we add the class animated to the login/register card
+                            $(".autoSaveMessageArea span").text(s_msg);
+                            $(".autoSaveMessageArea span").fadeIn(1000);
+                        }, 500);
+                        // animation rendering control
+
+                    }
+                    else{
+                        //$('.circle-loader').fadeOut(100);
+                        //$('.x-mark').fadeIn(500);
+                        //$(".validationMsgArea span").text(s_msg);
+                        //$(".validationMsgArea span").css('color','red');
+                    }
+                },
+                error: function(data) {
+                    //$('.circle-loader').fadeOut(100);
+                    //$('.x-mark').fadeIn(500);
+                    console.log(data);
+                    // set message to div area ...fields can not be left null
+                    //$(".validationMsgArea span").text("You can not leave any fields empty.");
+                    //$(".validationMsgArea span").css('color','red');
+                }
+            });
+        } // end of function
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+    });
+
+
+    function setBreadCrumb(bsStatusArrayList){
+
+        for(var a=0; a< bsStatusArrayList.length; a++){
+            if(a==0){
+                if(bsStatusArrayList[a] != "NA"){
+
+                    $('#bs-header1').addClass(bsStatusArrayList[a]);
+                    $('#bs-link1').attr("href", bsLink1);
+
+                }
+
+            }
+            if(a==1){
+                if(bsStatusArrayList[a] != "NA"){
+                    $('#bs-header2').addClass(bsStatusArrayList[a]);
+
+
+                }
+
+            }
+            if(a==2){
+                if(bsStatusArrayList[a] != "NA"){
+
+                    $('#bs-header3').addClass(bsStatusArrayList[a]);
+                    if(bsStatusArrayList[a] == "active"){
+                        $('#bs-link3').attr("href", bsLink3_active);
+
+                    }
+                    if(bsStatusArrayList[a] == "done"){
+                        $('#bs-link3').attr("href", bsLink3_done);
+                    }
+
+                }
+
+            }
+            if(a==3){
+                if(bsStatusArrayList[a] != "NA"){
+
+                    $('#bs-header4').addClass(bsStatusArrayList[a]);
+                    if(bsStatusArrayList[a] == "active"){
+                        $('#bs-link4').attr("href", bsLink4_active);
+
+                    }
+                    if(bsStatusArrayList[a] == "done"){
+                        $('#bs-link4').attr("href", bsLink4_done);
+                    }
+
+                }
+
+            }
+            if(a==4){
+                if(bsStatusArrayList[a] != "NA"){
+                    $('#bs-header5').addClass(bsStatusArrayList[a]);
+                    if(bsStatusArrayList[a] == "active"){
+                        $('#bs-link5').attr("href", bsLink5_active);
+
+                    }
+                    if(bsStatusArrayList[a] == "done"){
+                        $('#bs-link5').attr("href", bsLink5_done);
+                    }
+
+                }
+
+            }
+            if(a==5){
+                if(bsStatusArrayList[a] != "NA"){
+                    $('#bs-header6').addClass(bsStatusArrayList[a]);
+                    if(bsStatusArrayList[a] == "active"){
+                        $('#bs-link6').attr("href", bsLink6_active);
+
+                    }
+                    if(bsStatusArrayList[a] == "done"){
+                        $('#bs-link6').attr("href", bsLink6_done);
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+</script>
+
+</body>
+</html>

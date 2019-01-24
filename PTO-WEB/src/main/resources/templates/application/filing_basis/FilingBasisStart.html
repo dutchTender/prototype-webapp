@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/efileApplicationMarkFragment :: layout (~{::body},'user')}" xmlns="http://www.w3.org/1999/html">
+<head >
+    <meta charset="UTF-8">
+    <title>Goods and Services Review</title>
+</head>
+<body>
+<div class="row content" style="display: none;">
+    <main class="col-xs-12 col-sm-8 col-md-8 col-lg-7">
+        <!--START Content Div-->
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row">
+                    <section class="col-xs-12 steps breadcrumb-steps" aria-label="progress tracker">
+                        <div class="row displaycell">
+                            <div class="col-xs-2 one" id="bs-header1">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-4 number">
+                                        <span>1</span>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-7 col-md-8 col-lg-8" id="bs-link1">
+                                        <p class="first">Your details</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 two" id="bs-header2">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-4 number">
+                                        <span>2</span>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-7 col-md-8 col-lg-8" id="bs-link2">
+                                        <p>Trademark details</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 three" id="bs-header3">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-4 number">
+                                        <span>3</span>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-7 col-md-8 col-lg-8" id="bs-link3">
+                                        <p>Goods and services</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 four" id="bs-header4">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-4 number">
+                                        <span>4</span>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-7 col-md-8 col-lg-8" id="bs-link4">
+                                        <p>Basis</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 five" id="bs-header5">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-4 number">
+                                        <span>5</span>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-7 col-md-8 col-lg-8" id="bs-link5">
+                                        <p>Additional info</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 six" id="bs-header6">
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-4 number">
+                                        <span>6</span>
+                                    </div>
+                                    <div class="col-xs-9 col-sm-7 col-md-8 col-lg-8" id="bs-link6">
+                                        <p>Confirm and pay</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <h1>Filing Basis</h1>
+                <div class="row">
+                    <form action="" method="post" >
+                        <fieldset>
+                            <div class="col-xs-12 form-group form-group-md margincontent" id="inuseyes">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <p class="weight600" id="inuse">Is the mark currently in use? <a href="#" data-toggle="tooltip" title="" class="glyphicon glyphicon-info-sign test" data-placement="right" data-original-title="In use means you are already using your trademark in commerce. Commerce means the buying and selling of goods and services"></a></p>
+                                        <div role="radiogroup" aria-labelledby="inuse" class="form-group form-group-md">
+                                            <div class="radio">
+                                                <label for="inlineRadio21" class="radio-inline radiocontainer">Yes, the mark is in use with all of the selected goods/services<input type="radio" name="markinuse" id="inlineRadio21" value="yes" tabindex="0"><span class="checkmark"></span></label>
+                                            </div>
+                                            <div class="radio">
+                                                <label for="inlineRadio022" class="radio-inline radiocontainer">No, the mark is not in use with all of the selected goods/services<input type="radio" name="markinuse" id="inlineRadio022" value="no" tabindex="0"><span class="checkmark"></span></label>
+                                            </div>
+                                        </div><!--END radiogroup-->
+                                        <p class="weight600" id="foreigninuse">Do you have a registration and/or pending application in a foreign country for same goods/services?</p>
+                                        <div role="radiogroup" aria-labelledby="foreigninuse">
+                                            <div class="radio form-group form-group-md">
+                                                <label for="inlineRadio23" class="radio-inline radiocontainer">Yes<input type="radio" name="foreigninuse" id="inlineRadio23" value="yes" tabindex="0"><span class="checkmark"></span></label>
+                                            </div>
+                                            <div class="radio">
+                                                <label for="inlineRadio024" class="radio-inline radiocontainer">No<input type="radio" name="foreigninuse" id="inlineRadio024" value="no" tabindex="0"><span class="checkmark"></span></label>
+                                            </div>
+                                        </div><!--END radiogroup-->
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--prev / next buttons-->
+        <div class="inlinebuttons btn-group btn-group-justified  owner-paging-buttons" role="nav" aria-label="view previous or next page" id="prevnxt">
+            <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-default fill prev" id="prevButton" value="previous">Previous</button>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-primary fill next" id="nextButton" value="next" disabled>Next
+                    <div class="round"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></div></button>
+            </div>
+        </div>
+    </main>
+</div><!--END div content-->
+
+
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+
+
+    var appInternalID = /*[[${baseTrademarkApplication.applicationInternalID}]]*/ 'User Name';
+
+    var host_name= /*[[${hostBean.host}]]*/ 'User Name';
+    var host_port= /*[[${hostBean.port}]]*/ 'User Name';
+
+
+    var host = host_name+":"+host_port;
+
+
+    var  image_path = /*[[${markImagePath}]]*/ 'User Name';
+
+    var  image_pathBW = /*[[${markImagePathBW}]]*/ 'User Name';
+
+    var colorClaim = /*[[${markColorClaim}]]*/ 'User Name';
+
+    var acceptBW = /*[[${markColorClaimBW}]]*/ 'User Name';
+
+    var hasFapp =  /*[[${baseTrademarkApplication.markHasForeignRegistration}]]*/ 'User Name';
+    var hasFappSet =  /*[[${baseTrademarkApplication.markFappSet}]]*/ 'User Name';
+
+
+    var inUse =  /*[[${baseTrademarkApplication.markInUseForAllGS}]]*/ 'User Name';
+    var inUseSet =  /*[[${baseTrademarkApplication.markAllgsSet}]]*/ 'User Name';
+
+    var markType = /*[[${baseTrademarkApplication.tradeMark.trademarkDesignType}]]*/ 'User Name';
+    var markText = /*[[${baseTrademarkApplication.tradeMark.trademarkStandardCharacterText}]]*/ 'User Name';
+    var breadCrumbStatus = /*[[${breadCrumbStatus}]]*/ 'User Name';
+
+    /*]]>*/
+</script>
+
+
+
+<script>
+
+    var nextLinkURL = "../../application/filingBasisUpload/?trademarkID="+appInternalID;
+
+
+    if(inUse){
+        nextLinkURL = "../../application/inUseFilingBasisUpload/?trademarkID="+appInternalID;
+
+    }
+    var prevLinkURL = "../../application/goodsAndServicesReview/?trademarkID="+appInternalID;
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    // bred crumb links
+    ////////////////////////////////////////////////////////////////////////////////////
+    var bsLink1 = "../../application/OwnerSetView/?trademarkID="+appInternalID;
+
+    var bsLink2_active =  "../../application/MarkDetails/?trademarkID="+appInternalID;
+    var bsLink2_done =  "../../mark/designWithTextDisclaimer/?trademarkID="+appInternalID;
+
+    var bsLink3_active =  "../../application/goodsAndServicesStart/?trademarkID="+appInternalID;
+    var bsLink3_done =  "../../application/goodsAndServicesReview/?trademarkID="+appInternalID;
+
+
+
+
+    var bsLink4_active = "../../application/filingBasisStart/?trademarkID="+appInternalID;
+    var bsLink4_done = "../../application/filingBasisStart/?trademarkID="+appInternalID;
+
+
+
+    var bsLink5_active =  "../../application/additionalInfoUpload/?trademarkID="+appInternalID;
+    var bsLink5_done =  "../../application/additionalInfoUpload/?trademarkID="+appInternalID;
+
+
+
+
+    var bsLink6_active =  "../../application/confirmInfo/?trademarkID="+appInternalID;
+    var bsLink6_done =  "../../application/confirmInfo/?trademarkID="+appInternalID;
+    ////////////////////////////////////////////////////////////////////////////////////
+
+
+
+</script>
+
+
+<script>
+
+
+    // next link url to enable  for u.s individual href="http://localhost:8080/application/owner/info"
+    $(document).ready(function() {
+        setTimeout(function () {
+            $('.content').fadeIn(500);
+        }, 500);
+
+        setTimeout(function () {
+            // after 1000 ms we add the class animated to the login/register card
+            $('#panels').fadeIn(500);
+        }, 500);
+
+
+        setTimeout(function () {
+            // after 1000 ms we add the class animated to the login/register card
+            $('#contacts-ui').fadeIn(500);
+
+
+        }, 500);
+
+        $('.glyphicon').click(function () {
+            $(this).toggleClass("glyphicon-triangle-right").toggleClass("glyphicon-triangle-bottom");
+        });
+
+
+
+        $('[data-toggle="tooltip"]').tooltip();
+
+        setBreadCrumb(breadCrumbStatus);
+
+        $('#bs-link1').click(function () {
+            var url = $(this).attr("href");
+            if(url != "undefined"){
+                location.href=url;
+            }
+
+        });
+
+        $('#bs-link2').click(function () {
+            var url = $(this).attr("href");
+            if(url != "undefined"){
+                location.href=url;
+            }
+
+        });
+
+        $('#bs-link3').click(function () {
+            var url = $(this).attr("href");
+            if(url != "undefined"){
+                location.href=url;
+            }
+
+        });
+
+        $('#bs-link4').click(function () {
+            var url = $(this).attr("href");
+            if(url != "undefined"){
+                //location.href=url;
+            }
+
+        });
+
+        $('#bs-link5').click(function () {
+            var url = $(this).attr("href");
+            if(url != "undefined"){
+                location.href=url;
+            }
+
+        });
+
+        $('#bs-link6').click(function () {
+            var url = $(this).attr("href");
+            if(url != "undefined"){
+                location.href=url;
+            }
+
+        });
+
+        $('#prevButton').click(function () {
+            location.href=prevLinkURL;
+        });
+
+        $('#nextButton').click(function () {
+            location.href=nextLinkURL;
+        });
+
+        $('#searchDB').click(function () {
+            location.href=prevLinkURL;
+        });
+
+
+
+
+
+
+
+        //////////////////////////////////////////////////////////////////////
+        // set mark image based on persisted values
+        //////////////////////////////////////////////////////////////////////
+
+        if(markType == "Standard Character"){
+            $('[data-toggle="popover"]').popover({
+                title : false,
+                html : true,
+                content : '<div class="media"><span id="showmarktxt" style="min-width:77px;width:80px;margin:0 auto;font-family: Palatino, Garamond, Bookman, Avant Garde; font-size:.9em;text-align:center;margin-bottom:0;" class="media-object" alt="my trademark">'+markText+'</span></div>'
+            });
+
+
+        }
+        else {
+
+            //////////////////////////////////////////////////////////////////////
+            // set mark image widget based on persisted values
+            //////////////////////////////////////////////////////////////////////
+            if(colorClaim == null){
+                if(image_path != null){
+                    $('[data-toggle="popover"]').popover({
+                        title : false,
+                        html : true,
+                        content : '<div class="media"><img src="'+image_path+'" style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>'
+                    });
+
+                }
+            }
+
+            if(colorClaim == false){
+
+                if(acceptBW == true){
+                    $('#inlineRadio2').click();
+                    $('#bwmark').click();
+
+                    $('[data-toggle="popover"]').popover({
+                        title : false,
+                        html : true,
+                        content : '<div class="media"><img src="'+image_pathBW+'" style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>'
+                    });
+
+
+                }
+                else{
+                    if(image_path != null){
+
+                        $('[data-toggle="popover"]').popover({
+                            title : false,
+                            html : true,
+                            content : '<div class="media"><img src="'+image_path+'" style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>'
+                        });
+
+
+
+                    }
+                }
+
+            }
+            if(colorClaim == true){
+                $('#inlineRadio1').click();
+                if(image_path != null){
+
+                    $('[data-toggle="popover"]').popover({
+                        title : false,
+                        html : true,
+                        content : '<div class="media"><img src="'+image_path+'" style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>'
+                    });
+
+
+                }
+            }
+
+
+        }
+
+
+        // listener for mark image widget popover
+        $( '#togglepop' ).click(function() {
+            $( this ).toggleClass( 'focus' );
+            $(this).html() === '<span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Hide My Mark'
+                ? $(this).html('<span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Show My Mark')
+                : $(this).html('<span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Hide My Mark');
+        });
+
+
+       if(hasFappSet){
+
+           if(hasFapp == false){
+               $('#inlineRadio024').attr("checked", true);
+               $('#nextButton').attr("disabled", false);
+           }
+           else {
+               $('#inlineRadio23').click();
+               $('#nextButton').attr("disabled", false);
+           }
+
+
+       }
+        if(inUseSet){
+
+            if(inUse == false){
+                $('#inlineRadio022').attr("checked", true);
+                $('#nextButton').attr("disabled", false);
+
+            }
+            else {
+                $('#inlineRadio21').attr("checked", true);
+                $('#nextButton').attr("disabled", false);
+
+            }
+
+
+        }
+
+        $("#inlineRadio21").click(function () {
+
+
+            // call rest api
+            // unlock next button
+
+            // yes to pending foreign registration
+            $('#nextButton').attr("disabled", false);
+            saveGSdetails("GS-mark-inUse", "yes", appInternalID);
+            nextLinkURL = "../../application/inUseFilingBasisUpload/?trademarkID="+appInternalID;
+
+
+
+        });
+
+        $("#inlineRadio022").click(function () {
+
+
+            // call rest api
+            // unlock next button
+
+            // no to pending foreign registration
+            $('#nextButton').attr("disabled", false);
+            saveGSdetails("GS-mark-inUse", "no", appInternalID);
+            nextLinkURL = "../../application/filingBasisUpload/?trademarkID="+appInternalID;
+
+        });
+
+
+        $("#inlineRadio23").click(function () {
+
+
+            // call rest api
+            // unlock next button
+
+            // yes to pending foreign registration
+            $('#nextButton').attr("disabled", false);
+            saveGSdetails("GS-mark-fapp", "yes", appInternalID);
+            if($('#inlineRadio21').is(":checked")){
+
+                nextLinkURL = "../../application/inUseFilingBasisUpload/?trademarkID="+appInternalID;
+            }
+            if($('#inlineRadio022').is(":checked")){
+
+                nextLinkURL = "../../application/filingBasisUpload/?trademarkID="+appInternalID;
+            }
+
+
+
+        });
+
+        $("#inlineRadio024").click(function () {
+
+
+            // call rest api
+            // unlock next button
+
+            // no to pending foreign registration
+            $('#nextButton').attr("disabled", false);
+            saveGSdetails("GS-mark-fapp", "no", appInternalID);
+
+            if($('#inlineRadio21').is(":checked")){
+
+                nextLinkURL = "../../application/inUseFilingBasisUpload/?trademarkID="+appInternalID;
+            }
+
+            if($('#inlineRadio022').is(":checked")){
+
+                nextLinkURL = "../../application/filingBasisUpload/?trademarkID="+appInternalID;
+            }
+
+
+
+        });
+
+
+
+
+    });
+
+
+
+
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////
+        // end of contact information 'State' auto save ////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+
+    function saveGSdetails(field_name_prefix, field_value, appInternalID) {
+
+
+
+
+
+        //alert(field_name_prefix);
+        // send state, and token to server
+        // token will be generated in the controller and added to the view
+        // similar to how access token works ...a token is tied to a user
+        // access token will be passed in through model
+        //
+        // var tokenValue = '${token}';  // token is the model attribute name
+        // we are not using secured tokens for the prototype
+        // we will secure it by adding ssl and https support
+
+        //var field_value = $(this).val();
+        //alert(field_value);
+
+        $.ajax({
+            url: "../../REST/apiGateway/GS/update/"+field_name_prefix+"/"+field_value+"/"+appInternalID,
+            type: 'GET',
+            success: function(data){
+
+                // parse out status msg:
+                var s_code = data.substring(data.indexOf("status:")+7, data.indexOf("status:")+4+7);
+
+                var s_msg = data.substring(data.indexOf("msg:")+4, data.length-2);
+
+                if(s_code.trim() == "200"){
+                    //if(data.contains("status: 200")){
+                    // show confirmation check mark on form
+                    //$('#toggle').delay(1000).click();
+                    $(".autoSaveMessageArea span").fadeOut(500);
+                    setTimeout(function() {
+                        // after 1000 ms we add the class animated to the login/register card
+                        $(".autoSaveMessageArea span").text(s_msg);
+                        $(".autoSaveMessageArea span").fadeIn(1000);
+                    }, 500);
+
+                }
+
+
+            },
+            error: function(data) {
+
+                console.log(data);
+
+            }
+
+        });
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////
+        // end of contact information 'State' auto save ////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+
+
+    }
+
+
+    function setBreadCrumb(bsStatusArrayList){
+
+        for(var a=0; a< bsStatusArrayList.length; a++){
+            if(a==0){
+                if(bsStatusArrayList[a] != "NA"){
+
+                    $('#bs-header1').addClass(bsStatusArrayList[a]);
+                    $('#bs-link1').attr("href", bsLink1);
+
+                }
+
+            }
+            if(a==1){
+                if(bsStatusArrayList[a] != "NA"){
+                    $('#bs-header2').addClass(bsStatusArrayList[a]);
+                    if(bsStatusArrayList[a] == "active"){
+                        $('#bs-link2').attr("href", bsLink2_active);
+
+                    }
+                    if(bsStatusArrayList[a] == "done"){
+                        $('#bs-link2').attr("href", bsLink2_done);
+                    }
+
+
+
+                }
+
+            }
+            if(a==2){
+                if(bsStatusArrayList[a] != "NA"){
+
+                    $('#bs-header3').addClass(bsStatusArrayList[a]);
+
+                    if(bsStatusArrayList[a] == "active"){
+                        $('#bs-link3').attr("href", bsLink3_active);
+
+                    }
+                    if(bsStatusArrayList[a] == "done"){
+                        $('#bs-link3').attr("href", bsLink3_done);
+                    }
+
+
+                }
+
+            }
+            if(a==3){
+                if(bsStatusArrayList[a] != "NA"){
+
+                    $('#bs-header4').addClass(bsStatusArrayList[a]);
+
+                }
+
+            }
+            if(a==4){
+                if(bsStatusArrayList[a] != "NA"){
+                    $('#bs-header5').addClass(bsStatusArrayList[a]);
+                    if(bsStatusArrayList[a] == "active"){
+                        $('#bs-link5').attr("href", bsLink5_active);
+
+                    }
+                    if(bsStatusArrayList[a] == "done"){
+                        $('#bs-link5').attr("href", bsLink5_done);
+                    }
+
+                }
+
+            }
+            if(a==5){
+                if(bsStatusArrayList[a] != "NA"){
+                    $('#bs-header6').addClass(bsStatusArrayList[a]);
+                    if(bsStatusArrayList[a] == "active"){
+                        $('#bs-link6').attr("href", bsLink6_active);
+
+                    }
+                    if(bsStatusArrayList[a] == "done"){
+                        $('#bs-link6').attr("href", bsLink6_done);
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

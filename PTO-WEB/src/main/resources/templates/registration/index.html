@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout (~{::body},'registration')}" xmlns="http://www.w3.org/1999/html">
+      th:replace="~{fragments/lynnFragmentNoSession :: layout (~{::body},'registration')}" xmlns="http://www.w3.org/1999/html">
 <head >
     <meta charset="UTF-8">
     <title>Registration Home Page</title>
@@ -9,14 +9,15 @@
 
 <!-- End Navbar -->
 <div class="content" style="display: none;" >
-    <div class="container-fluid" style="position: relative; top:100px;">
+    <div class="container-fluid" style="position: relative; top:-100px;">
 
             <div class="col-md-14" >
-                <div class="form-container" style=" position: relative;top:10%; max-height:3000px; color: black;   margin-bottom: 100px; background-image: linear-gradient(white, whitesmoke); border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+                <div class="form-container" style=" position: relative;top:10%; max-height:3000px; color: black;   margin-bottom: 100px; background-image: linear-gradient(white, white); border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; border-top-left-radius: 20px; border-top-right-radius: 20px;">
                     <div class="row">
                         <div class="col-sm-6">
                             <div style="position: relative;top:26px; margin-left: 40px; margin-bottom: 50px;">
-                                <h4><b style="color: black; opacity: 1; mix-blend-mode: normal; color: rgb(0, 0, 0); font-size: 36px; font-weight: normal; font-style: normal; text-decoration: none; text-align: left; width: 597px; height: 41px; transform: rotate(0deg) translate(96px, 195px) rotate(0deg);">New User Account</b></h4>
+                                <h4><b style="color: black; opacity: 1; mix-blend-mode: normal; color: rgb(0, 0, 0); font-size: 36px; font-weight: normal; font-style: normal; text-decoration: none; text-align: left; width: 597px; height: 41px; transform: rotate(0deg) translate(96px, 195px) rotate(0deg);">Create an account</b></h4>
+                                <p class="help-block">Already have an account? <a href="/login">Sign in</a></p>
                             </div>
                         </div>
                         <div class="col-sm-4">
@@ -31,29 +32,32 @@
 
                         <div class="card-text">
 
-                            <h5 class="card-title"><b style="color: black; color: rgb(0, 0, 0); font-size: 16px; text-align: left; font-weight: bold; font-style: normal; text-decoration: none;">Account Details</b></h5>
+                            <h2 class="card-title"><b style="color: black; color: rgb(0, 0, 0); font-size: 16px; text-align: left; font-weight: bold; font-style: normal; text-decoration: none;">Account Details</b></h2>
 
                         </div>
-                        <hr style="height:3px; position:relative; top:-20px; left:-11.9%; max-width: 80.1%">
+
                     </div>
-                    <div class="card-body" style=" margin-top: 20px;">
+
+
+                    <div class="card-body" style=" margin-top: 20px; border: none;">
                         <form method="post" style="" action="/newUser" class="form-horizontal" th:object="${userCredentialsDTO}">
+                            <div class="text-right help-block form-control-width-lg"><p class="req-form-input-text"><span aria-hidden="true">*</span><span class="sr-only">asterisk</span> indicates <span id="reqAsstText">required</span></p></div>
 
 
-                            <div class="row" style="position: relative; right:-18%;">
+                            <div class="row" style="position: relative; right:-19%;">
                                 <span>
-                                    <label class="col-sm-2 col-form-label"><b style="color: red">*</b>E-Mail </label>
+                                    <label class="col-sm-2 col-form-label">Email Address<b>*</b> </label>
                                 </span>
 
                             </div>
-                            <div class="row" style="position: relative; right:-20%; top: 10%;">
+                            <div class="row" style="position: relative; right:-20%; top:-11px; ">
 
                                 <div class="col-sm-6">
 
                                     <div class="form-group">
                                         <span>
 
-                                           <input type="email" th:field="*{email}"  id="email" placeholder="Email" class="form-control" style="margin:auto; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px;"  th:required>
+                                           <input type="email" th:field="*{email}"  id="email" placeholder="" class="form-control" style="margin:auto; border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;"  required>
 
                                        <b style="color: red"> <p th:each="error : ${#fields.errors('email')}"
                                               th:text="${error}">Validation error</p></b>
@@ -65,20 +69,20 @@
 
 
 
-                            <div class="row" style="position: relative; right:-18%;">
+                            <div class="row" style="position: relative; right:-19%;">
                              <span>
 
-                                 <label class="col-sm-2 col-form-label"><b style="color: red">*</b>First Name </label>
+                                 <label class="col-sm-2 col-form-label">First Name <b>*</b> </label>
                              </span>
 
                             </div>
 
-                            <div class="row" style="position: relative; right:-20%;">
+                            <div class="row" style="position: relative; right:-20%; top:-11px;">
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <span>
-                                            <input type="text" th:field="*{firstName}"  name="firstName" class="form-control" style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                                            <input type="text" th:field="*{firstName}"  name="firstName" class="form-control" style="border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;" required>
                                            <b style="color: red">   <p th:each="error : ${#fields.errors('firstName')}"
                                                                        th:text="${error}">Validation error</p></b>
 
@@ -90,19 +94,19 @@
 
 
 
-                            <div class="row" style="position: relative; right:-18%;">
+                            <div class="row" style="position: relative; right:-19%;">
                                 <span>
                                      <label class="col-sm-2 col-form-label">Middle Name</label>
 
                                 </span>
 
                             </div>
-                            <div class="row" style="position: relative; right:-20%;">
+                            <div class="row" style="position: relative; right:-20%; top:-11px;">
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <span>
-                                          <input type="text" name="middleName" class="form-control" style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                                          <input type="text" name="middleName" class="form-control" style="border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;">
                                         </span>
                                     </div>
                                 </div>
@@ -110,21 +114,21 @@
 
 
 
-                            <div class="row" style="position: relative; right:-18%;">
+                            <div class="row" style="position: relative; right:-19%;">
                                 <span>
-                                    <label class="col-sm-2 col-form-label"><b style="color: red">*</b>Last Name </label>
+                                    <label class="col-sm-2 col-form-label">Last Name <b>*</b> </label>
 
                                 </span>
 
                             </div>
 
-                            <div class="row" style="position: relative; right:-20%;">
+                            <div class="row" style="position: relative; right:-20%; top:-11px; ">
 
                                 <div class="col-sm-6">
 
                                     <div class="form-group">
                                         <span>
-                                         <input type="text" th:field="*{lastName}" name="lastName" class="form-control" style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                                         <input type="text" th:field="*{lastName}" name="lastName" class="form-control" style="border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;" required>
                                            <b style="color: red">  <p th:each="error : ${#fields.errors('lastName')}"
                                                                       th:text="${error}">Validation error</p></b>
                                         </span>
@@ -133,24 +137,42 @@
                             </div>
 
 
-                            <div class="row" style="position: relative; right:-18%;">
+                            <div class="row" style="position: relative; right:-19%;">
                                 <span>
 
                                     <label class="col-sm-2 col-form-label">Suffix</label>
                                 </span>
                             </div>
 
-                            <div class="row" style="position: relative; right:-20%;">
+                            <div class="row" style="position: relative; right:-20%; top:-11px;">
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <span>
-                                            <select  class="form-control" name="suffix"  style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
-                                            <option value=""><b></b></option>
-                                            <option value="mr"><b>Mr</b></option>
-                                            <option value="mrs"><b>Mrs</b></option>
-                                            <option value="ms"><b>ms</b></option>
-                                        </select>
+                                            <input  type="text" class="form-control" name="suffix"  style="border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;"/>
+
+                                        </span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="position: relative; right:-19%;">
+                                <span>
+                                    <label class="col-sm-2 col-form-label">Password <b>*</b></label>
+                                </span>
+
+                            </div>
+
+                            <div class="row" style="position: relative; right:-20%; top:-11px;">
+
+                                <div class="col-sm-6">
+
+                                    <div class="form-group">
+                                        <span>
+
+                                           <input id="password" type="password"  th:field="*{password}"   class="form-control" style="margin:auto; border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;"  th:required>
+                                             <b style="color: red"> <p th:each="error : ${#fields.errors('password')}"
+                                                                       th:text="${error}">Validation error</p></b>
 
                                         </span>
 
@@ -158,74 +180,56 @@
                                 </div>
                             </div>
 
-                        <div class="card-text">
-                            <h5 class="card-title"><b style="color: black; color: rgb(0, 0, 0); font-size: 16px; text-align: left; font-weight: bold; font-style: normal; text-decoration: none;">Account View Preference</b></h5>
-                        </div>
-                        <hr style="height:3px; position:relative; top:-20px; left:-11.9%; max-width:80.1%;">
 
 
-                            <div class="row" style="position: relative; right:-20%; margin-bottom: 15px;">
 
-                                <b style="color: red">*</b>  <b>Select application View for new applications: </b><a  style="text-decoration: none;" data-toggle="tooltip" data-placement="right"      title="Guided User view guides the applicant through the process with questions and videos. While the Experienced User view minimizes the extra assistance. "><i  style="position: relative; bottom: -5px;"  class="material-icons">error_outline</i></a>
+                            <div class="row" style="position: relative; right:-19%; ">
+                             <span>
+
+                                 <label class="col-sm-2 col-form-label">Confirm Password<b>*</b></label>
+                             </span>
+
                             </div>
 
-                            <div class="row" style="position: relative; right: -7%;">
-                                <label class="col-sm-2 col-form-label"></label>
+                            <div class="row" style="position: relative; right:-20%; top:-11px;">
+
                                 <div class="col-sm-6">
                                     <div class="form-group">
+                                        <span>
+                                            <input id="password-confirm" type="password"   th:field="*{password_confirm}" name="password-confirm" class="form-control" placeholder="" style="border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;">
 
-
-                                           <div class="row">
-                                                <span>
-                                                    <input type="radio" th:field="*{viewType}"  name="viewType" value="Guided User View">&nbsp;&nbsp;<b>Guided User View</b>
-                                                </span>
-
-                                           </div>
-
-                                        <div class="row">
-                                            <span>
-
-                                                <input type="radio"  th:field="*{viewType}" name="viewType" value="Experienced User View">&nbsp;&nbsp;<b>Experienced User View</b>
-                                            </span>
-
-
-                                        </div>
-                                        <b style="color: red"> <p th:each="error : ${#fields.errors('lastName')}"
-                                                                  th:text="${error}">Validation error</p></b>
+                                                 <b style="color: red"> <p th:each="error : ${#fields.errors('password_confirm')}"
+                                                                           th:text="${error}">Validation error</p></b>
+                                        </span>
 
                                     </div>
                                 </div>
                             </div>
+
+
+
 
                             <div class="row">
-                                <label class="col-sm-2 col-form-label"></label>
-                                <div class="col-sm-6" style="position: relative; right: -36px;">
-                                    <div class="form-group">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input confirmDisclaimerCheckbox" type="checkbox" value=""> I understand and agree with USPTO's</input>
-                                            <a data-target="#eFileDisclaimerModal" data-toggle="modal" href="#eFileDisclaimerModal">Terms of Use </a> and
-                                            <a data-target="#eFileDisclaimerModal" data-toggle="modal" href="#eFileDisclaimerModal">Privacy Policy</a>
-                                            <span class="form-check-sign">
-                                              <span class="check"></span>
-                                            </span>
-                                        </label>
-                                    </div>
-                                </div>
+                                        <span style="position: relative; bottom:-2px; right:-244px;">
+                                            <input  class="form-check-input checkmark fa-check confirmDisclaimerCheckbox" type="checkbox"  value="" role="checkbox" aria-checked="true" tabindex="0" aria-labelledby="2factorcheck-label" id="useTwoFactor" name="useTwoFactor">
+
+                                            <label class="form-check-label form-check" for="useTwoFactor" id="2factorcheck-label"><span class="radio notspecial">I understand and agree with USPTO's <a data-target="#eFileDisclaimerModal" data-toggle="modal" href="#eFileDisclaimerModal">Terms of Use </a> and
+                                            <a data-target="#eFileDisclaimerModal" data-toggle="modal" href="#eFileDisclaimerModal">Privacy Policy</a></span></label>
+                                        </span>&nbsp;&nbsp;<span><b></b></span>
                             </div>
-
-
 
                             <div class="row" style="margin-bottom: 50px; position:relative; right:-57%; margin-right: 5%;">
                                 <label class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-3">
                                     <div class="form-group">
-                                        <button style="position:relative; right:-50%; min-width: 100px; background-color: #084A95; color: whitesmoke; border-top-left-radius: 7px; border-bottom-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px;" class="btn btn-default btn- registrationSubmit" type="submit" value="Register" disabled><span class="glyphicon glyphicon-log-in" ></span> &nbsp;&nbsp;submit&nbsp;</button>
+                                        <button style="position:relative; right:-50%; min-width: 100px; background-color: #084A95; color: whitesmoke; border-top-left-radius: 7px; border-bottom-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px;" class="btn  btn- registrationSubmit" type="submit" value="Register" disabled><span class="glyphicon glyphicon-log-in" ></span> &nbsp;&nbsp;<b style="font-weight: bold;">Next</b>&nbsp;</button>
                                     </div>
                                 </div>
                             </div>
-
-
                         </form>
+
+
+
                     </div>
                 </div>
             </div>
@@ -312,6 +316,44 @@
             $('.confirmDisclaimerCheckbox').prop('disabled', false)
             $('.confirmDisclaimerCheckbox').prop('checked', true);
             $('.registrationSubmit').prop('disabled', false);
+        });
+
+        var allowsubmit = false;
+
+        //on keypress
+        $('#password-confirm').keyup(function(e){
+            //get values
+            var pass = $('#password').val();
+            var confpass = $(this).val();
+
+            //check the strings
+            if(pass == confpass){
+                //if both are same remove the error and allow to submit
+                $('.autoSaveMessageArea').text('');
+                allowsubmit = true;
+            }else{
+                //if not matching show error and not allow to submit
+                $('.autoSaveMessageArea').text('Password and Password confirm do not match.');
+                allowsubmit = false;
+            }
+        });
+
+        //jquery form submit
+        $('#setAccountPW').submit(function(){
+
+            var pass = $('#password').val();
+            var confpass = $('#password-confirm').val();
+
+            //just to make sure once again during submit
+            //if both are true then only allow submit
+            if(pass == confpass){
+                allowsubmit = true;
+            }
+            if(allowsubmit){
+                return true;
+            }else{
+                return false;
+            }
         });
     });
 </script>

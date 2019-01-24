@@ -20,7 +20,20 @@
 
 
     <link rel="stylesheet" th:href="@{/resources/css/usPTO.css}"/>
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130047127-1"></script>
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-130047127-1');
+    </script>
+
 
 </head>
 
@@ -40,17 +53,6 @@
                               <button aria-expanded="false" aria-haspopup="true" class="btn btn-default dropdown-toggle ex-btn-inverse" data-toggle="dropdown" type="button"><span class="hidden-xs ">Home&nbsp;</span><span class="visible-xs icon-btn"><span class="icon icon-question-circle icon-inverse"></span></span></button>
 
                           </div><!---->
-
-
-
-
-
-
-                        <div class="btn-group">
-                          <button aria-expanded="false" aria-haspopup="true" class="btn btn-default dropdown-toggle ex-btn-inverse" data-toggle="dropdown" type="button"><span class="hidden-xs ">Resources&nbsp;</span><span class="visible-xs icon-btn"><span class="icon icon-question-circle icon-inverse"></span></span></button>
-
-                      </div><!---->
-
 
 
                         <div class="btn-group">
@@ -155,25 +157,17 @@
 
 <script>
     $(document).ready(function() {
-
         setTimeout(function() {
             // after 1000 ms we add the class animated to the login/register card
             $('.content').fadeIn(500);
         }, 500);
-
-
         ///////////////////////////////////////////////////////////////////////////////////////////
         // password modal update actions
         // passowrd update on click
         ////////////////////////////////////////////////////////////////////////////////////////////
-
         $('#webPolicy').click( function () {
-
             $('#web-policy-card').fadeIn();
-
         });
-
-
         $(function() {
             $('*').click(function(e) {
                 if(e.target.id != 'webPolicy')   {
@@ -181,12 +175,7 @@
                 }
             });
         });
-
-
-
-
         //////////////////////////////////////////////////////////////////////////
-
     });
 </script>
 </body>
@@ -217,7 +206,7 @@
                                   <div class="input-group">
                                     <div class="input-group-prepend">
                                       <span class="input-group-text" style="margin:auto; position:relative; left:40%; right:40%; margin-bottom: 10px">
-                                          <span class="glyphicon glyphicon-user"><b>Email Address</b></span>
+                                          <i class="material-icons">face</i><b style="padding-left: 10px; position: relative; top:-5px;">Email Address</b>
                                       </span>
                                     </div>
                                     <input style="margin: auto; min-width: 265px; position:relative; left:40%; right:40%; margin-top: 10px; margin-bottom: 10px; border-top-right-radius: 10px; border-top-left-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px;" type="email" class="form-control" name="username" placeholder="Email...">
@@ -227,7 +216,7 @@
                                   <div class="input-group" >
                                     <div class="input-group-prepend">
                                       <span class="input-group-text" style="margin:auto; position:relative; left:40%; right :40%; margin-bottom: 10px; margin-top: 10px;">
-                                          <span class="glyphicon glyphicon-lock"><b>Password</b></span>
+                                          <i class="material-icons">vpn_key</i><b style="padding-left: 10px; position: relative; top:-5px;">Password</b>
                                       </span>
                                     </div>
                                     <input  style="margin:auto; min-width: 265px; position:relative; left:40%; margin-top: 10px; border-top-right-radius: 10px; border-top-left-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px;" type="password" class="form-control" name="password" placeholder="Password...">
@@ -238,7 +227,7 @@
 
 
 
-                                <div class="form-group" ><button style="position:relative; left:20.7%; right:30%; min-width: 262px; background-color: #004c97; color: whitesmoke; border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;" class="btn" type="submit" value="Sign In"><span style="position: relative; left:-75px;" class="glyphicon glyphicon-log-in" ></span><b style="position: relative; left:-20px;"> &nbsp;  Sign In&nbsp;</b></button></div>
+                                <div class="form-group" ><button style="position:relative; right:-93px; min-width: 262px; background-color: #004c97; color: whitesmoke; border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;" class="btn" type="submit" value="Sign In"><i class="material-icons" style="position: relative; left:-70px; ">input</i><b style="position: relative; left:-20px; top:-5px;"> &nbsp;  Sign In&nbsp;</b></button></div>
 
                                 <!-- Login Form -->
                                 <div  style="color: red; position: relative; top:20%; right:-22%;" th:if="${param.error}">

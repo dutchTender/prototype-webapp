@@ -1,0 +1,1194 @@
+<!doctype html>
+<html th:fragment="layout (template, menu)" lang="en" xml:lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" style="-moz-border-radius: 0px;-webkit-border-radius: 0px;border-radius: 0px;" type="image/x-icon" th:href="@{/resources/images/nav_banner.png}">
+
+    <title>Owner Sole Proprietor :: USPTO.gov :: webapp prototype</title>
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+</head>
+
+<body class="insertform">
+<div class="row content" style="display: none;">
+    <div class="col-xs-12">
+        <!--START Content Div-->
+        <div class="row" style="position: relative; top:-222px;">
+            <div class="col-xs-12 col-sm-12 col-lg-12">
+                <button type="button" class="btn-sm btn-success fill" id="clearfillOwner">Clear form</button>
+            </div>
+            <div class="col-xs-12 text-left">
+                <!--START Owner Information Form-->
+                <div class="card-text">
+                    <h2 class="card-title weight600" id="ownerinfo">Owner Information</h2>
+                </div>
+                <form method="post" id="addNewOwnerForm" action="/owner/add" onsubmit="return validateOwnerForm();" th:object="${addNewOwnerContactFormDTO}" aria-labelledby="ownerinfo">
+                    <fieldset aria-labelledby="ownerinfo">
+                        <div class="row">
+                            <div class="form-group form-group-md col-xs-12 col-sm-12 col-lg-4">
+                                <label for="ownername"><span class="weight600">&#42;</span>Owner Name</label>
+                                <input type="text" class="form-control"  id="ownername" th:field="*{ownerName}" required>
+                            </div>
+                            <div class="form-group form-group-md col-xs-12 col-sm-6 col-lg-4">
+                                <label for="additionalname">Additional Name</label>
+                                <select class="form-control" id="additionalname" th:field="*{ownerType}">
+                                    <option value="Select">Select</option>
+                                    <option value="DBA">Doing Business As (DBA)</option>
+                                    <option value="TA">Trading As (TA)</option>
+                                    <option value="AKA">Also Known As (AKA)</option>
+                                    <option value="Formerly">Formerly</option>
+                                </select>
+                            </div>
+                            <div class="form-group form-group-md col-xs-12 col-sm-6 col-lg-4">
+                                <label for="stateoforg"><span class="weight600">&#42;</span>State Where Legally Organized</label>
+                                <select class="form-control" id="stateoforg" th:field="*{ownerState}"  required>
+                                    <option value="">Select</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="AK">Alaska</option>
+                                    <option value="AZ">Arizona</option>
+                                    <option value="AR">Arkansas</option>
+                                    <option value="CA">California</option>
+                                    <option value="CO">Colorado</option>
+                                    <option value="CT">Connecticut</option>
+                                    <option value="DE">Delaware</option>
+                                    <option value="DC">District of Columbia</option>
+                                    <option value="FL">Florida</option>
+                                    <option value="GA">Georgia</option>
+                                    <option value="HI">Hawaii</option>
+                                    <option value="ID">Idaho</option>
+                                    <option value="IL">Illinois</option>
+                                    <option value="IN">Indiana</option>
+                                    <option value="IA">Iowa</option>
+                                    <option value="KS">Kansas</option>
+                                    <option value="KY">Kentucky</option>
+                                    <option value="LA">Louisiana</option>
+                                    <option value="ME">Maine</option>
+                                    <option value="MD">Maryland</option>
+                                    <option value="MA">Massachusetts</option>
+                                    <option value="MI">Michigan</option>
+                                    <option value="MN">Minnesota</option>
+                                    <option value="MS">Mississippi</option>
+                                    <option value="MO">Missouri</option>
+                                    <option value="MT">Montana</option>
+                                    <option value="NE">Nebraska</option>
+                                    <option value="NV">Nevada</option>
+                                    <option value="NH">New Hampshire</option>
+                                    <option value="NJ">New Jersey</option>
+                                    <option value="NM">New Mexico</option>
+                                    <option value="NY">New York</option>
+                                    <option value="NC">North Carolina</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="OH">Ohio</option>
+                                    <option value="OK">Oklahoma</option>
+                                    <option value="OR">Oregon</option>
+                                    <option value="PA">Pennsylvania</option>
+                                    <option value="RI">Rhode Island</option>
+                                    <option value="SC">South Carolina</option>
+                                    <option value="SD">South Dakota</option>
+                                    <option value="TN">Tennessee</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="UT">Utah</option>
+                                    <option value="VT">Vermont</option>
+                                    <option value="VA">Virginia</option>
+                                    <option value="WA">Washington</option>
+                                    <option value="WV">West Virginia</option>
+                                    <option value="WI">Wisconsin</option>
+                                    <option value="WY">Wyoming</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <!--END Owner Information-->
+                    <!--START Sole Proprietor Information-->
+                    <div class="card-text">
+                        <h2 class="card-title weight600" id="proprietorinfo">Trustee Information</h2>
+                    </div>
+
+                    <label><b style="color: red">&#42;</b>Select Entity Type</label>
+
+                    <span>
+                                <select  id="domestic-entity-dropdown-partner" class="form-control" name="nameType"   style="border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px;">
+                                        <option id="opt-none" value="none"  ></option>
+                                        <option id="opt-domestic-ind" value="Individual"  >Individual</option>
+                                        <option id="opt-domestic-soleP" value="Sole Proprietorship" >Sole Proprietorship</option>
+                                        <option id="opt-domestic-llc" value="Limited Liability Company" >Limited Liability Company</option>
+                                        <option  id="opt-domestic-part" value="Partnership" >Partnership</option>
+                                        <option id="opt-domestic-jvc" value="Joint Venture">Joint Venture</option>
+                                        <option id="opt-domestic-trt" value="Trust">Trust</option>
+                                        <option id="opt-domestic-est" value="Estate">Estate</option>
+                                </select>
+                    </span>
+                    <div id="partnerEntitydynamicFormArea" th:each="partner, itemStat : *{partnerDTOs}">
+                        <fieldset aria-labelledby="proprietorinfo" id="individual-partner-entity" style="display: none;">
+                            <div class="row">
+                                <div class="form-group form-group-md col-xs-12 col-md-8 col-lg-4">
+                                    <label for="partner-first-name"><span class="weight600">&#42;</span>First Name</label>
+                                    <input type="text" id="partner-first-name" th:field="*{partnerDTOs[__${itemStat.index}__].firstName}" name="firstName" class="form-control" style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;" required>
+                                </div>
+                                <div class="form-group form-group-md col-xs-12 col-md-4 col-lg-3">
+                                    <label for="partner-middle-name">Middle Name</label>
+                                    <input type="text"  th:field="*{partnerDTOs[__${itemStat.index}__].middleName}" id="partner-middle-name" name="middleName" class="form-control" style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+                                </div>
+                                <div class="form-group form-group-md col-xs-12 col-md-12 col-lg-5">
+                                    <label for="partner-last-name"><span class="weight600">&#42;</span>Last Name</label>
+                                    <input id="partner-last-name" type="text" th:field="*{partnerDTOs[__${itemStat.index}__].lastName}"  name="lastName" class="form-control" style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;" required>
+                                </div>
+                                <div class="form-group form-group-md col-xs-6">
+                                    <label for="partner-suffix">Suffix</label>
+                                    <input  class="form-control" id="partner-suffix" th:field="*{partnerDTOs[__${itemStat.index}__].suffix}" name="suffix" style="  border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;"/>
+
+                                </div>
+                                <div class="form-group form-group-md col-xs-6">
+                                    <label for="partner-citizenship">Country of Citizenship</label>
+                                    <select   th:field="*{partnerDTOs[__${itemStat.index}__].citizenShip}" id="partner-citizenship"  class="form-control" name="owner-citizenship"  style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+                                        <option value="UNITED STATES OF AMERICA">UNITED STATES OF AMERICA</option>
+                                        <option value="AFGHANISTAN">AFGHANISTAN</option>
+                                        <option value="ALBANIA">ALBANIA</option>
+                                        <option value="B4">ALGERIA</option>
+                                        <option value="B5">AMERICAN SAMOA</option>
+                                        <option value="B6">ANDORRA</option>
+                                        <option value="B7">ANGOLA</option>
+                                        <option value="1A">ANGUILLA</option>
+                                        <option value="B8">ANTARCTICA</option>
+                                        <option value="B9">ANTIGUA AND BARBUDA</option>
+                                        <option value="C1">ARGENTINA</option>
+                                        <option value="1B">ARMENIA</option>
+                                        <option value="1C">ARUBA</option>
+                                        <option value="C3">AUSTRALIA</option>
+                                        <option value="C4">AUSTRIA</option>
+                                        <option value="1D">AZERBAIJAN</option>
+                                        <option value="C5">BAHAMAS</option>
+                                        <option value="C6">BAHRAIN</option>
+                                        <option value="C7">BANGLADESH</option>
+                                        <option value="C8">BARBADOS</option>
+                                        <option value="1F">BELARUS</option>
+                                        <option value="C9">BELGIUM</option>
+                                        <option value="D1">BELIZE</option>
+                                        <option value="G6">BENIN</option>
+                                        <option value="D0">BERMUDA</option>
+                                        <option value="D2">BHUTAN</option>
+                                        <option value="D3">BOLIVIA</option>
+                                        <option value="1E">BOSNIA AND HERZEGOVINA</option>
+                                        <option value="B1">BOTSWANA</option>
+                                        <option value="D4">BOUVET ISLAND</option>
+                                        <option value="D5">BRAZIL</option>
+                                        <option value="D6">BRITISH INDIAN OCEAN TERRITORY</option>
+                                        <option value="D9">BRUNEI DARUSSALAM</option>
+                                        <option value="E0">BULGARIA</option>
+                                        <option value="X2">BURKINA FASO</option>
+                                        <option value="E2">BURUNDI</option>
+                                        <option value="CANADA">CANADA</option>
+                                        <option value="E3">CAMBODIA</option>
+                                        <option value="E4">CAMEROON</option>
+                                        <option value="E8">CAPE VERDE</option>
+                                        <option value="E9">CAYMAN ISLANDS</option>
+                                        <option value="F0">CENTRAL AFRICAN REPUBLIC</option>
+                                        <option value="F2">CHAD</option>
+                                        <option value="F3">CHILE</option>
+                                        <option value="CHINA">CHINA</option>
+                                        <option value="F6">CHRISTMAS ISLAND</option>
+                                        <option value="F7">COCOS (KEELING) ISLANDS</option>
+                                        <option value="F8">COLOMBIA</option>
+                                        <option value="F9">COMOROS</option>
+                                        <option value="G0">CONGO</option>
+                                        <option value="Y3">CONGO, THE DEMOCRATIC REPUBLIC OF THE</option>
+                                        <option value="G1">COOK ISLANDS</option>
+                                        <option value="G2">COSTA RICA</option>
+                                        <option value="L7">COTE D'IVOIRE</option>
+                                        <option value="1M">CROATIA</option>
+                                        <option value="G3">CUBA</option>
+                                        <option value="G4">CYPRUS</option>
+                                        <option value="2N">CZECH REPUBLIC</option>
+                                        <option value="G7">DENMARK</option>
+                                        <option value="1G">DJIBOUTI</option>
+                                        <option value="G9">DOMINICA</option>
+                                        <option value="G8">DOMINICAN REPUBLIC</option>
+                                        <option value="2F">EAST TIMOR</option>
+                                        <option value="H1">ECUADOR</option>
+                                        <option value="H2">EGYPT</option>
+                                        <option value="H3">EL SALVADOR</option>
+                                        <option value="H4">EQUATORIAL GUINEA</option>
+                                        <option value="1J">ERITREA</option>
+                                        <option value="1H">ESTONIA</option>
+                                        <option value="H5">ETHIOPIA</option>
+                                        <option value="H7">FALKLAND ISLANDS (MALVINAS)</option>
+                                        <option value="H6">FAROE ISLANDS</option>
+                                        <option value="H8">FIJI</option>
+                                        <option value="H9">FINLAND</option>
+                                        <option value="FRANCE">FRANCE</option>
+                                        <option value="I3">FRENCH GUIANA</option>
+                                        <option value="I4">FRENCH POLYNESIA</option>
+                                        <option value="2C">FRENCH SOUTHERN TERRITORIES</option>
+                                        <option value="I5">GABON</option>
+                                        <option value="I6">GAMBIA</option>
+                                        <option value="2Q">GEORGIA</option>
+                                        <option value="GERMANY">GERMANY</option>
+                                        <option value="J0">GHANA</option>
+                                        <option value="J1">GIBRALTAR</option>
+                                        <option value="J3">GREECE</option>
+                                        <option value="J4">GREENLAND</option>
+                                        <option value="J5">GRENADA</option>
+                                        <option value="J6">GUADELOUPE</option>
+                                        <option value="GU">GUAM</option>
+                                        <option value="J8">GUATEMALA</option>
+                                        <option value="J9">GUINEA</option>
+                                        <option value="S0">GUINEA-BISSAU</option>
+                                        <option value="K0">GUYANA</option>
+                                        <option value="K1">HAITI</option>
+                                        <option value="K4">HEARD ISLAND AND MCDONALD ISLANDS</option>
+                                        <option value="X4">HOLY SEE (VATICAN CITY STATE)</option>
+                                        <option value="K2">HONDURAS</option>
+                                        <option value="K3">HONG KONG</option>
+                                        <option value="K5">HUNGARY</option>
+                                        <option value="ICELAND">ICELAND</option>
+                                        <option value="INDIA">INDIA</option>
+                                        <option value="INDONESIA">INDONESIA</option>
+                                        <option value="K9">IRAN, ISLAMIC REPUBLIC OF</option>
+                                        <option value="L0">IRAQ</option>
+                                        <option value="L2">IRELAND</option>
+                                        <option value="ISRAEL">ISRAEL</option>
+                                        <option value="ITALY">ITALY</option>
+                                        <option value="L8">JAMAICA</option>
+                                        <option value="M0">JAPAN</option>
+                                        <option value="M2">JORDAN</option>
+                                        <option value="1P">KAZAKSTAN</option>
+                                        <option value="M3">KENYA</option>
+                                        <option value="J2">KIRIBATI</option>
+                                        <option value="M4">KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF</option>
+                                        <option value="M5">KOREA, REPUBLIC OF</option>
+                                        <option value="M6">KUWAIT</option>
+                                        <option value="1N">KYRGYZSTAN</option>
+                                        <option value="M7">LAO PEOPLE'S DEMOCRATIC REPUBLIC</option>
+                                        <option value="1R">LATVIA</option>
+                                        <option value="M8">LEBANON</option>
+                                        <option value="M9">LESOTHO</option>
+                                        <option value="N0">LIBERIA</option>
+                                        <option value="N1">LIBYAN ARAB JAMAHIRIYA</option>
+                                        <option value="N2">LIECHTENSTEIN</option>
+                                        <option value="1Q">LITHUANIA</option>
+                                        <option value="N4">LUXEMBOURG</option>
+                                        <option value="N5">MACAU</option>
+                                        <option value="1U">MACEDONIA, FORMER YUGOSLAV REP. OF</option>
+                                        <option value="N6">MADAGASCAR</option>
+                                        <option value="N7">MALAWI</option>
+                                        <option value="N8">MALAYSIA</option>
+                                        <option value="N9">MALDIVES</option>
+                                        <option value="O0">MALI</option>
+                                        <option value="O1">MALTA</option>
+                                        <option value="1T">MARSHALL ISLANDS</option>
+                                        <option value="O2">MARTINIQUE</option>
+                                        <option value="O3">MAURITANIA</option>
+                                        <option value="O4">MAURITIUS</option>
+                                        <option value="2P">MAYOTTE</option>
+                                        <option value="O5">MEXICO</option>
+                                        <option value="1K">MICRONESIA, FEDERATED STATES OF</option>
+                                        <option value="1S">MOLDOVA, REPUBLIC OF</option>
+                                        <option value="O9">MONACO</option>
+                                        <option value="P0">MONGOLIA</option>
+                                        <option value="P1">MONTSERRAT</option>
+                                        <option value="P2">MOROCCO</option>
+                                        <option value="P3">MOZAMBIQUE</option>
+                                        <option value="E1">MYANMAR</option>
+                                        <option value="T6">NAMIBIA</option>
+                                        <option value="P5">NAURU</option>
+                                        <option value="P6">NEPAL</option>
+                                        <option value="P7">NETHERLANDS</option>
+                                        <option value="P8">NETHERLANDS ANTILLES</option>
+                                        <option value="1W">NEW CALEDONIA</option>
+                                        <option value="Q2">NEW ZEALAND</option>
+                                        <option value="Q3">NICARAGUA</option>
+                                        <option value="Q4">NIGER</option>
+                                        <option value="Q5">NIGERIA</option>
+                                        <option value="Q6">NIUE</option>
+                                        <option value="Q7">NORFOLK ISLAND</option>
+                                        <option value="1V">NORTHERN MARIANA ISLANDS</option>
+                                        <option value="Q8">NORWAY</option>
+                                        <option value="P4">OMAN</option>
+                                        <option value="R0">PAKISTAN</option>
+                                        <option value="1Y">PALAU</option>
+                                        <option value="1X">PALESTINIAN TERRITORY, OCCUPIED</option>
+                                        <option value="R1">PANAMA</option>
+                                        <option value="R2">PAPUA NEW GUINEA</option>
+                                        <option value="R4">PARAGUAY</option>
+                                        <option value="R5">PERU</option>
+                                        <option value="R6">PHILIPPINES</option>
+                                        <option value="R8">PITCAIRN</option>
+                                        <option value="R9">POLAND</option>
+                                        <option value="S1">PORTUGAL</option>
+                                        <option value="PR">PUERTO RICO</option>
+                                        <option value="S3">QATAR</option>
+                                        <option value="S4">REUNION</option>
+                                        <option value="S5">ROMANIA</option>
+                                        <option value="1Z">RUSSIAN FEDERATION</option>
+                                        <option value="S6">RWANDA</option>
+                                        <option value="U8">SAINT HELENA</option>
+                                        <option value="U7">SAINT KITTS AND NEVIS</option>
+                                        <option value="U9">SAINT LUCIA</option>
+                                        <option value="V0">SAINT PIERRE AND MIQUELON</option>
+                                        <option value="V1">SAINT VINCENT AND THE GRENADINES</option>
+                                        <option value="Y0">SAMOA</option>
+                                        <option value="S8">SAN MARINO</option>
+                                        <option value="S9">SAO TOME AND PRINCIPE</option>
+                                        <option value="T0">SAUDI ARABIA</option>
+                                        <option value="T1">SENEGAL</option>
+                                        <option value="T2">SEYCHELLES </option>
+                                        <option value="T8">SIERRA LEONE</option>
+                                        <option value="U0">SINGAPORE</option>
+                                        <option value="2B">SLOVAKIA</option>
+                                        <option value="2A">SLOVENIA</option>
+                                        <option value="D7">SOLOMON ISLANDS</option>
+                                        <option value="U1">SOMALIA</option>
+                                        <option value="T3">SOUTH AFRICA</option>
+                                        <option value="1L">SOUTH GEORGIA/SO. SANDWICH ISLANDS</option>
+                                        <option value="U3">SPAIN</option>
+                                        <option value="F1">SRI LANKA</option>
+                                        <option value="V2">SUDAN</option>
+                                        <option value="V3">SURINAME</option>
+                                        <option value="L9">SVALBARD AND JAN MAYEN</option>
+                                        <option value="V6">SWAZILAND</option>
+                                        <option value="V7">SWEDEN</option>
+                                        <option value="V8">SWITZERLAND</option>
+                                        <option value="V9">SYRIAN ARAB REPUBLIC</option>
+                                        <option value="F5">TAIWAN</option>
+                                        <option value="2D">TAJIKISTAN</option>
+                                        <option value="W0">TANZANIA, UNITED REPUBLIC OF</option>
+                                        <option value="W1">THAILAND</option>
+                                        <option value="W2">TOGO</option>
+                                        <option value="W3">TOKELAU</option>
+                                        <option value="W4">TONGA</option>
+                                        <option value="W5">TRINIDAD AND TOBAGO</option>
+                                        <option value="W6">TUNISIA</option>
+                                        <option value="W8">TURKEY</option>
+                                        <option value="2E">TURKMENISTAN</option>
+                                        <option value="W7">TURKS AND CAICOS ISLANDS</option>
+                                        <option value="2G">TUVALU</option>
+                                        <option value="W9">UGANDA</option>
+                                        <option value="2H">UKRAINE</option>
+                                        <option value="C0">UNITED ARAB EMIRATES</option>
+                                        <option value="X0">UNITED KINGDOM</option>
+                                        <option value="2J">UNITED STATES MINOR OUTLYING ISLANDS</option>
+                                        <option value="X3">URUGUAY</option>
+                                        <option value="2K">UZBEKISTAN</option>
+                                        <option value="2L">VANUATU</option>
+                                        <option value="X5">VENEZUELA</option>
+                                        <option value="Q1">VIET NAM</option>
+                                        <option value="D8">VIRGIN ISLANDS, BRITISH</option>
+                                        <option value="VI">VIRGIN ISLANDS, U.S.</option>
+                                        <option value="X8">WALLIS AND FUTUNA</option>
+                                        <option value="U5">WESTERN SAHARA</option>
+                                        <option value="T7">YEMEN</option>
+                                        <option value="Y2">YUGOSLAVIA</option>
+                                        <option value="Y4">ZAMBIA</option>
+                                        <option value="Y5">ZIMBABWE</option>
+                                        <option value="XX">UNKNOWN</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset aria-labelledby="proprietorinfo" id="none-individual-partner-entity" style="display: none;">
+                            <div class="row">
+                                <div class="form-group form-group-md col-xs-12 col-md-8 col-lg-4">
+                                    <label for="ownername"><b style="color: red">&#42;</b>Owner Name</label>
+                                    <input id="owner-name" type="text" th:field="*{partnerDTOs[__${itemStat.index}__].partnerName}"  class="form-control rounded-borders"  style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;" required>
+                                </div>
+                                <div class="form-group form-group-md col-xs-12 col-md-12 col-lg-5">
+                                    <label><b style="color: red">&#42;</b>Type</label>
+                                    <span>
+                                    <select  id="owner-type" class="form-control" name="nameType" th:field="*{partnerDTOs[__${itemStat.index}__].type}"   style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+                                        <option value="">Select</option>
+                                        <option value="DBA">Doing Business As(DBA)</option>
+                                        <option value="TA">Trading As(TA)</option>
+                                        <option value="AKA">Also Known As(AKA)</option>
+                                        <option value="F">Formerly</option>
+
+                                    </select>
+                                </span>
+                                </div>
+
+
+                                <div class="form-group form-group-md col-xs-6">
+                                    <label><b style="color: red">&#42;</b>State where legally organized</label>
+                                    <select  id="owner-state" th:field="*{partnerDTOs[__${itemStat.index}__].state}"  class="form-control" name="State"  style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;" >
+                                        <option  value="">Select</option>
+                                        <option  value="AL">Alabama</option>
+                                        <option  value="AK">Alaska</option>
+                                        <option value="AZ">Arizona</option>
+                                        <option value="AR">Arkansas</option>
+                                        <option value="CA">California</option>
+                                        <option value="CO">Colorado</option>
+                                        <option value="CT">Connecticut</option>
+                                        <option value="DE">Delaware</option>
+                                        <option value="DC">District of Columbia</option>
+                                        <option value="FL">Florida</option>
+                                        <option value="GA">Georgia</option>
+                                        <option value="HI">Hawaii</option>
+                                        <option value="ID">Idaho</option>
+                                        <option value="IL">Illinois</option>
+                                        <option value="IN">Indiana</option>
+                                        <option value="IA">Iowa</option>
+                                        <option value="KS">Kansas</option>
+                                        <option value="KY">Kentucky</option>
+                                        <option value="LA">Louisiana</option>
+                                        <option value="ME">Maine</option>
+                                        <option value="MD">Maryland</option>
+                                        <option value="MA">Massachusetts</option>
+                                        <option value="MI">Michigan</option>
+                                        <option value="MN">Minnesota</option>
+                                        <option value="MS">Mississippi</option>
+                                        <option value="MO">Missouri</option>
+                                        <option value="MT">Montana</option>
+                                        <option value="NE">Nebraska</option>
+                                        <option value="NV">Nevada</option>
+                                        <option value="NH">New Hampshire</option>
+                                        <option value="NJ">New Jersey</option>
+                                        <option value="NM">New Mexico</option>
+                                        <option value="NY">New York</option>
+                                        <option value="NC">North Carolina</option>
+                                        <option value="ND">North Dakota</option>
+                                        <option value="OH">Ohio</option>
+                                        <option value="OK">Oklahoma</option>
+                                        <option value="OR">Oregon</option>
+                                        <option value="PA">Pennsylvania</option>
+                                        <option value="RI">Rhode Island</option>
+                                        <option value="SC">South Carolina</option>
+                                        <option value="SD">South Dakota</option>
+                                        <option value="TN">Tennessee</option>
+                                        <option value="TX">Texas</option>
+                                        <option value="UT">Utah</option>
+                                        <option value="VT">Vermont</option>
+                                        <option value="VA">Virginia</option>
+                                        <option value="WA">Washington</option>
+                                        <option value="WV">West Virginia</option>
+                                        <option value="WI">Wisconsin</option>
+                                        <option value="WY">Wyoming</option>
+
+                                    </select>
+                                </div>
+
+                            </div>
+                        </fieldset>
+                    </div> <!-- end of arrary dto object -->
+                    <!--END Sole Proprietor Information Form-->
+                    <!--START Owner Address Information Form-->
+                    <div class="card-text">
+                        <h2 class="card-title weight600" id="addressinfo">Owner Address Information</h2>
+                    </div>
+                    <fieldset aria-labelledby="addressinfo">
+                        <div class="row">
+                            <div class="form-group form-group-md col-md-12 col-lg-7">
+                                <label for="OwnerAddressCountry">Country/US Territory</label>
+                                <select class="form-control" id="OwnerAddressCountry" name="territory" th:field="*{OwnerAddressCountry}" required>
+                                    <option value="">Select</option>
+                                    <option value="X1">UNITED STATES OF AMERICA</option>
+                                    <option value="B2">AFGHANISTAN</option>
+                                    <option value="B3">ALBANIA</option>
+                                    <option value="B4">ALGERIA</option>
+                                    <option value="B5">AMERICAN SAMOA</option>
+                                    <option value="B6">ANDORRA</option>
+                                    <option value="B7">ANGOLA</option>
+                                    <option value="1A">ANGUILLA</option>
+                                    <option value="B8">ANTARCTICA</option>
+                                    <option value="B9">ANTIGUA AND BARBUDA</option>
+                                    <option value="C1">ARGENTINA</option>
+                                    <option value="1B">ARMENIA</option>
+                                    <option value="1C">ARUBA</option>
+                                    <option value="C3">AUSTRALIA</option>
+                                    <option value="C4">AUSTRIA</option>
+                                    <option value="1D">AZERBAIJAN</option>
+                                    <option value="C5">BAHAMAS</option>
+                                    <option value="C6">BAHRAIN</option>
+                                    <option value="C7">BANGLADESH</option>
+                                    <option value="C8">BARBADOS</option>
+                                    <option value="1F">BELARUS</option>
+                                    <option value="C9">BELGIUM</option>
+                                    <option value="D1">BELIZE</option>
+                                    <option value="G6">BENIN</option>
+                                    <option value="D0">BERMUDA</option>
+                                    <option value="D2">BHUTAN</option>
+                                    <option value="D3">BOLIVIA</option>
+                                    <option value="1E">BOSNIA AND HERZEGOVINA</option>
+                                    <option value="B1">BOTSWANA</option>
+                                    <option value="D4">BOUVET ISLAND</option>
+                                    <option value="D5">BRAZIL</option>
+                                    <option value="D6">BRITISH INDIAN OCEAN TERRITORY</option>
+                                    <option value="D9">BRUNEI DARUSSALAM</option>
+                                    <option value="E0">BULGARIA</option>
+                                    <option value="X2">BURKINA FASO</option>
+                                    <option value="E2">BURUNDI</option>
+                                    <option value="E3">CAMBODIA</option>
+                                    <option value="E4">CAMEROON</option>
+                                    <option value="E8">CAPE VERDE</option>
+                                    <option value="E9">CAYMAN ISLANDS</option>
+                                    <option value="F0">CENTRAL AFRICAN REPUBLIC</option>
+                                    <option value="F2">CHAD</option>
+                                    <option value="F3">CHILE</option>
+                                    <option value="F4">CHINA</option>
+                                    <option value="F6">CHRISTMAS ISLAND</option>
+                                    <option value="F7">COCOS (KEELING) ISLANDS</option>
+                                    <option value="F8">COLOMBIA</option>
+                                    <option value="F9">COMOROS</option>
+                                    <option value="G0">CONGO</option>
+                                    <option value="Y3">CONGO, THE DEMOCRATIC REPUBLIC OF THE</option>
+                                    <option value="G1">COOK ISLANDS</option>
+                                    <option value="G2">COSTA RICA</option>
+                                    <option value="L7">COTE D'IVOIRE</option>
+                                    <option value="1M">CROATIA</option>
+                                    <option value="G3">CUBA</option>
+                                    <option value="G4">CYPRUS</option>
+                                    <option value="2N">CZECH REPUBLIC</option>
+                                    <option value="G7">DENMARK</option>
+                                    <option value="1G">DJIBOUTI</option>
+                                    <option value="G9">DOMINICA</option>
+                                    <option value="G8">DOMINICAN REPUBLIC</option>
+                                    <option value="2F">EAST TIMOR</option>
+                                    <option value="H1">ECUADOR</option>
+                                    <option value="H2">EGYPT</option>
+                                    <option value="H3">EL SALVADOR</option>
+                                    <option value="H4">EQUATORIAL GUINEA</option>
+                                    <option value="1J">ERITREA</option>
+                                    <option value="1H">ESTONIA</option>
+                                    <option value="H5">ETHIOPIA</option>
+                                    <option value="H7">FALKLAND ISLANDS (MALVINAS)</option>
+                                    <option value="H6">FAROE ISLANDS</option>
+                                    <option value="H8">FIJI</option>
+                                    <option value="H9">FINLAND</option>
+                                    <option value="I0">FRANCE</option>
+                                    <option value="I3">FRENCH GUIANA</option>
+                                    <option value="I4">FRENCH POLYNESIA</option>
+                                    <option value="2C">FRENCH SOUTHERN TERRITORIES</option>
+                                    <option value="I5">GABON</option>
+                                    <option value="I6">GAMBIA</option>
+                                    <option value="2Q">GEORGIA</option>
+                                    <option value="2M">GERMANY</option>
+                                    <option value="J0">GHANA</option>
+                                    <option value="J1">GIBRALTAR</option>
+                                    <option value="J3">GREECE</option>
+                                    <option value="J4">GREENLAND</option>
+                                    <option value="J5">GRENADA</option>
+                                    <option value="J6">GUADELOUPE</option>
+                                    <option value="GU">GUAM</option>
+                                    <option value="J8">GUATEMALA</option>
+                                    <option value="J9">GUINEA</option>
+                                    <option value="S0">GUINEA-BISSAU</option>
+                                    <option value="K0">GUYANA</option>
+                                    <option value="K1">HAITI</option>
+                                    <option value="K4">HEARD ISLAND AND MCDONALD ISLANDS</option>
+                                    <option value="X4">HOLY SEE (VATICAN CITY STATE)</option>
+                                    <option value="K2">HONDURAS</option>
+                                    <option value="K3">HONG KONG</option>
+                                    <option value="K5">HUNGARY</option>
+                                    <option value="K6">ICELAND</option>
+                                    <option value="K7">INDIA</option>
+                                    <option value="K8">INDONESIA</option>
+                                    <option value="K9">IRAN, ISLAMIC REPUBLIC OF</option>
+                                    <option value="L0">IRAQ</option>
+                                    <option value="L2">IRELAND</option>
+                                    <option value="L3">ISRAEL</option>
+                                    <option value="L6">ITALY</option>
+                                    <option value="L8">JAMAICA</option>
+                                    <option value="M0">JAPAN</option>
+                                    <option value="M2">JORDAN</option>
+                                    <option value="1P">KAZAKSTAN</option>
+                                    <option value="M3">KENYA</option>
+                                    <option value="J2">KIRIBATI</option>
+                                    <option value="M4">KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF</option>
+                                    <option value="M5">KOREA, REPUBLIC OF</option>
+                                    <option value="M6">KUWAIT</option>
+                                    <option value="1N">KYRGYZSTAN</option>
+                                    <option value="M7">LAO PEOPLE'S DEMOCRATIC REPUBLIC</option>
+                                    <option value="1R">LATVIA</option>
+                                    <option value="M8">LEBANON</option>
+                                    <option value="M9">LESOTHO</option>
+                                    <option value="N0">LIBERIA</option>
+                                    <option value="N1">LIBYAN ARAB JAMAHIRIYA</option>
+                                    <option value="N2">LIECHTENSTEIN</option>
+                                    <option value="1Q">LITHUANIA</option>
+                                    <option value="N4">LUXEMBOURG</option>
+                                    <option value="N5">MACAU</option>
+                                    <option value="1U">MACEDONIA, FORMER YUGOSLAV REP. OF</option>
+                                    <option value="N6">MADAGASCAR</option>
+                                    <option value="N7">MALAWI</option>
+                                    <option value="N8">MALAYSIA</option>
+                                    <option value="N9">MALDIVES</option>
+                                    <option value="O0">MALI</option>
+                                    <option value="O1">MALTA</option>
+                                    <option value="1T">MARSHALL ISLANDS</option>
+                                    <option value="O2">MARTINIQUE</option>
+                                    <option value="O3">MAURITANIA</option>
+                                    <option value="O4">MAURITIUS</option>
+                                    <option value="2P">MAYOTTE</option>
+                                    <option value="O5">MEXICO</option>
+                                    <option value="1K">MICRONESIA, FEDERATED STATES OF</option>
+                                    <option value="1S">MOLDOVA, REPUBLIC OF</option>
+                                    <option value="O9">MONACO</option>
+                                    <option value="P0">MONGOLIA</option>
+                                    <option value="P1">MONTSERRAT</option>
+                                    <option value="P2">MOROCCO</option>
+                                    <option value="P3">MOZAMBIQUE</option>
+                                    <option value="E1">MYANMAR</option>
+                                    <option value="T6">NAMIBIA</option>
+                                    <option value="P5">NAURU</option>
+                                    <option value="P6">NEPAL</option>
+                                    <option value="P7">NETHERLANDS</option>
+                                    <option value="P8">NETHERLANDS ANTILLES</option>
+                                    <option value="1W">NEW CALEDONIA</option>
+                                    <option value="Q2">NEW ZEALAND</option>
+                                    <option value="Q3">NICARAGUA</option>
+                                    <option value="Q4">NIGER</option>
+                                    <option value="Q5">NIGERIA</option>
+                                    <option value="Q6">NIUE</option>
+                                    <option value="Q7">NORFOLK ISLAND</option>
+                                    <option value="1V">NORTHERN MARIANA ISLANDS</option>
+                                    <option value="Q8">NORWAY</option>
+                                    <option value="P4">OMAN</option>
+                                    <option value="R0">PAKISTAN</option>
+                                    <option value="1Y">PALAU</option>
+                                    <option value="1X">PALESTINIAN TERRITORY, OCCUPIED</option>
+                                    <option value="R1">PANAMA</option>
+                                    <option value="R2">PAPUA NEW GUINEA</option>
+                                    <option value="R4">PARAGUAY</option>
+                                    <option value="R5">PERU</option>
+                                    <option value="R6">PHILIPPINES</option>
+                                    <option value="R8">PITCAIRN</option>
+                                    <option value="R9">POLAND</option>
+                                    <option value="S1">PORTUGAL</option>
+                                    <option value="PR">PUERTO RICO</option>
+                                    <option value="S3">QATAR</option>
+                                    <option value="S4">REUNION</option>
+                                    <option value="S5">ROMANIA</option>
+                                    <option value="1Z">RUSSIAN FEDERATION</option>
+                                    <option value="S6">RWANDA</option>
+                                    <option value="U8">SAINT HELENA</option>
+                                    <option value="U7">SAINT KITTS AND NEVIS</option>
+                                    <option value="U9">SAINT LUCIA</option>
+                                    <option value="V0">SAINT PIERRE AND MIQUELON</option>
+                                    <option value="V1">SAINT VINCENT AND THE GRENADINES</option>
+                                    <option value="Y0">SAMOA</option>
+                                    <option value="S8">SAN MARINO</option>
+                                    <option value="S9">SAO TOME AND PRINCIPE</option>
+                                    <option value="T0">SAUDI ARABIA</option>
+                                    <option value="T1">SENEGAL</option>
+                                    <option value="T2">SEYCHELLES </option>
+                                    <option value="T8">SIERRA LEONE</option>
+                                    <option value="U0">SINGAPORE</option>
+                                    <option value="2B">SLOVAKIA</option>
+                                    <option value="2A">SLOVENIA</option>
+                                    <option value="D7">SOLOMON ISLANDS</option>
+                                    <option value="U1">SOMALIA</option>
+                                    <option value="T3">SOUTH AFRICA</option>
+                                    <option value="1L">SOUTH GEORGIA/SO. SANDWICH ISLANDS</option>
+                                    <option value="U3">SPAIN</option>
+                                    <option value="F1">SRI LANKA</option>
+                                    <option value="V2">SUDAN</option>
+                                    <option value="V3">SURINAME</option>
+                                    <option value="L9">SVALBARD AND JAN MAYEN</option>
+                                    <option value="V6">SWAZILAND</option>
+                                    <option value="V7">SWEDEN</option>
+                                    <option value="V8">SWITZERLAND</option>
+                                    <option value="V9">SYRIAN ARAB REPUBLIC</option>
+                                    <option value="F5">TAIWAN</option>
+                                    <option value="2D">TAJIKISTAN</option>
+                                    <option value="W0">TANZANIA, UNITED REPUBLIC OF</option>
+                                    <option value="W1">THAILAND</option>
+                                    <option value="W2">TOGO</option>
+                                    <option value="W3">TOKELAU</option>
+                                    <option value="W4">TONGA</option>
+                                    <option value="W5">TRINIDAD AND TOBAGO</option>
+                                    <option value="W6">TUNISIA</option>
+                                    <option value="W8">TURKEY</option>
+                                    <option value="2E">TURKMENISTAN</option>
+                                    <option value="W7">TURKS AND CAICOS ISLANDS</option>
+                                    <option value="2G">TUVALU</option>
+                                    <option value="W9">UGANDA</option>
+                                    <option value="2H">UKRAINE</option>
+                                    <option value="C0">UNITED ARAB EMIRATES</option>
+                                    <option value="X0">UNITED KINGDOM</option>
+                                    <option value="2J">UNITED STATES MINOR OUTLYING ISLANDS</option>
+                                    <option value="X3">URUGUAY</option>
+                                    <option value="2K">UZBEKISTAN</option>
+                                    <option value="2L">VANUATU</option>
+                                    <option value="X5">VENEZUELA</option>
+                                    <option value="Q1">VIET NAM</option>
+                                    <option value="D8">VIRGIN ISLANDS, BRITISH</option>
+                                    <option value="VI">VIRGIN ISLANDS, U.S.</option>
+                                    <option value="X8">WALLIS AND FUTUNA</option>
+                                    <option value="U5">WESTERN SAHARA</option>
+                                    <option value="T7">YEMEN</option>
+                                    <option value="Y2">YUGOSLAVIA</option>
+                                    <option value="Y4">ZAMBIA</option>
+                                    <option value="Y5">ZIMBABWE</option>
+                                    <option value="XX">UNKNOWN</option>
+                                </select>
+                            </div>
+                            <div class="form-group form-group-md col-md-12 col-lg-8">
+                                <label for="ownerAddress1"><span class="weight600">&#42;</span>Address Line 1</label>
+                                <input type="text" class="form-control" id="ownerAddress1" th:field="*{ownerAddress1}" required>
+                            </div>
+                            <div class="form-group form-group-md col-md-12 col-lg-8">
+                                <label for="addressline2">Address Line 2</label>
+                                <input type="text" class="form-control" id="addressline2" th:field="*{ownerAddress2}">
+                            </div>
+                            <div class="form-group form-group-md col-md-12 col-lg-8">
+                                <label for="addressline3">Address Line 3</label>
+                                <input type="text" class="form-control" id="addressline3" th:field="*{ownerAddress3}">
+                            </div>
+                            <div class="form-group form-group-md col-xs-12 col-md-12 col-lg-5">
+                                <label for="ownerCity"><span class="weight600">&#42;</span>City</label>
+                                <input type="text" class="form-control" id="ownerCity" th:field="*{ownerCity}" required>
+                            </div>
+                            <div class="form-group form-group-md col-xs-12 col-md-4 col-lg-3">
+                                <label for="ownerState"><span class="weight600">&#42;</span>State</label>
+                                <select class="form-control" id="ownerState" th:field="*{ownerState}" required>
+                                    <option value="">Select</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="AK">Alaska</option>
+                                    <option value="AZ">Arizona</option>
+                                    <option value="AR">Arkansas</option>
+                                    <option value="CA">California</option>
+                                    <option value="CO">Colorado</option>
+                                    <option value="CT">Connecticut</option>
+                                    <option value="DE">Delaware</option>
+                                    <option value="DC">District of Columbia</option>
+                                    <option value="FL">Florida</option>
+                                    <option value="GA">Georgia</option>
+                                    <option value="HI">Hawaii</option>
+                                    <option value="ID">Idaho</option>
+                                    <option value="IL">Illinois</option>
+                                    <option value="IN">Indiana</option>
+                                    <option value="IA">Iowa</option>
+                                    <option value="KS">Kansas</option>
+                                    <option value="KY">Kentucky</option>
+                                    <option value="LA">Louisiana</option>
+                                    <option value="ME">Maine</option>
+                                    <option value="MD">Maryland</option>
+                                    <option value="MA">Massachusetts</option>
+                                    <option value="MI">Michigan</option>
+                                    <option value="MN">Minnesota</option>
+                                    <option value="MS">Mississippi</option>
+                                    <option value="MO">Missouri</option>
+                                    <option value="MT">Montana</option>
+                                    <option value="NE">Nebraska</option>
+                                    <option value="NV">Nevada</option>
+                                    <option value="NH">New Hampshire</option>
+                                    <option value="NJ">New Jersey</option>
+                                    <option value="NM">New Mexico</option>
+                                    <option value="NY">New York</option>
+                                    <option value="NC">North Carolina</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="OH">Ohio</option>
+                                    <option value="OK">Oklahoma</option>
+                                    <option value="OR">Oregon</option>
+                                    <option value="PA">Pennsylvania</option>
+                                    <option value="RI">Rhode Island</option>
+                                    <option value="SC">South Carolina</option>
+                                    <option value="SD">South Dakota</option>
+                                    <option value="TN">Tennessee</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="UT">Utah</option>
+                                    <option value="VT">Vermont</option>
+                                    <option value="VA">Virginia</option>
+                                    <option value="WA">Washington</option>
+                                    <option value="WV">West Virginia</option>
+                                    <option value="WI">Wisconsin</option>
+                                    <option value="WY">Wyoming</option>
+                                </select>
+                            </div>
+                            <div class="form-group form-group-md col-xs-12 col-md-8 col-lg-4">
+                                <label for="ownerZipcode"><span class="weight600">&#42;</span>Zip Code</label>
+                                <input type="text" class="form-control" id="ownerZipcode" placeholder="" th:field="*{ownerZipcode}" required>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <!--END Owner Address Information Form-->
+                    <!--START Additional Information Form-->
+                    <div class="card-text">
+                        <h2 class="card-title weight600" id="additionalinfo">Additional Information</h2>
+                    </div>
+                    <fieldset aria-labelledby="additionalinfo">
+                        <div class="row">
+                            <div class="form-group form-group-md col-xs-12 col-md-6">
+                                <label for="ownerEmail"><span class="weight600">&#42;</span>Email Address <a href="#" data-toggle="tooltip" title="The USPTO will use this email address to send correspondence regarding this application or registration. It is critical to ensure this email address is current." class="glyphicon glyphicon-info-sign test" data-placement="right"></a></label>
+                                <input type="text" class="form-control" id="ownerEmail" th:field="*{ownerEmail}" required>
+                            </div>
+                            <div class="form-group form-group-md col-xs-12 col-md-6">
+                                <label for="webaddress">Website Address</label>
+                                <input type="text" class="form-control" id="webaddress" th:field="*{ownerWebSite}">
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="form-group form-group-md col-xs-12 col-md-4 col-lg-4">
+                                        <label for="phonenumbertype">Phone Type</label>
+                                        <select class="form-control" id="phonenumbertype" name="phonenumbertype">
+                                            <option value="Type">Type</option>
+                                            <option value="Cell">Cell</option>
+                                            <option value="Home">Home</option>
+                                            <option value="Work">Work</option>
+                                            <option value="Fax">Fax</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group form-group-md col-xs-12 col-md-6 col-lg-6">
+                                        <label for="phone">Phone Number</label>
+                                        <input type="text" class="form-control" id="phone" th:field="*{ownerPhone}">
+                                    </div>
+                                    <div class="form-group form-group-md col-xs-12 col-md-2 col-lg-2">
+                                        <label for="extension">Ext.</label>
+                                        <input type="text" class="form-control" id="extension">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" style="display:none; max-height: 1px;">
+                                <input id="appInternalIDForm" type="text" th:field="*{appInternalID}"   class="form-control"   style=" width:1px;">
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                <!--END Additional Information Form-->
+
+            </div><!--END Content Div-->
+            <div class="inlinebuttons btn-group btn-group-justified  owner-form-buttons" role="nav" aria-label="view previous or next page" id="prevnxt">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-default fill prev" id="prevButton" value="previous">Previous</button>
+                </div>
+                <div class="btn-group" id="formSubmitNextButtonGroup">
+                    <button type="button" class="btn btn-sm btn-primary fill next" id="nextButton" value="next" disabled>Next
+                        <div class="round"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></div></button>
+                </div>
+                <div class="btn-group" id="formPagingNextButtonGroup" style="display: none;">
+                    <button type="button" class="btn btn-sm btn-primary fill next" id="nextButtonFormPaging" value="next">Next
+                        <div class="round"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></div></button>
+                </div>
+            </div>
+        </div><!--MAIN-->
+    </div><!--END container div-->
+
+
+</div>
+
+
+
+<!--load model attribute for Jquery consumption  -->
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+
+
+    var appInternalID = /*[[${baseTrademarkApplication.applicationInternalID}]]*/ 'User Name';
+    var host_name= /*[[${hostBean.host}]]*/ 'User Name';
+    var host_port= /*[[${hostBean.port}]]*/ 'User Name';
+    var host = host_name+":"+host_port;
+    var selectedContacts = /*[[${selectedOwners.ContactEmails}]]*/ 'User Name';
+    var ownerOpt = /*[[${baseTrademarkApplication.isOwnerSet()}]]*/ 'User Name';
+
+    /*]]>*/
+</script>
+
+
+
+
+
+<script>
+    $(document).ready(function() {
+
+        ///////////////////////////////////////////////////////////////////////////////
+        // initial page load
+        ///////////////////////////////////////////////////////////////////////////////
+        setTimeout(function() {
+            // after 1000 ms we add the class animated to the login/register card
+            $('.content').fadeIn(500);
+        }, 500);
+
+        ///////////////////////////////////////////////////////////////////////////////
+        // initialize hover text on Owner Name Information
+        ///////////////////////////////////////////////////////////////////////////////
+        $('[data-toggle="tooltip"]').tooltip();
+
+        // update app id on hidden field
+
+        $('#appInternalIDForm').val(appInternalID);
+
+        if(ownerOpt== false){
+            $('#nextButton').attr("disabled", true);
+        }
+        if(ownerOpt== true){
+            $('#nextButton').attr("disabled", false);
+
+            // fade out owner submit, fade in owner page
+
+            $('#formSubmitNextButtonGroup').fadeOut();
+            $('#formPagingNextButtonGroup').fadeIn();
+        }
+
+        if(attorneyOpt == false){
+            prevLinkURL = prevLinkURLAttorneyFalse;
+        }
+
+
+
+        $('#prevButton').click(function () {
+            location.href=prevLinkURL;
+        });
+
+        $('#nextButtonFormPaging').click(function () {
+            location.href = nextLinkURL;
+        });
+
+
+        //populate form from managed contacts
+        $('button#autofill').on('click',function() {
+            $( '#mydata2' ).css('visibility','visible');
+            $( '#mydata2 .collapse' ).collapse('show').fadeIn( 'slow','swing');
+            $( 'button#contactsbtn span#toggleglyphone' ).addClass('visuallyremoved');
+            $( 'button#contactsbtn span#toggleglyph' ).addClass('visuallyadded');
+        });
+
+        $('input.form-control').focusout(function () {
+
+
+            if($(this).val() != "") {
+                $('#formPagingNextButtonGroup').fadeOut();
+                $('#formSubmitNextButtonGroup').fadeIn();
+
+
+                $('#nextButton').attr("disabled",false);
+                $('#nextButton').attr("form", "addNewOwnerForm");
+                $('#nextButton').attr("type", "submit");
+                $('#nextButton').attr("id", "contactSumbit");
+            }
+
+        });
+
+
+        $('a.fromcontact').click(function () {
+
+            $('#formPagingNextButtonGroup').fadeOut();
+            $('#formSubmitNextButtonGroup').fadeIn();
+            var contactEmail = $(this).parent().next().html();
+
+            setformWithManagedContact(contactEmail);
+
+
+            $('#nextButton').attr("disabled",false);
+            $('#nextButton').attr("form", "addNewOwnerForm");
+            $('#nextButton').attr("type", "submit");
+            $('#nextButton').attr("id", "contactSumbit");
+
+
+        });
+
+
+
+
+        $( "#clearfillOwner" ).click(function() {
+
+
+            $('#addNewOwnerForm')[0].reset();
+            $('#appInternalIDForm').val(appInternalID);
+            $('#formSubmitNextButtonGroup').fadeOut();
+            $('#formPagingNextButtonGroup').fadeIn();
+
+
+
+            if(ownerOpt == false){
+                $('#nextButtonFormPaging').attr("disabled", true);
+            }
+
+        });
+
+
+
+
+
+
+        // load partner div
+
+        $('#domestic-entity-dropdown-partner').change( function () {
+
+
+            var subtype_val = this.value;
+            if(subtype_val == "none"){
+                //fade out every thing
+                fadeOutPartnerInfo();
+            }
+            if(subtype_val == "Individual"){
+                fadeOutPartnerInfo();
+
+                $('#individual-partner-entity').fadeIn(1000);
+
+                disableNoneIndiviualRequiredfields();
+                enableIndiviualRequiredfields();
+
+            }
+            if(subtype_val == "Sole Proprietorship"){
+                fadeOutPartnerInfo();
+                $('#individual-partner-entity').fadeIn(1000);  // same owner entity fields as individual
+                disableNoneIndiviualRequiredfields();
+                enableIndiviualRequiredfields();
+            }
+
+
+            if(subtype_val == "Limited Liability Company"){
+
+                setTimeout(function() {
+                    // after 1000 ms we add the class animated to the login/register card
+                    fadeOutPartnerInfo();
+                }, 500);
+
+                setTimeout(function() {
+                    // after 1000 ms we add the class animated to the login/register card
+                    $('#none-individual-partner-entity').fadeIn(1000);
+                }, 1000);
+
+                disableIndiviualRequiredfields();
+                enableNoneIndiviualRequiredfields();
+                // same owner entity fields as individual
+
+            }
+            if(subtype_val == "Partnership"){
+                setTimeout(function() {
+                    // after 1000 ms we add the class animated to the login/register card
+                    fadeOutPartnerInfo();
+                }, 500);
+
+                setTimeout(function() {
+                    // after 1000 ms we add the class animated to the login/register card
+                    $('#none-individual-partner-entity').fadeIn(1000);
+                }, 1000);
+                disableIndiviualRequiredfields();
+                enableNoneIndiviualRequiredfields();
+            }
+
+            if(subtype_val == "Joint Venture"){
+                setTimeout(function() {
+                    // after 1000 ms we add the class animated to the login/register card
+                    fadeOutPartnerInfo();
+                }, 500);
+
+                setTimeout(function() {
+                    // after 1000 ms we add the class animated to the login/register card
+                    $('#none-individual-partner-entity').fadeIn(1000);
+                }, 1000);
+                disableIndiviualRequiredfields();
+                enableNoneIndiviualRequiredfields();
+            }
+
+            if(subtype_val == "Trust"){
+                setTimeout(function() {
+                    // after 1000 ms we add the class animated to the login/register card
+                    fadeOutPartnerInfo();
+                }, 500);
+
+                setTimeout(function() {
+                    // after 1000 ms we add the class animated to the login/register card
+                    $('#none-individual-partner-entity').fadeIn(1000);
+                }, 1000);
+                disableIndiviualRequiredfields();
+                enableNoneIndiviualRequiredfields();
+            }
+
+            if(subtype_val == "Estate"){
+                setTimeout(function() {
+                    // after 1000 ms we add the class animated to the login/register card
+                    fadeOutPartnerInfo();
+                }, 500);
+
+                setTimeout(function() {
+                    // after 1000 ms we add the class animated to the login/register card
+                    $('#none-individual-partner-entity').fadeIn(1000);
+                }, 1000);
+                disableIndiviualRequiredfields();
+                enableNoneIndiviualRequiredfields();
+            }
+
+
+
+
+
+            //saveProjectInfo("set-Owner-entity-types", "US"+"+"+subtype_val, appInternalID); // static from radio buttton
+        })
+
+
+
+
+        ////////////////////////////////////////////////////
+        // set server specific link urls
+        // set links for traversal buttons
+        ////////////////////////////////////////////////////
+        //alert(window.location.href);
+
+
+    });
+
+    function validateOwnerForm()
+    {
+        var formError = false;
+        var errorMsg = "";
+        // check if contact attempted to add already in application
+        for(var a=0; a < selectedContacts.length; a++){
+            if($('#ownerEmail').val() == selectedContacts[a]){
+                formError = true;
+                errorMsg = "this new contact is already added to this application as an owner.";
+            }
+        }
+
+
+
+        if(formError)
+        {
+            alert(errorMsg);
+
+            return false;
+        }
+
+        return true;
+    }
+
+
+    function fadeOutPartnerInfo(){
+
+        $('#individual-partner-entity').fadeOut(1000);
+        $('#none-individual-partner-entity').fadeOut(1000);
+    }
+
+
+    function disableNoneIndiviualRequiredfields(){
+        $('#owner-name').prop("required", false);
+
+        $('#owner-type').prop("required", false);
+        $('#owner-state').prop("required", false);
+    }
+
+    function enableNoneIndiviualRequiredfields(){
+        $('#owner-name').prop("required", true);
+
+        $('#owner-type').prop("required", true);
+        $('#owner-state').prop("required", true);
+    }
+
+
+    function disableIndiviualRequiredfields(){
+        $('#partner-first-name').prop("required", false);
+        $('#partner-last-name').prop("required", false);
+    }
+
+    function enableIndiviualRequiredfields() {
+        $('#partner-first-name').prop("required", true);
+        $('#partner-last-name').prop("required", true);
+    }
+
+
+</script>
+
+
+</body>
+</html>

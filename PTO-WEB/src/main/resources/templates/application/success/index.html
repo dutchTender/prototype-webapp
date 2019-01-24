@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/efileApplicationDefaultFragment :: layout (~{::body},'user')}" xmlns="http://www.w3.org/1999/html">
+<head >
+    <meta charset="UTF-8">
+    <title>Trademark application success</title>
+</head>
+<body>
+<div class="row content" style="display: none; min-height: 850px;" >
+    <main class="col-xs-12 col-sm-8 col-md-8 col-lg-7">
+        <!--START Content Div-->
+        <div class="row">
+            <div class="col-xs-12">
+
+                <div class="row center" style="margin-bottom: 15px;">
+                    <div class="col-xs-12">
+                        <h1>Submission Successful</h1>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col-xs-12">
+                        <h2 style="color: darkgreen; font-weight: bold;">Success!</h2>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col-xs-12">
+                        <p>We received your application and assigned serial number ########. <b style="font-weight: bold">A <a th:attr="href=${baseTrademarkApplication.getRecieptFilePath()}">PDF</a> version of your filing opened in a new window, you are able to save it for your records.</b> This PDF file serve as your official confirmation copy. For electronically submitted applications, we do not mail paper filing receipts.</p>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col-xs-12">
+                    <p><b style="font-weight: bold;">What's next?</b><br>In approximately three months, your application will be assigned to a USPTO examining attorney for review. Visit our website for an explanation of <a href="https://www.uspto.gov/trademark/trademark-timelines/trademark-application-and-post-registration-process-timelines">application process time line.</a></p>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col-xs-12">
+                        <iframe style="min-height: 555px;" th:src="${baseTrademarkApplication.getRecieptFilePath()}" class="img-responsive" allowfullscreen webkitallowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col-xs-12">
+                        <p>To be sure that you don't miss an important email from the USPTO and to avoid the possible <a href="https://www.uspto.gov/trademarks-application-process/abandoned-applications">abandonment</a> of yor application, yhou should check your application status and review your document in our database, <a href="http://tsdr.uspto.gov/">Trademark Status and Document Retrieval</a>(TSDR) every three to four months</p>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-bottom: 55px;">
+                    <div class="col-xs-12">
+                        Thank you.
+                    </div>
+                </div>
+
+
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col-xs-12">
+                        <button class="btn-primary btn-sm" id="home-button" style="min-width: 222px; min-height: 23px; font-weight: bold">Return to Homepage</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!--prev / next buttons-->
+
+    </main>
+</div><!--END div content-->
+
+
+
+<script>
+
+
+
+
+
+
+
+</script>
+
+
+<script>
+
+
+    // next link url to enable  for u.s individual href="http://localhost:8080/application/owner/info"
+    $(document).ready(function() {
+        setTimeout(function () {
+            $('.content').fadeIn(500);
+        }, 500);
+
+        setTimeout(function () {
+            // after 1000 ms we add the class animated to the login/register card
+            $('#panels').fadeIn(500);
+        }, 500);
+
+
+        setTimeout(function () {
+            // after 1000 ms we add the class animated to the login/register card
+            $('#contacts-ui').fadeIn(500);
+
+
+        }, 500);
+
+        //window.open("https://preview.uxpin.com/646c2ecbcfb400369217dd7cdd69a4ab19148f3f#/pages/87302094/simulate/sitemap?mode=i", '_blank', 'location=yes,height=888,width=555,scrollbars=yes,status=yes');
+
+        $('#home-button').click(function () {
+            location.href="../../accounts/dashboard";
+        });
+
+        //////////////////////////////////////////////////////////////////////
+
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

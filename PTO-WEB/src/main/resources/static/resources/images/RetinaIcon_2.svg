@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [
+	<!ENTITY ns_extend "http://ns.adobe.com/Extensibility/1.0/">
+	<!ENTITY ns_ai "http://ns.adobe.com/AdobeIllustrator/10.0/">
+	<!ENTITY ns_graphs "http://ns.adobe.com/Graphs/1.0/">
+	<!ENTITY ns_vars "http://ns.adobe.com/Variables/1.0/">
+	<!ENTITY ns_imrep "http://ns.adobe.com/ImageReplacement/1.0/">
+	<!ENTITY ns_sfw "http://ns.adobe.com/SaveForWeb/1.0/">
+	<!ENTITY ns_custom "http://ns.adobe.com/GenericCustomNamespace/1.0/">
+	<!ENTITY ns_adobe_xpath "http://ns.adobe.com/XPath/1.0/">
+]>
+<svg version="1.1" id="Layer_1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="82px" height="82px"
+	 viewBox="0 0 82 82" enable-background="new 0 0 82 82" xml:space="preserve">
+<metadata>
+	<sfw  xmlns="&ns_sfw;">
+		<slices></slices>
+		<sliceSourceBounds  height="82" width="76.875" y="199.5" x="279.554" bottomLeftOrigin="true"></sliceSourceBounds>
+	</sfw>
+</metadata>
+<g>
+	<g>
+		<path vector-effect="non-scaling-stroke" d="M77.93,1.708L77.93,1.708c0-0.342,0-0.513-0.172-0.684
+			C77.416,0.342,76.904,0,76.221,0H18.137c-0.512,0-1.025,0.171-1.367,0.684L1.908,20.5H1.054V82h61.5v-1.195l15.033-19.988
+			c0.17-0.342,0.342-0.684,0.342-1.025l0,0V1.708z M4.471,23.917h11.958v35.363L4.471,75.166V23.917z M19.846,23.917h39.291v34.167
+			H19.846V23.917z M62.555,22.721L74.512,6.833v51.25H62.555V22.721z M59.992,20.5H19.846V3.417h52.959L59.992,20.5z M16.429,6.833
+			V20.5H6.179L16.429,6.833z M6.179,78.584L18.992,61.5h40.145v17.084H6.179z M62.555,75.166V61.5h10.25L62.555,75.166z"/>
+	</g>
+</g>
+<rect x="27.5" y="29.5" fill="none" width="33" height="39"/>
+<text transform="matrix(1 0 0 1 27.5 52.0723)" fill="#004C97" font-family="'Perpetua-Bold'" font-size="36" letter-spacing="4">A</text>
+</svg>

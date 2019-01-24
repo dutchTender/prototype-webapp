@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"/>
+
+<head >
+    <meta charset="UTF-8">
+    <title>Owner Information - Corporation</title>
+</head>
+<body>
+
+
+
+<!-- End Navbar -->
+<div class="content" style="display: none; background-color: white; min-height: 1500px; max-width: 800px; position: relative; top:-220px; bottom: -10%; left:-10px;" >
+    <div class="container-fluid" >
+
+        <div class="col-sm-12" >
+            <div class="form-container base-page" style="position: relative; bottom:-170px;">
+
+
+
+                <div class="row" style="position: relative; top:-250px; left:-10px; ">
+
+                    <div class="card-text">
+
+                        <h5 class="card-title"><b style="color: black; color: rgb(0, 0, 0); font-size: 16px; text-align: left; font-weight: bold; font-style: normal; text-decoration: none;">Owner Information</b><a  style="text-decoration: none;" data-toggle="tooltip" title="If the owner only have one name, insert the words First Name Unavailable (FNU) in the first name field and the name to be entered in the surename field."><i class="material-icons" style="position: relative; top:8px; right:-25px;">info_outline</i></a></h5>
+
+                    </div>
+                    <hr style="height:3px; position:relative; top:-20px; left:-11.5%; max-width: 80.1%">
+                </div>
+
+                <form method="post" style="" id="addNewOwnerForm" action="/owner/add"  class="form-horizontal"  th:object="${addNewOwnerContactFormDTO}">
+
+
+
+                    <div class="row" style="position: relative; top:-250px; right:-7%; margin-bottom: 5px;">
+
+                        <div class="col-sm-4">
+                            <label for="ownername"><b style="color: red">&#42;</b>Owner Name</label>
+                            <input type="text" class="form-control rounded-borders" id="ownername" th:field="*{ownerName}"  style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;" required>
+                        </div>
+                    </div>
+
+                    <div class="row" style="position: relative; top:-240px; right:-9%; ">
+                        <span   style="opacity: 1; mix-blend-mode: normal; font-variant: normal; color: rgb(0, 0, 0); font-size: 16px; font-weight: bold; font-style: normal; text-decoration: none; text-align: left; width: 573px; height: 18px; transform: rotate(0deg) translate(164px, 724px) rotate(0deg);"><p>Add&nbsp;additional name if I do business as/or trading under a different name:</p></span>
+                    </div>
+
+                    <div class="row" style="position: relative; top:-695px; left:-6%; ">
+                        <div id="TextElement3c22541d249c4ccdbef101d00bf9c27b" class="ng-element el-text-2 empty-line-hack font-S-Arial-n4" data-id="e663302ac1054b3abb7536d7052cff99" style="opacity: 1; mix-blend-mode: normal; font-variant: normal; color: rgb(0, 0, 0); font-size: 16px; font-weight: normal; font-style: normal; text-decoration: none; text-align: left; width: 300px; height: 18px; transform: rotate(0deg) translate(149px, 472px) rotate(0deg);"><p>Type</p></div>
+                    </div>
+                    <div class="row" style="position: relative; top:-205px; right:-7%; ">
+                        <!--default drop down -->
+                        <div class="col-sm-4">
+
+                        <span>
+                            <select  class="form-control" name="nameType"  th:field="*{ownerType}" style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+                                <option value="none">Select</option>
+                                <option value="DBA">Doing Business As(DBA)</option>
+                                <option value="TA">Trading As(TA)</option>
+                                <option value="AKA">Also Known As(AKA)</option>
+                                <option value="F">Formerly</option>
+
+                            </select>
+                        </span>
+
+                        </div>
+
+                        <div class="col-sm-4" style="position: relative; bottom:-5px; right:-7%;">
+                            <div class="form-group nameTypeFieldMsgArea" style="display:none;position: relative; left:-15%;">
+                                <b><span></span></b>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row" style="position: relative; top:-190px; right:-7%;">
+                        <div class="col-sm-4">
+                            <label><b style="color: red">&#42;</b>State of Incorporation</label>
+                            <select  class="form-control" name="State" th:field="*{ownerState}"   style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;" >
+                                <option  value="none"></option>
+                                <option  value="AL">Alabama</option>
+                                <option  value="AK">Alaska</option>
+                                <option value="AZ">Arizona</option>
+                                <option value="AR">Arkansas</option>
+                                <option value="CA">California</option>
+                                <option value="CO">Colorado</option>
+                                <option value="CT">Connecticut</option>
+                                <option value="DE">Delaware</option>
+                                <option value="DC">District of Columbia</option>
+                                <option value="FL">Florida</option>
+                                <option value="GA">Georgia</option>
+                                <option value="HI">Hawaii</option>
+                                <option value="ID">Idaho</option>
+                                <option value="IL">Illinois</option>
+                                <option value="IN">Indiana</option>
+                                <option value="IA">Iowa</option>
+                                <option value="KS">Kansas</option>
+                                <option value="KY">Kentucky</option>
+                                <option value="LA">Louisiana</option>
+                                <option value="ME">Maine</option>
+                                <option value="MD">Maryland</option>
+                                <option value="MA">Massachusetts</option>
+                                <option value="MI">Michigan</option>
+                                <option value="MN">Minnesota</option>
+                                <option value="MS">Mississippi</option>
+                                <option value="MO">Missouri</option>
+                                <option value="MT">Montana</option>
+                                <option value="NE">Nebraska</option>
+                                <option value="NV">Nevada</option>
+                                <option value="NH">New Hampshire</option>
+                                <option value="NJ">New Jersey</option>
+                                <option value="NM">New Mexico</option>
+                                <option value="NY">New York</option>
+                                <option value="NC">North Carolina</option>
+                                <option value="ND">North Dakota</option>
+                                <option value="OH">Ohio</option>
+                                <option value="OK">Oklahoma</option>
+                                <option value="OR">Oregon</option>
+                                <option value="PA">Pennsylvania</option>
+                                <option value="RI">Rhode Island</option>
+                                <option value="SC">South Carolina</option>
+                                <option value="SD">South Dakota</option>
+                                <option value="TN">Tennessee</option>
+                                <option value="TX">Texas</option>
+                                <option value="UT">Utah</option>
+                                <option value="VT">Vermont</option>
+                                <option value="VA">Virginia</option>
+                                <option value="WA">Washington</option>
+                                <option value="WV">West Virginia</option>
+                                <option value="WI">Wisconsin</option>
+                                <option value="WY">Wyoming</option>
+
+                            </select>
+
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+                    <!--                    end of Owner Name Information -->
+
+
+                    <div class=" card-header-rose card-header-text" style="margin-top: 20px; position: relative; top:-190px; left:-20px; " >
+
+                        <div class="card-text">
+
+                            <h5 class="card-title"><b style="color: black; color: rgb(0, 0, 0); font-size: 16px; text-align: left; font-weight: bold; font-style: normal; text-decoration: none;">Owner Address Information</b></h5>
+
+                        </div>
+                        <hr style="height:3px; position:relative; top:-20px; left:-11.5%; max-width: 80.1%">
+                    </div>
+
+                    <div class="row" style="position: relative; top:-205px; right:-7%;">
+                         <span>
+                            <label class="col-sm-3 col-form-label"><p><b style="color: red">*</b>Email Address<a  style="text-decoration: none;" data-toggle="tooltip" title="The USPTO will use this email address to send correspondence regarding this application or registration. It is critical to ensure this email address is current."><i class="material-icons" style="position: relative; top:8px; right:-25px;">info_outline</i></a></p></label>
+
+                        </span>
+
+                    </div>
+                    <div class="row" style="position: relative; top:-220px; right:-8%;">
+
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <span>
+                                    <input type="email" name="email" th:field="*{ownerEmail}"  placeholder="" class="form-control" style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;" required>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4" style="position: relative; bottom:-35px;">
+                            <div class="form-group emailFieldMsgArea" style="display:none; position: relative; left:-15%;">
+                                <b><span></span></b>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="row" style="position: relative; top:-200px; right: -7%; ">
+                         <span>
+
+                             <label class="col-sm-3 col-form-label"><b style="color: red">*</b>Country/US Territory</label>
+                         </span>
+
+                        </div>
+
+                        <div class="row" style="position: relative; top:-200px; right:-8%; ">
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                        <span>
+                                             <select   th:field="*{OwnerAddressCountry}"  class="form-control" name="suffix"  style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;" required>
+
+                                                    <option value="X1">UNITED STATES OF AMERICA</option>
+                                                    <option value="B2">AFGHANISTAN</option>
+                                                    <option value="B3">ALBANIA</option>
+                                                    <option value="B4">ALGERIA</option>
+                                                    <option value="B5">AMERICAN SAMOA</option>
+                                                    <option value="B6">ANDORRA</option>
+                                                    <option value="B7">ANGOLA</option>
+                                                    <option value="1A">ANGUILLA</option>
+                                                    <option value="B8">ANTARCTICA</option>
+                                                    <option value="B9">ANTIGUA AND BARBUDA</option>
+                                                    <option value="C1">ARGENTINA</option>
+                                                    <option value="1B">ARMENIA</option>
+                                                    <option value="1C">ARUBA</option>
+                                                    <option value="C3">AUSTRALIA</option>
+                                                    <option value="C4">AUSTRIA</option>
+                                                    <option value="1D">AZERBAIJAN</option>
+                                                    <option value="C5">BAHAMAS</option>
+                                                    <option value="C6">BAHRAIN</option>
+                                                    <option value="C7">BANGLADESH</option>
+                                                    <option value="C8">BARBADOS</option>
+                                                    <option value="1F">BELARUS</option>
+                                                    <option value="C9">BELGIUM</option>
+                                                    <option value="D1">BELIZE</option>
+                                                    <option value="G6">BENIN</option>
+                                                    <option value="D0">BERMUDA</option>
+                                                    <option value="D2">BHUTAN</option>
+                                                    <option value="D3">BOLIVIA</option>
+                                                    <option value="1E">BOSNIA AND HERZEGOVINA</option>
+                                                    <option value="B1">BOTSWANA</option>
+                                                    <option value="D4">BOUVET ISLAND</option>
+                                                    <option value="D5">BRAZIL</option>
+                                                    <option value="D6">BRITISH INDIAN OCEAN TERRITORY</option>
+                                                    <option value="D9">BRUNEI DARUSSALAM</option>
+                                                    <option value="E0">BULGARIA</option>
+                                                    <option value="X2">BURKINA FASO</option>
+                                                    <option value="E2">BURUNDI</option>
+                                                    <option value="E3">CAMBODIA</option>
+                                                    <option value="E4">CAMEROON</option>
+                                                    <option value="E8">CAPE VERDE</option>
+                                                    <option value="E9">CAYMAN ISLANDS</option>
+                                                    <option value="F0">CENTRAL AFRICAN REPUBLIC</option>
+                                                    <option value="F2">CHAD</option>
+                                                    <option value="F3">CHILE</option>
+                                                    <option value="F4">CHINA</option>
+                                                    <option value="F6">CHRISTMAS ISLAND</option>
+                                                    <option value="F7">COCOS (KEELING) ISLANDS</option>
+                                                    <option value="F8">COLOMBIA</option>
+                                                    <option value="F9">COMOROS</option>
+                                                    <option value="G0">CONGO</option>
+                                                    <option value="Y3">CONGO, THE DEMOCRATIC REPUBLIC OF THE</option>
+                                                    <option value="G1">COOK ISLANDS</option>
+                                                    <option value="G2">COSTA RICA</option>
+                                                    <option value="L7">COTE D'IVOIRE</option>
+                                                    <option value="1M">CROATIA</option>
+                                                    <option value="G3">CUBA</option>
+                                                    <option value="G4">CYPRUS</option>
+                                                    <option value="2N">CZECH REPUBLIC</option>
+                                                    <option value="G7">DENMARK</option>
+                                                    <option value="1G">DJIBOUTI</option>
+                                                    <option value="G9">DOMINICA</option>
+                                                    <option value="G8">DOMINICAN REPUBLIC</option>
+                                                    <option value="2F">EAST TIMOR</option>
+                                                    <option value="H1">ECUADOR</option>
+                                                    <option value="H2">EGYPT</option>
+                                                    <option value="H3">EL SALVADOR</option>
+                                                    <option value="H4">EQUATORIAL GUINEA</option>
+                                                    <option value="1J">ERITREA</option>
+                                                    <option value="1H">ESTONIA</option>
+                                                    <option value="H5">ETHIOPIA</option>
+                                                    <option value="H7">FALKLAND ISLANDS (MALVINAS)</option>
+                                                    <option value="H6">FAROE ISLANDS</option>
+                                                    <option value="H8">FIJI</option>
+                                                    <option value="H9">FINLAND</option>
+                                                    <option value="I0">FRANCE</option>
+                                                    <option value="I3">FRENCH GUIANA</option>
+                                                    <option value="I4">FRENCH POLYNESIA</option>
+                                                    <option value="2C">FRENCH SOUTHERN TERRITORIES</option>
+                                                    <option value="I5">GABON</option>
+                                                    <option value="I6">GAMBIA</option>
+                                                    <option value="2Q">GEORGIA</option>
+                                                    <option value="2M">GERMANY</option>
+                                                    <option value="J0">GHANA</option>
+                                                    <option value="J1">GIBRALTAR</option>
+                                                    <option value="J3">GREECE</option>
+                                                    <option value="J4">GREENLAND</option>
+                                                    <option value="J5">GRENADA</option>
+                                                    <option value="J6">GUADELOUPE</option>
+                                                    <option value="GU">GUAM</option>
+                                                    <option value="J8">GUATEMALA</option>
+                                                    <option value="J9">GUINEA</option>
+                                                    <option value="S0">GUINEA-BISSAU</option>
+                                                    <option value="K0">GUYANA</option>
+                                                    <option value="K1">HAITI</option>
+                                                    <option value="K4">HEARD ISLAND AND MCDONALD ISLANDS</option>
+                                                    <option value="X4">HOLY SEE (VATICAN CITY STATE)</option>
+                                                    <option value="K2">HONDURAS</option>
+                                                    <option value="K3">HONG KONG</option>
+                                                    <option value="K5">HUNGARY</option>
+                                                    <option value="K6">ICELAND</option>
+                                                    <option value="K7">INDIA</option>
+                                                    <option value="K8">INDONESIA</option>
+                                                    <option value="K9">IRAN, ISLAMIC REPUBLIC OF</option>
+                                                    <option value="L0">IRAQ</option>
+                                                    <option value="L2">IRELAND</option>
+                                                    <option value="L3">ISRAEL</option>
+                                                    <option value="L6">ITALY</option>
+                                                    <option value="L8">JAMAICA</option>
+                                                    <option value="M0">JAPAN</option>
+                                                    <option value="M2">JORDAN</option>
+                                                    <option value="1P">KAZAKSTAN</option>
+                                                    <option value="M3">KENYA</option>
+                                                    <option value="J2">KIRIBATI</option>
+                                                    <option value="M4">KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF</option>
+                                                    <option value="M5">KOREA, REPUBLIC OF</option>
+                                                    <option value="M6">KUWAIT</option>
+                                                    <option value="1N">KYRGYZSTAN</option>
+                                                    <option value="M7">LAO PEOPLE'S DEMOCRATIC REPUBLIC</option>
+                                                    <option value="1R">LATVIA</option>
+                                                    <option value="M8">LEBANON</option>
+                                                    <option value="M9">LESOTHO</option>
+                                                    <option value="N0">LIBERIA</option>
+                                                    <option value="N1">LIBYAN ARAB JAMAHIRIYA</option>
+                                                    <option value="N2">LIECHTENSTEIN</option>
+                                                    <option value="1Q">LITHUANIA</option>
+                                                    <option value="N4">LUXEMBOURG</option>
+                                                    <option value="N5">MACAU</option>
+                                                    <option value="1U">MACEDONIA, FORMER YUGOSLAV REP. OF</option>
+                                                    <option value="N6">MADAGASCAR</option>
+                                                    <option value="N7">MALAWI</option>
+                                                    <option value="N8">MALAYSIA</option>
+                                                    <option value="N9">MALDIVES</option>
+                                                    <option value="O0">MALI</option>
+                                                    <option value="O1">MALTA</option>
+                                                    <option value="1T">MARSHALL ISLANDS</option>
+                                                    <option value="O2">MARTINIQUE</option>
+                                                    <option value="O3">MAURITANIA</option>
+                                                    <option value="O4">MAURITIUS</option>
+                                                    <option value="2P">MAYOTTE</option>
+                                                    <option value="O5">MEXICO</option>
+                                                    <option value="1K">MICRONESIA, FEDERATED STATES OF</option>
+                                                    <option value="1S">MOLDOVA, REPUBLIC OF</option>
+                                                    <option value="O9">MONACO</option>
+                                                    <option value="P0">MONGOLIA</option>
+                                                    <option value="P1">MONTSERRAT</option>
+                                                    <option value="P2">MOROCCO</option>
+                                                    <option value="P3">MOZAMBIQUE</option>
+                                                    <option value="E1">MYANMAR</option>
+                                                    <option value="T6">NAMIBIA</option>
+                                                    <option value="P5">NAURU</option>
+                                                    <option value="P6">NEPAL</option>
+                                                    <option value="P7">NETHERLANDS</option>
+                                                    <option value="P8">NETHERLANDS ANTILLES</option>
+                                                    <option value="1W">NEW CALEDONIA</option>
+                                                    <option value="Q2">NEW ZEALAND</option>
+                                                    <option value="Q3">NICARAGUA</option>
+                                                    <option value="Q4">NIGER</option>
+                                                    <option value="Q5">NIGERIA</option>
+                                                    <option value="Q6">NIUE</option>
+                                                    <option value="Q7">NORFOLK ISLAND</option>
+                                                    <option value="1V">NORTHERN MARIANA ISLANDS</option>
+                                                    <option value="Q8">NORWAY</option>
+                                                    <option value="P4">OMAN</option>
+                                                    <option value="R0">PAKISTAN</option>
+                                                    <option value="1Y">PALAU</option>
+                                                    <option value="1X">PALESTINIAN TERRITORY, OCCUPIED</option>
+                                                    <option value="R1">PANAMA</option>
+                                                    <option value="R2">PAPUA NEW GUINEA</option>
+                                                    <option value="R4">PARAGUAY</option>
+                                                    <option value="R5">PERU</option>
+                                                    <option value="R6">PHILIPPINES</option>
+                                                    <option value="R8">PITCAIRN</option>
+                                                    <option value="R9">POLAND</option>
+                                                    <option value="S1">PORTUGAL</option>
+                                                    <option value="PR">PUERTO RICO</option>
+                                                    <option value="S3">QATAR</option>
+                                                    <option value="S4">REUNION</option>
+                                                    <option value="S5">ROMANIA</option>
+                                                    <option value="1Z">RUSSIAN FEDERATION</option>
+                                                    <option value="S6">RWANDA</option>
+                                                    <option value="U8">SAINT HELENA</option>
+                                                    <option value="U7">SAINT KITTS AND NEVIS</option>
+                                                    <option value="U9">SAINT LUCIA</option>
+                                                    <option value="V0">SAINT PIERRE AND MIQUELON</option>
+                                                    <option value="V1">SAINT VINCENT AND THE GRENADINES</option>
+                                                    <option value="Y0">SAMOA</option>
+                                                    <option value="S8">SAN MARINO</option>
+                                                    <option value="S9">SAO TOME AND PRINCIPE</option>
+                                                    <option value="T0">SAUDI ARABIA</option>
+                                                    <option value="T1">SENEGAL</option>
+                                                    <option value="T2">SEYCHELLES </option>
+                                                    <option value="T8">SIERRA LEONE</option>
+                                                    <option value="U0">SINGAPORE</option>
+                                                    <option value="2B">SLOVAKIA</option>
+                                                    <option value="2A">SLOVENIA</option>
+                                                    <option value="D7">SOLOMON ISLANDS</option>
+                                                    <option value="U1">SOMALIA</option>
+                                                    <option value="T3">SOUTH AFRICA</option>
+                                                    <option value="1L">SOUTH GEORGIA/SO. SANDWICH ISLANDS</option>
+                                                    <option value="U3">SPAIN</option>
+                                                    <option value="F1">SRI LANKA</option>
+                                                    <option value="V2">SUDAN</option>
+                                                    <option value="V3">SURINAME</option>
+                                                    <option value="L9">SVALBARD AND JAN MAYEN</option>
+                                                    <option value="V6">SWAZILAND</option>
+                                                    <option value="V7">SWEDEN</option>
+                                                    <option value="V8">SWITZERLAND</option>
+                                                    <option value="V9">SYRIAN ARAB REPUBLIC</option>
+                                                    <option value="F5">TAIWAN</option>
+                                                    <option value="2D">TAJIKISTAN</option>
+                                                    <option value="W0">TANZANIA, UNITED REPUBLIC OF</option>
+                                                    <option value="W1">THAILAND</option>
+                                                    <option value="W2">TOGO</option>
+                                                    <option value="W3">TOKELAU</option>
+                                                    <option value="W4">TONGA</option>
+                                                    <option value="W5">TRINIDAD AND TOBAGO</option>
+                                                    <option value="W6">TUNISIA</option>
+                                                    <option value="W8">TURKEY</option>
+                                                    <option value="2E">TURKMENISTAN</option>
+                                                    <option value="W7">TURKS AND CAICOS ISLANDS</option>
+                                                    <option value="2G">TUVALU</option>
+                                                    <option value="W9">UGANDA</option>
+                                                    <option value="2H">UKRAINE</option>
+                                                    <option value="C0">UNITED ARAB EMIRATES</option>
+                                                    <option value="X0">UNITED KINGDOM</option>
+                                                    <option value="2J">UNITED STATES MINOR OUTLYING ISLANDS</option>
+                                                    <option value="X3">URUGUAY</option>
+                                                    <option value="2K">UZBEKISTAN</option>
+                                                    <option value="2L">VANUATU</option>
+                                                    <option value="X5">VENEZUELA</option>
+                                                    <option value="Q1">VIET NAM</option>
+                                                    <option value="D8">VIRGIN ISLANDS, BRITISH</option>
+                                                    <option value="VI">VIRGIN ISLANDS, U.S.</option>
+                                                    <option value="X8">WALLIS AND FUTUNA</option>
+                                                    <option value="U5">WESTERN SAHARA</option>
+                                                    <option value="T7">YEMEN</option>
+                                                    <option value="Y2">YUGOSLAVIA</option>
+                                                    <option value="Y4">ZAMBIA</option>
+                                                    <option value="Y5">ZIMBABWE</option>
+                                                    <option value="XX">UNKNOWN</option>
+                                                </select>
+
+
+                                        </span>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4" style=" position: relative; bottom:-35px;">
+                                <div class="form-group countryFieldMsgArea2" style="display:none; position: relative; left:-15%;">
+                                    <b><span></span></b>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
+                        <div class="row" style="position: relative; top:-200px; right:-7%;">
+                             <span>
+
+                                 <label class="col-sm-3 col-form-label"><b style="color: red">*</b>Address Line 1</label>
+                             </span>
+
+                        </div>
+
+                        <div class="row" style="position: relative; top:-200px; right:-8%;">
+
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <span>
+                                        <input type="text"  th:field="*{ownerAddress1}"    name="Address1" class="form-control" style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;" required>
+                                    </span>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4" style="position: relative; bottom:-35px;">
+                                <div class="form-group address1FieldMsgArea" style="display:none; position: relative; left:-15%;">
+                                    <b><span></span></b>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+
+
+
+                        <div class="row" style="position: relative; top:-200px; right:-7%;">
+                             <span>
+
+                                 <label class="col-sm-3 col-form-label">Address Line 2</label>
+                             </span>
+
+                        </div>
+
+                        <div class="row" style="position: relative; top:-200px; right:-8%;">
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                            <span>
+                                <input type="text"  th:field="*{ownerAddress2}"   name="Address2" class="form-control" style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+
+
+                            </span>
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4" style=" position: relative; bottom:-35px;">
+                                <div class="form-group address2FieldMsgArea" style="display:none; position: relative; left:-15%;">
+                                    <b><span></span></b>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+
+
+                        <div class="row" style="position: relative; top:-200px; right:-7%;">
+                                <span>
+                                     <label class="col-sm-3 col-form-label">Address Line 3</label>
+
+                                </span>
+
+                        </div>
+                        <div class="row" style="position: relative; top:-200px; right:-8%;">
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                        <span>
+                                          <input type="text" th:field="*{ownerAddress3}"  name="Address3" class="form-control" style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+                                        </span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4" style="position: relative; bottom:-35px;">
+                                <div class="form-group address3FieldMsgArea" style="display:none; position: relative; left:-15%;">
+                                    <b><span></span></b>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row" style="position: relative; top:-200px; right:-7%;">
+                                <span>
+                                    <label class="col-sm-2 col-form-label"><b style="color: red">*</b>City</label>
+
+                                </span>
+
+                        </div>
+
+                        <div class="row" style="position: relative; top:-200px; right:-8%;">
+
+                            <div class="col-sm-4">
+
+                                <div class="form-group">
+                                        <span>
+                                         <input type="text" th:field="*{ownerCity}"   th:value="${user.city}"  name="City" class="form-control" style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;" required>
+
+                                        </span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4" style="position: relative; bottom:-35px;">
+                                <div class="form-group cityFieldMsgArea" style="display:none; position: relative; left:-15%;">
+                                    <b><span></span></b>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row" style="position: relative; top:-200px; right:-7%;">
+                                <span>
+
+                                    <label class="col-sm-2 col-form-label">State</label>
+                                </span>
+                        </div>
+
+                        <div class="row" style="position: relative; top:-200px; right:-8%;">
+
+                            <div class="col-sm-4">
+
+                                <div class="form-group">
+                                    <select  class="form-control custom-select" name="State" th:field="*{ownerState}"  th:value="${user.state}"  style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+                                        <option  value="none"></option>
+                                        <option  value="AL">Alabama</option>
+                                        <option  value="AK">Alaska</option>
+                                        <option value="AZ">Arizona</option>
+                                        <option value="AR">Arkansas</option>
+                                        <option value="CA">California</option>
+                                        <option value="CO">Colorado</option>
+                                        <option value="CT">Connecticut</option>
+                                        <option value="DE">Delaware</option>
+                                        <option value="DC">District of Columbia</option>
+                                        <option value="FL">Florida</option>
+                                        <option value="GA">Georgia</option>
+                                        <option value="HI">Hawaii</option>
+                                        <option value="ID">Idaho</option>
+                                        <option value="IL">Illinois</option>
+                                        <option value="IN">Indiana</option>
+                                        <option value="IA">Iowa</option>
+                                        <option value="KS">Kansas</option>
+                                        <option value="KY">Kentucky</option>
+                                        <option value="LA">Louisiana</option>
+                                        <option value="ME">Maine</option>
+                                        <option value="MD">Maryland</option>
+                                        <option value="MA">Massachusetts</option>
+                                        <option value="MI">Michigan</option>
+                                        <option value="MN">Minnesota</option>
+                                        <option value="MS">Mississippi</option>
+                                        <option value="MO">Missouri</option>
+                                        <option value="MT">Montana</option>
+                                        <option value="NE">Nebraska</option>
+                                        <option value="NV">Nevada</option>
+                                        <option value="NH">New Hampshire</option>
+                                        <option value="NJ">New Jersey</option>
+                                        <option value="NM">New Mexico</option>
+                                        <option value="NY">New York</option>
+                                        <option value="NC">North Carolina</option>
+                                        <option value="ND">North Dakota</option>
+                                        <option value="OH">Ohio</option>
+                                        <option value="OK">Oklahoma</option>
+                                        <option value="OR">Oregon</option>
+                                        <option value="PA">Pennsylvania</option>
+                                        <option value="RI">Rhode Island</option>
+                                        <option value="SC">South Carolina</option>
+                                        <option value="SD">South Dakota</option>
+                                        <option value="TN">Tennessee</option>
+                                        <option value="TX">Texas</option>
+                                        <option value="UT">Utah</option>
+                                        <option value="VT">Vermont</option>
+                                        <option value="VA">Virginia</option>
+                                        <option value="WA">Washington</option>
+                                        <option value="WV">West Virginia</option>
+                                        <option value="WI">Wisconsin</option>
+                                        <option value="WY">Wyoming</option>
+
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4" style="position: relative; bottom:-35px;">
+                                <div class="form-group stateFieldMsgArea" style="display:none; position: relative; left:-15%;">
+                                    <b><span></span></b>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row" style="position: relative; top:-200px; right:-7%;">
+                                <span>
+                                     <label class="col-sm-2 col-form-label">Zip Code</label>
+
+                                </span>
+
+                        </div>
+                        <div class="row" style="position: relative; top:-200px; right:-8%;">
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                        <span>
+                                          <input type="text" name="zipcode" th:field="*{ownerZipcode}"  placeholder="XXXXX" class="form-control" style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+                                        </span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4" style="position: relative; bottom:-35px;">
+                                <div class="form-group zipcodeFieldMsgArea" style="display:none; position: relative; left:-15%;">
+                                    <b><span></span></b>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="position: relative; top:-200px; right:-7%;">
+                            <span>
+                                 <label class="col-sm-2 col-form-label">Website URL</label>
+
+                            </span>
+
+                        </div>
+                        <div class="row" style="position: relative; top:-200px; right:-8%;">
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                <span>
+                                  <input type="url" name="website" th:field="*{ownerWebSite}"  placeholder="" class="form-control" style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+                                </span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4" style="display:none; position: relative; bottom:-35px;">
+                                <div class="form-group webURLFieldMsgArea" style="position: relative; left:-15%;">
+                                    <b><span></span></b>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="position: relative; top:-200px; right:-7%;">
+                                <span>
+                                     <label class="col-sm-3 col-form-label">Phone Number</label>
+
+                                </span>
+                            <span>
+                                     <label class="col-sm-2 col-form-label">Ext.</label>
+
+                                </span>
+
+                        </div>
+
+
+                        <div class="row" style="position: relative; top:-200px; right:-6%">
+                            <div class="col-sm-1">
+                                <select  class="form-control" name="phone-type"  value="Type" style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+                                    <option value="cell"><b>Cell</b></option>
+                                    <option value="home"><b>Home</b></option>
+                                    <option value="work"><b>Work</b></option>
+                                    <option value="fax"><b>Fax</b></option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="number" id="phone" name="Phone" class="form-control"  th:field="*{ownerPhone}"   style=" border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+                            </div>
+                            <div class="col-sm-1">
+                                <input type="number" id="ext" name="Phone" class="form-control"   style=" border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+                            </div>
+
+                            <div class="col-sm-4" style="position: relative; bottom:-35px;">
+                                <div class="form-group phoneFieldMsgArea" style="display:none; position: relative; left:-15%;">
+                                    <b><span></span></b>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="position: relative; top:-200px;  right:-7%;">
+                            <button id="addNewPhoneNumber" class="ng-element el-button font-S-Arial-n4 interactive" data-id="fdd4cf621d614e66a1ba02d4820e53a9" style="opacity: 1; mix-blend-mode: normal; border-color: rgb(221, 221, 221); background-color: rgb(0, 120, 171); background-image: none; color: rgb(255, 255, 255); font-weight: bold; padding: 6px 10px; text-align: center; border-width: 0px; border-radius: 3px; border-style: solid; background-size: cover; background-repeat: repeat; background-position: center center; font-size: 16px; font-style: normal; width: 280px; height: 30px; transform: rotate(0deg) translate(158px, 389px) rotate(0deg);">Add Additional Phone Number</button>
+                        </div>
+
+                        <div class="row" style="position: relative; display: none; top:-120px;left:-5%;">
+                            <input id="appInternalID" type="text" th:value="${baseTrademarkApplication.applicationInternalID}"  class="form-control"   style=" border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+                        </div>
+
+                        <div class="row" style="position: relative; display: none; top:-120px;left:-5%;">
+                            <input id="appInternalIDForm" type="text" th:field="*{appInternalID}"   class="form-control"   style=" border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+                        </div>
+
+                        <div class="row" style="position: relative;  top:-150px; right:-600px;">
+                            <button id="addOwnerConfirm" class=" btn-sm btn"  type="submit"  style=" padding:5px; min-width:120px; color: white; background-color: rgb(52, 152, 219); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; border-top-right-radius: 5px; border-top-left-radius: 5px; position: relative; top:20px;"><b>Submit</b></button>
+                        </div>
+
+
+                    </form>
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <!--load model attribute for Jquery consumption  -->
+    <script th:inline="javascript">
+
+        /*<![CDATA[*/
+
+
+        var appInternalID = /*[[${baseTrademarkApplication.applicationInternalID}]]*/ 'User Name';
+        var host_name= /*[[${hostBean.host}]]*/ 'User Name';
+        var host_port= /*[[${hostBean.port}]]*/ 'User Name';
+        var host = host_name+":"+host_port;
+        //alert(tableRows);
+
+        /*]]>*/
+    </script>
+
+
+
+
+
+
+
+</div>
+
+
+
+</div>
+<!-- end of main content-->
+
+
+
+
+
+
+<script>
+    $(document).ready(function() {
+
+        ///////////////////////////////////////////////////////////////////////////////
+        // initial page load
+        ///////////////////////////////////////////////////////////////////////////////
+        setTimeout(function() {
+            // after 1000 ms we add the class animated to the login/register card
+            $('.content').fadeIn(500);
+        }, 500);
+
+        ///////////////////////////////////////////////////////////////////////////////
+        // initialize hover text on Owner Name Information
+        ///////////////////////////////////////////////////////////////////////////////
+        $('[data-toggle="tooltip"]').tooltip();
+
+        // update app id on hidden field
+
+        $('#appInternalIDForm').val(appInternalID);
+
+
+
+
+
+        ////////////////////////////////////////////////////
+
+    });
+
+</script>
+
+
+
+</body>
+</html>
