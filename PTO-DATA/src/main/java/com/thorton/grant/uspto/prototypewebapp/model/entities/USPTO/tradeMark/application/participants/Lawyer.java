@@ -6,11 +6,27 @@ import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.user.PTOUser
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 public class Lawyer extends Contact {
+
+
+    public Lawyer() {
+        docketNumberList = new ArrayList<>();
+    }
+
+    // object copy constructor
+    public Lawyer(Lawyer lawyer) {
+        this.setEmail(lawyer.getEmail());
+        this.setFirstName(lawyer.getFirstName());
+        this.setLastName(lawyer.getLastName());
+        this.setLawFirmName(lawyer.getLawFirmName());
+        this.setBarLicense(lawyer.getBarLicense());
+        this.setBarJurisdiction(lawyer.getBarJurisdiction());
+        this.setClient(lawyer.getClient());
+        this.setPrimary(lawyer.isPrimary());
+    }
 
     private boolean isPrimary;
     private boolean validBarAssociation; // affiliation
@@ -19,13 +35,40 @@ public class Lawyer extends Contact {
     private String barLicense;
 
     private String docketNumber;
+    // support multiple docket numbers
+    private ArrayList<String> docketNumberList;
 
 
     private String AffiliationStatus;
+    private boolean AffiliationStatusSet;
+    private boolean affliationUS;
+
+
+
+
+    private boolean usCertifyCheck;
+
+
+
+
     private String barJurisdiction;
     private String MembershipNumber;
     private Date BarAdmissionDate;
     private String BarCertificateImageKey; // its the name of the file
+
+    private String BarCertificateImageFileName; // its the name of the file
+
+    private boolean BarCertificateImageUploaded; // its the name of the file
+
+
+    // flags if a bar certificate upload was a pdf file
+    private boolean barCertifcatePDF;
+
+
+
+
+
+
 
     private String CanadianAgentName;
     private boolean isApplicantCA;
@@ -42,20 +85,6 @@ public class Lawyer extends Contact {
 
 
 
-    public Lawyer() {
-    }
-
-    // object copy constructor
-    public Lawyer(Lawyer lawyer) {
-        this.setEmail(lawyer.getEmail());
-        this.setFirstName(lawyer.getFirstName());
-        this.setLastName(lawyer.getLastName());
-        this.setLawFirmName(lawyer.getLawFirmName());
-        this.setBarLicense(lawyer.getBarLicense());
-        this.setBarJurisdiction(lawyer.getBarJurisdiction());
-        this.setClient(lawyer.getClient());
-        this.setPrimary(lawyer.isPrimary());
-    }
 
     @OneToOne
     private BaseTrademarkApplication primaryCase;
@@ -219,6 +248,81 @@ public class Lawyer extends Contact {
 
     public void setCollapseID(String collapseID) {
         this.collapseID = collapseID;
+    }
+
+    public boolean isAffiliationStatusSet() {
+        return AffiliationStatusSet;
+    }
+
+    public void setAffiliationStatusSet(boolean affiliationStatusSet) {
+        AffiliationStatusSet = affiliationStatusSet;
+    }
+
+    public boolean isAffliationUS() {
+        return affliationUS;
+    }
+
+    public void setAffliationUS(boolean affliationUS) {
+        this.affliationUS = affliationUS;
+    }
+
+    public boolean isBarCertificateImageUploaded() {
+        return BarCertificateImageUploaded;
+    }
+
+    public void setBarCertificateImageUploaded(boolean barCertificateImageUploaded) {
+        BarCertificateImageUploaded = barCertificateImageUploaded;
+    }
+
+    public String getBarCertificateImageFileName() {
+        return BarCertificateImageFileName;
+    }
+
+    public void setBarCertificateImageFileName(String barCertificateImageFileName) {
+        BarCertificateImageFileName = barCertificateImageFileName;
+    }
+
+
+    public String getBarAdmissionDateDisplay() {
+        if( getBarAdmissionDate() != null) {
+            return getBarAdmissionDate().toString().substring(0, 10);
+        }
+        else {
+            return "";
+        }
+    }
+
+    public ArrayList<String> getDocketNumberList() {
+        return docketNumberList;
+    }
+
+    public void setDocketNumberList(ArrayList<String> docketNumberList) {
+        this.docketNumberList = docketNumberList;
+    }
+
+    public void addDocketNumber(String dNumber){
+
+        docketNumberList.add(dNumber);
+    }
+
+    public void removeDocketNumber(String dNumber){
+        docketNumberList.remove(dNumber);
+    }
+
+    public boolean isBarCertifcatePDF() {
+        return barCertifcatePDF;
+    }
+
+    public void setBarCertifcatePDF(boolean barCertifcatePDF) {
+        this.barCertifcatePDF = barCertifcatePDF;
+    }
+
+    public boolean isUsCertifyCheck() {
+        return usCertifyCheck;
+    }
+
+    public void setUsCertifyCheck(boolean usCertifyCheck) {
+        this.usCertifyCheck = usCertifyCheck;
     }
 
     @Override

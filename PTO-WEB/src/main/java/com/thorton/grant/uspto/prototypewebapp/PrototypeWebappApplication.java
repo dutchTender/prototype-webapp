@@ -30,7 +30,7 @@ public class PrototypeWebappApplication {
     }
 
 
-    @Bean
+   @Bean
     public ServletWebServerFactory tomcatRedirectToHTTPS() {
         TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
             @Override

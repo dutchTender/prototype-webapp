@@ -17,6 +17,47 @@ public class TradeMarkService extends BaseRESTapiService {
         super(serviceBeanFactory, hostBean);
     }
 
+
+    @CrossOrigin(origins = {"https://localhost","https://efile-reimagined.com"})
+    @RequestMapping(method = GET, value="/REST/apiGateway/mark/update/additional/{markField}/{markValue}/{index}/{appInternalID}")
+    @ResponseBody
+    ResponseEntity<String> addAdditionalTradeMarkFieldsUpdate(@PathVariable String markField , @PathVariable String markValue, @PathVariable String index, @PathVariable String appInternalID) {
+        String appFieldReadable = "Mark disclaimer";
+        String responseMsg = appFieldReadable+" has been saved";
+
+        BaseTradeMarkApplicationService baseTradeMarkApplicationService = getServiceBeanFactory().getBaseTradeMarkApplicationService();
+        BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID(appInternalID);
+        int returnIndex = -1;
+
+        if(markField.equals("mark-disclaimer-declaration-additional")){
+
+            if(index.equals("new")){
+                baseTrademarkApplication.getTradeMark().addDisclaimerDeclaration(markValue);
+                returnIndex = baseTrademarkApplication.getTradeMark().getDisclaimerDeclarationList().size()-1;
+            }
+            else {
+                returnIndex  = Integer.valueOf(index);
+                baseTrademarkApplication.getTradeMark().getDisclaimerDeclarationList().set(returnIndex, markValue);
+
+
+
+            }
+
+
+        }
+        if(markField.equals("mark-disclaimer-declaration-remove")){
+
+            String declaration = baseTrademarkApplication.getTradeMark().getDisclaimerDeclarationList().get(Integer.valueOf(index));
+            baseTrademarkApplication.getTradeMark().getDisclaimerDeclarationList().remove(declaration);
+
+        }
+
+
+        //return ResponseEntity.ok().headers(responseHeader).body(responseMsg) ;
+        return buildResponseEnity("200", "{index:" +returnIndex+"}, {message:" +responseMsg+"}");
+    }
+
+
     @CrossOrigin(origins = {"https://localhost","https://efile-reimagined.com"})
     @RequestMapping(method = GET, value="/REST/apiGateway/mark/update/{markField}/{markValue}/{appInternalID}")
     @ResponseBody
@@ -57,6 +98,7 @@ public class TradeMarkService extends BaseRESTapiService {
             if(markValue.equals("no")){
 
                 baseTrademarkApplication.getTradeMark().setMarkColorClaim(false);
+                baseTrademarkApplication.getTradeMark().setMarkColorClaimBW(true);
                 baseTrademarkApplication.getTradeMark().setColorClaimSet(true);
 
             }
@@ -69,6 +111,7 @@ public class TradeMarkService extends BaseRESTapiService {
             // ptoUser.setState(param); // sets state code
 
            baseTrademarkApplication.getTradeMark().setMarkColorClaimBW(true);
+           baseTrademarkApplication.getTradeMark().setAcceptBWmarkSet(true);
             appFieldReadable = "Accept BW Drawing ";
 
         }
@@ -76,16 +119,8 @@ public class TradeMarkService extends BaseRESTapiService {
 
         if(markField.equals("mark-description")){
             // ptoUser.setState(param); // sets state code
-            baseTrademarkApplication.getTradeMark().setMarkDescription(markValue);
-            appFieldReadable = "Mark Description";
-
-        }
-
-
-        if(markField.equals("mark-BW-description")){
-            // ptoUser.setState(param); // sets state code
-            baseTrademarkApplication.getTradeMark().setMarkBWDescription(markValue);
-            appFieldReadable = "Mark BW Description";
+            baseTrademarkApplication.getTradeMark().setMarkDescription("The mark consists of "+markValue);
+            appFieldReadable = "Mark description";
 
         }
 
@@ -198,6 +233,30 @@ public class TradeMarkService extends BaseRESTapiService {
             if(markValue.equals("no")){
                 baseTrademarkApplication.getTradeMark().setContainNamePortaitSignature(false);
                 baseTrademarkApplication.getTradeMark().setNamePortraitSet(true);
+                baseTrademarkApplication.getTradeMark().setName(false);
+                baseTrademarkApplication.getTradeMark().setPortrait(false);
+                baseTrademarkApplication.getTradeMark().setSignature(false);
+
+                baseTrademarkApplication.getTradeMark().setNameFirstName("");
+                baseTrademarkApplication.getTradeMark().setNameMiddleName("");
+                baseTrademarkApplication.getTradeMark().setNameLastName("");
+
+                baseTrademarkApplication.getTradeMark().setSignatureFirstName("");
+                baseTrademarkApplication.getTradeMark().setSignatureMiddleName("");
+                baseTrademarkApplication.getTradeMark().setSignatureLastName("");
+
+                baseTrademarkApplication.getTradeMark().setPortraitFirstName("");
+                baseTrademarkApplication.getTradeMark().setPortraitMiddleName("");
+                baseTrademarkApplication.getTradeMark().setPortraitLastName("");
+
+                baseTrademarkApplication.getTradeMark().setNPSLivingPerson(false);
+                baseTrademarkApplication.getTradeMark().setNPSLivingPersonSet(false);
+
+
+
+
+
+
 
             }
 
@@ -331,11 +390,13 @@ public class TradeMarkService extends BaseRESTapiService {
 
             if(markValue.equals("yes")){
                 baseTrademarkApplication.getTradeMark().setNPSLivingPerson(true);
+                baseTrademarkApplication.getTradeMark().setNPSLivingPersonSet(true);
 
             }
             if(markValue.equals("no")){
                 baseTrademarkApplication.getTradeMark().setNPSLivingPerson(false);
-
+                baseTrademarkApplication.getTradeMark().setNPSLivingPersonSet(true);
+                baseTrademarkApplication.getTradeMark().setConsentFileUploaded(false);
             }
 
             appFieldReadable = "Mark NPS - Living Person";
@@ -367,13 +428,15 @@ public class TradeMarkService extends BaseRESTapiService {
 
         }
 
+
+        /*  no longer valid code. this field is no longer used for this value
         if(markField.equals("mark-disclaimer-declaration")){
             // ptoUser.setState(param); // sets state code
             baseTrademarkApplication.getTradeMark().setDisclaimerDeclaration(markValue);
 
             appFieldReadable = "Mark Disclaimer Declaration";
 
-        }
+        }*/
 
 
 

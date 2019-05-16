@@ -92,6 +92,13 @@
                 <div class="col-xs-12">
                     <h1 th:text="${baseTrademarkApplication.tradeMark.getTradeMarkPageTitle()}"></h1>
                     <p class="required" style="position: relative; right:-15px;"><span class="weight600">&#42; = Required</span></p>
+                    <p class="instructions" id="costsavingoptions">Reduced Fee Mode</p>
+                    <div role="switch" aria-describedby="#costsavingoptions" aria-label="turn reduce fee labels on or off">
+                        <label class="switch">
+                            <input class="togglesavemore" type="checkbox">
+                            <span class="slider"><span class="visuallyhidden" id="on">On</span> <span id="off">Off</span></span>
+                        </label>
+                    </div>
                 </div>
 
             </div>
@@ -105,15 +112,25 @@
 
                     <fieldset>
                         <div class="form-group form-group-md col-xs-12">
-                            <p class="required weight600" aria-level="3"><span class="weight600">&#42;</span> Mark Literal</p>
-                            <label for="mark-literal">Enter the words, letters and numbers appearing in the mark. <a href="#" data-toggle="tooltip" title="Any entry in this field that is not found in the mark image will not be considered part of the mark." class="glyphicon glyphicon-info-sign test" data-placement="right"></a></label>
+                            <p class="required weight600" aria-level="3"> Mark Literal </p>
+                            <label for="mark-literal"> <p>Enter the word(s), letter(s) and/or number(s) you wish to register, e.g., <span class="uppercase">the cat&#8217;s meow</span>. Entries in this field must be found in the <a href="https://www.uspto.gov/trademark/standard-character-set">USPTO standard character set</a>. <a href="#" data-toggle="tooltip" title="Any entry in this field that is not found in the mark image will not be considered part of the mark." class="glyphicon glyphicon-info-sign test" data-placement="right"></a></p></label>
                             <textarea id="mark-literal" rows="3" class="form-control" th:text="${baseTrademarkApplication.tradeMark.markLiteral}"></textarea>
+
+
+                            <h3 class="weight600" style="margin-top: 15px;">Mark Description <span class="label label-info subtle visuallyremoved">Reduced Fee</span></h3>
+                            <b>Enter the description of the mark <a href="#" data-toggle="tooltip" title="If the mark is a color mark, the description must include the nature and location of the color; i.e., you must specifically state where each color is located within the mark." class="glyphicon glyphicon-info-sign test" data-placement="right"></a></b><br>
+                            <label>The mark consists of </label>
+                            <textarea id="mark-description" rows="3" class="form-control"  th:text="${baseTrademarkApplication.tradeMark.getMarkDescription()}"></textarea>
+
+
+
+
                             <div class="row">
                                 <div class="col-xs-12">
                                     <section aria-label="color claim">
                                         <div class="card-text">
                                             <div role="heading" aria-level="2">
-                                                <button type="button" class="btn btn-link Accordion-trigger" data-toggle="collapse" data-target="#colorclaim" aria-controls="colorclaim" aria-expanded="false" id="colorbtn"><span class="glyphicon glyphicon-triangle-right"></span>Color Claim</button>
+                                                <button type="button" class="btn btn-link Accordion-trigger" data-toggle="collapse" data-target="#colorclaim" aria-controls="colorclaim" aria-expanded="false" id="colorbtn"><span class="glyphicon glyphicon-triangle-right"></span><span id="toggleglyphcolor" class="glyphicon glyphicon-triangle-bottom visuallyremoved"></span> Color Claim</button>
                                             </div>
                                         </div>
                                         <div id="colorclaim" class="collapse Accordion-panel" role="region" aria-labelledby="colorclaimbtn">
@@ -134,35 +151,26 @@
                                                 </div><!--END radiogroup-->
 
 
-
-
                                                 <div id="yescolorclaim" style="display: none;"><!--toggle 'yes' radio-->
 
                                                     <img id="colorMarkInline" src="" style="position: relative; left:-5px; max-width: 250px; max-height: 200px; margin-bottom: 20px; margin-top: 11px;" />
                                                     <br>
 
-                                                    <label>Identify the colors in your mark.</label>
+                                                    <label>List ony the color(s) in your mark. Example: Red, Blue and Orange <span class="label label-info subtle visuallyremoved">Reduced Fee</span></label>
                                                     <textarea id="mark-color-description" rows="3" class="form-control" th:text="${baseTrademarkApplication.tradeMark.markColors}"></textarea>
-                                                    <h3 class="weight600">Mark Description</h3>
-                                                    <b><span class="weight600">&#42;</span> Enter the description of the mark including the location of the colors. <a href="#" data-toggle="tooltip" title="If the mark is a color mark, the description must include the nature and location of the color; i.e., you must specifically state where each color is located within the mark." class="glyphicon glyphicon-info-sign test" data-placement="right"></a></b>
-                                                    <textarea id="mark-color-claim" rows="3" class="form-control" placeholder="This mark consists of" th:text="${baseTrademarkApplication.tradeMark.markColorDescription}"></textarea>
+
                                                 </div>
-
-
 
                                                 <div id="nocolorclaim" style="display: none;"><!--toggle 'no' radio-->
 
                                                     <img id="colorMarkBWInline" src="" style="position: relative; left:-5px; max-width: 250px; max-height: 200px; margin-bottom: 20px; margin-top: 11px;" />
-                                                    <input class="form-check-input checkmark" type="checkbox" value="accept B W mark" role="checkbox" aria-checked="false" tabindex="0" aria-labelledby="acceptmark" id="bwmark" style="position:relative; left:-33px;">
-                                                    <label class="form-check-label form-check" for="bwmark" id="acceptmark" style="position:relative; left:-33px;"><span class="radio notspecial">Accept the black and white drawing.</span></label>
-                                                    <div class="alert alert-warning" role="alert">
-                                                        <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-                                                        <span class="sr-only">Warning:</span>
-                                                        Submitting a color drawing with no claim to color could result in a refusal and delay the examination process.
+                                                    <div class="bwimage" align="left">
+                                                        <input class="form-check-input checkmark" type="checkbox" value="accept B W mark" role="checkbox" aria-checked="false" tabindex="0" aria-labelledby="acceptmark" id="bwmark" style="position:relative; left:-33px;">
+                                                        <label class="form-check-label form-check" for="bwmark" id="acceptmark" style="position:relative; left:-33px;"><span class="radio notspecial">Accept the black and white drawing.</span></label>
+
                                                     </div>
-                                                    <h3 class="weight600">Mark Description</h3>
-                                                    <span class="weight600">&#42;</span> Provide a description of the mark.
-                                                    <textarea id="mark-BW-description" rows="3" class="form-control" placeholder="" th:text="${baseTrademarkApplication.tradeMark.markBWDescription}"></textarea>
+
+
                                                 </div>
 
 
@@ -175,19 +183,14 @@
                                                         <label for="inlineRadio2" class="radio-inline radiocontainer" id="10">No<input type="radio" name="coloradio" id="inlineRadio2" value="no"><span class="checkmark"></span></label>
                                                     </div><!--END radiogroup-->
 
-
-
-
                                                     <div id="yescolorclaim"><!--toggle 'yes' radio-->
 
                                                         <img id="colorMarkInline" src="" style="position: relative; left:-5px; max-width: 250px; max-height: 200px; margin-bottom: 20px; margin-top: 11px;" />
                                                         <br>
 
-                                                        <label>Identify the colors in your mark.</label>
+                                                        <label>List ony the color(s) in your mark. Example: Red, Blue and Orange <span class="label label-info subtle visuallyremoved">Reduced Fee</span></label>
                                                         <textarea id="mark-color-description" rows="3" class="form-control" th:text="${baseTrademarkApplication.tradeMark.markColors}"></textarea>
-                                                        <h3 class="weight600">Mark Description</h3>
-                                                        <b><span class="weight600">&#42;</span> Enter the description of the mark including the location of the colors. <a href="#" data-toggle="tooltip" title="If the mark is a color mark, the description must include the nature and location of the color; i.e., you must specifically state where each color is located within the mark." class="glyphicon glyphicon-info-sign test" data-placement="right"></a></b>
-                                                        <textarea id="mark-color-claim" rows="3" class="form-control" placeholder="This mark consists of" th:text="${baseTrademarkApplication.tradeMark.markColorDescription}"></textarea>
+
                                                     </div>
 
 
@@ -195,16 +198,12 @@
                                                     <div id="nocolorclaim" style="display: none;"><!--toggle 'no' radio-->
 
                                                         <img id="colorMarkBWInline" src="" style="position: relative; left:-5px; max-width: 250px; max-height: 200px; margin-bottom: 20px; margin-top: 11px;" />
-                                                        <input class="form-check-input checkmark" type="checkbox" value="accept B W mark" role="checkbox" aria-checked="false" tabindex="0" aria-labelledby="acceptmark" id="bwmark" style="position:relative; left:-33px;">
-                                                        <label class="form-check-label form-check" for="bwmark" id="acceptmark" style="position:relative; left:-33px;"><span class="radio notspecial">Accept the black and white drawing.</span></label>
-                                                        <div class="alert alert-warning" role="alert">
-                                                            <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-                                                            <span class="sr-only">Warning:</span>
-                                                            Submitting a color drawing with no claim to color could result in a refusal and delay the examination process.
+                                                        <div class="bwimage" align="left">
+                                                            <input class="form-check-input checkmark" type="checkbox" value="accept B W mark" role="checkbox" aria-checked="false" tabindex="0" aria-labelledby="acceptmark" id="bwmark" style="position:relative; left:-33px;">
+                                                            <label class="form-check-label form-check" for="bwmark" id="acceptmark" style="position:relative; left:-33px;"><span class="radio notspecial">Accept the black and white drawing.</span></label>
+
                                                         </div>
-                                                        <h3 class="weight600">Mark Description</h3>
-                                                        <span class="weight600">&#42;</span> Provide a description of the mark.
-                                                        <textarea id="mark-BW-description" rows="3" class="form-control" placeholder="" th:text="${baseTrademarkApplication.tradeMark.markBWDescription}"></textarea>
+
                                                     </div>
                                                 </th:block>
                                                 <th:block th:if="${baseTrademarkApplication.tradeMark.isMarkColorClaim() == false}">
@@ -221,11 +220,9 @@
                                                         <img id="colorMarkInline" src="" style="position: relative; left:-5px; max-width: 250px; max-height: 200px; margin-bottom: 20px; margin-top: 11px;" />
                                                         <br>
 
-                                                        <label>Identify the colors in your mark.</label>
+                                                        <label>List ony the color(s) in your mark. Example: Red, Blue and Orange <span class="label label-info subtle visuallyremoved">Reduced Fee</span></label>
                                                         <textarea id="mark-color-description" rows="3" class="form-control" th:text="${baseTrademarkApplication.tradeMark.markColors}"></textarea>
-                                                        <h3 class="weight600">Mark Description</h3>
-                                                        <b><span class="weight600">&#42;</span> Enter the description of the mark including the location of the colors. <a href="#" data-toggle="tooltip" title="If the mark is a color mark, the description must include the nature and location of the color; i.e., you must specifically state where each color is located within the mark." class="glyphicon glyphicon-info-sign test" data-placement="right"></a></b>
-                                                        <textarea id="mark-color-claim" rows="3" class="form-control" placeholder="This mark consists of" th:text="${baseTrademarkApplication.tradeMark.markColorDescription}"></textarea>
+
                                                     </div>
 
 
@@ -233,16 +230,12 @@
                                                     <div id="nocolorclaim" style=""><!--toggle 'no' radio-->
 
                                                         <img id="colorMarkBWInline" src="" style="position: relative; left:-5px; max-width: 250px; max-height: 200px; margin-bottom: 20px; margin-top: 11px;" />
-                                                        <input class="form-check-input checkmark" type="checkbox" value="accept B W mark" role="checkbox" aria-checked="false" tabindex="0" aria-labelledby="acceptmark" id="bwmark" style="position:relative; left:-33px;">
-                                                        <label class="form-check-label form-check" for="bwmark" id="acceptmark" style="position:relative; left:-33px;"><span class="radio notspecial">Accept the black and white drawing.</span></label>
-                                                        <div class="alert alert-warning" role="alert">
-                                                            <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-                                                            <span class="sr-only">Warning:</span>
-                                                            Submitting a color drawing with no claim to color could result in a refusal and delay the examination process.
+                                                        <div class="bwimage" align="left">
+                                                            <input class="form-check-input checkmark" type="checkbox" value="accept B W mark" role="checkbox" aria-checked="false" tabindex="0" aria-labelledby="acceptmark" id="bwmark" style="position:relative; left:-33px;">
+                                                            <label class="form-check-label form-check" for="bwmark" id="acceptmark" style="position:relative; left:-33px;"><span class="radio notspecial">Accept the black and white drawing.</span></label>
+
                                                         </div>
-                                                        <h3 class="weight600">Mark Description</h3>
-                                                        <span class="weight600">&#42;</span> Provide a description of the mark.
-                                                        <textarea id="mark-BW-description" rows="3" class="form-control" placeholder="" th:text="${baseTrademarkApplication.tradeMark.markBWDescription}"></textarea>
+
                                                     </div>
                                                 </th:block>
 
@@ -259,7 +252,7 @@
                                     <section aria-label="translation">
                                         <div class="card-text">
                                             <div role="heading" aria-level="2">
-                                                <button type="button" class="btn btn-link Accordion-trigger" data-toggle="collapse" data-target="#translation" aria-controls="translation" aria-expanded="false" id="translatesbtn"><span class="glyphicon glyphicon-triangle-right"></span> Translation</button>
+                                                <button type="button" class="btn btn-link Accordion-trigger" data-toggle="collapse" data-target="#translation" aria-controls="translation" aria-expanded="false" id="translatesbtn"><span class="glyphicon glyphicon-triangle-right"></span><span id="toggleglyph" class="glyphicon glyphicon-triangle-bottom visuallyremoved"></span> Translation</button>
                                             </div>
                                         </div>
                                         <div id="translation" class="collapse Accordion-panel" role="region" aria-labelledby="translationbtn">
@@ -278,7 +271,7 @@
 
                                                 </div><!--END radiogroup-->
                                                 <div id="yestranslation" style="display: none;"><!--toggle 'yes' radio-->
-                                                    <h3 class="weight600">Enter the foreign language and the translation.</h3>
+                                                    <h3 >Enter the foreign language and the translation. <span class="label label-info subtle visuallyremoved">Reduced Fee</span></h3>
                                                     <div class="form-group form-group-md col-xs-12 col-md-3">
                                                         <b for="language">Language</b>
                                                         <select class="form-control" id="language" th:field="${baseTrademarkApplication.tradeMark.foreignLanguageType_translation}">
@@ -289,7 +282,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="form-group form-group-md col-xs-12 col-md-5">
-                                                        <b>The English Translation of</b>
+                                                        <b>The English Translation of the word</b>
                                                         <input type="text" class="form-control" id="engtranslation" th:value="${baseTrademarkApplication.tradeMark.foreignLanguageTranslationOriginalText}" >
                                                     </div>
                                                     <div class="form-group form-group-md col-xs-12 col-md-4">
@@ -312,7 +305,7 @@
                                                         <label for="inlineRadio4" class="radio-inline radiocontainer" id="2">No<input type="radio" name="foreignradio" id="inlineRadio4" value="no"><span class="checkmark"></span></label>
                                                     </div><!--END radiogroup-->
                                                     <div id="yestranslation"><!--toggle 'yes' radio-->
-                                                        <h3 class="weight600">Enter the foreign language and the translation.</h3>
+                                                        <h3 class="weight600">Enter the foreign language and the translation. <span class="label label-info subtle visuallyremoved">Reduced Fee</span></h3>
                                                         <div class="form-group form-group-md col-xs-12 col-md-3">
                                                             <b for="language">Language</b>
                                                             <select class="form-control" id="language" th:field="${baseTrademarkApplication.tradeMark.foreignLanguageType_translation}">
@@ -323,7 +316,7 @@
                                                             </select>
                                                         </div>
                                                         <div class="form-group form-group-md col-xs-12 col-md-5">
-                                                            <b>The English Translation of</b>
+                                                            <b>The English Translation of the word</b>
                                                             <input type="text" class="form-control" id="engtranslation" th:value="${baseTrademarkApplication.tradeMark.foreignLanguageTranslationOriginalText}" >
                                                         </div>
                                                         <div class="form-group form-group-md col-xs-12 col-md-4">
@@ -345,7 +338,7 @@
                                                         <label for="inlineRadio4" class="radio-inline radiocontainer" id="2">No<input type="radio" name="foreignradio" id="inlineRadio4" value="no" checked><span class="checkmark"></span></label>
                                                     </div><!--END radiogroup-->
                                                     <div id="yestranslation" style="display: none;"><!--toggle 'yes' radio-->
-                                                        <h3 class="weight600">Enter the foreign language and the translation.</h3>
+                                                        <h3 class="weight600">Enter the foreign language and the translation. <span class="label label-info subtle visuallyremoved">Reduced Fee</span></h3>
                                                         <div class="form-group form-group-md col-xs-12 col-md-3">
                                                             <b for="language">Language</b>
                                                             <select class="form-control" id="language" th:field="${baseTrademarkApplication.tradeMark.foreignLanguageType_translation}">
@@ -356,7 +349,7 @@
                                                             </select>
                                                         </div>
                                                         <div class="form-group form-group-md col-xs-12 col-md-5">
-                                                            <b>The English Translation of</b>
+                                                            <b>The English Translation of the word</b>
                                                             <input type="text" class="form-control" id="engtranslation" th:value="${baseTrademarkApplication.tradeMark.foreignLanguageTranslationOriginalText}" >
                                                         </div>
                                                         <div class="form-group form-group-md col-xs-12 col-md-4">
@@ -382,24 +375,24 @@
                                     <section aria-label="transliteration">
                                         <div class="card-text">
                                             <div role="heading" aria-level="2">
-                                                <button type="button" class="btn btn-link Accordion-trigger" data-toggle="collapse" data-target="#transliteration" aria-controls="transliteration" aria-expanded="false" id="translitbtn"><span class="glyphicon glyphicon-triangle-right"></span> Transliteration</button>
+                                                <button type="button" class="btn btn-link Accordion-trigger" data-toggle="collapse" data-target="#transliteration" aria-controls="transliteration" aria-expanded="false" id="translitbtn"><span class="glyphicon glyphicon-triangle-right"></span><span id="toggleglyph" class="glyphicon glyphicon-triangle-bottom visuallyremoved"></span> Transliteration</button>
                                             </div>
                                         </div>
                                         <div id="transliteration" class="collapse Accordion-panel" role="region" aria-labelledby="translitbtn">
                                             <div class="Accordion">
-                                                <p>If a name(s) shown in the mark identifies a particular living individual, enter the name of the individual being identified. In addition, attach a .jpg or .pdf file showing the actual consent of the named individual to the use and registration of his or her name. Select &#8220;No&#8221; if the mark includes a name(s) but this does NOT identify a particular living person. <a href="https://tmep.uspto.gov/RDMS/TMEP/current#/current/TMEP-1200d1e4891.html" target="_blank">More information</a>.</p>
+                                                <p>A transliteration of a trademark is the phonetic spelling, in the standard English alphabet, of the word(s) in the trademark that are in non-Latin characters. For example, if your trademark includes Chinese characters, the transliteration will state how those characters will be spelled out based on how they sound, using the English alphabet. <a href="https://tmep.uspto.gov/RDMS/TMEP/current#/current/TMEP-1200d1e4891.html" target="_blank">More information</a>.</p>
                                             </div>
                                         </div>
 
                                         <th:block th:if="${baseTrademarkApplication.tradeMark.isTranlierationSet() == false}">
                                             <div class="col-xs-12">
-                                                <p id="translit">Does your mark contain foreign wording in non-Latin characters that requires transliteration?</p>
+                                                <p id="translit">Does your mark contain foreign wording in non-Latin characters?</p>
                                                 <div role="radiogroup" aria-labelledby="translit">
                                                     <label for="inlineRadio5" class="radio-inline radiocontainer" id="3">Yes<input type="radio" name="nonlatradio" id="inlineRadio5" value="yes"><span class="checkmark"></span></label>
                                                     <label for="inlineRadio6" class="radio-inline radiocontainer" id="4">No<input type="radio" name="nonlatradio" id="inlineRadio6" value="no"><span class="checkmark"></span></label>
                                                 </div>
                                                 <div id="yestransliteration" style="display: none"><!--toggle 'yes' radio-->
-                                                    <h3 class="weight600">Enter the transliteration of the mark.</h3>
+                                                    <h3 >Enter the transliteration of the mark. <span class="label label-info subtle visuallyremoved">Reduced Fee</span></h3>
                                                     <div class="form-group form-group-md col-xs-12 col-md-3">
                                                         <b>Language</b>
                                                         <select class="form-control" id="languagetranslit" th:field="${baseTrademarkApplication.tradeMark.foreignLanguageType_transliteration}">
@@ -415,8 +408,9 @@
                                                         <input type="text" class="form-control" id="nonlatranslation" th:value="${baseTrademarkApplication.tradeMark.foreignLanguateTransliterationOriginalText}">
                                                     </div>
                                                     <div class="form-group form-group-md col-xs-12 col-md-12">
-                                                        <b for="inenglish">and this, in English, means</b>
+                                                        <b for="inenglish">and this means</b>
                                                         <input type="text" class="form-control" id="inenglish" th:value="${baseTrademarkApplication.tradeMark.foreignLanguateTransliterationUSText}">
+                                                        <p class="form-group form-group-md">in English.</p>
                                                     </div>
                                                 </div>
 
@@ -425,13 +419,13 @@
                                         <th:block th:if="${baseTrademarkApplication.tradeMark.isTranlierationSet()== true}">
                                             <th:block th:if="${baseTrademarkApplication.tradeMark.foreignLanguateTransliterationWording == true}">
                                                 <div class="col-xs-12">
-                                                    <p id="translit">Does your mark contain foreign wording in non-Latin characters that requires transliteration?</p>
+                                                    <p id="translit">Does your mark contain foreign wording in non-Latin characters?</p>
                                                     <div role="radiogroup" aria-labelledby="translit">
                                                         <label for="inlineRadio5" class="radio-inline radiocontainer" id="3">Yes<input type="radio" name="nonlatradio" id="inlineRadio5" value="yes" checked><span class="checkmark"></span></label>
                                                         <label for="inlineRadio6" class="radio-inline radiocontainer" id="4">No<input type="radio" name="nonlatradio" id="inlineRadio6" value="no"><span class="checkmark"></span></label>
                                                     </div>
                                                     <div id="yestransliteration" style=""><!--toggle 'yes' radio-->
-                                                        <h3 class="weight600">Enter the transliteration of the mark.</h3>
+                                                        <h3 class="weight600">Enter the transliteration of the mark. <span class="label label-info subtle visuallyremoved">Reduced Fee</span></h3>
                                                         <div class="form-group form-group-md col-xs-12 col-md-3">
                                                             <b>Language</b>
                                                             <select class="form-control" id="languagetranslit" th:field="${baseTrademarkApplication.tradeMark.foreignLanguageType_transliteration}">
@@ -456,13 +450,13 @@
                                             </th:block>
                                             <th:block th:if="${baseTrademarkApplication.tradeMark.foreignLanguateTransliterationWording == false}">
                                                 <div class="col-xs-12">
-                                                    <p id="translit">Does your mark contain foreign wording in non-Latin characters that requires transliteration?</p>
+                                                    <p id="translit">Does your mark contain foreign wording in non-Latin characters?</p>
                                                     <div role="radiogroup" aria-labelledby="translit">
                                                         <label for="inlineRadio5" class="radio-inline radiocontainer" id="3">Yes<input type="radio" name="nonlatradio" id="inlineRadio5" value="yes"><span class="checkmark"></span></label>
                                                         <label for="inlineRadio6" class="radio-inline radiocontainer" id="4">No<input type="radio" name="nonlatradio" id="inlineRadio6" value="no" checked><span class="checkmark"></span></label>
                                                     </div>
                                                     <div id="yestransliteration" style="display: none;"><!--toggle 'yes' radio-->
-                                                        <h3 class="weight600">Enter the transliteration of the mark.</h3>
+                                                        <h3 class="weight600">Enter the transliteration of the mark. <span class="label label-info subtle visuallyremoved">Reduced Fee</span></h3>
                                                         <div class="form-group form-group-md col-xs-12 col-md-3">
                                                             <b>Language</b>
                                                             <select class="form-control" id="languagetranslit" th:field="${baseTrademarkApplication.tradeMark.foreignLanguageType_transliteration}">
@@ -514,14 +508,14 @@
 
 
                                                     <div id="yesnps" role="region" aria-labelledby="translit" style="display: none;">
-                                                        <p id="whichnps">Identify which of the following it contains:</p>
+                                                        <p id="whichnps">Identify which of the following it contains: <span class="label label-info subtle visuallyremoved">Reduced Fee</span></p>
 
                                                         <input class="form-check-input checkmark" type="checkbox" value="" role="checkbox" aria-checked="false" tabindex="0" aria-labelledby="checkname" id="namechecked">
                                                         <label class="form-check-label form-check" for="namechecked" id="checkname"><span class="radio notspecial">Name</span></label>
 
 
 
-                                                        <div id="yescontainsname" role="region" aria-labelledby="whichnps" class="form-group form-group-md">
+                                                        <div id="yescontainsname" role="region" aria-labelledby="whichnps" class="form-group form-group-md" style="display: none;">
                                                             <div class="row">
                                                                 <div class="form-group form-group-md col-xs-12 col-md-8 col-lg-3">
                                                                     <label for="name-firstname">First Name</label>
@@ -545,7 +539,7 @@
                                                         <input class="form-check-input checkmark" type="checkbox" value="portrait" aria-checked="false" tabindex="0" id="portraitchecked" aria-labelledby="checkportrait">
                                                         <label class="form-check-label form-check" for="portraitchecked" id="checkportrait"><span class="radio notspecial" id="collect">Portrait</span></label>
 
-                                                        <div id="yescontainsportrait" role="region" aria-labelledby="whichnps" class="form-group form-group-md">
+                                                        <div id="yescontainsportrait" role="region" aria-labelledby="whichnps" class="form-group form-group-md" style="display: none;">
                                                             <div class="row">
                                                                 <div class="form-group form-group-md col-xs-12 col-md-8 col-lg-3">
                                                                     <label for="portrait-firstname">First Name</label>
@@ -569,7 +563,7 @@
                                                         <input class="form-check-input checkmark" type="checkbox" value="signature" aria-checked="false" tabindex="0" aria-labelledby="checksignature" id="signaturechecked">
                                                         <label class="form-check-label form-check" for="signaturechecked" id="checksignature"><span class="radio notspecial" id="collectm">Signature</span></label>
 
-                                                        <div id="yescontainssignature" role="region" aria-labelledby="whichnps" class="form-group form-group-md">
+                                                        <div id="yescontainssignature" role="region" aria-labelledby="whichnps" class="form-group form-group-md" style="display: none;">
                                                             <div class="row">
                                                                 <div class="form-group form-group-md col-xs-12 col-md-8 col-lg-3">
                                                                     <label for="signature-firstname">First Name</label>
@@ -589,40 +583,126 @@
                                                             </div>
                                                         </div>
 
-                                                        <p id="individualiving">Is this of a living individual?</p>
+                                                        <p id="individualiving">Does this refer to a particular living individual? See the <a href="https://www.uspto.gov/trademark/laws-regulations/inquiry-regarding-nameportraitsignature-particular-living-individual-mark" target="_blank">Name/Portrait/Consent help page<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span><span class="sr-only">Opens in new window</span></a></p>
                                                         <div role="radiogroup" class="form-group form-group-md" aria-labelledby="individualiving">
-                                                            <label for="inlineRadio17" class="radio-inline"><input type="radio" name="livindividualradio" id="inlineRadio17" value="yes">Yes</label>
-                                                            <label for="inlineRadio18" class="radio-inline"><input type="radio" name="livindividualradio" id="inlineRadio18" value="no">No</label>
+                                                            <label for="inlineRadio17" class="radio-inline radiocontainer">Yes<input type="radio" name="livindividualradio" id="inlineRadio17" value="yes"><span class="checkmark"></span></label>
+                                                            <label for="inlineRadio18" class="radio-inline radiocontainer">No<input type="radio" name="livindividualradio" id="inlineRadio18" value="no"><span class="checkmark"></span></label>
                                                         </div><!--END radiogroup-->
 
-                                                       <div th:if="${baseTrademarkApplication.tradeMark.consentFileUploaded == false}">
-                                                            <h4 class="weight600">Upload Consent <i class="material-icons" style="position: relative; bottom: -5px;">cloud_upload</i></h4>
-                                                            <p><a th:href="@{/resources/documents/Consent_template.docx}"><span class="glyphicon glyphicon-download" aria-hidden="true"></span>Download Consent Template</a></p>
-                                                            <form action="/Mark/consent/add" method="post" enctype="multipart/form-data" id="markConsentForm" class="form-horizontal">
-                                                                <div class="form-group form-group-md">
-                                                                    <label class="small upload-drop-zone" for="consentfile"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> <br>
-                                                                        Upload Consent</label>
-                                                                    <input type="file" id="consentfile" name="file" class="form-control">
-                                                                </div><!-- Drop Zone -->
-                                                                <div class="row">
-                                                                    <div class="js-upload-finished col-xs-12 col-md-10 col-lg-8">
-                                                                        <p id="uploaded">Processed files</p>
-                                                                        <div class="list-group">
-                                                                            <a href="#" class="list-group-item list-group-item-success" aria-labelledby="uploaded"></a>
+                                                        <th:block th:if="${baseTrademarkApplication.tradeMark.consentFileUploaded == false}">
+                                                            <div class="row" id="npsConsent" style="display: none;">
+                                                                <div class="js-upload-finished col-xs-12 col-md-10 col-lg-8">
+
+                                                                    <h4 class="weight600">Consent Uploaded <i class="material-icons" style="position: relative; bottom: -5px;">check_circle</i></h4>
+                                                                    <div class="list-group" id="filedata">
+                                                                        <div class="list-group-item list-group-item-success fileholder col-xs-12" role="alert">
+                                                                            <div class="row">
+                                                                                <div class="col-xs-2">
+                                                                                    <button type="button" class="btn btn-sm close" aria-label="remove file selection">
+                                                                                        <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="col-xs-4 linkholder">
+                                                                                    <a id="consentFileLink" th:href="${baseTrademarkApplication.tradeMark.getTrademarkConsentDownLoadPath()}" th:text="${baseTrademarkApplication.tradeMark.getTrademarkConsentFileName()}"> file</a>
+
+                                                                                </div>
+                                                                                <div class="col-xs-2">
+                                                                                    <img th:src="@{/resources/images/microsoft-word-512.png}" class="img-thumbnail">
+                                                                                </div>
+                                                                                <div class="col-xs-4">
+                                                                                    <span class="badge alert-success pull-right">Uploaded File</span>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <input  style=" position:relative; display: none; width: 1px; height:1px;" name="AppInternalID" id="appInternalIDForm"   value="" />
-                                                                <div class="col-xs-12">
-                                                                    <button type="submit" id="consentSubmit" class="btn btn-sm" >Upload file</button>
+                                                            </div>
+
+                                                            <div id="yesliving" role="region" aria-labelledby="individualiving" class="form-group form-group-md" style="display: none">
+
+                                                                <h4 class="weight600">Upload Consent <i class="material-icons" style="position: relative; bottom: -5px;">cloud_upload</i></h4>
+                                                                <p><a id="consent-download" th:href="@{/resources/documents/Consent_template.docx}"><span class="glyphicon glyphicon-download" aria-hidden="true"></span>Download Consent Template</a></p>
+                                                                <form action="/Mark/consent/js/add" method="post" enctype="multipart/form-data" id="markConsentForm" class="form-horizontal">
+                                                                    <div class="form-group form-group-md">
+                                                                        <label class="small upload-drop-zone" for="consentfile"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> <br>
+                                                                            Upload Consent</label>
+                                                                        <input type="file" id="consentfile" name="file" class="form-control"  accept=".doc,.docx">
+                                                                    </div><!-- Drop Zone -->
+
+                                                                    <input  style=" position:relative; display: none; width: 1px; height:1px;" name="AppInternalID" id="appInternalIDForm"   value="" />
+
+                                                                    <div class="col-xs-12">
+                                                                        <div class="center">
+
+                                                                            <div type="button" form="markConsentForm"   file-id="consentfile" gs-img-id="consent-preview-img-id" spinner-id="consent-upload-spinner" class="btn btn-sm upload-consent-button" style="background-color: darkgreen; color: white; font-weight: bold;"><i class="material-icons" style="margin-right: 5px; margin-top: 5px;">cloud_upload</i><b style="position: relative; top:-5px;">Upload Consent Document</b><span><i class="fa fa-spinner fa-spin"  id="consent-upload-spinner" style="font-size:24px; margin-left: 11px; display: none;"></i></span></div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </form>
+                                                            </div>
+
+                                                        </th:block>
+
+                                                        <th:block th:if="${baseTrademarkApplication.tradeMark.consentFileUploaded == true}">
+
+                                                            <div class="row" id="npsConsent">
+                                                                <div class="js-upload-finished col-xs-12 col-md-10 col-lg-8">
+
+                                                                    <h4 class="weight600">Consent Uploaded <i class="material-icons" style="position: relative; bottom: -5px;">check_circle</i></h4>
+                                                                    <div class="list-group" id="filedata">
+                                                                        <div class="list-group-item list-group-item-success fileholder col-xs-12" role="alert">
+                                                                            <div class="row">
+                                                                                <div class="col-xs-2">
+                                                                                    <button type="button" class="btn btn-sm close" aria-label="remove file selection">
+                                                                                        <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="col-xs-4 linkholder">
+                                                                                    <a th:href="${baseTrademarkApplication.tradeMark.getTrademarkConsentDownLoadPath()}" th:text="${baseTrademarkApplication.tradeMark.getTrademarkConsentFileName()}"></a>
+
+                                                                                </div>
+                                                                                <div class="col-xs-2">
+                                                                                     <img th:src="@{/resources/images/microsoft-word-512.png}" class="img-thumbnail">
+                                                                                </div>
+                                                                                <div class="col-xs-4">
+                                                                                    <span class="badge alert-success pull-right">Uploaded File</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                            </form>
-                                                       </div>
+                                                            </div>
 
-                                                    <div th:if="${baseTrademarkApplication.tradeMark.consentFileUploaded == true}">
-                                                        <h4 class="weight600">Consent Uploaded <i class="material-icons" style="position: relative; bottom: -5px;">check_circle</i></h4>
+                                                            <div id="yesliving" role="region" aria-labelledby="individualiving" class="form-group form-group-md" style="display: none">
 
-                                                    </div>
+                                                                <h4 class="weight600">Upload Consent <i class="material-icons" style="position: relative; bottom: -5px;">cloud_upload</i></h4>
+                                                                <p><a id="consent-download" th:href="@{/resources/documents/Consent_template.docx}"><span class="glyphicon glyphicon-download" aria-hidden="true"></span>Download Consent Template</a></p>
+                                                                <form action="/Mark/consent/js/add" method="post" enctype="multipart/form-data" id="markConsentForm" class="form-horizontal">
+                                                                    <div class="form-group form-group-md">
+                                                                        <label class="small upload-drop-zone" for="consentfile"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> <br>
+                                                                            Upload Consent</label>
+                                                                        <input type="file" id="consentfile" name="file" class="form-control"  accept=".doc,.docx">
+                                                                    </div><!-- Drop Zone -->
+
+                                                                    <input  style=" position:relative; display: none; width: 1px; height:1px;" name="AppInternalID" id="appInternalIDForm"   value="" />
+
+                                                                    <div class="col-xs-12">
+                                                                        <div class="center">
+
+                                                                            <div type="button" form="markConsentForm"   file-id="consentfile" gs-img-id="consent-preview-img-id" spinner-id="consent-upload-spinner" class="btn btn-sm upload-consent-button" style="background-color: darkgreen; color: white; font-weight: bold;"><i class="material-icons" style="margin-right: 5px; margin-top: 5px;">cloud_upload</i><b style="position: relative; top:-5px;">Upload Consent Document</b><span><i class="fa fa-spinner fa-spin"  id="consent-upload-spinner" style="font-size:24px; margin-left: 11px; display: none;"></i></span></div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </form>
+                                                            </div>
+
+
+
+                                                        </th:block>
+
+
                                                     </div>
                                             </th:block>
                                             <th:block th:if="${baseTrademarkApplication.tradeMark.isNamePortraitSet() == true}">
@@ -634,14 +714,14 @@
 
 
                                                     <div id="yesnps" role="region" aria-labelledby="translit" style="">
-                                                        <p id="whichnps">Identify which of the following it contains:</p>
+                                                        <p id="whichnps">Identify which of the following it contains: <span class="label label-info subtle visuallyremoved">Reduced Fee</span></p>
 
                                                         <input class="form-check-input checkmark" type="checkbox" value="" role="checkbox" aria-checked="false" tabindex="0" aria-labelledby="checkname" id="namechecked">
                                                         <label class="form-check-label form-check" for="namechecked" id="checkname"><span class="radio notspecial">Name</span></label>
 
 
 
-                                                        <div id="yescontainsname" role="region" aria-labelledby="whichnps" class="form-group form-group-md">
+                                                        <div id="yescontainsname" role="region" aria-labelledby="whichnps" class="form-group form-group-md" style="display: none;">
                                                             <div class="row">
                                                                 <div class="form-group form-group-md col-xs-12 col-md-8 col-lg-3">
                                                                     <label for="name-firstname">First Name</label>
@@ -665,7 +745,7 @@
                                                         <input class="form-check-input checkmark" type="checkbox" value="portrait" aria-checked="false" tabindex="0" id="portraitchecked" aria-labelledby="checkportrait">
                                                         <label class="form-check-label form-check" for="portraitchecked" id="checkportrait"><span class="radio notspecial" id="collect">Portrait</span></label>
 
-                                                        <div id="yescontainsportrait" role="region" aria-labelledby="whichnps" class="form-group form-group-md">
+                                                        <div id="yescontainsportrait" role="region" aria-labelledby="whichnps" class="form-group form-group-md" style="display: none;">
                                                             <div class="row">
                                                                 <div class="form-group form-group-md col-xs-12 col-md-8 col-lg-3">
                                                                     <label for="portrait-firstname">First Name</label>
@@ -689,7 +769,7 @@
                                                         <input class="form-check-input checkmark" type="checkbox" value="signature" aria-checked="false" tabindex="0" aria-labelledby="checksignature" id="signaturechecked">
                                                         <label class="form-check-label form-check" for="signaturechecked" id="checksignature"><span class="radio notspecial" id="collectm">Signature</span></label>
 
-                                                        <div id="yescontainssignature" role="region" aria-labelledby="whichnps" class="form-group form-group-md">
+                                                        <div id="yescontainssignature" role="region" aria-labelledby="whichnps" class="form-group form-group-md" style="display: none;">
                                                             <div class="row">
                                                                 <div class="form-group form-group-md col-xs-12 col-md-8 col-lg-3">
                                                                     <label for="signature-firstname">First Name</label>
@@ -709,40 +789,126 @@
                                                             </div>
                                                         </div>
 
-                                                        <p id="individualiving">Is this of a living individual?</p>
+                                                        <p id="individualiving">Does this refer to a particular living individual? See the <a href="https://www.uspto.gov/trademark/laws-regulations/inquiry-regarding-nameportraitsignature-particular-living-individual-mark" target="_blank">Name/Portrait/Consent help page<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span><span class="sr-only">Opens in new window</span></a></p>
                                                         <div role="radiogroup" class="form-group form-group-md" aria-labelledby="individualiving">
-                                                            <label for="inlineRadio17" class="radio-inline"><input type="radio" name="livindividualradio" id="inlineRadio17" value="yes">Yes</label>
-                                                            <label for="inlineRadio18" class="radio-inline"><input type="radio" name="livindividualradio" id="inlineRadio18" value="no">No</label>
+
+                                                            <label for="inlineRadio17" class="radio-inline radiocontainer">Yes<input type="radio" name="livindividualradio" id="inlineRadio17" value="yes"><span class="checkmark"></span></label>
+                                                            <label for="inlineRadio18" class="radio-inline radiocontainer">No<input type="radio" name="livindividualradio" id="inlineRadio18" value="no"><span class="checkmark"></span></label>
                                                         </div><!--END radiogroup-->
 
-                                                        <div th:if="${baseTrademarkApplication.tradeMark.consentFileUploaded == false}">
-                                                            <h4 class="weight600">Upload Consent <i class="material-icons" style="position: relative; bottom: -5px;">cloud_upload</i></h4>
-                                                            <p><a th:href="@{/resources/documents/Consent_template.docx}"><span class="glyphicon glyphicon-download" aria-hidden="true"></span>Download Consent Template</a></p>
-                                                            <form action="/Mark/consent/add" method="post" enctype="multipart/form-data" id="markConsentForm" class="form-horizontal">
-                                                                <div class="form-group form-group-md">
-                                                                    <label class="small upload-drop-zone" for="consentfile"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> <br>
-                                                                        Upload Consent</label>
-                                                                    <input type="file" id="consentfile" name="file" class="form-control">
-                                                                </div><!-- Drop Zone -->
-                                                                <div class="row">
-                                                                    <div class="js-upload-finished col-xs-12 col-md-10 col-lg-8">
-                                                                        <p id="uploaded">Processed files</p>
-                                                                        <div class="list-group">
-                                                                            <a href="#" class="list-group-item list-group-item-success" aria-labelledby="uploaded"></a>
+                                                        <th:block th:if="${baseTrademarkApplication.tradeMark.consentFileUploaded == false}">
+                                                            <div class="row" id="npsConsent" style="display: none;">
+                                                                <div class="js-upload-finished col-xs-12 col-md-10 col-lg-8">
+
+                                                                    <h4 class="weight600">Consent Uploaded <i class="material-icons" style="position: relative; bottom: -5px;">check_circle</i></h4>
+                                                                    <div class="list-group" id="filedata">
+                                                                        <div class="list-group-item list-group-item-success fileholder col-xs-12" role="alert">
+                                                                            <div class="row">
+                                                                                <div class="col-xs-2">
+                                                                                    <button type="button" class="btn btn-sm close" aria-label="remove file selection">
+                                                                                        <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="col-xs-4 linkholder">
+                                                                                    <a id="consentFileLink" th:href="${baseTrademarkApplication.tradeMark.getTrademarkConsentDownLoadPath()}" th:text="${baseTrademarkApplication.tradeMark.getTrademarkConsentFileName()}"> file</a>
+
+                                                                                </div>
+                                                                                <div class="col-xs-2">
+                                                                                    <img th:src="@{/resources/images/microsoft-word-512.png}" class="img-thumbnail">
+                                                                                </div>
+                                                                                <div class="col-xs-4">
+                                                                                    <span class="badge alert-success pull-right">Uploaded File</span>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <input  style=" position:relative; display: none; width: 1px; height:1px;" name="AppInternalID" id="appInternalIDForm"   value="" />
-                                                                <div class="col-xs-12">
-                                                                    <button type="submit" id="consentSubmit" class="btn btn-sm" >Upload file</button>
+                                                            </div>
+
+                                                            <div id="yesliving" role="region" aria-labelledby="individualiving" class="form-group form-group-md" style="display: none">
+
+                                                                <h4 class="weight600">Upload Consent <i class="material-icons" style="position: relative; bottom: -5px;">cloud_upload</i></h4>
+                                                                <p><a id="consent-download" th:href="@{/resources/documents/Consent_template.docx}"><span class="glyphicon glyphicon-download" aria-hidden="true"></span>Download Consent Template</a></p>
+                                                                <form action="/Mark/consent/js/add" method="post" enctype="multipart/form-data" id="markConsentForm" class="form-horizontal">
+                                                                    <div class="form-group form-group-md">
+                                                                        <label class="small upload-drop-zone" for="consentfile"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> <br>
+                                                                            Upload Consent</label>
+                                                                        <input type="file" id="consentfile" name="file" class="form-control"  accept=".doc,.docx">
+                                                                    </div><!-- Drop Zone -->
+
+                                                                    <input  style=" position:relative; display: none; width: 1px; height:1px;" name="AppInternalID" id="appInternalIDForm"   value="" />
+
+                                                                    <div class="col-xs-12">
+                                                                        <div class="center">
+
+                                                                            <div type="button" form="markConsentForm"   file-id="consentfile" gs-img-id="consent-preview-img-id" spinner-id="consent-upload-spinner" class="btn btn-sm upload-consent-button" style="background-color: darkgreen; color: white; font-weight: bold;"><i class="material-icons" style="margin-right: 5px; margin-top: 5px;">cloud_upload</i><b style="position: relative; top:-5px;">Upload Consent Document</b><span><i class="fa fa-spinner fa-spin"  id="consent-upload-spinner" style="font-size:24px; margin-left: 11px; display: none;"></i></span></div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </form>
+                                                            </div>
+
+                                                        </th:block>
+
+                                                        <th:block th:if="${baseTrademarkApplication.tradeMark.consentFileUploaded == true}">
+
+                                                            <div class="row" id="npsConsent">
+                                                                <div class="js-upload-finished col-xs-12 col-md-10 col-lg-8">
+
+                                                                    <h4 class="weight600">Consent Uploaded <i class="material-icons" style="position: relative; bottom: -5px;">check_circle</i></h4>
+                                                                    <div class="list-group" id="filedata">
+                                                                        <div class="list-group-item list-group-item-success fileholder col-xs-12" role="alert">
+                                                                            <div class="row">
+                                                                                <div class="col-xs-2">
+                                                                                    <button type="button" class="btn btn-sm close" aria-label="remove file selection">
+                                                                                        <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="col-xs-4 linkholder">
+                                                                                    <a th:href="${baseTrademarkApplication.tradeMark.getTrademarkConsentDownLoadPath()}" th:text="${baseTrademarkApplication.tradeMark.getTrademarkConsentFileName()}"></a>
+
+                                                                                </div>
+                                                                                <div class="col-xs-2">
+                                                                                    <img th:src="@{/resources/images/microsoft-word-512.png}" class="img-thumbnail">
+                                                                                </div>
+                                                                                <div class="col-xs-4">
+                                                                                    <span class="badge alert-success pull-right">Uploaded File</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                            </form>
-                                                        </div>
+                                                            </div>
 
-                                                        <div th:if="${baseTrademarkApplication.tradeMark.consentFileUploaded == true}">
-                                                            <h4 class="weight600">Consent Uploaded <i class="material-icons" style="position: relative; bottom: -5px;">check_circle</i></h4>
+                                                            <div id="yesliving" role="region" aria-labelledby="individualiving" class="form-group form-group-md" style="display: none">
 
-                                                        </div>
+                                                                <h4 class="weight600">Upload Consent <i class="material-icons" style="position: relative; bottom: -5px;">cloud_upload</i></h4>
+                                                                <p><a id="consent-download" th:href="@{/resources/documents/Consent_template.docx}"><span class="glyphicon glyphicon-download" aria-hidden="true"></span>Download Consent Template</a></p>
+                                                                <form action="/Mark/consent/js/add" method="post" enctype="multipart/form-data" id="markConsentForm" class="form-horizontal">
+                                                                    <div class="form-group form-group-md">
+                                                                        <label class="small upload-drop-zone" for="consentfile"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> <br>
+                                                                            Upload Consent</label>
+                                                                        <input type="file" id="consentfile" name="file" class="form-control"  accept=".doc,.docx">
+                                                                    </div><!-- Drop Zone -->
+
+                                                                    <input  style=" position:relative; display: none; width: 1px; height:1px;" name="AppInternalID" id="appInternalIDForm"   value="" />
+
+                                                                    <div class="col-xs-12">
+                                                                        <div class="center">
+
+                                                                            <div type="button" form="markConsentForm"   file-id="consentfile" gs-img-id="consent-preview-img-id" spinner-id="consent-upload-spinner" class="btn btn-sm upload-consent-button" style="background-color: darkgreen; color: white; font-weight: bold;"><i class="material-icons" style="margin-right: 5px; margin-top: 5px;">cloud_upload</i><b style="position: relative; top:-5px;">Upload Consent Document</b><span><i class="fa fa-spinner fa-spin"  id="consent-upload-spinner" style="font-size:24px; margin-left: 11px; display: none;"></i></span></div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </form>
+                                                            </div>
+
+
+
+                                                        </th:block>
+
                                                     </div>
                                                 </th:block>
                                                 <th:block th:if="${baseTrademarkApplication.tradeMark.containNamePortaitSignature == false}">
@@ -753,7 +919,7 @@
 
 
                                                     <div id="yesnps" role="region" aria-labelledby="translit" style="display: none;">
-                                                        <p id="whichnps">Identify which of the following it contains:</p>
+                                                        <p id="whichnps">Identify which of the following it contains: <span class="label label-info subtle visuallyremoved">Reduced Fee</span></p>
 
                                                         <input class="form-check-input checkmark" type="checkbox" value="" role="checkbox" aria-checked="false" tabindex="0" aria-labelledby="checkname" id="namechecked">
                                                         <label class="form-check-label form-check" for="namechecked" id="checkname"><span class="radio notspecial">Name</span></label>
@@ -828,40 +994,125 @@
                                                             </div>
                                                         </div>
 
-                                                        <p id="individualiving">Is this of a living individual?</p>
+                                                        <p id="individualiving">Does this refer to a particular living individual? See the <a href="https://www.uspto.gov/trademark/laws-regulations/inquiry-regarding-nameportraitsignature-particular-living-individual-mark" target="_blank">Name/Portrait/Consent help page<span class="glyphicon glyphicon-new-window" aria-hidden="true"></span><span class="sr-only">Opens in new window</span></a></p>
                                                         <div role="radiogroup" class="form-group form-group-md" aria-labelledby="individualiving">
-                                                            <label for="inlineRadio17" class="radio-inline"><input type="radio" name="livindividualradio" id="inlineRadio17" value="yes">Yes</label>
-                                                            <label for="inlineRadio18" class="radio-inline"><input type="radio" name="livindividualradio" id="inlineRadio18" value="no">No</label>
+                                                            <label for="inlineRadio17" class="radio-inline radiocontainer">Yes<input type="radio" name="livindividualradio" id="inlineRadio17" value="yes"><span class="checkmark"></span></label>
+                                                            <label for="inlineRadio18" class="radio-inline radiocontainer">No<input type="radio" name="livindividualradio" id="inlineRadio18" value="no"><span class="checkmark"></span></label>
                                                         </div><!--END radiogroup-->
+                                                        <th:block th:if="${baseTrademarkApplication.tradeMark.consentFileUploaded == false}">
+                                                            <div class="row" id="npsConsent" style="display: none;">
+                                                                <div class="js-upload-finished col-xs-12 col-md-10 col-lg-8">
 
-                                                        <div th:if="${baseTrademarkApplication.tradeMark.consentFileUploaded == false}">
-                                                            <h4 class="weight600">Upload Consent <i class="material-icons" style="position: relative; bottom: -5px;">cloud_upload</i></h4>
-                                                            <p><a th:href="@{/resources/documents/Consent_template.docx}"><span class="glyphicon glyphicon-download" aria-hidden="true"></span>Download Consent Template</a></p>
-                                                            <form action="/Mark/consent/add" method="post" enctype="multipart/form-data" id="markConsentForm" class="form-horizontal">
-                                                                <div class="form-group form-group-md">
-                                                                    <label class="small upload-drop-zone" for="consentfile"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> <br>
-                                                                        Upload Consent</label>
-                                                                    <input type="file" id="consentfile" name="file" class="form-control">
-                                                                </div><!-- Drop Zone -->
-                                                                <div class="row">
-                                                                    <div class="js-upload-finished col-xs-12 col-md-10 col-lg-8">
-                                                                        <p id="uploaded">Processed files</p>
-                                                                        <div class="list-group">
-                                                                            <a href="#" class="list-group-item list-group-item-success" aria-labelledby="uploaded"></a>
+                                                                    <h4 class="weight600">Consent Uploaded <i class="material-icons" style="position: relative; bottom: -5px;">check_circle</i></h4>
+                                                                    <div class="list-group" id="filedata">
+                                                                        <div class="list-group-item list-group-item-success fileholder col-xs-12" role="alert">
+                                                                            <div class="row">
+                                                                                <div class="col-xs-2">
+                                                                                    <button type="button" class="btn btn-sm close" aria-label="remove file selection">
+                                                                                        <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="col-xs-4 linkholder">
+                                                                                    <a id="consentFileLink" th:href="${baseTrademarkApplication.tradeMark.getTrademarkConsentDownLoadPath()}" th:text="${baseTrademarkApplication.tradeMark.getTrademarkConsentFileName()}"> file</a>
+
+                                                                                </div>
+                                                                                <div class="col-xs-2">
+                                                                                    <img th:src="@{/resources/images/microsoft-word-512.png}" class="img-thumbnail">
+                                                                                </div>
+                                                                                <div class="col-xs-4">
+                                                                                    <span class="badge alert-success pull-right">Uploaded File</span>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <input  style=" position:relative; display: none; width: 1px; height:1px;" name="AppInternalID" id="appInternalIDForm"   value="" />
-                                                                <div class="col-xs-12">
-                                                                    <button type="submit" id="consentSubmit" class="btn btn-sm" >Upload file</button>
+                                                            </div>
+
+                                                            <div id="yesliving" role="region" aria-labelledby="individualiving" class="form-group form-group-md" style="display: none">
+
+                                                                <h4 class="weight600">Upload Consent <i class="material-icons" style="position: relative; bottom: -5px;">cloud_upload</i></h4>
+                                                                <p><a id="consent-download" th:href="@{/resources/documents/Consent_template.docx}"><span class="glyphicon glyphicon-download" aria-hidden="true"></span>Download Consent Template</a></p>
+                                                                <form action="/Mark/consent/js/add" method="post" enctype="multipart/form-data" id="markConsentForm" class="form-horizontal">
+                                                                    <div class="form-group form-group-md">
+                                                                        <label class="small upload-drop-zone" for="consentfile"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> <br>
+                                                                            Upload Consent</label>
+                                                                        <input type="file" id="consentfile" name="file" class="form-control"  accept=".doc,.docx">
+                                                                    </div><!-- Drop Zone -->
+
+                                                                    <input  style=" position:relative; display: none; width: 1px; height:1px;" name="AppInternalID" id="appInternalIDForm"   value="" />
+
+                                                                    <div class="col-xs-12">
+                                                                        <div class="center">
+
+                                                                            <div type="button" form="markConsentForm"   file-id="consentfile" gs-img-id="consent-preview-img-id" spinner-id="consent-upload-spinner" class="btn btn-sm upload-consent-button" style="background-color: darkgreen; color: white; font-weight: bold;"><i class="material-icons" style="margin-right: 5px; margin-top: 5px;">cloud_upload</i><b style="position: relative; top:-5px;">Upload Consent Document</b><span><i class="fa fa-spinner fa-spin"  id="consent-upload-spinner" style="font-size:24px; margin-left: 11px; display: none;"></i></span></div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </form>
+                                                            </div>
+
+                                                        </th:block>
+
+                                                        <th:block th:if="${baseTrademarkApplication.tradeMark.consentFileUploaded == true}">
+
+                                                            <div class="row" id="npsConsent">
+                                                                <div class="js-upload-finished col-xs-12 col-md-10 col-lg-8">
+
+                                                                    <h4 class="weight600">Consent Uploaded <i class="material-icons" style="position: relative; bottom: -5px;">check_circle</i></h4>
+                                                                    <div class="list-group" id="filedata">
+                                                                        <div class="list-group-item list-group-item-success fileholder col-xs-12" role="alert">
+                                                                            <div class="row">
+                                                                                <div class="col-xs-2">
+                                                                                    <button type="button" class="btn btn-sm close" aria-label="remove file selection">
+                                                                                        <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="col-xs-4 linkholder">
+                                                                                    <a th:href="${baseTrademarkApplication.tradeMark.getTrademarkConsentDownLoadPath()}" th:text="${baseTrademarkApplication.tradeMark.getTrademarkConsentFileName()}"></a>
+
+                                                                                </div>
+                                                                                <div class="col-xs-2">
+                                                                                    <img th:src="@{/resources/images/microsoft-word-512.png}" class="img-thumbnail">
+                                                                                </div>
+                                                                                <div class="col-xs-4">
+                                                                                    <span class="badge alert-success pull-right">Uploaded File</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                            </form>
-                                                        </div>
+                                                            </div>
 
-                                                        <div th:if="${baseTrademarkApplication.tradeMark.consentFileUploaded == true}">
-                                                            <h4 class="weight600">Consent Uploaded <i class="material-icons" style="position: relative; bottom: -5px;">check_circle</i></h4>
+                                                            <div id="yesliving" role="region" aria-labelledby="individualiving" class="form-group form-group-md" style="display: none">
 
-                                                        </div>
+                                                                <h4 class="weight600">Upload Consent <i class="material-icons" style="position: relative; bottom: -5px;">cloud_upload</i></h4>
+                                                                <p><a id="consent-download" th:href="@{/resources/documents/Consent_template.docx}"><span class="glyphicon glyphicon-download" aria-hidden="true"></span>Download Consent Template</a></p>
+                                                                <form action="/Mark/consent/js/add" method="post" enctype="multipart/form-data" id="markConsentForm" class="form-horizontal">
+                                                                    <div class="form-group form-group-md">
+                                                                        <label class="small upload-drop-zone" for="consentfile"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> <br>
+                                                                            Upload Consent</label>
+                                                                        <input type="file" id="consentfile" name="file" class="form-control"  accept=".doc,.docx">
+                                                                    </div><!-- Drop Zone -->
+
+                                                                    <input  style=" position:relative; display: none; width: 1px; height:1px;" name="AppInternalID" id="appInternalIDForm"   value="" />
+
+                                                                    <div class="col-xs-12">
+                                                                        <div class="center">
+
+                                                                            <div type="button" form="markConsentForm"   file-id="consentfile" gs-img-id="consent-preview-img-id" spinner-id="consent-upload-spinner" class="btn btn-sm upload-consent-button" style="background-color: darkgreen; color: white; font-weight: bold;"><i class="material-icons" style="margin-right: 5px; margin-top: 5px;">cloud_upload</i><b style="position: relative; top:-5px;">Upload Consent Document</b><span><i class="fa fa-spinner fa-spin"  id="consent-upload-spinner" style="font-size:24px; margin-left: 11px; display: none;"></i></span></div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </form>
+                                                            </div>
+
+
+
+                                                        </th:block>
+
+
                                                     </div>
                                                 </th:block>
                                             </th:block>
@@ -881,7 +1132,7 @@
                 <button type="button" class="btn btn-sm btn-default fill prev" id="prevButton" value="previous">Previous</button>
             </div>
             <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-primary fill next" id="nextButton" value="next" disabled>Next
+                <button type="button" class="btn btn-sm btn-primary fill next" id="nextButton" value="next">Next
                     <div class="round"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></div></button>
             </div>
         </div>
@@ -905,6 +1156,11 @@
 
     var colorClaim = /*[[${markColorClaim}]]*/ 'User Name';
 
+    var colorClaimSet = /*[[${colorClaimSet}]]*/ 'User Name';
+
+
+
+
     var acceptBW = /*[[${markColorClaimBW}]]*/ 'User Name';
 
     var translationFW = /*[[${translationFW}]]*/ 'User Name';
@@ -912,16 +1168,23 @@
     var translitFW = /*[[${translitFW}]]*/ 'User Name';
     var containsSignatureName = /*[[${containsSignatureName}]]*/ 'User Name';
 
+
+
+
+
+
     var isName = /*[[${isName}]]*/ 'User Name';
     var isSignature = /*[[${isSignature}]]*/ 'User Name';
     var isPortrait = /*[[${isPortrait}]]*/ 'User Name';
 
     var isNPSLivingPerson = /*[[${isNPSLivingPerson}]]*/ 'User Name';
+    var isNPSLivingPersonSet = /*[[${isNPSLivingPersonSet}]]*/ 'User Name';
+    var isConsentUploaded = /*[[${isConsentUploaded}]]*/ 'User Name';
 
 
     var host = host_name+":"+host_port;
     var breadCrumbStatus = /*[[${breadCrumbStatus}]]*/ 'User Name';
-
+    var validateTEAS =  /*[[${baseTrademarkApplication.isValidateTEASFields()}]]*/ 'User Name';
 
     /*]]>*/
 </script>
@@ -962,6 +1225,24 @@
     ////////////////////////////////////////////////////////////////////////////////////
 
 
+
+
+    var nameOnlyConsentLink =  "../../resources/documents/Consent_templateName.docx";
+    var SignatureOnlyConsentLink  =  "../../resources/documents/consent_template_signature.docx";
+    var portraitOnlyConsentLink  =  "../../resources/documents/Consent_templatePortrait.docx";
+
+
+    var nameAndSignatureConsentLink  =  "../../resources/documents/consent_template_name_signature.docx";
+
+    var nameAndPortraitConsentLink  =  "../../resources/documents/consent_template_name_portrait.docx";
+
+    var signatureAndPortraitConsentLink  =  "../../resources/documents/consent_template_signature_portrait.docx";
+
+    var npsAllConsentLink = "../../resources/documents/consent_template_nps_all.docx";
+
+
+
+
 </script>
 
 
@@ -991,68 +1272,78 @@
         }, 500)
 
         $('#appInternalIDForm').val(appInternalID);
+
+        // expand fee drop down
+        $('a.dropdown-toggle').click();
+
+
+
+        //////////////////////////////////////////////////////////////////
+        // persistence rendering logic for TEAS plus field labels
+        //////////////////////////////////////////////////////////////////
+        if(validateTEAS == true){
+            $('input.togglesavemore').attr("checked",true);
+            $( document ).find('span.subtle').removeClass('visuallyremoved');
+            $( document ).find('#on').removeClass('visuallyhidden');
+
+        }
+        else{
+            $( document ).find('span.subtle').addClass( 'visuallyremoved' );
+        }
         //////////////////////////////////////////////////////////////////////
         // set mark image based on persisted values
         //////////////////////////////////////////////////////////////////////
-        if(colorClaim == null){
+        if(colorClaimSet == false){
             if(image_path != null){
-                $('[data-toggle="popover"]').popover({
-                    title : false,
-                    html : true,
-                    content : '<div class="media"><img src="'+image_path+'" style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>'
-                });
+
+                $( '#togglepop' ).attr('data-content', '<div class="media"><img src='+image_path+' style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>');
 
             }
             // set color claim to true be default when its not set yet
+            else{
+                $( '#togglepop' ).attr('data-content', '<div class="media"><span class="glyphicon glyphicon-picture" aria-hidden="true"  style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></span></div>');
+            }
 
-            $('#inlineRadio1').click();
         }
+        else {
 
-        if(colorClaim == false){
+            if(colorClaim == false){
 
-            if(acceptBW == true){
-               // $('#inlineRadio2').click();
-               // $('#bwmark').click();
+                if(acceptBW == true){
+                    // $('#inlineRadio2').click();
+                    // $('#bwmark').click();
 
-                $('[data-toggle="popover"]').popover({
-                    title : false,
-                    html : true,
-                    content : '<div class="media"><img src="'+image_pathBW+'" style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>'
-                });
+                    $( '#togglepop' ).attr('data-content', '<div class="media"><img src='+image_pathBW+' style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>');
 
-                $('#colorMarkBWInline').attr("src", image_pathBW);
+                    $('#colorMarkBWInline').attr("src", image_pathBW);
+
+                }
+                else{
+                    if(image_path != null){
+
+                        $( '#togglepop' ).attr('data-content', '<div class="media"><img src='+image_path+' style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>');
+                        $('#colorMarkInline').attr("src", image_path);
+
+
+                    }
+
+                }
 
             }
-            else{
+            if(colorClaim == true){
+                // $('#inlineRadio1').click();
                 if(image_path != null){
 
-                    $('[data-toggle="popover"]').popover({
-                        title : false,
-                        html : true,
-                        content : '<div class="media"><img src="'+image_path+'" style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>'
-                    });
-
+                    $( '#togglepop' ).attr('data-content', '<div class="media"><img src='+image_path+' style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>');
                     $('#colorMarkInline').attr("src", image_path);
 
 
                 }
             }
 
+
         }
-        if(colorClaim == true){
-           // $('#inlineRadio1').click();
-            if(image_path != null){
 
-                $('[data-toggle="popover"]').popover({
-                    title : false,
-                    html : true,
-                    content : '<div class="media"><img src="'+image_path+'" style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>'
-                });
-                $('#colorMarkInline').attr("src", image_path);
-
-
-            }
-        }
 
 
 
@@ -1070,54 +1361,43 @@
 
         }
 
-        if(isNPSLivingPerson == true){
-            $('#inlineRadio017').click();
 
-        }
-        else {
-            if(isNPSLivingPerson == false){
-                $('#inlineRadio018').click();
+        if(isNPSLivingPersonSet == true){
+
+            if(isNPSLivingPerson == true){
+                $('#inlineRadio17').attr("checked", true);
+                if(isConsentUploaded){
+                    $('#npsConsent').show();
+                    $('#yesliving').hide();
+                }
+                else {
+                    $('#yesliving').show();
+                    $('#npsConsent').hide();
+                }
+
+
+            }
+            else {
+                if(isNPSLivingPerson == false){
+                    $('#inlineRadio18').attr("checked", true);
+                    $('#yesliving').hide();
+                    $('#npsConsent').hide();
+                }
             }
         }
 
 
 
 
-
-
-
-        $( '#togglepop' ).click(function() {
-            $( this ).toggleClass( 'focus' );
-            $(this).html() === '<span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Hide My Mark'
-                ? $(this).html('<span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Show My Mark')
-                : $(this).html('<span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Hide My Mark');
-        });
-
-
-
-        //////////////////////////////////////////////////////////////////////
-        // added for integration
-        // right triang\le accodian toggle
-        //////////////////////////////////////////////////////////////////////
-        $('.glyphicon').click(function () {
-            $(this).toggleClass("glyphicon-triangle-right").toggleClass("glyphicon-triangle-bottom");
-        });
-        //////////////////////////////////////////////////////////////////////
-        // activate tool tip
-        //////////////////////////////////////////////////////////////////////
-        $('[data-toggle="tooltip"]').tooltip();
-
-
-
-        $('[data-toggle="tooltip"]').tooltip();
-
-
-
         setBreadCrumb(breadCrumbStatus);
+
+        $('[data-toggle="tooltip"]').tooltip();
+
+
 
         $('#bs-link1').click(function () {
             var url = $(this).attr("href");
-            if(url != "undefined"){
+            if(url != undefined){
                 location.href=url;
             }
 
@@ -1125,7 +1405,7 @@
 
         $('#bs-link2').click(function () {
             var url = $(this).attr("href");
-            if(url != "undefined"){
+            if(url != undefined){
                 //location.href=url;
             }
 
@@ -1133,7 +1413,7 @@
 
         $('#bs-link3').click(function () {
             var url = $(this).attr("href");
-            if(url != "undefined"){
+            if(url != undefined){
                 location.href=url;
             }
 
@@ -1141,7 +1421,7 @@
 
         $('#bs-link4').click(function () {
             var url = $(this).attr("href");
-            if(url != "undefined"){
+            if(url != undefined){
                 location.href=url;
             }
 
@@ -1149,7 +1429,7 @@
 
         $('#bs-link5').click(function () {
             var url = $(this).attr("href");
-            if(url != "undefined"){
+            if(url != undefined){
                 location.href=url;
             }
 
@@ -1157,7 +1437,7 @@
 
         $('#bs-link6').click(function () {
             var url = $(this).attr("href");
-            if(url != "undefined"){
+            if(url != undefined){
                 location.href=url;
             }
 
@@ -1174,7 +1454,22 @@
         });
 
         $('#nextButton').click(function () {
-            location.href=nextLinkURL;
+
+
+            if($('#inlineRadio7').is(":checked")){
+
+                if($('#namechecked').is(":checked") || $('#signaturechecked').is(":checked") || $('#portraitchecked').is(":checked") ){
+                    location.href=nextLinkURL;
+                }
+                else{
+                    alert("You indicated that your mark contains a name, portrait, or signature. You must select an option, or answer 'No' to the question.");
+                }
+
+            }
+            else{
+                location.href=nextLinkURL;
+            }
+
         });
 
         if($('#mark-literal').val()!= ""){
@@ -1272,10 +1567,10 @@
         //////////////////////////////////////////////////////////////////////
         // field auto save  mark color descriptions
         //////////////////////////////////////////////////////////////////////
-        $('#mark-color-claim').focusout(function () {
-            var colorDescriptions = $(this).val();
+        $('#mark-description').focusout(function () {
+            var description = $(this).val();
 
-            saveMarkTextdetails("mark-color-description", colorDescriptions, appInternalID);
+            saveMarkTextdetails("mark-description", description, appInternalID);
         });
 
         //////////////////////////////////////////////////////////////////////
@@ -1428,22 +1723,154 @@
         $('#namechecked').click(function () {
 
             if($(this).is(":checked")) {
+            // name checked
 
                 saveMarkTextdetails("mark-NPS-name", "yes", appInternalID);
+
+                if($('#signaturechecked').is(":checked")){
+                  // signature checked
+
+                    if($('#portraitchecked').is(":checked")){
+                        // all 3 checked
+                        $('#consent-download').attr("href", npsAllConsentLink);
+
+                    }
+                    else {
+                        // only name and signature checked
+                        $('#consent-download').attr("href", nameAndSignatureConsentLink);
+                    }
+
+
+
+                }
+                else{
+
+                    // signature not checked
+                    if($('#portraitchecked').is(":checked")){
+                        // portrait and name are checked
+
+                        $('#consent-download').attr("href", nameAndPortraitConsentLink);
+
+                    }
+                    else {
+                        // only name is checked
+                        $('#consent-download').attr("href", nameOnlyConsentLink);
+                    }
+
+
+                }
+
             }
             else{
+                // name is unchecked ...
+
                 saveMarkTextdetails("mark-NPS-name", "no", appInternalID);
+
+                if($('#signaturechecked').is(":checked")){
+                    // signature is checked
+                    if($('#portraitchecked').is(":checked")){
+                        // signature and portrait checked
+                        $('#consent-download').attr("href", signatureAndPortraitConsentLink);
+
+                    }
+                    else {
+                        // only  signature checked
+                        $('#consent-download').attr("href", SignatureOnlyConsentLink);
+                    }
+
+                }
+                else{
+                    if($('#portraitchecked').is(":checked")){
+                        //  portrait checked
+                        $('#consent-download').attr("href", portraitOnlyConsentLink);
+
+                    }
+                    else {
+                        // only  signature checked
+                        $('#consent-download').attr("href", "");
+                    }
+
+
+                }
+
             }
         });
+
 
         $('#portraitchecked').click(function () {
 
             if($(this).is(":checked")) {
 
                 saveMarkTextdetails("mark-NPS-portrait", "yes", appInternalID);
+
+                if($('#namechecked').is(":checked")){
+                    // portrait and named checked
+
+                    if($('#signaturechecked').is(":checked")){
+                        // all 3 checked
+                        $('#consent-download').attr("href", npsAllConsentLink);
+
+                    }
+                    else {
+
+                        // only portrait and name
+                        $('#consent-download').attr("href", nameAndPortraitConsentLink);
+                    }
+
+
+
+                }
+                else{
+
+                    if($('#signaturechecked').is(":checked")){
+                        // portrait and signature are checked
+
+                        $('#consent-download').attr("href", signatureAndPortraitConsentLink);
+
+                    }
+                    else {
+                        // portrait only
+                        $('#consent-download').attr("href", portraitOnlyConsentLink);
+                    }
+
+
+                }
+                /////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
             }
             else{
+                // portrait is unchecked
+
                 saveMarkTextdetails("mark-NPS-portrait", "no", appInternalID);
+                if($('#signaturechecked').is(":checked")){
+
+                    if($('#namechecked').is(":checked")){
+                        // signature and name still checked
+                        $('#consent-download').attr("href", nameAndSignatureConsentLink);
+
+                    }
+                    else {
+                        // only  signature checked
+                        $('#consent-download').attr("href", SignatureOnlyConsentLink);
+                    }
+
+                }
+                else{
+                    if($('#namechecked').is(":checked")){
+                        //  portrait checked
+                        $('#consent-download').attr("href", nameOnlyConsentLink);
+
+                    }
+                    else {
+                        // only  signature checked
+                        $('#consent-download').attr("href", "");
+                    }
+
+
+                }
+
             }
         });
 
@@ -1452,9 +1879,72 @@
             if($(this).is(":checked")) {
 
                 saveMarkTextdetails("mark-NPS-signature", "yes", appInternalID);
+
+                if($('#namechecked').is(":checked")){
+                    // portrait and named checked
+
+                    if($('#portraitchecked').is(":checked")){
+                        // all 3 checked
+
+                        $('#consent-download').attr("href", npsAllConsentLink);
+
+                    }
+                    else {
+
+                        // only signature and name
+                        $('#consent-download').attr("href", nameAndSignatureConsentLink);
+                    }
+
+
+
+                }
+                else{
+
+                    if($('#portraitchecked').is(":checked")){
+                        // portrait and signature are checked
+
+                        $('#consent-download').attr("href", signatureAndPortraitConsentLink);
+
+                    }
+                    else {
+                        // signature only checked
+                        $('#consent-download').attr("href", SignatureOnlyConsentLink);
+                    }
+
+
+                }
+                /////////////////////////////////////////////////////////////////////////////////////////////////
             }
             else{
                 saveMarkTextdetails("mark-NPS-signature", "no", appInternalID);
+
+                if($('#portraitchecked').is(":checked")){
+
+                    if($('#namechecked').is(":checked")){
+                        // portraut and name still checked
+                        $('#consent-download').attr("href", nameAndPortraitConsentLink);
+
+                    }
+                    else {
+                        // only  portrait  checked
+                        $('#consent-download').attr("href", portraitOnlyConsentLink);
+                    }
+
+                }
+                else{
+                    if($('#namechecked').is(":checked")){
+                        //  portrait checked
+                        $('#consent-download').attr("href", nameOnlyConsentLink);
+
+                    }
+                    else {
+
+                        $('#consent-download').attr("href", "");
+                    }
+
+
+                }
+
             }
         });
 
@@ -1565,6 +2055,7 @@
 
 
             saveMarkTextdetails("mark-nps-living", "yes", appInternalID);
+          $('#yesliving').show(500);
 
         });
 
@@ -1577,6 +2068,19 @@
 
             saveMarkTextdetails("mark-nps-living", "no", appInternalID);
 
+           $('#npsConsent').hide(500);
+           $('#yesliving').hide(500);
+
+        });
+
+
+        $('.close').click(function () {
+
+
+            $('#npsConsent').hide(500);
+            $('#yesliving').show(500);
+
+
         });
 
 
@@ -1585,6 +2089,74 @@
 
 
 
+        // this is the id of the submit button
+        $(".upload-consent-button").click(function() {
+
+
+
+            var formID = $(this).attr("form");
+
+
+            var fileInputId = $(this).attr("file-id");
+
+
+            var spinnerID = "consent-upload-spinner";
+
+            $('#'+spinnerID).show();
+
+            var fileInput = document.getElementById(fileInputId);
+            var file = fileInput.files[0];
+            var formData = new FormData();
+            formData.append('file', file);
+            formData.append('appID', appInternalID);
+
+
+            var url = $("#"+formID).attr("action");
+            // Get the selected files from the input.
+
+
+             setTimeout(function () {
+                 $.ajax({
+                     type: "POST",
+                     url: url,
+                     data: formData, // serializes the form's elements.
+                     async: true,
+                     cache: false,
+                     contentType: false,
+                     processData: false,
+                     success: function(data)
+                     {
+                         // we will return the the file url
+                         // call jquery and set it in the img div
+                         var consentDownloadLink = parsePathFromResponse(data);
+                         var consentFileName = parseNameFromResponse(data);
+
+                         // set download path
+
+                         $('#consentFileLink').attr('href', consentDownloadLink);
+                         // set file name here too
+
+                         $('#consentFileLink').text(consentFileName);
+
+                         //$('#'+imageId).attr("src", imgPath);
+
+
+                         $("#"+spinnerID).hide(500);
+
+
+                         $('#yesliving').hide(500);
+
+                         $('#npsConsent').show(500);
+
+                     }
+                 });
+
+             }, 1000);
+
+
+
+            return false; // avoid to execute the actual submit of the form.
+        });
 
 
 
@@ -1665,6 +2237,28 @@
 
 
     }
+
+    function parsePathFromResponse(response){
+        var index = response.indexOf("image-url:");
+        index = index+10;
+        response = response.substring(index);
+
+
+        var index2 = response.indexOf("}");
+        response = response.substring(0, index2);
+        return response;
+    }
+    function parseNameFromResponse(response){
+        var index = response.indexOf("image-name:");
+        index = index+11;
+        response = response.substring(index);
+
+
+        var index2 = response.indexOf("}");
+        response = response.substring(0, index2);
+        return response;
+    }
+
 
     function setBreadCrumb(bsStatusArrayList){
 

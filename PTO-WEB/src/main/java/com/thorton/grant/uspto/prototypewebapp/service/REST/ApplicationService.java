@@ -114,7 +114,7 @@ public class ApplicationService  extends  BaseRESTapiService{
             }
             else {
                 baseTrademarkApplication.setOwnerType("Foreign");
-                baseTrademarkApplication.setOwnerSubType("Foreign Corporation");
+                baseTrademarkApplication.setOwnerSubType("Corporation");
                 baseTrademarkApplication.setForeignEnityFiling(true);
                 baseTrademarkApplication.setEntityTypeSet(true);
 
@@ -396,7 +396,7 @@ public class ApplicationService  extends  BaseRESTapiService{
            }
            baseTrademarkApplication.setPrimaryLawyer(primaryAttorney);
            primaryAttorney.setPrimary(true);
-           baseTrademarkApplication.setLastViewModel("application/attorney/AttorneySet");
+           baseTrademarkApplication.setLastViewModel("application/attorney/AttorneySet2");
            baseTrademarkApplication.setAttorneyCollapseID(primaryAttorney.getFirstName()+primaryAttorney.getLastName());
            baseTradeMarkApplicationService.save(baseTrademarkApplication);
 
@@ -548,6 +548,11 @@ public class ApplicationService  extends  BaseRESTapiService{
         ///////////////////////////////////////////////////////////
         if(markType.equals("Standard Character")){
             baseTrademarkApplication.setStandardTextMark(true);
+            baseTrademarkApplication.getTradeMark().setStandardCharacterMark(true);
+        }
+        else {
+            baseTrademarkApplication.setStandardTextMark(false);
+            baseTrademarkApplication.getTradeMark().setStandardCharacterMark(false);
         }
 
 
@@ -705,7 +710,52 @@ public class ApplicationService  extends  BaseRESTapiService{
 
         }
 
+        if(fieldName.equals("declare-all")){
 
+            if(fieldValue.equals("yes")){
+                baseTrademarkApplication.setDeclarationApplicantIsOwner(true);
+
+                baseTrademarkApplication.setDeclarationMarkInUse(true);
+                baseTrademarkApplication.setDeclarationSpecimen(true);
+                baseTrademarkApplication.setDeclarationConcurrentUser(true);
+                baseTrademarkApplication.setDeclarationEvidenceSupport(true);
+                baseTrademarkApplication.setDeclarationWarningFalseStatement(true);
+                baseTrademarkApplication.setDeclarationNoOtherHasRight(true);
+                baseTrademarkApplication.setDeclarationAll(true);
+
+                baseTrademarkApplication.setDeclarationApplicantIsOwnerSet(true);
+                baseTrademarkApplication.setDeclarationMarkInUseSet(true);
+                baseTrademarkApplication.setDeclarationSpecimenSet(true);
+                baseTrademarkApplication.setDeclarationConcurrentUserSet(true);
+                baseTrademarkApplication.setDeclarationEvidenceSupportSet(true);
+                baseTrademarkApplication.setDeclarationWarningFalseStatementSet(true);
+                baseTrademarkApplication.setDeclarationNoOtherHasRightSet(true);
+            }
+            else {
+                baseTrademarkApplication.setDeclarationApplicantIsOwner(false);
+                baseTrademarkApplication.setDeclarationMarkInUse(false);
+                baseTrademarkApplication.setDeclarationSpecimen(false);
+                baseTrademarkApplication.setDeclarationConcurrentUser(false);
+                baseTrademarkApplication.setDeclarationEvidenceSupport(false);
+                baseTrademarkApplication.setDeclarationWarningFalseStatement(false);
+                baseTrademarkApplication.setDeclarationNoOtherHasRight(false);
+                baseTrademarkApplication.setDeclarationAll(false);
+
+
+                baseTrademarkApplication.setDeclarationApplicantIsOwnerSet(false);
+                baseTrademarkApplication.setDeclarationMarkInUseSet(false);
+                baseTrademarkApplication.setDeclarationSpecimenSet(false);
+                baseTrademarkApplication.setDeclarationConcurrentUserSet(false);
+                baseTrademarkApplication.setDeclarationEvidenceSupportSet(false);
+                baseTrademarkApplication.setDeclarationWarningFalseStatementSet(false);
+                baseTrademarkApplication.setDeclarationNoOtherHasRightSet(false);
+
+            }
+
+
+
+            appFieldReadable = "Application Declaration all";
+        }
 
         if(fieldName.equals("declare-app-owner")){
             // ptoUser.setState(param); // sets state code
@@ -718,7 +768,7 @@ public class ApplicationService  extends  BaseRESTapiService{
                 baseTrademarkApplication.setDeclarationApplicantIsOwner(false);
 
             }
-
+            baseTrademarkApplication.setDeclarationApplicantIsOwnerSet(true);
             appFieldReadable = "Application Declaration";
 
         }
@@ -735,6 +785,7 @@ public class ApplicationService  extends  BaseRESTapiService{
                 baseTrademarkApplication.setDeclarationMarkInUse(false);
 
             }
+            baseTrademarkApplication.setDeclarationMarkInUseSet(true);
 
             appFieldReadable = "Application Declaration";
 
@@ -744,14 +795,20 @@ public class ApplicationService  extends  BaseRESTapiService{
             // ptoUser.setState(param); // sets state code
 
             if(fieldValue.equals("yes")){
-                baseTrademarkApplication.setDeclarationMarkInUseSpecimen(true);
+                baseTrademarkApplication.setDeclarationSpecimen(true);
+
+
 
             }
             if(fieldValue.equals("no")){
-                baseTrademarkApplication.setDeclarationMarkInUseSpecimen(false);
+                baseTrademarkApplication.setDeclarationSpecimen(false);
+
 
             }
 
+
+
+            baseTrademarkApplication.setDeclarationSpecimenSet(true);
             appFieldReadable = "Application Declaration";
 
         }
@@ -768,6 +825,7 @@ public class ApplicationService  extends  BaseRESTapiService{
 
             }
 
+            baseTrademarkApplication.setDeclarationConcurrentUserSet(true);
             appFieldReadable = "Application Declaration";
 
         }
@@ -786,6 +844,7 @@ public class ApplicationService  extends  BaseRESTapiService{
 
             appFieldReadable = "Application Declaration";
 
+            baseTrademarkApplication.setDeclarationEvidenceSupportSet(true);
         }
 
         if(fieldName.equals("declare-warning-false")){
@@ -800,10 +859,27 @@ public class ApplicationService  extends  BaseRESTapiService{
 
             }
 
+            baseTrademarkApplication.setDeclarationWarningFalseStatementSet(true);
             appFieldReadable = "Application Declaration";
 
         }
 
+
+        if(fieldName.equals("declare-noOther-has-right")){
+            // ptoUser.setState(param); // sets state code
+
+            if(fieldValue.equals("yes")){
+                baseTrademarkApplication.setDeclarationNoOtherHasRight(true);
+
+
+            }
+            if(fieldValue.equals("no")){
+                baseTrademarkApplication.setDeclarationNoOtherHasRight(false);
+            }
+            baseTrademarkApplication.setDeclarationNoOtherHasRightSet(true);
+            appFieldReadable = "Application Declaration";
+
+        }
 
 
         baseTradeMarkApplicationService.save(baseTrademarkApplication);
@@ -818,6 +894,39 @@ public class ApplicationService  extends  BaseRESTapiService{
         return buildResponseEnity("200", responseMsg);
     }
 
+    @CrossOrigin(origins = {"http://localhost:80","http://efile-reimagined.com"})
+    @RequestMapping(method = GET, value="/REST/apiGateway/application/TEASOpt/{fieldValue}/{appInternalID}")
+    @ResponseBody
+    ResponseEntity<String> saveApplicatoinTEASOpt(@PathVariable String fieldValue , @PathVariable String appInternalID){
+
+        //////////////////////////////////////////////////////////
+        // retrieve application using passed internal id
+        //////////////////////////////////////////////////////////
+        BaseTradeMarkApplicationService baseTradeMarkApplicationService = getServiceBeanFactory().getBaseTradeMarkApplicationService();
+        BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID(appInternalID);
+        String responseMsg = "";
+
+        if(fieldValue.equals("yes")){
+            baseTrademarkApplication.setValidateTEASFields(true);
+            responseMsg = "Reduced fee validation has been set to TRUE for the current application.";
+        }
+        else {
+            baseTrademarkApplication.setValidateTEASFields(false);
+            responseMsg = "Reduced fee level validation has been set to FALSE for the current application.";
+        }
+
+
+
+
+        baseTradeMarkApplicationService.save(baseTrademarkApplication);
+
+        ////////////////////////////////////////////////
+        // start generating response
+        ////////////////////////////////////////////////
+
+        return buildResponseEnity("200", responseMsg);
+
+    }
 
 
 }

@@ -1,6 +1,6 @@
 package com.thorton.grant.uspto.prototypewebapp.model.entities.DTO.application.form;
 
-import java.util.Date;
+
 
 public class NewAttorneyContactFormDTO {
 
@@ -32,8 +32,22 @@ public class NewAttorneyContactFormDTO {
 
 
     private String attorneyPhone;
+    private String attorneyPhoneType;
+    private String attorneyPhoneExtension;
+
+    private String attorneyPhone2;
+    private String attorneyPhoneType2;
+    private String attorneyPhoneExtension2;
+
+    private String attorneyPhone3;
+    private String attorneyPhoneType3;
+    private String attorneyPhoneExtension3;
+
+
 
     private String attorneyDocketNumber;
+    private String attorneyDocketNumber2;
+    private String attorneyDocketNumber3;
 
     private String attorneyAffiliation;
 
@@ -47,6 +61,10 @@ public class NewAttorneyContactFormDTO {
 
 
     private String appInternalID;
+
+
+
+    private String usCertifyCheckbox;
 
 
     public String getTitle() {
@@ -173,8 +191,26 @@ public class NewAttorneyContactFormDTO {
         return attorneyDocketNumber;
     }
 
+
+
     public void setAttorneyDocketNumber(String attorneyDocketNumber) {
         this.attorneyDocketNumber = attorneyDocketNumber;
+    }
+
+    public String getAttorneyDocketNumber2() {
+        return attorneyDocketNumber2;
+    }
+
+    public void setAttorneyDocketNumber2(String attorneyDocketNumber2) {
+        this.attorneyDocketNumber2 = attorneyDocketNumber2;
+    }
+
+    public String getAttorneyDocketNumber3() {
+        return attorneyDocketNumber3;
+    }
+
+    public void setAttorneyDocketNumber3(String attorneyDocketNumber3) {
+        this.attorneyDocketNumber3 = attorneyDocketNumber3;
     }
 
     public String getAttorneyAffiliation() {
@@ -231,5 +267,78 @@ public class NewAttorneyContactFormDTO {
 
     public void setApplicantCA(String applicantCA) {
         this.applicantCA = applicantCA;
+    }
+
+
+    public String getAttorneyPhoneType() {
+        return attorneyPhoneType;
+    }
+
+    public void setAttorneyPhoneType(String attorneyPhoneType) {
+        this.attorneyPhoneType = attorneyPhoneType;
+    }
+
+    public String getAttorneyPhoneExtension() {
+        return attorneyPhoneExtension;
+    }
+
+    public void setAttorneyPhoneExtension(String attorneyPhoneExtension) {
+        this.attorneyPhoneExtension = attorneyPhoneExtension;
+    }
+
+    public String getAttorneyPhone2() {
+        return attorneyPhone2;
+    }
+
+    public void setAttorneyPhone2(String attorneyPhone2) {
+        this.attorneyPhone2 = attorneyPhone2;
+    }
+
+    public String getAttorneyPhoneType2() {
+        return attorneyPhoneType2;
+    }
+
+    public void setAttorneyPhoneType2(String attorneyPhoneType2) {
+        this.attorneyPhoneType2 = attorneyPhoneType2;
+    }
+
+    public String getAttorneyPhoneExtension2() {
+        return attorneyPhoneExtension2;
+    }
+
+    public void setAttorneyPhoneExtension2(String attorneyPhoneExtension2) {
+        this.attorneyPhoneExtension2 = attorneyPhoneExtension2;
+    }
+
+    public String getAttorneyPhone3() {
+        return attorneyPhone3;
+    }
+
+    public void setAttorneyPhone3(String attorneyPhone3) {
+        this.attorneyPhone3 = attorneyPhone3;
+    }
+
+    public String getAttorneyPhoneType3() {
+        return attorneyPhoneType3;
+    }
+
+    public void setAttorneyPhoneType3(String attorneyPhoneType3) {
+        this.attorneyPhoneType3 = attorneyPhoneType3;
+    }
+
+    public String getAttorneyPhoneExtension3() {
+        return attorneyPhoneExtension3;
+    }
+
+    public void setAttorneyPhoneExtension3(String attorneyPhoneExtension3) {
+        this.attorneyPhoneExtension3 = attorneyPhoneExtension3;
+    }
+
+    public String getUsCertifyCheckbox() {
+        return usCertifyCheckbox;
+    }
+
+    public void setUsCertifyCheckbox(String usCertifyCheckbox) {
+        this.usCertifyCheckbox = usCertifyCheckbox;
     }
 }

@@ -3,11 +3,13 @@ package com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.tradeMark.a
 import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.tradeMark.application.types.BaseTrademarkApplication;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.user.PTOUser;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.base.BaseEntity;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.Objects;
 
 
@@ -15,6 +17,11 @@ import java.util.Objects;
 @Table(name = "trade_marks")
 public class TradeMark extends BaseEntity {
 
+
+    public TradeMark() {
+
+        disclaimerDeclarationList =  new ArrayList<>();
+    }
 
     private String PTOtradeMarkID;
     private String description;
@@ -29,7 +36,9 @@ public class TradeMark extends BaseEntity {
     private String trademarkImagePath;
     private String trademarkBWImagePath;
 
-    private String trademarkConsentFilePath; // pdf or .doc
+    private String baseStoragePath;
+
+
 
 
     private String trademarkStandardCharacterText;
@@ -43,7 +52,11 @@ public class TradeMark extends BaseEntity {
 
 
     // color claim fields
+    @Nullable
     private boolean markColorClaim;
+
+
+
     private String markColors;
     private String markColorDescription;
 
@@ -54,7 +67,7 @@ public class TradeMark extends BaseEntity {
     private String markBWDescription;
 
     private boolean colorClaimSet;
-
+    private boolean acceptBWmarkSet;
 
 
 
@@ -86,6 +99,14 @@ public class TradeMark extends BaseEntity {
 
     private boolean consentFileUploaded = false;
 
+    private String trademarkConsentFilePath; // pdf or .doc
+
+    private String trademarkConsentFileName;
+    private String trademarkConsentDownLoadPath;
+
+
+
+
     private boolean isName;
     private String nameFirstName;
     private String nameMiddleName;
@@ -102,6 +123,8 @@ public class TradeMark extends BaseEntity {
     private String signatureLastName;
 
     private boolean isNPSLivingPerson;
+    private boolean NPSLivingPersonSet;
+
 
 
 
@@ -121,12 +144,25 @@ public class TradeMark extends BaseEntity {
 
     private String disclaimerDeclaration;
 
+    private ArrayList<String> disclaimerDeclarationList;
+
+    // this needs to be an array list ...see how we implemented
+    // this for attorney docket number
+
+
+
+
+    // prior registration fields
+
 
 
     private boolean priorRegistratoin;
     private boolean priorRegistratoinSet;
 
     private String priorRegistrationNumber;
+
+
+    // meaning and significance fields
 
     private boolean markWordingHasSignifigance;
     private boolean meaningSet;
@@ -240,18 +276,7 @@ public class TradeMark extends BaseEntity {
 
     public String getMarkDescription() {
 
-        if(isMarkColorClaim()){
-            return markColorDescription;
-        }
-        else {
-            if(trademarkDesignType.equals("Standard Character")){
-                System.out.println("999999999999999999999999999999999999999999999999999999999999999999999999999999");
-                return trademarkStandardCharacterText;
-            }
-            else {
-                return markBWDescription;
-            }
-        }
+       return markDescription;
 
     }
 
@@ -662,12 +687,79 @@ public class TradeMark extends BaseEntity {
 
     }
 
+    public String getBaseStoragePath() {
+        return baseStoragePath;
+    }
+
+    public void setBaseStoragePath(String baseStoragePath) {
+        this.baseStoragePath = baseStoragePath;
+    }
+
+
+
+
     public boolean isStandardCharacterMark() {
         return standardCharacterMark;
     }
 
     public void setStandardCharacterMark(boolean standardCharacterMark) {
         this.standardCharacterMark = standardCharacterMark;
+    }
+
+    public boolean isAcceptBWmarkSet() {
+        return acceptBWmarkSet;
+    }
+
+    public void setAcceptBWmarkSet(boolean acceptBWmarkSet) {
+        this.acceptBWmarkSet = acceptBWmarkSet;
+    }
+
+
+    public String getMarkImagePhysicalPath(){
+
+
+        String path = getMarkImageDisplayPath();
+
+
+        path = path.replace("/files", this.baseStoragePath);
+
+        return path;
+    }
+
+    public String getTrademarkConsentFileName() {
+        return trademarkConsentFileName;
+    }
+
+    public void setTrademarkConsentFileName(String trademarkConsentFileName) {
+        this.trademarkConsentFileName = trademarkConsentFileName;
+    }
+
+    public String getTrademarkConsentDownLoadPath() {
+        return trademarkConsentDownLoadPath;
+    }
+
+    public void setTrademarkConsentDownLoadPath(String trademarkConsentDownLoadPath) {
+        this.trademarkConsentDownLoadPath = trademarkConsentDownLoadPath;
+    }
+
+    public boolean isNPSLivingPersonSet() {
+        return NPSLivingPersonSet;
+    }
+
+    public void setNPSLivingPersonSet(boolean NPSLivingPersonSet) {
+        this.NPSLivingPersonSet = NPSLivingPersonSet;
+    }
+
+    public ArrayList<String> getDisclaimerDeclarationList() {
+        return disclaimerDeclarationList;
+    }
+
+    public void setDisclaimerDeclarationList(ArrayList<String> disclaimerDeclarationList) {
+        this.disclaimerDeclarationList = disclaimerDeclarationList;
+    }
+
+    public void addDisclaimerDeclaration( String disclaimerDeclaration){
+        disclaimerDeclarationList.add(disclaimerDeclaration);
     }
 
     @Override

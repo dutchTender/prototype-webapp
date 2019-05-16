@@ -13,9 +13,12 @@ import com.thorton.grant.uspto.prototypewebapp.model.entities.DTO.application.Se
 import com.thorton.grant.uspto.prototypewebapp.model.entities.DTO.application.form.NewAttorneyContactFormDTO;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.DTO.application.form.NewOwnerContactFormDTO;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.DTO.application.form.partnerDTO;
+import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.tradeMark.application.actions.OfficeActions;
+import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.tradeMark.application.actions.Petition;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.tradeMark.application.participants.Lawyer;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.tradeMark.application.participants.Owner;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.tradeMark.application.types.BaseTrademarkApplication;
+import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.tradeMark.assets.GSClassCategory;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.tradeMark.assets.GoodAndService;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.tradeMark.assets.TradeMark;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.user.ManagedContact;
@@ -27,6 +30,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -173,6 +177,25 @@ public class ApplicationFlowController {
             ContactsDisplayDTO selectedAttorneyDisplayDTO2 = new ContactsDisplayDTO();
             selectedAttorneyDisplayDTO2.setContactEmails(selectedContactEmails2 );
             model.addAttribute("selectedAttorneys",selectedAttorneyDisplayDTO2);
+
+
+            boolean colorClaim= false;
+            boolean acceptBW = false;
+            boolean colorClaimSet = false;
+            boolean standardCharacterMark = false;
+            String markType = "";
+            String markText ="";
+
+            model.addAttribute("markImagePath","");
+            model.addAttribute("markImagePathBW","");
+            model.addAttribute("markColorClaim", colorClaim);
+            model.addAttribute("markColorClaimBW", acceptBW);
+            model.addAttribute("colorClaimSet", colorClaimSet);
+            model.addAttribute("standardCharacterMark ", standardCharacterMark );
+            model.addAttribute("markType", markType);
+            model.addAttribute("markText",markText);
+
+
             model.addAttribute("breadCrumbStatus", trademarkApplication.getSectionStatus());
 
 
@@ -202,6 +225,38 @@ public class ApplicationFlowController {
             ContactsDisplayDTO selectedAttorneyDisplayDTO2 = new ContactsDisplayDTO();
             selectedAttorneyDisplayDTO2.setContactEmails(selectedContactEmails2 );
             model.addAttribute("selectedAttorneys",selectedAttorneyDisplayDTO2);
+
+
+            boolean colorClaim= false;
+            boolean acceptBW = false;
+            boolean colorClaimSet = false;
+            boolean standardCharacterMark = false;
+            String markType = "";
+            String markText ="";
+
+            if( baseTrademarkApplication.getTradeMark() != null) {
+                model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
+                model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+                colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+                acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+                colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+                standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
+                markType = baseTrademarkApplication.getTradeMark().getTrademarkDesignType();
+                markText = baseTrademarkApplication.getTradeMark().getTrademarkStandardCharacterText();
+            }
+            else{
+                model.addAttribute("markImagePath","");
+                model.addAttribute("markImagePathBW","");
+
+            }
+
+            model.addAttribute("markColorClaim", colorClaim);
+            model.addAttribute("markColorClaimBW", acceptBW);
+            model.addAttribute("colorClaimSet", colorClaimSet);
+            model.addAttribute("standardCharacterMark ", standardCharacterMark );
+            model.addAttribute("markType", markType);
+            model.addAttribute("markText",markText);
 
             model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
 
@@ -300,7 +355,7 @@ public class ApplicationFlowController {
         ContactsDisplayDTO selectedAttorneyDisplayDTO = new ContactsDisplayDTO();
         selectedAttorneyDisplayDTO.setContactNames(selectedContactNames);
         model.addAttribute("selectedAttorneys",selectedAttorneyDisplayDTO);
-        baseTrademarkApplication.setLastViewModel("application/attorney/AttorneySet");
+        baseTrademarkApplication.setLastViewModel("application/attorney/AttorneySet2");
 
         if(trademarkInternalID.equals("new")) {
 
@@ -352,20 +407,206 @@ public class ApplicationFlowController {
             // baseTrademarkApplication.setLastViewModel("application/AttorneyStart");
 
             model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
-            model.addAttribute("lawyerPool", baseTrademarkApplication.getAvailableLawyers());
+            model.addAttribute("lawyerPool", baseTrademarkApplication.getAvailableLawyersExcludePrimary());
 
 
         }
 
 
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
+        String markType = "";
+        String markText ="";
+
+        if( baseTrademarkApplication.getTradeMark() != null) {
+            model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
+            model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
+            markType = baseTrademarkApplication.getTradeMark().getTrademarkDesignType();
+            markText = baseTrademarkApplication.getTradeMark().getTrademarkStandardCharacterText();
+        }
+        else{
+            model.addAttribute("markImagePath","");
+            model.addAttribute("markImagePathBW","");
+
+        }
+
+        model.addAttribute("markColorClaim", colorClaim);
+        model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+        model.addAttribute("markType", markType);
+        model.addAttribute("markText",markText);
 
         model.addAttribute("hostBean", hostBean);
         model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
-        return "application/attorney/AttorneySet";
+        return "application/attorney/AttorneySet2";
 
     }
 
 
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    // controller for AttorneySet page
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    // hopefully just a redirect here, we won't need to add the applicaiton and credentials to the model
+    @RequestMapping({"/application/attorney/edit/{email}"})
+    public String attorneyEdit(WebRequest request, Model model, @PathVariable String email, @RequestParam("trademarkID") String trademarkInternalID) {
+
+        // create a new application and tie it to user then save it to repository
+        // create attorneyDTO + to model
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PTOUserService ptoUserService = serviceBeanFactory.getPTOUserService();
+        PTOUser ptoUser = ptoUserService.findByEmail(authentication.getName());
+        UserCredentialsService userCredentialsService = serviceBeanFactory.getUserCredentialsService();
+        UserCredentials credentials = userCredentialsService.findByEmail(authentication.getName());
+
+        model.addAttribute("user", ptoUser);
+        model.addAttribute("account",credentials);
+        BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
+
+
+        /////////////////////////////////////////////
+        // load my contacts list for thyemleaf
+        /////////////////////////////////////////////
+        ArrayList<String> contactNames = new ArrayList<>();
+        ArrayList<String> contactEmails = new ArrayList<>();
+        ArrayList<String> contactFirms = new ArrayList<>();
+        Lawyer lawyer = null;
+
+        for(Iterator<Lawyer> iter = ptoUser.getMyLawyers().iterator(); iter.hasNext(); ) {
+            lawyer = iter.next();
+            contactNames.add(lawyer.getFirstName()+" "+lawyer.getLastName());
+            contactEmails.add(lawyer.getEmail());
+            contactFirms.add(lawyer.getLawFirmName());
+
+        }
+        Collections.reverse(contactNames);
+        Collections.reverse(contactEmails);
+        Collections.reverse(contactFirms);
+        ContactsDisplayDTO contactsDisplayDTO = new ContactsDisplayDTO();
+        contactsDisplayDTO.setContactNames(contactNames);
+        contactsDisplayDTO.setContactEmails(contactEmails);
+        contactsDisplayDTO.setContactFirms(contactFirms);
+        model.addAttribute("myContacts", contactsDisplayDTO);
+        SelectedContactsDisplayDTO selectedContactsDisplayDTO = new SelectedContactsDisplayDTO();
+
+///////////////////////////////////////////
+        // load my contacts list for thyemleaf
+        ////////////////////////////////////////////
+        ArrayList<String> contactNamesMC = new ArrayList<>();
+        ArrayList<String> contactEmailsMC = new ArrayList<>();
+        ArrayList<String> contactSubTypesMC = new ArrayList<>();
+        ManagedContact managedContact = null;
+
+        for(Iterator<ManagedContact> iter = ptoUser.getMyManagedContacts().iterator(); iter.hasNext(); ) {
+            managedContact = iter.next();
+            if(managedContact.getContactType() == "attorney") {
+                contactNamesMC.add(managedContact.getDisplayName());
+                contactEmailsMC.add(managedContact.getEmail());
+                contactSubTypesMC.add(managedContact.getContactType());
+            }
+
+        }
+        Collections.reverse(contactNamesMC);
+        Collections.reverse(contactEmailsMC);
+        Collections.reverse(contactSubTypesMC);
+        ContactsDisplayDTO mcDisplayDTO = new ContactsDisplayDTO();
+        mcDisplayDTO.setContactNames(contactNamesMC);
+        mcDisplayDTO.setContactEmails(contactEmailsMC);
+        mcDisplayDTO.setContactEntitySubType(contactSubTypesMC);
+        model.addAttribute("myManagedContacts", mcDisplayDTO);
+
+        // set empty selected contacts for thymeleaf
+        BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID(trademarkInternalID);
+
+        ArrayList<String> selectedContactNames = new ArrayList<>();
+        for(Iterator<Lawyer> iter = baseTrademarkApplication.getAvailableLawyers().iterator(); iter.hasNext(); ) {
+            Lawyer current = iter.next();
+            selectedContactNames.add(current.getFirstName()+" "+current.getLastName());
+        }
+        ContactsDisplayDTO selectedAttorneyDisplayDTO = new ContactsDisplayDTO();
+        selectedAttorneyDisplayDTO.setContactNames(selectedContactNames);
+        model.addAttribute("selectedAttorneys",selectedAttorneyDisplayDTO);
+
+
+
+            ////////////////////////////////////////////////////////////////////////////
+            // existing trade  mark application
+            ////////////////////////////////////////////////////////////////////////////
+            // loaded baseTradeMarkapplication by internal id and add to model
+            ////////////////////////////////////////////////////////////////////////////
+            // BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID(trademarkInternalID);
+            // we are already setting this value in the begging for selected contacts rendering
+            /////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////
+            // add relationship (i.e grey out the correspondant contacts table)
+            // we can do this when rendering the contacts table rows ...
+            // do a check and insert different HTML for the row
+            //////////////////////////////////////////////////////////////////////////
+
+            ////////////////////////////////////////////////////////////////////////////////////////////
+            // add selected contacts display info to model
+            ////////////////////////////////////////////////////////////////////////////////////////////
+
+            Lawyer attorney = baseTrademarkApplication.findContactByEmail(email);
+
+
+            model.addAttribute("attorney", attorney);
+            model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+            model.addAttribute("lawyerPool", baseTrademarkApplication.getAvailableLawyers());
+
+
+
+
+
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
+        String markType = "";
+        String markText ="";
+
+        if( baseTrademarkApplication.getTradeMark() != null) {
+            model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
+            model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
+            markType = baseTrademarkApplication.getTradeMark().getTrademarkDesignType();
+            markText = baseTrademarkApplication.getTradeMark().getTrademarkStandardCharacterText();
+        }
+        else{
+            model.addAttribute("markImagePath","");
+            model.addAttribute("markImagePathBW","");
+
+        }
+
+        model.addAttribute("markColorClaim", colorClaim);
+        model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+        model.addAttribute("markType", markType);
+        model.addAttribute("markText",markText);
+
+
+
+        model.addAttribute("hostBean", hostBean);
+        model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
+
+
+
+        return "application/attorney/AttorneyEdit";
+
+    }
 
 
 
@@ -436,10 +677,165 @@ public class ApplicationFlowController {
         selectedAttorneyDisplayDTO.setContactEmails(selectedContactNames);
         model.addAttribute("selectedOwners",selectedAttorneyDisplayDTO);
 
+
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
+        String markType = "";
+        String markText ="";
+
+        if( baseTrademarkApplication.getTradeMark() != null) {
+            model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
+            model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
+            markType = baseTrademarkApplication.getTradeMark().getTrademarkDesignType();
+            markText = baseTrademarkApplication.getTradeMark().getTrademarkStandardCharacterText();
+        }
+        else{
+            model.addAttribute("markImagePath","");
+            model.addAttribute("markImagePathBW","");
+
+        }
+
+        model.addAttribute("markColorClaim", colorClaim);
+        model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+        model.addAttribute("markType", markType);
+        model.addAttribute("markText",markText);
+
+
         model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
         return "application/owner/OwnerStart";
     }
 
+
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    // controller for AttorneySet page
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    @Transactional
+    @RequestMapping({"/application/OwnerSetView","application/OwnerSetView"})
+    public String applicationOwnerView
+    (WebRequest request, Model model, @RequestParam("trademarkID") String trademarkInternalID) {
+
+        // create a new application and tie it to user then save it to repository
+        // create attorneyDTO + to model
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PTOUserService ptoUserService = serviceBeanFactory.getPTOUserService();
+        PTOUser ptoUser = ptoUserService.findByEmail(authentication.getName());
+        UserCredentialsService userCredentialsService = serviceBeanFactory.getUserCredentialsService();
+        UserCredentials credentials = userCredentialsService.findByEmail(authentication.getName());
+
+        model.addAttribute("user", ptoUser);
+        model.addAttribute("account",credentials);
+        BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
+        BaseTrademarkApplication  baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID(trademarkInternalID);
+
+        baseTrademarkApplication.setLastViewModel("application/owner/OwnerSetView2");
+
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        // add contacts display info to model
+        ////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        // create new check
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        // check if user has LoadContinueUrl set ...
+        // in the web url that triggers, you get that from an iteration of
+        // myTradeMarks on the dashboard
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////
+        // load my contacts list for thyemleaf
+        ////////////////////////////////////////////
+        ArrayList<String> contactNamesMC = new ArrayList<>();
+        ArrayList<String> contactEmailsMC = new ArrayList<>();
+        ArrayList<String> contactSubTypesMC = new ArrayList<>();
+        ManagedContact managedContact = null;
+
+        for(Iterator<ManagedContact> iter = ptoUser.getMyManagedContacts().iterator(); iter.hasNext(); ) {
+            managedContact = iter.next();
+            if(managedContact.getContactType() == "owner"){
+                contactNamesMC.add(managedContact.getDisplayName());
+                contactEmailsMC.add(managedContact.getEmail());
+                contactSubTypesMC.add(managedContact.getContactType());
+            }
+
+
+        }
+        Collections.reverse(contactNamesMC);
+        Collections.reverse(contactEmailsMC);
+        Collections.reverse(contactSubTypesMC);
+        ContactsDisplayDTO mcDisplayDTO = new ContactsDisplayDTO();
+        mcDisplayDTO.setContactNames(contactNamesMC);
+        mcDisplayDTO.setContactEmails(contactEmailsMC);
+        mcDisplayDTO.setContactEntitySubType(contactSubTypesMC);
+        model.addAttribute("myManagedContacts", mcDisplayDTO);
+
+
+
+
+        ArrayList<String> selectedContactNames = new ArrayList<>();
+        for(Iterator<Owner> iter = baseTrademarkApplication.getOwners().iterator(); iter.hasNext(); ) {
+            Owner current = iter.next();
+            selectedContactNames.add(current.getFirstName()+" "+current.getLastName());
+        }
+        ContactsDisplayDTO selectedAttorneyDisplayDTO = new ContactsDisplayDTO();
+        selectedAttorneyDisplayDTO.setContactNames(selectedContactNames);
+        model.addAttribute("selectedOwners",selectedAttorneyDisplayDTO);
+
+
+
+
+        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+
+
+        model.addAttribute("hostBean", hostBean);
+        model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
+
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
+        String markType = "";
+        String markText ="";
+
+        if( baseTrademarkApplication.getTradeMark() != null) {
+            model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
+            model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
+            markType = baseTrademarkApplication.getTradeMark().getTrademarkDesignType();
+            markText = baseTrademarkApplication.getTradeMark().getTrademarkStandardCharacterText();
+        }
+        else{
+            model.addAttribute("markImagePath","");
+            model.addAttribute("markImagePathBW","");
+
+        }
+
+        model.addAttribute("markColorClaim", colorClaim);
+        model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+        model.addAttribute("markType", markType);
+        model.addAttribute("markText",markText);
+
+
+        return "application/owner/OwnerSetView2";
+
+    }
 
 
 
@@ -482,6 +878,599 @@ public class ApplicationFlowController {
         return "application/owner/individual/ownerInfo2";
     }
 
+
+    // hopefully just a redirect here, we won't need to add the applicaiton and credentials to the model
+    @RequestMapping({"/application/owner/Ind/edit/{email}"})
+    public String ownerIndvUSInfoEdit(WebRequest request, Model model, @PathVariable String email, @RequestParam("trademarkID") String trademarkInternalID) {
+
+        // create a new application and tie it to user then save it to repository
+        // create attorneyDTO + to model
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PTOUserService ptoUserService = serviceBeanFactory.getPTOUserService();
+        PTOUser ptoUser = ptoUserService.findByEmail(authentication.getName());
+        UserCredentialsService userCredentialsService = serviceBeanFactory.getUserCredentialsService();
+        UserCredentials credentials = userCredentialsService.findByEmail(authentication.getName());
+
+        model.addAttribute("user", ptoUser);
+        model.addAttribute("account",credentials);
+        BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
+        BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID(trademarkInternalID);
+
+
+        Owner owner = baseTrademarkApplication.findOwnerByEmail(email);
+
+        model.addAttribute("owner", owner);
+
+        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+
+        model.addAttribute("hostBean", hostBean);
+
+        model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
+
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
+        String markType = "";
+        String markText ="";
+
+        if( baseTrademarkApplication.getTradeMark() != null) {
+            model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
+            model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
+            markType = baseTrademarkApplication.getTradeMark().getTrademarkDesignType();
+            markText = baseTrademarkApplication.getTradeMark().getTrademarkStandardCharacterText();
+        }
+        else{
+            model.addAttribute("markImagePath","");
+            model.addAttribute("markImagePathBW","");
+
+        }
+
+        model.addAttribute("markColorClaim", colorClaim);
+        model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+        model.addAttribute("markType", markType);
+        model.addAttribute("markText",markText);
+
+
+
+
+
+        return "application/owner/individual/ownerInfoEdit";
+    }
+
+    // hopefully just a redirect here, we won't need to add the applicaiton and credentials to the model
+    @RequestMapping({"/application/owner/corp/edit/{email}"})
+    public String ownerCorpUSInfoEdit(WebRequest request, Model model, @PathVariable String email, @RequestParam("trademarkID") String trademarkInternalID) {
+
+        // create a new application and tie it to user then save it to repository
+        // create attorneyDTO + to model
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PTOUserService ptoUserService = serviceBeanFactory.getPTOUserService();
+        PTOUser ptoUser = ptoUserService.findByEmail(authentication.getName());
+        UserCredentialsService userCredentialsService = serviceBeanFactory.getUserCredentialsService();
+        UserCredentials credentials = userCredentialsService.findByEmail(authentication.getName());
+
+        model.addAttribute("user", ptoUser);
+        model.addAttribute("account",credentials);
+        BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
+        BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID(trademarkInternalID);
+
+
+        Owner owner = baseTrademarkApplication.findOwnerByEmail(email);
+
+        model.addAttribute("owner", owner);
+
+        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+
+        model.addAttribute("hostBean", hostBean);
+
+        model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
+
+
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
+        String markType = "";
+        String markText ="";
+
+        if( baseTrademarkApplication.getTradeMark() != null) {
+            model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
+            model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
+            markType = baseTrademarkApplication.getTradeMark().getTrademarkDesignType();
+            markText = baseTrademarkApplication.getTradeMark().getTrademarkStandardCharacterText();
+        }
+        else{
+            model.addAttribute("markImagePath","");
+            model.addAttribute("markImagePathBW","");
+
+        }
+
+        model.addAttribute("markColorClaim", colorClaim);
+        model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+        model.addAttribute("markType", markType);
+        model.addAttribute("markText",markText);
+
+
+        return "application/owner/corp/ownerInfoEdit";
+    }
+
+    // hopefully just a redirect here, we won't need to add the applicaiton and credentials to the model
+    @RequestMapping({"/application/owner/estate/edit/{email}"})
+    public String ownerEstateUSInfoEdit(WebRequest request, Model model, @PathVariable String email, @RequestParam("trademarkID") String trademarkInternalID) {
+
+        // create a new application and tie it to user then save it to repository
+        // create attorneyDTO + to model
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PTOUserService ptoUserService = serviceBeanFactory.getPTOUserService();
+        PTOUser ptoUser = ptoUserService.findByEmail(authentication.getName());
+        UserCredentialsService userCredentialsService = serviceBeanFactory.getUserCredentialsService();
+        UserCredentials credentials = userCredentialsService.findByEmail(authentication.getName());
+
+        model.addAttribute("user", ptoUser);
+        model.addAttribute("account",credentials);
+        BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
+        BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID(trademarkInternalID);
+
+
+        Owner owner = baseTrademarkApplication.findOwnerByEmail(email);
+
+        model.addAttribute("owner", owner);
+
+        model.addAttribute("governingEntity", owner.getGoverningEntities());
+
+        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+
+        model.addAttribute("hostBean", hostBean);
+
+        model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
+
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
+        String markType = "";
+        String markText ="";
+
+        if( baseTrademarkApplication.getTradeMark() != null) {
+            model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
+            model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
+            markType = baseTrademarkApplication.getTradeMark().getTrademarkDesignType();
+            markText = baseTrademarkApplication.getTradeMark().getTrademarkStandardCharacterText();
+        }
+        else{
+            model.addAttribute("markImagePath","");
+            model.addAttribute("markImagePathBW","");
+
+        }
+
+        model.addAttribute("markColorClaim", colorClaim);
+        model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+        model.addAttribute("markType", markType);
+        model.addAttribute("markText",markText);
+
+
+
+        return "application/owner/estate/ownerInfoEdit";
+    }
+
+
+    // hopefully just a redirect here, we won't need to add the applicaiton and credentials to the model
+    @RequestMapping({"/application/owner/solp/edit/{email}"})
+    public String ownerSolpUSInfoEdit(WebRequest request, Model model, @PathVariable String email, @RequestParam("trademarkID") String trademarkInternalID) {
+
+        // create a new application and tie it to user then save it to repository
+        // create attorneyDTO + to model
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PTOUserService ptoUserService = serviceBeanFactory.getPTOUserService();
+        PTOUser ptoUser = ptoUserService.findByEmail(authentication.getName());
+        UserCredentialsService userCredentialsService = serviceBeanFactory.getUserCredentialsService();
+        UserCredentials credentials = userCredentialsService.findByEmail(authentication.getName());
+
+        model.addAttribute("user", ptoUser);
+        model.addAttribute("account",credentials);
+        BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
+        BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID(trademarkInternalID);
+
+
+        Owner owner = baseTrademarkApplication.findOwnerByEmail(email);
+
+        model.addAttribute("owner", owner);
+
+        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+
+        model.addAttribute("hostBean", hostBean);
+
+        model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
+
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
+        String markType = "";
+        String markText ="";
+
+        if( baseTrademarkApplication.getTradeMark() != null) {
+            model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
+            model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
+            markType = baseTrademarkApplication.getTradeMark().getTrademarkDesignType();
+            markText = baseTrademarkApplication.getTradeMark().getTrademarkStandardCharacterText();
+        }
+        else{
+            model.addAttribute("markImagePath","");
+            model.addAttribute("markImagePathBW","");
+
+        }
+
+        model.addAttribute("markColorClaim", colorClaim);
+        model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+        model.addAttribute("markType", markType);
+        model.addAttribute("markText",markText);
+
+
+
+        return "application/owner/solP/ownerInfoEdit";
+    }
+
+
+    // hopefully just a redirect here, we won't need to add the applicaiton and credentials to the model
+    @RequestMapping({"/application/owner/llc/edit/{email}"})
+    public String owneLLCUSInfoEdit(WebRequest request, Model model, @PathVariable String email, @RequestParam("trademarkID") String trademarkInternalID) {
+
+        // create a new application and tie it to user then save it to repository
+        // create attorneyDTO + to model
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PTOUserService ptoUserService = serviceBeanFactory.getPTOUserService();
+        PTOUser ptoUser = ptoUserService.findByEmail(authentication.getName());
+        UserCredentialsService userCredentialsService = serviceBeanFactory.getUserCredentialsService();
+        UserCredentials credentials = userCredentialsService.findByEmail(authentication.getName());
+
+        model.addAttribute("user", ptoUser);
+        model.addAttribute("account",credentials);
+        BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
+        BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID(trademarkInternalID);
+
+
+        Owner owner = baseTrademarkApplication.findOwnerByEmail(email);
+
+        model.addAttribute("owner", owner);
+
+        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+
+        model.addAttribute("hostBean", hostBean);
+
+        model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
+
+
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
+        String markType = "";
+        String markText ="";
+
+        if( baseTrademarkApplication.getTradeMark() != null) {
+            model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
+            model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
+            markType = baseTrademarkApplication.getTradeMark().getTrademarkDesignType();
+            markText = baseTrademarkApplication.getTradeMark().getTrademarkStandardCharacterText();
+        }
+        else{
+            model.addAttribute("markImagePath","");
+            model.addAttribute("markImagePathBW","");
+
+        }
+
+        model.addAttribute("markColorClaim", colorClaim);
+        model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+        model.addAttribute("markType", markType);
+        model.addAttribute("markText",markText);
+
+
+
+        return "application/owner/llc/ownerInfoEdit";
+    }
+
+    // hopefully just a redirect here, we won't need to add the applicaiton and credentials to the model
+    @RequestMapping({"/application/owner/jv/edit/{email}"})
+    public String ownerJointVentureUSInfoEdit(WebRequest request, Model model, @PathVariable String email, @RequestParam("trademarkID") String trademarkInternalID) {
+
+        // create a new application and tie it to user then save it to repository
+        // create attorneyDTO + to model
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PTOUserService ptoUserService = serviceBeanFactory.getPTOUserService();
+        PTOUser ptoUser = ptoUserService.findByEmail(authentication.getName());
+        UserCredentialsService userCredentialsService = serviceBeanFactory.getUserCredentialsService();
+        UserCredentials credentials = userCredentialsService.findByEmail(authentication.getName());
+
+        model.addAttribute("user", ptoUser);
+        model.addAttribute("account",credentials);
+        BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
+        BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID(trademarkInternalID);
+
+
+        Owner owner = baseTrademarkApplication.findOwnerByEmail(email);
+
+        model.addAttribute("owner", owner);
+
+        model.addAttribute("governingEntity", owner.getGoverningEntities());
+
+        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+
+        model.addAttribute("hostBean", hostBean);
+
+        model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
+
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
+        String markType = "";
+        String markText ="";
+
+        if( baseTrademarkApplication.getTradeMark() != null) {
+            model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
+            model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
+            markType = baseTrademarkApplication.getTradeMark().getTrademarkDesignType();
+            markText = baseTrademarkApplication.getTradeMark().getTrademarkStandardCharacterText();
+        }
+        else{
+            model.addAttribute("markImagePath","");
+            model.addAttribute("markImagePathBW","");
+
+        }
+
+        model.addAttribute("markColorClaim", colorClaim);
+        model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+        model.addAttribute("markType", markType);
+        model.addAttribute("markText",markText);
+
+
+
+        return "application/owner/jointVC/ownerInfoEdit";
+    }
+
+
+
+
+    // hopefully just a redirect here, we won't need to add the applicaiton and credentials to the model
+    @RequestMapping({"/application/owner/llp/edit/{email}"})
+    public String ownerLLPUSInfoEdit(WebRequest request, Model model, @PathVariable String email, @RequestParam("trademarkID") String trademarkInternalID) {
+
+        // create a new application and tie it to user then save it to repository
+        // create attorneyDTO + to model
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PTOUserService ptoUserService = serviceBeanFactory.getPTOUserService();
+        PTOUser ptoUser = ptoUserService.findByEmail(authentication.getName());
+        UserCredentialsService userCredentialsService = serviceBeanFactory.getUserCredentialsService();
+        UserCredentials credentials = userCredentialsService.findByEmail(authentication.getName());
+
+        model.addAttribute("user", ptoUser);
+        model.addAttribute("account",credentials);
+        BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
+        BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID(trademarkInternalID);
+
+
+        Owner owner = baseTrademarkApplication.findOwnerByEmail(email);
+
+        model.addAttribute("owner", owner);
+
+        model.addAttribute("governingEntity", owner.getGoverningEntities());
+
+        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+
+        model.addAttribute("hostBean", hostBean);
+
+        model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
+
+
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
+        String markType = "";
+        String markText ="";
+
+        if( baseTrademarkApplication.getTradeMark() != null) {
+            model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
+            model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
+            markType = baseTrademarkApplication.getTradeMark().getTrademarkDesignType();
+            markText = baseTrademarkApplication.getTradeMark().getTrademarkStandardCharacterText();
+        }
+        else{
+            model.addAttribute("markImagePath","");
+            model.addAttribute("markImagePathBW","");
+
+        }
+
+        model.addAttribute("markColorClaim", colorClaim);
+        model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+        model.addAttribute("markType", markType);
+        model.addAttribute("markText",markText);
+
+        return "application/owner/llp/ownerInfoEdit";
+    }
+
+    // hopefully just a redirect here, we won't need to add the applicaiton and credentials to the model
+    @RequestMapping({"/application/owner/partner/edit/{email}"})
+    public String ownerPartnerUSInfoEdit(WebRequest request, Model model, @PathVariable String email, @RequestParam("trademarkID") String trademarkInternalID) {
+
+        // create a new application and tie it to user then save it to repository
+        // create attorneyDTO + to model
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PTOUserService ptoUserService = serviceBeanFactory.getPTOUserService();
+        PTOUser ptoUser = ptoUserService.findByEmail(authentication.getName());
+        UserCredentialsService userCredentialsService = serviceBeanFactory.getUserCredentialsService();
+        UserCredentials credentials = userCredentialsService.findByEmail(authentication.getName());
+
+        model.addAttribute("user", ptoUser);
+        model.addAttribute("account",credentials);
+        BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
+        BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID(trademarkInternalID);
+
+
+        Owner owner = baseTrademarkApplication.findOwnerByEmail(email);
+
+        model.addAttribute("owner", owner);
+
+        model.addAttribute("governingEntity", owner.getGoverningEntities());
+
+        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+
+        model.addAttribute("hostBean", hostBean);
+
+        model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
+
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
+        String markType = "";
+        String markText ="";
+
+        if( baseTrademarkApplication.getTradeMark() != null) {
+            model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
+            model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
+            markType = baseTrademarkApplication.getTradeMark().getTrademarkDesignType();
+            markText = baseTrademarkApplication.getTradeMark().getTrademarkStandardCharacterText();
+        }
+        else{
+            model.addAttribute("markImagePath","");
+            model.addAttribute("markImagePathBW","");
+
+        }
+
+        model.addAttribute("markColorClaim", colorClaim);
+        model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+        model.addAttribute("markType", markType);
+        model.addAttribute("markText",markText);
+
+
+        return "application/owner/partnership/ownerInfoEdit";
+    }
+
+
+    // hopefully just a redirect here, we won't need to add the applicaiton and credentials to the model
+    @RequestMapping({"/application/owner/trust/edit/{email}"})
+    public String ownerTrustUSInfoEdit(WebRequest request, Model model, @PathVariable String email, @RequestParam("trademarkID") String trademarkInternalID) {
+
+        // create a new application and tie it to user then save it to repository
+        // create attorneyDTO + to model
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PTOUserService ptoUserService = serviceBeanFactory.getPTOUserService();
+        PTOUser ptoUser = ptoUserService.findByEmail(authentication.getName());
+        UserCredentialsService userCredentialsService = serviceBeanFactory.getUserCredentialsService();
+        UserCredentials credentials = userCredentialsService.findByEmail(authentication.getName());
+
+        model.addAttribute("user", ptoUser);
+        model.addAttribute("account",credentials);
+        BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
+        BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID(trademarkInternalID);
+
+
+        Owner owner = baseTrademarkApplication.findOwnerByEmail(email);
+
+        model.addAttribute("owner", owner);
+
+        model.addAttribute("governingEntity", owner.getGoverningEntities());
+
+        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+
+        model.addAttribute("hostBean", hostBean);
+
+        model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
+
+
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
+        String markType = "";
+        String markText ="";
+
+        if( baseTrademarkApplication.getTradeMark() != null) {
+            model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
+            model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
+            markType = baseTrademarkApplication.getTradeMark().getTrademarkDesignType();
+            markText = baseTrademarkApplication.getTradeMark().getTrademarkStandardCharacterText();
+        }
+        else{
+            model.addAttribute("markImagePath","");
+            model.addAttribute("markImagePathBW","");
+
+        }
+
+        model.addAttribute("markColorClaim", colorClaim);
+        model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+        model.addAttribute("markType", markType);
+        model.addAttribute("markText",markText);
+
+
+        return "application/owner/trust/ownerInfoEdit";
+    }
 
     @RequestMapping({"/application/owner/us/solp"})
     public String ownerSolPUSInfo(WebRequest request, Model model, @RequestParam("trademarkID") String trademarkInternalID) {
@@ -819,95 +1808,6 @@ public class ApplicationFlowController {
 
 
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////
-    // controller for AttorneySet page
-    /////////////////////////////////////////////////////////////////////////////////////////////////
-    @Transactional
-    @RequestMapping({"/application/OwnerSetView","application/OwnerSetView"})
-    public String applicationOwnerView
-    (WebRequest request, Model model, @RequestParam("trademarkID") String trademarkInternalID) {
-
-        // create a new application and tie it to user then save it to repository
-        // create attorneyDTO + to model
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        PTOUserService ptoUserService = serviceBeanFactory.getPTOUserService();
-        PTOUser ptoUser = ptoUserService.findByEmail(authentication.getName());
-        UserCredentialsService userCredentialsService = serviceBeanFactory.getUserCredentialsService();
-        UserCredentials credentials = userCredentialsService.findByEmail(authentication.getName());
-
-        model.addAttribute("user", ptoUser);
-        model.addAttribute("account",credentials);
-        BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
-        BaseTrademarkApplication  baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID(trademarkInternalID);
-
-        baseTrademarkApplication.setLastViewModel("application/owner/OwnerSetView");
-
-        ////////////////////////////////////////////////////////////////////////////////////////////
-        // add contacts display info to model
-        ////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        // create new check
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        // check if user has LoadContinueUrl set ...
-        // in the web url that triggers, you get that from an iteration of
-        // myTradeMarks on the dashboard
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////
-        // load my contacts list for thyemleaf
-        ////////////////////////////////////////////
-        ArrayList<String> contactNamesMC = new ArrayList<>();
-        ArrayList<String> contactEmailsMC = new ArrayList<>();
-        ArrayList<String> contactSubTypesMC = new ArrayList<>();
-        ManagedContact managedContact = null;
-
-        for(Iterator<ManagedContact> iter = ptoUser.getMyManagedContacts().iterator(); iter.hasNext(); ) {
-            managedContact = iter.next();
-            if(managedContact.getContactType() == "owner"){
-                contactNamesMC.add(managedContact.getDisplayName());
-                contactEmailsMC.add(managedContact.getEmail());
-                contactSubTypesMC.add(managedContact.getContactType());
-            }
-
-
-        }
-        Collections.reverse(contactNamesMC);
-        Collections.reverse(contactEmailsMC);
-        Collections.reverse(contactSubTypesMC);
-        ContactsDisplayDTO mcDisplayDTO = new ContactsDisplayDTO();
-        mcDisplayDTO.setContactNames(contactNamesMC);
-        mcDisplayDTO.setContactEmails(contactEmailsMC);
-        mcDisplayDTO.setContactEntitySubType(contactSubTypesMC);
-        model.addAttribute("myManagedContacts", mcDisplayDTO);
-
-
-
-
-        ArrayList<String> selectedContactNames = new ArrayList<>();
-        for(Iterator<Owner> iter = baseTrademarkApplication.getOwners().iterator(); iter.hasNext(); ) {
-            Owner current = iter.next();
-            selectedContactNames.add(current.getFirstName()+" "+current.getLastName());
-        }
-        ContactsDisplayDTO selectedAttorneyDisplayDTO = new ContactsDisplayDTO();
-        selectedAttorneyDisplayDTO.setContactNames(selectedContactNames);
-        model.addAttribute("selectedOwners",selectedAttorneyDisplayDTO);
-
-
-
-
-        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
-
-
-        model.addAttribute("hostBean", hostBean);
-        model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
-        return "application/owner/OwnerSetView";
-
-    }
-
-
-
 
 
 
@@ -1066,29 +1966,38 @@ public class ApplicationFlowController {
 
         NewAttorneyContactFormDTO attorneyContactFormDTO = new NewAttorneyContactFormDTO();
         model.addAttribute("addNewAttorneyContactFormDTO", attorneyContactFormDTO);
+        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
 
 
 
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
 
         if( baseTrademarkApplication.getTradeMark() != null) {
             model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
             model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
 
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
         }
         else{
             model.addAttribute("markImagePath","");
 
             model.addAttribute("markImagePathBW","");
 
-
         }
-        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
-        boolean colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
-        boolean acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+
 
         model.addAttribute("markColorClaim", colorClaim);
         model.addAttribute("markColorClaimBW", acceptBW);
-
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+        ////////////////////////////////////////////////////////////////////////////////////
         ArrayList<String> selectedGSDescrption = new ArrayList<>();
         for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
             GoodAndService current = iter.next();
@@ -1143,11 +2052,40 @@ public class ApplicationFlowController {
             baseTradeMarkApplicationService.save(baseTrademarkApplication);
 
         }
+
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
+
+        if( baseTrademarkApplication.getTradeMark() != null) {
+            model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
+            model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
+        }
+        else{
+            model.addAttribute("markImagePath","");
+
+            model.addAttribute("markImagePathBW","");
+
+        }
+
+
+
+        model.addAttribute("markColorClaim", colorClaim);
+        model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+        model.addAttribute("markType", baseTrademarkApplication.getTradeMark().getTradeMarkPageTitle());
         model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
 
         model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
         return "application/mark/MarkDetailsStart";
-        //return "registrationConfirm/VerificationEmail";
+
     }
 
     @RequestMapping({"/mark/designWithText"})
@@ -1172,26 +2110,42 @@ public class ApplicationFlowController {
         baseTrademarkApplication.setLastViewModel("application/mark/MarkDetailsUpload");
 
 
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
+
         if( baseTrademarkApplication.getTradeMark() != null) {
             model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
             model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
         }
         else{
             model.addAttribute("markImagePath","");
 
             model.addAttribute("markImagePathBW","");
 
-
         }
 
-        boolean colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
-        boolean acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
 
         model.addAttribute("markColorClaim", colorClaim);
         model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
 
         model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
         model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
+
+        model.addAttribute("markType", baseTrademarkApplication.getTradeMark().getTradeMarkPageTitle());
+
+
+
+
 
         return "application/mark/MarkDetailsUpload";
 
@@ -1218,26 +2172,35 @@ public class ApplicationFlowController {
         BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
         BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID(trademarkInternalID);
         baseTrademarkApplication.setLastViewModel("application/mark/MarkDetailsDesignWText");
+        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
 
         if( baseTrademarkApplication.getTradeMark() != null) {
             model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
             model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
 
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
         }
         else{
             model.addAttribute("markImagePath","");
 
             model.addAttribute("markImagePathBW","");
 
-
         }
 
 
 
+        model.addAttribute("markColorClaim", colorClaim);
+        model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
 
-        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
-        boolean colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
-        boolean acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
         boolean translationFW = baseTrademarkApplication.getTradeMark().isForeignLanguageTranslationWording();
         boolean transliterationFW = baseTrademarkApplication.getTradeMark().isForeignLanguateTransliterationWording();
         boolean containsSignatureName = baseTrademarkApplication.getTradeMark().isContainNamePortaitSignature();
@@ -1246,9 +2209,21 @@ public class ApplicationFlowController {
         boolean isSignature = baseTrademarkApplication.getTradeMark().isSignature();
         boolean isPortrait =  baseTrademarkApplication.getTradeMark().isPortrait();
         boolean isNPSLivingPerson =  baseTrademarkApplication.getTradeMark().isNPSLivingPerson();
+        boolean isNPSLivingPersonSet = baseTrademarkApplication.getTradeMark().isNPSLivingPersonSet();
+
+        boolean isConsentUploaded = false;
+
+        if(baseTrademarkApplication.getTradeMark().getTrademarkConsentFilePath() != null && baseTrademarkApplication.getTradeMark().getTrademarkConsentFilePath() != ""){
+            isConsentUploaded = true;
+        }
 
         model.addAttribute("markColorClaim", colorClaim);
         model.addAttribute("markColorClaimBW", acceptBW);
+
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark", standardCharacterMark);
+
+
         model.addAttribute("translationFW", translationFW);
         model.addAttribute("translitFW", transliterationFW);
         model.addAttribute("containsSignatureName", containsSignatureName );
@@ -1257,6 +2232,9 @@ public class ApplicationFlowController {
         model.addAttribute("isSignature", isSignature );
         model.addAttribute("isPortrait", isPortrait );
         model.addAttribute("isNPSLivingPerson", isNPSLivingPerson );
+        model.addAttribute("isNPSLivingPersonSet", isNPSLivingPersonSet);
+
+        model.addAttribute("isConsentUploaded", isConsentUploaded);
 
         model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
         return "application/mark/MarkDetailsDesignWText";
@@ -1287,19 +2265,36 @@ public class ApplicationFlowController {
         BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID(trademarkInternalID);
 
         baseTrademarkApplication.setLastViewModel("application/mark/MarkDetailsStandard");
+        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
+
         if( baseTrademarkApplication.getTradeMark() != null) {
             model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
             model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
         }
         else{
             model.addAttribute("markImagePath","");
 
             model.addAttribute("markImagePathBW","");
+
         }
 
-        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
-        boolean colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
-        boolean acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+
+        model.addAttribute("markColorClaim", colorClaim);
+        model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+
+
         boolean translationFW = baseTrademarkApplication.getTradeMark().isForeignLanguageTranslationWording();
         boolean transliterationFW = baseTrademarkApplication.getTradeMark().isForeignLanguateTransliterationWording();
         boolean containsSignatureName = baseTrademarkApplication.getTradeMark().isContainNamePortaitSignature();
@@ -1308,9 +2303,15 @@ public class ApplicationFlowController {
         boolean isSignature = baseTrademarkApplication.getTradeMark().isSignature();
         boolean isPortrait =  baseTrademarkApplication.getTradeMark().isPortrait();
         boolean isNPSLivingPerson =  baseTrademarkApplication.getTradeMark().isNPSLivingPerson();
+        boolean isNPSLivingPersonSet = baseTrademarkApplication.getTradeMark().isNPSLivingPersonSet();
 
-        model.addAttribute("markColorClaim", colorClaim);
-        model.addAttribute("markColorClaimBW", acceptBW);
+        boolean isConsentUploaded = false;
+
+        if(baseTrademarkApplication.getTradeMark().getTrademarkConsentFilePath() != null && baseTrademarkApplication.getTradeMark().getTrademarkConsentFilePath() != ""){
+            isConsentUploaded = true;
+        }
+
+
         model.addAttribute("translationFW", translationFW);
         model.addAttribute("translitFW", transliterationFW);
         model.addAttribute("containsSignatureName", containsSignatureName );
@@ -1319,12 +2320,182 @@ public class ApplicationFlowController {
         model.addAttribute("isSignature", isSignature );
         model.addAttribute("isPortrait", isPortrait );
         model.addAttribute("isNPSLivingPerson", isNPSLivingPerson );
+        model.addAttribute("isNPSLivingPersonSet", isNPSLivingPersonSet);
+
+        model.addAttribute("isConsentUploaded", isConsentUploaded);
+
         model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
+
         return "application/mark/MarkDetailsStandard";
 
     }
 
+    @RequestMapping({"/mark/designOnlyDetails"})
+    public String designOnlyDetails (WebRequest request, Model model, @RequestParam("trademarkID") String trademarkInternalID) {
+        //public String markUpload (WebRequest request, Model model) {
+        // get owner info
 
+        // get email and get PTOUser object from repository
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PTOUserService ptoUserService = serviceBeanFactory.getPTOUserService();
+        PTOUser ptoUser = ptoUserService.findByEmail(authentication.getName());
+
+        UserCredentialsService userCredentialsService = serviceBeanFactory.getUserCredentialsService();
+        UserCredentials credentials = userCredentialsService.findByEmail(authentication.getName());
+
+        model.addAttribute("user", ptoUser);
+        model.addAttribute("account",credentials);
+        model.addAttribute("hostBean", hostBean);
+        String applcationLookupID = trademarkInternalID;
+        BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
+        BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID(trademarkInternalID);
+        baseTrademarkApplication.setLastViewModel("application/mark/MarkDetailsDesignWText");
+        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
+
+        if( baseTrademarkApplication.getTradeMark() != null) {
+            model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
+            model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
+        }
+        else{
+            model.addAttribute("markImagePath","");
+
+            model.addAttribute("markImagePathBW","");
+
+        }
+
+
+
+        model.addAttribute("markColorClaim", colorClaim);
+        model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+
+        boolean translationFW = baseTrademarkApplication.getTradeMark().isForeignLanguageTranslationWording();
+        boolean transliterationFW = baseTrademarkApplication.getTradeMark().isForeignLanguateTransliterationWording();
+        boolean containsSignatureName = baseTrademarkApplication.getTradeMark().isContainNamePortaitSignature();
+
+        boolean isName = baseTrademarkApplication.getTradeMark().isName();
+        boolean isSignature = baseTrademarkApplication.getTradeMark().isSignature();
+        boolean isPortrait =  baseTrademarkApplication.getTradeMark().isPortrait();
+        boolean isNPSLivingPerson =  baseTrademarkApplication.getTradeMark().isNPSLivingPerson();
+        boolean isNPSLivingPersonSet = baseTrademarkApplication.getTradeMark().isNPSLivingPersonSet();
+
+        boolean isConsentUploaded = false;
+
+        if(baseTrademarkApplication.getTradeMark().getTrademarkConsentFilePath() != null && baseTrademarkApplication.getTradeMark().getTrademarkConsentFilePath() != ""){
+            isConsentUploaded = true;
+        }
+
+        model.addAttribute("translationFW", translationFW);
+        model.addAttribute("translitFW", transliterationFW);
+        model.addAttribute("containsSignatureName", containsSignatureName );
+
+        model.addAttribute("isName", isName );
+        model.addAttribute("isSignature", isSignature );
+        model.addAttribute("isPortrait", isPortrait );
+        model.addAttribute("isNPSLivingPerson", isNPSLivingPerson );
+        model.addAttribute("isNPSLivingPersonSet", isNPSLivingPersonSet);
+
+        model.addAttribute("isConsentUploaded", isConsentUploaded);
+
+        model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
+        return "application/mark/MarkDetailsDesignOnly";
+
+    }
+
+    @RequestMapping({"/mark/designStylizedDetails"})
+    public String designStylizedDetails (WebRequest request, Model model, @RequestParam("trademarkID") String trademarkInternalID) {
+        //public String markUpload (WebRequest request, Model model) {
+        // get owner info
+
+        // get email and get PTOUser object from repository
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PTOUserService ptoUserService = serviceBeanFactory.getPTOUserService();
+        PTOUser ptoUser = ptoUserService.findByEmail(authentication.getName());
+
+        UserCredentialsService userCredentialsService = serviceBeanFactory.getUserCredentialsService();
+        UserCredentials credentials = userCredentialsService.findByEmail(authentication.getName());
+
+        model.addAttribute("user", ptoUser);
+        model.addAttribute("account",credentials);
+        model.addAttribute("hostBean", hostBean);
+        String applcationLookupID = trademarkInternalID;
+        BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
+        BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID(trademarkInternalID);
+        baseTrademarkApplication.setLastViewModel("application/mark/MarkDetailsDesignWText");
+        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
+
+        if( baseTrademarkApplication.getTradeMark() != null) {
+            model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
+            model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
+        }
+        else{
+            model.addAttribute("markImagePath","");
+
+            model.addAttribute("markImagePathBW","");
+
+        }
+
+
+
+        model.addAttribute("markColorClaim", colorClaim);
+        model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+
+
+
+        boolean translationFW = baseTrademarkApplication.getTradeMark().isForeignLanguageTranslationWording();
+        boolean transliterationFW = baseTrademarkApplication.getTradeMark().isForeignLanguateTransliterationWording();
+        boolean containsSignatureName = baseTrademarkApplication.getTradeMark().isContainNamePortaitSignature();
+
+        boolean isName = baseTrademarkApplication.getTradeMark().isName();
+        boolean isSignature = baseTrademarkApplication.getTradeMark().isSignature();
+        boolean isPortrait =  baseTrademarkApplication.getTradeMark().isPortrait();
+        boolean isNPSLivingPerson =  baseTrademarkApplication.getTradeMark().isNPSLivingPerson();
+        boolean isNPSLivingPersonSet = baseTrademarkApplication.getTradeMark().isNPSLivingPersonSet();
+
+        boolean isConsentUploaded = false;
+
+        if(baseTrademarkApplication.getTradeMark().getTrademarkConsentFilePath() != null && baseTrademarkApplication.getTradeMark().getTrademarkConsentFilePath() != ""){
+            isConsentUploaded = true;
+        }
+
+
+        model.addAttribute("translationFW", translationFW);
+        model.addAttribute("translitFW", transliterationFW);
+        model.addAttribute("containsSignatureName", containsSignatureName );
+
+        model.addAttribute("isName", isName );
+        model.addAttribute("isSignature", isSignature );
+        model.addAttribute("isPortrait", isPortrait );
+        model.addAttribute("isNPSLivingPerson", isNPSLivingPerson );
+        model.addAttribute("isNPSLivingPersonSet", isNPSLivingPersonSet);
+
+        model.addAttribute("isConsentUploaded", isConsentUploaded);
+
+        model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
+        return "application/mark/MarkDetailsStylized";
+
+    }
 
     @RequestMapping({"/application/MarkExamples"})
     public String markExamples( WebRequest request, Model model, @RequestParam("anchorID") String anchorID){
@@ -1378,24 +2549,38 @@ public class ApplicationFlowController {
         baseTrademarkApplication.setLastViewModel("application/mark/MarkDetailsDesignWTextDisclaimer");
 
 
+
+        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
+
         if( baseTrademarkApplication.getTradeMark() != null) {
             model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
             model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
 
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
         }
         else{
             model.addAttribute("markImagePath","");
 
             model.addAttribute("markImagePathBW","");
 
-
         }
-        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
-        boolean colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
-        boolean acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+
 
         model.addAttribute("markColorClaim", colorClaim);
         model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+
+        model.addAttribute("markType", baseTrademarkApplication.getTradeMark().getTradeMarkPageTitle());
+
 
         boolean activeDisclaimer = baseTrademarkApplication.getTradeMark().isActvieDisclaimer();
         boolean priorRegistration = baseTrademarkApplication.getTradeMark().isPriorRegistratoin();
@@ -1452,27 +2637,39 @@ public class ApplicationFlowController {
         }
         model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
 
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
+
         if( baseTrademarkApplication.getTradeMark() != null) {
             model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
             model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
 
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
         }
         else{
             model.addAttribute("markImagePath","");
 
             model.addAttribute("markImagePathBW","");
 
-
         }
-        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
-        boolean colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
-        boolean acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
-        boolean searchDB = baseTrademarkApplication.isSearchExistingGSdatabase();
 
 
 
         model.addAttribute("markColorClaim", colorClaim);
         model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+
+
+
+
+
+        boolean searchDB = baseTrademarkApplication.isSearchExistingGSdatabase();
         model.addAttribute("searchDB", searchDB);
 
         model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
@@ -1511,26 +2708,35 @@ public class ApplicationFlowController {
 
         }
         model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
 
         if( baseTrademarkApplication.getTradeMark() != null) {
             model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
             model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
 
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
         }
         else{
             model.addAttribute("markImagePath","");
 
             model.addAttribute("markImagePathBW","");
 
-
         }
-        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
-        boolean colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
-        boolean acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
 
 
         model.addAttribute("markColorClaim", colorClaim);
         model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+
+
 
         ArrayList<String> selectedGSDescrption = new ArrayList<>();
         for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
@@ -1587,24 +2793,34 @@ public class ApplicationFlowController {
         }
         model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
 
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
+
         if( baseTrademarkApplication.getTradeMark() != null) {
             model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
             model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
 
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
         }
         else{
             model.addAttribute("markImagePath","");
 
             model.addAttribute("markImagePathBW","");
 
-
         }
-        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
-        boolean colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
-        boolean acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+
 
         model.addAttribute("markColorClaim", colorClaim);
         model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+
 
         ArrayList<String> selectedGSIDs = new ArrayList<>();
         for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
@@ -1665,25 +2881,35 @@ public class ApplicationFlowController {
 
         }
         model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
 
         if( baseTrademarkApplication.getTradeMark() != null) {
             model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
             model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
 
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
         }
         else{
             model.addAttribute("markImagePath","");
 
             model.addAttribute("markImagePathBW","");
 
-
         }
-        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
-        boolean colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
-        boolean acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+
 
         model.addAttribute("markColorClaim", colorClaim);
         model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+
+
 
         ArrayList<String> selectedGSDescrption = new ArrayList<>();
         for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
@@ -1733,25 +2959,35 @@ public class ApplicationFlowController {
 
         }
         model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
 
         if( baseTrademarkApplication.getTradeMark() != null) {
             model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
             model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
 
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
         }
         else{
             model.addAttribute("markImagePath","");
 
             model.addAttribute("markImagePathBW","");
 
-
         }
-        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
-        boolean colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
-        boolean acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+
 
         model.addAttribute("markColorClaim", colorClaim);
         model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+
+
 
         ArrayList<String> selectedGSDescrption = new ArrayList<>();
         for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
@@ -1803,25 +3039,33 @@ public class ApplicationFlowController {
 
         }
         model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
 
         if( baseTrademarkApplication.getTradeMark() != null) {
             model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
             model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
 
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
         }
         else{
             model.addAttribute("markImagePath","");
 
             model.addAttribute("markImagePathBW","");
 
-
         }
-        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
-        boolean colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
-        boolean acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+
 
         model.addAttribute("markColorClaim", colorClaim);
         model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
 
         ArrayList<String> selectedGSDescrption = new ArrayList<>();
         for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
@@ -1839,6 +3083,88 @@ public class ApplicationFlowController {
         return "application/filing_basis/FilingBasisInuseUpload";
 
     }
+
+
+
+    @RequestMapping({"/application/gridViewFilingBasisUpload"})
+    public String filingBasisUploadGridView(WebRequest request, Model model, @RequestParam("trademarkID") String trademarkInternalID) {
+        // get owner info
+
+
+        System.out.println("999999999999999999999999999999999999999999999999999999");
+
+        // get email and get PTOUser object from repository
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PTOUserService ptoUserService = serviceBeanFactory.getPTOUserService();
+        PTOUser ptoUser = ptoUserService.findByEmail(authentication.getName());
+
+        UserCredentialsService userCredentialsService = serviceBeanFactory.getUserCredentialsService();
+        UserCredentials credentials = userCredentialsService.findByEmail(authentication.getName());
+
+        model.addAttribute("user", ptoUser);
+        model.addAttribute("account",credentials);
+        model.addAttribute("hostBean", hostBean);
+        String applcationLookupID = trademarkInternalID;
+        BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
+        BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID(trademarkInternalID);
+
+        baseTrademarkApplication.setLastViewModel("application/filing_basis/FilingBasisGridUpload");
+
+        if(baseTrademarkApplication.getTradeMark() == null){
+            TradeMark tradeMark = new TradeMark();
+            tradeMark.setTrademarkDesignType("");
+            baseTrademarkApplication.setTradeMark(tradeMark);
+            baseTradeMarkApplicationService.save(baseTrademarkApplication);
+
+        }
+        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
+
+        if( baseTrademarkApplication.getTradeMark() != null) {
+            model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
+            model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
+        }
+        else{
+            model.addAttribute("markImagePath","");
+
+            model.addAttribute("markImagePathBW","");
+
+        }
+
+
+
+        model.addAttribute("markColorClaim", colorClaim);
+        model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+
+
+
+        ArrayList<String> selectedGSDescrption = new ArrayList<>();
+        for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+            GoodAndService current = iter.next();
+            selectedGSDescrption.add(current.getClassDescription());
+        }
+        ContactsDisplayDTO selectedDescription = new ContactsDisplayDTO();
+        selectedDescription.setContactNames(selectedGSDescrption);
+        model.addAttribute("selectedGoods_Services",selectedDescription);
+
+
+
+
+        model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
+        return "application/filing_basis/FilingBasisGridUpload";
+
+    }
+
 
 
 
@@ -1885,25 +3211,34 @@ public class ApplicationFlowController {
 
         }
         model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
 
         if( baseTrademarkApplication.getTradeMark() != null) {
             model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
             model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
 
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
         }
         else{
             model.addAttribute("markImagePath","");
 
             model.addAttribute("markImagePathBW","");
 
-
         }
-        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
-        boolean colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
-        boolean acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+
 
         model.addAttribute("markColorClaim", colorClaim);
         model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+
 
         ArrayList<String> selectedGSDescrption = new ArrayList<>();
         for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
@@ -1921,6 +3256,7 @@ public class ApplicationFlowController {
         return "application/additional/additionalInfo";
 
     }
+
 
 
 
@@ -1966,25 +3302,34 @@ public class ApplicationFlowController {
 
         }
         model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+        boolean colorClaim= false;
+        boolean acceptBW = false;
+        boolean colorClaimSet = false;
+        boolean standardCharacterMark = false;
 
         if( baseTrademarkApplication.getTradeMark() != null) {
             model.addAttribute("markImagePath", baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
             model.addAttribute("markImagePathBW",baseTrademarkApplication.getTradeMark().getTrademarkBWImagePath());
+            colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
+            acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
 
+            colorClaimSet = baseTrademarkApplication.getTradeMark().isColorClaimSet();
+            standardCharacterMark = baseTrademarkApplication.getTradeMark().isStandardCharacterMark();
         }
         else{
             model.addAttribute("markImagePath","");
 
             model.addAttribute("markImagePathBW","");
 
-
         }
-        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
-        boolean colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
-        boolean acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
+
+
 
         model.addAttribute("markColorClaim", colorClaim);
         model.addAttribute("markColorClaimBW", acceptBW);
+        model.addAttribute("colorClaimSet", colorClaimSet);
+        model.addAttribute("standardCharacterMark ", standardCharacterMark );
+
 
         ArrayList<String> selectedGSDescrption = new ArrayList<>();
         for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
@@ -1999,6 +3344,388 @@ public class ApplicationFlowController {
 
 
         model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
+
+
+        // TEAS field validation
+
+        String returnLink = "";
+        ArrayList<String> missedTEAsFields = new ArrayList<>();
+        // check attorney TEAS fields  bar #
+        if(baseTrademarkApplication.isAttorneyFiling() == true){
+
+
+            if(baseTrademarkApplication.getPrimaryLawyer().getBarJurisdiction() == null){
+                missedTEAsFields.add("Attorney bar jurisdiction");
+                returnLink ="../../application/AttorneySet2/?trademarkID=";
+            }
+            if(baseTrademarkApplication.getPrimaryLawyer().getMembershipNumber() == null){
+                missedTEAsFields.add("Attorney bar membership number");
+                returnLink ="../../application/AttorneySet2/?trademarkID=";
+            }
+            if(baseTrademarkApplication.getPrimaryLawyer().getBarAdmissionDate() == null){
+                missedTEAsFields.add("Attorney bar membership admission date");
+                returnLink ="../../application/AttorneySet2/?trademarkID=";
+            }
+
+            if(baseTrademarkApplication.getPrimaryLawyer().getBarCertificateImageKey() == null){
+                missedTEAsFields.add("Attorney bar membership certificate");
+                returnLink ="../../application/AttorneySet2/?trademarkID=";
+            }
+
+
+        }
+
+
+        // check owner TEAS fields  (individual -citizen ship)
+        // all others (state where organized)/ corp state of incorporation
+        // for foreign corp - country of in corporation
+
+
+        if(missedTEAsFields.size() == 0){
+            returnLink ="../../application/OwnerSetView/?trademarkID=";
+        }
+
+
+        if(baseTrademarkApplication.getPrimaryOwner().getOwnersubType().equals("Individual")){
+
+            if(baseTrademarkApplication.getPrimaryOwner().getCitizenShip() == null || baseTrademarkApplication.getPrimaryOwner().getCitizenShip().equals("")){
+                missedTEAsFields.add("Owner - country of citizenship");
+            }
+
+        }
+
+        if(baseTrademarkApplication.getPrimaryOwner().getOwnersubType().equals("Limited Liability Company") ||
+                baseTrademarkApplication.getPrimaryOwner().getOwnersubType().equals("Partnership") ||
+                baseTrademarkApplication.getPrimaryOwner().getOwnersubType().equals("Limited Partnership") ||
+                baseTrademarkApplication.getPrimaryOwner().getOwnersubType().equals("Joint Venture") ||
+                baseTrademarkApplication.getPrimaryOwner().getOwnersubType().equals("Trust") ||
+                baseTrademarkApplication.getPrimaryOwner().getOwnersubType().equals("Estate")
+        ){
+            if(baseTrademarkApplication.getPrimaryOwner().getOwnerOrganizationState()== null || baseTrademarkApplication.getPrimaryOwner().getOwnerOrganizationState().equals("")){
+                missedTEAsFields.add("Owner - state where legally organized ");
+            }
+        }
+
+        if(baseTrademarkApplication.getPrimaryOwner().getOwnersubType().equals("Corporation")){
+
+
+            if(baseTrademarkApplication.getPrimaryOwner().getOwnerOrganizationState() == null ||baseTrademarkApplication.getPrimaryOwner().getOwnerOrganizationState().equals("") ){
+                missedTEAsFields.add("Owner - state where legally incorporated");
+            }
+
+        }
+
+
+        if(baseTrademarkApplication.getPrimaryOwner().getOwnersubType().contains("Foreign")){
+            if(baseTrademarkApplication.getPrimaryOwner().getOwnerOrganizationState() == null || baseTrademarkApplication.getPrimaryOwner().getOwnerOrganizationState().equals("")){
+                missedTEAsFields.add("Owner - country where legally incorporated");
+            }
+
+        }
+
+
+
+
+
+
+        if(missedTEAsFields.size() == 0){
+            returnLink ="../../mark/designWithTextDetails/?trademarkID=";
+        }
+
+
+
+        if(baseTrademarkApplication.getTradeMark().getTrademarkDesignType().equals("Standard Character")){
+            returnLink ="../../mark/standard/?trademarkID=";
+        }
+
+/*
+        if(baseTrademarkApplication.getTradeMark().getTrademarkDesignType().equals("Standard Character") == true){
+
+
+            if(baseTrademarkApplication.getTradeMark().getMarkLiteral() == null){
+                missedTEAsFields.add("Mark literal");
+
+            }
+
+
+        }
+*/
+
+
+        if(baseTrademarkApplication.getTradeMark().getTrademarkDesignType().equals("Standard Character") == false){
+
+
+                if(baseTrademarkApplication.getTradeMark().isMarkColorClaimBW()){
+
+                    if(baseTrademarkApplication.getTradeMark().isAcceptBWmarkSet() == false){
+                        missedTEAsFields.add("Mark color claim - accept B&W mark");
+                    }
+                }
+                else {
+                    if(baseTrademarkApplication.getTradeMark().isMarkColorClaim()){
+                        if(baseTrademarkApplication.getTradeMark().getMarkColors() == null){
+                            missedTEAsFields.add("Mark color claim - mark color");
+                        }
+                    }
+                }
+
+
+                if(baseTrademarkApplication.getTradeMark().getMarkDescription() == null){
+                    missedTEAsFields.add("Mark description");
+                }
+
+
+        }
+
+        if(baseTrademarkApplication.getTradeMark().isTranslationSet() == false){
+            //missedTEAsFields.add("Translation");
+        }
+        else {
+            if(baseTrademarkApplication.getTradeMark().isForeignLanguageTranslationWording() == true){
+                if(baseTrademarkApplication.getTradeMark().getForeignLanguageTranslationOriginalText() == null){
+                    missedTEAsFields.add("Translation - foreign language text");
+                }
+                if(baseTrademarkApplication.getTradeMark().getForeignLanguageTranslationUSText() == null){
+                    missedTEAsFields.add("Translation - foreign language translated text");
+                }
+                if(baseTrademarkApplication.getTradeMark().getForeignLanguageType_translation() == null){
+                    missedTEAsFields.add("Translation - foreign language type");
+                }
+
+            }
+        }
+
+        if(baseTrademarkApplication.getTradeMark().isTranlierationSet() == false){
+           // missedTEAsFields.add("Transliteration");
+        }
+        else {
+            if(baseTrademarkApplication.getTradeMark().isForeignLanguateTransliterationWording() == true){
+                if(baseTrademarkApplication.getTradeMark().getForeignLanguateTransliterationOriginalText() == null){
+                    missedTEAsFields.add("Transliteration - foreign language text");
+                }
+                if(baseTrademarkApplication.getTradeMark().getForeignLanguateTransliterationUSText() == null){
+                    missedTEAsFields.add("Transliteration - foreign language transliterated text");
+                }
+                if(baseTrademarkApplication.getTradeMark().getForeignLanguageType_transliteration() == null){
+                    missedTEAsFields.add("Transliteration - foreign language type");
+                }
+            }
+        }
+
+        if(baseTrademarkApplication.getTradeMark().isPriorRegistratoinSet() == true){
+            if(baseTrademarkApplication.getTradeMark().isPriorRegistratoin() == true){
+                if(baseTrademarkApplication.getTradeMark().getPriorRegistrationNumber() == "" || baseTrademarkApplication.getTradeMark().getPriorRegistrationNumber() == null){
+                    missedTEAsFields.add("Prior registration number");
+
+                }
+            }
+
+        }
+
+        if(baseTrademarkApplication.getTradeMark().isNamePortraitSet() == true){
+
+
+            if(baseTrademarkApplication.getTradeMark().isPortrait()){
+                if(baseTrademarkApplication.getTradeMark().getPortraitFirstName() == null){
+                    missedTEAsFields.add("Name/Portrait/Signature Portrait - first name");
+                }
+                if(baseTrademarkApplication.getTradeMark().getPortraitLastName() == null){
+                    missedTEAsFields.add("Name/Portrait/Signature Portrait - last name");
+                }
+
+            }
+            if(baseTrademarkApplication.getTradeMark().isName()){
+
+                if(baseTrademarkApplication.getTradeMark().getNameFirstName() == null){
+                    missedTEAsFields.add("Name/Portrait/Signature Name- first name");
+                }
+                if(baseTrademarkApplication.getTradeMark().getNameLastName() == null){
+                    missedTEAsFields.add("Name/Portrait/Signature Name - last name");
+                }
+
+
+            }
+            if(baseTrademarkApplication.getTradeMark().isSignature()){
+
+                if(baseTrademarkApplication.getTradeMark().getSignatureFirstName() == null){
+                    missedTEAsFields.add("Name/Portrait/Signature Signature - first name");
+                }
+                if(baseTrademarkApplication.getTradeMark().getSignatureLastName() == null){
+                    missedTEAsFields.add("Name/Portrait/Signature Signature - last name");
+                }
+
+
+            }
+
+            if(baseTrademarkApplication.getTradeMark().isNPSLivingPerson() == true){
+                if(baseTrademarkApplication.getTradeMark().isConsentFileUploaded() == false){
+                    missedTEAsFields.add("Name Portrait Signature Consent File");
+                }
+            }
+
+        }
+
+        if(baseTrademarkApplication.getTradeMark().isPriorRegistratoin() == true){
+            if(baseTrademarkApplication.getTradeMark().getPriorRegistrationNumber() == null){
+
+                missedTEAsFields.add("Mark disclaimer - prior registration number");
+
+            }
+
+        }
+
+
+        // for each filing basis
+        ArrayList<GSClassCategory> gsClassCategories = baseTrademarkApplication.getGoodAndServicesCategories();
+        for(Iterator<GSClassCategory> iter = gsClassCategories.iterator(); iter.hasNext(); ) {
+            GSClassCategory current = iter.next();
+            ArrayList<GoodAndService> goodAndServices = current.getGoodAndServices();
+            for(Iterator<GoodAndService> iter2 = goodAndServices.iterator(); iter2.hasNext(); ) {
+                GoodAndService goodAndService = iter2.next();
+
+                if(goodAndService.isMarkInUse() == true){
+                    if(goodAndService.getFirstGSDate() == null){
+                        if(missedTEAsFields.size() == 0){
+                            returnLink = "../../application/inUseFilingBasisUpload/?trademarkID=";
+                        }
+
+                        missedTEAsFields.add("first in use date - "+goodAndService.getClassDescription());
+
+
+
+                    }
+                    if(goodAndService.getFirstCommerceDate() == null){
+                        if(missedTEAsFields.size() == 0){
+                            returnLink = "../../application/inUseFilingBasisUpload/?trademarkID=";
+                        }
+                        missedTEAsFields.add("first in commerce date - "+goodAndService.getClassDescription());
+
+                    }
+
+                }
+
+
+
+                if(goodAndService.isForeignRegistration()){
+                    if(goodAndService.getFrExpirationDate() == null){
+                        if(missedTEAsFields.size() == 0){
+                            if(goodAndService.isMarkInUse() == true){
+                                returnLink = "../../application/inUseFilingBasisUpload/?trademarkID=";
+                            }
+                            else {
+                                returnLink = "../../application/inUseFilingBasisUpload/?trademarkID=";
+                            }
+
+                        }
+                        missedTEAsFields.add("Foreign registration expiration date - "+goodAndService.getClassDescription());
+
+                    }
+
+                    if(goodAndService.getFrRenewlDate() == null){
+                        if(missedTEAsFields.size() == 0){
+                            if(goodAndService.isMarkInUse() == true){
+                                returnLink = "../../application/inUseFilingBasisUpload/?trademarkID=";
+                            }
+                            else {
+                                returnLink = "../../application/inUseFilingBasisUpload/?trademarkID=";
+                            }
+
+                        }
+                        missedTEAsFields.add("Foreign registration renewal date - "+goodAndService.getClassDescription());
+
+
+                    }
+
+                    if(goodAndService.getFrCertImagePath() == null){
+                        if(missedTEAsFields.size() == 0){
+                            if(goodAndService.isMarkInUse() == true){
+                                returnLink = "../../application/inUseFilingBasisUpload/?trademarkID=";
+                            }
+                            else {
+                                returnLink = "../../application/inUseFilingBasisUpload/?trademarkID=";
+                            }
+
+                        }
+                        missedTEAsFields.add("Foreign registration certificate - "+goodAndService.getClassDescription());
+
+                    }
+
+
+                }
+
+
+
+                if(goodAndService.isPendingFA()){
+                    if(goodAndService.getFaFilingDate()== null){
+                        if(missedTEAsFields.size() == 0){
+                            if(goodAndService.isMarkInUse() == true){
+                                returnLink = "../../application/inUseFilingBasisUpload/?trademarkID=";
+                            }
+                            else {
+                                returnLink = "../../application/inUseFilingBasisUpload/?trademarkID=";
+                            }
+
+                        }
+                        missedTEAsFields.add("Foreign application filing date - "+goodAndService.getClassDescription());
+
+
+                    }
+
+                    if(goodAndService.getFaRegistrationNumber()== null){
+                        if(missedTEAsFields.size() == 0){
+                            if(goodAndService.isMarkInUse() == true){
+                                returnLink = "../../application/inUseFilingBasisUpload/?trademarkID=";
+                            }
+                            else {
+                                returnLink = "../../application/inUseFilingBasisUpload/?trademarkID=";
+                            }
+
+                        }
+                        missedTEAsFields.add("Foreign application application number - "+goodAndService.getClassDescription());
+
+
+                    }
+
+
+                }
+
+
+
+
+
+            }
+        }
+        // end goods and services loops
+        if(missedTEAsFields.size() == 0){
+            returnLink = "../../application/additionalInfoUpload/?trademarkID=";
+        }
+
+
+        if(baseTrademarkApplication.isPrincipalRegister() == false){
+            missedTEAsFields.add("Type of register ");
+        }
+
+
+        if(missedTEAsFields.size() == 0){
+            returnLink = "../../application/confirmInfo/?trademarkID=";
+        }
+
+        boolean passedValidation = false;
+        if(missedTEAsFields.size() == 0){
+            passedValidation = true;
+            // update Base application base price
+            baseTrademarkApplication.setBaseFee(225);
+
+        }
+
+        baseTradeMarkApplicationService.save(baseTrademarkApplication);
+        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+
+        model.addAttribute("missedTEAsFields",missedTEAsFields);
+
+        model.addAttribute("returnLink",returnLink);
+        model.addAttribute("passedValidation",passedValidation);
+
         return "application/confirm/ConfirmApplicationInfo";
 
     }
@@ -2031,7 +3758,7 @@ public class ApplicationFlowController {
             TradeMark tradeMark = new TradeMark();
             tradeMark.setTrademarkDesignType("");
             baseTrademarkApplication.setTradeMark(tradeMark);
-            baseTradeMarkApplicationService.save(baseTrademarkApplication);
+
 
         }
 
@@ -2048,7 +3775,7 @@ public class ApplicationFlowController {
 
 
         }
-        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+
         boolean colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
         boolean acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
 
@@ -2066,11 +3793,66 @@ public class ApplicationFlowController {
 
 
 
+        // check if all declarations set,
+        // if so, update base price
+
+        if( baseTrademarkApplication.isDeclarationMarkInUseSet() == false || baseTrademarkApplication.isDeclarationApplicantIsOwnerSet() == false || baseTrademarkApplication.isDeclarationConcurrentUserSet() == false || baseTrademarkApplication.isDeclarationEvidenceSupportSet() == false || baseTrademarkApplication.isDeclarationSpecimenSet() == false || baseTrademarkApplication.isDeclarationWarningFalseStatementSet() == false){
+            baseTrademarkApplication.setBaseFee(275);
+        }
+
+        baseTradeMarkApplicationService.save(baseTrademarkApplication);
+        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
 
         model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
         return "application/confirm/ConfirmPayment";
 
     }
+
+
+
+    @RequestMapping({"/petitions/revAbandoned/{petitionID}"})
+    public String reviveAbandonedFiling( Model model, @PathVariable String petitionID ,@RequestParam("trademarkID") String trademarkInternalID){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        PTOUserService  ptoUserService = serviceBeanFactory.getPTOUserService();
+        PTOUser ptoUser = ptoUserService.findByEmail(authentication.getName());
+        UserCredentialsService userCredentialsService = serviceBeanFactory.getUserCredentialsService();
+        UserCredentials credentials = userCredentialsService.findByEmail(authentication.getName());
+
+
+        BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
+        BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID(trademarkInternalID);
+
+
+        //OfficeActions action = baseTrademarkApplication.findOfficeActionById(actionID);
+
+        Petition petition = baseTrademarkApplication.findPetitionById(petitionID);
+
+        //////////////////////////////////////////////////////
+        // this is set back to null upon verification check
+        //////////////////////////////////////////////////////
+
+        //////////////////////////////////////////////////////
+        //continuation = true;
+
+        model.addAttribute("user", ptoUser);
+        model.addAttribute("account",credentials);
+
+        model.addAttribute("petition", petition);
+
+        model.addAttribute("baseTrademarkApplication", baseTrademarkApplication);
+
+        model.addAttribute("petitionSignatureType", petition.getPetitionSignatureMethod());
+
+        model.addAttribute("responseSignatureType", petition.getResponseSignatureMethod());
+
+
+
+
+        return "petition/abandoned/index";
+    }
+
 
 
 }

@@ -172,9 +172,9 @@ public class UserAccountService extends BaseRESTapiService {
         if(ptoUser.getZipcode() == null || ptoUser.getZipcode().equals("")){
             profileSet = false;
         }
-        if(ptoUser.getPrimaryPhonenumber() == null || ptoUser.getPrimaryPhonenumber().equals("")){
-            profileSet = false;
-        }
+       // if(ptoUser.getPrimaryPhonenumber() == null || ptoUser.getPrimaryPhonenumber().equals("")){
+        //    profileSet = false;
+        //}
         ////////////////////////////////////////////////
         /// end profile check
         ////////////////////////////////////////////////

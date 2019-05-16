@@ -50,7 +50,7 @@ public class PathController {
         // get owner info
         System.out.println("#############################################################");
 
-        return "public/index2";
+        return "public/index";
 
         //return "registrationConfirm/VerificationEmail";
     }
@@ -75,10 +75,10 @@ public class PathController {
         model.addAttribute("account",credentials);
 
         if(ptoUser.isProfileComplete()){
-              return "forward:accounts/dashboard";
+              return "redirect:accounts/dashboard";
         }
         else {
-            return "forward:accounts/userHome";
+            return "redirect:accounts/userHome";
         }
 
     }
@@ -225,7 +225,7 @@ public class PathController {
         String server_message = "You have Successfully logged out.";
         model.addAttribute("message", server_message);
 
-        return "public/index2";
+        return "public/index";
 
     }
     ///////////////////////////////////
@@ -235,15 +235,13 @@ public class PathController {
     public String loginFailure(Model model) {
 
 
-        String server_message = "Password entered was not not correct.";
+        String server_message = "Email and password combination could not be found.";
         //redirectAttributes.addFlashAttribute("message",server_message );
         model.addAttribute("message", server_message);
 
         return "login";
 
     }
-
-
 
 
     @RequestMapping({"/aboutUs"})
@@ -267,4 +265,13 @@ public class PathController {
 
         return "owner/index";
     }
+
+
+
+
+    // petitions sample controller
+
+
+
+
 }

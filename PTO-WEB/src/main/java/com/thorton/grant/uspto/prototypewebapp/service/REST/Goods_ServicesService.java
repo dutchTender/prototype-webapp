@@ -148,11 +148,14 @@ public class Goods_ServicesService  extends BaseRESTapiService{
                 baseTrademarkApplication.setMarkInUseForAllGS(true);
                 baseTrademarkApplication.setMarkAllgsSet(true);
                 // we need to loop though all gs and set its in use to true
+
                 for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
                     GoodAndService current = iter.next();
-                    current.setMarkInUse(true);
-                    current.setMarkInUseSet(true);
+                    current.setMarkInUse(false);
+                    current.setMarkInUseSet(false);
                 }
+                baseTrademarkApplication.setDeclarationMarkInUse(true);
+                baseTrademarkApplication.setDeclarationMarkInUseSet(true);
             }
             else {
                 if(baseTrademarkApplication.isMarkAllgsSet() == false){
@@ -165,12 +168,15 @@ public class Goods_ServicesService  extends BaseRESTapiService{
                     }
                     baseTrademarkApplication.setMarkInUseForAllGS(false);
                 }
+                /*
                 for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
                     GoodAndService current = iter.next();
                     current.setMarkInUse(false);
                     current.setMarkInUseSet(true);
-                }
+                }*/
                 // we need to loop though all gs and set its in use to false
+                baseTrademarkApplication.setDeclarationMarkInUse(false);
+                baseTrademarkApplication.setDeclarationMarkInUseSet(true);
 
             }
             appFieldReadable = "Filing Basis mark in use option";
@@ -188,15 +194,46 @@ public class Goods_ServicesService  extends BaseRESTapiService{
             }
             else {
 
+
+
+
                 if(baseTrademarkApplication.isMarkFappSet() == false) {
+
                     baseTrademarkApplication.setMarkHasForeignRegistration(false);
                     baseTrademarkApplication.setMarkFappSet(true);
+
                 }
                 else {
-                    if(baseTrademarkApplication.isMarkHasForeignRegistration()== false){
-                        return buildResponseEnity("444", "");
-                    }
+                    // if mark foreign is set ...
+                    // we need to unset it
+                    // we need to unset all of the foreign application/registration settings and fields
+
                     baseTrademarkApplication.setMarkHasForeignRegistration(false);
+
+                    // for each filing basis, also set this value for foreign app and foreign registration
+                    for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServicesList().iterator(); iter.hasNext(); ) {
+                         GoodAndService current = iter.next();
+
+                         // unset foreign application for each good and service
+
+                         current.setFrCertImageName(null);current.setFaCountry(null);
+                        current.setFaRegistrationNumber(null);
+                        current.setFaFilingDate(null);
+                        current.setPendingFA(false);
+                        //unset foreign registration for each good and service
+                        current.setFrCountry(null);
+                        current.setFrRegistartionNumber(null);
+                        current.setFrRegistrationDate(null);
+                        current.setFrExpirationDate(null);
+                        current.setFrRenewlDate(null);
+                        current.setFrCertImagePath(null);
+                        current.setForeignRegistration(false);
+
+
+
+
+                    }
+
                 }
 
             }
@@ -235,8 +272,58 @@ public class Goods_ServicesService  extends BaseRESTapiService{
 
             }
             if(fbValue.equals("no")){
-                baseTrademarkApplication.findGSbyInternalID(gsID).setMarkInUse(false);
-                baseTrademarkApplication.findGSbyInternalID(gsID).setMarkInUseSet(true);
+
+                // get class category nunber
+                GoodAndService goodAndService = baseTrademarkApplication.findGSbyInternalID(gsID);
+                String catNumber = goodAndService.getClassNumber();
+                int gsCount = 0;
+                int gsNo = 0;
+
+                for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                    GoodAndService current = iter.next();
+
+                    if(current.getClassNumber().equals(catNumber)){
+
+                       gsCount++;
+                       if(current.isMarkInUse() == false && current.isMarkInUseSet() == true){
+                           gsNo++;
+                       }
+
+
+
+                    }
+                }
+
+
+                // get class level in use options
+                if(goodAndService.isAtLeastOneGoodInCommerceClassFlag()){
+                    if(gsCount - gsNo > 1){
+
+                        baseTrademarkApplication.findGSbyInternalID(gsID).setMarkInUse(false);
+                        baseTrademarkApplication.findGSbyInternalID(gsID).setMarkInUseSet(true);
+
+                    }
+                    else{
+
+                        return buildResponseEnity("420", "ERROR: Could not save good and service in use options");
+
+                    }
+
+                }
+                else{
+                     baseTrademarkApplication.findGSbyInternalID(gsID).setMarkInUse(false);
+                     baseTrademarkApplication.findGSbyInternalID(gsID).setMarkInUseSet(true);
+                }
+
+                // get number of goods and services in class
+
+                // get number of goods and services in use
+
+                // determine if this one can be set to no
+
+                // return success or failure
+
+
 
             }
 
@@ -248,15 +335,42 @@ public class Goods_ServicesService  extends BaseRESTapiService{
         if(fbField.equals("fb-gs-date")){
             // ptoUser.setState(param); // sets state code
 
+            if(gsID.equals("all")){
 
-            try {
-                DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
-                Date date = format.parse(fbValue);
-                baseTrademarkApplication.findGSbyInternalID(gsID).setFirstGSDate(date);
+                for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+
+                    GoodAndService current = iter.next();
+
+                    try {
+                        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                        Date date = format.parse(fbValue);
+                        current.setFirstGSDate(date);
+                        current.setFirstGSDateSet(true);
+
+                    }
+                    catch(Exception ex){
+                        return buildResponseEnity("420", "ERROR: Could not save Date, invalid Date format");
+
+                    }
+
+                }
 
             }
-            catch(Exception ex){
-                return buildResponseEnity("420", "ERROR: Could not save Date, invalid Date format");
+            else {
+
+                try {
+                    DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                    Date date = format.parse(fbValue);
+                    baseTrademarkApplication.findGSbyInternalID(gsID).setFirstGSDate(date);
+                    baseTrademarkApplication.findGSbyInternalID(gsID).setFirstGSDateSet(true);
+
+                }
+                catch(Exception ex){
+                    return buildResponseEnity("420", "ERROR: Could not save Date, invalid Date format");
+
+                }
+
+
 
             }
             appFieldReadable = "Filing Basis First Good and Services Date";
@@ -267,17 +381,43 @@ public class Goods_ServicesService  extends BaseRESTapiService{
         if(fbField.equals("fb-mark-date")){
             // ptoUser.setState(param); // sets state code
 
+           if (gsID.equals("all")){
 
-            try {
-                DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
-                Date date = format.parse(fbValue);
-                baseTrademarkApplication.findGSbyInternalID(gsID).setFirstCommerceDate(date);
+               for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
 
-            }
-            catch(Exception ex){
-                return buildResponseEnity("420", "ERROR: Could not save Date, invalid Date format");
+                   GoodAndService current = iter.next();
 
-            }
+
+
+                   try {
+                       DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                       Date date = format.parse(fbValue);
+                       current.setFirstCommerceDate(date);
+                       current.setFirstCommerceDateSet(true);
+                   }
+                   catch(Exception ex){
+                       return buildResponseEnity("420", "ERROR: Could not save Date, invalid Date format");
+
+                   }
+
+               }
+
+           }
+           else {
+               try {
+                   DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                   Date date = format.parse(fbValue);
+                   baseTrademarkApplication.findGSbyInternalID(gsID).setFirstCommerceDate(date);
+                   baseTrademarkApplication.findGSbyInternalID(gsID).setFirstCommerceDateSet(true);
+               }
+               catch(Exception ex){
+                   return buildResponseEnity("420", "ERROR: Could not save Date, invalid Date format");
+
+               }
+
+
+           }
+
             appFieldReadable = "Filing Basis First Commerce Date";
 
         }
@@ -327,6 +467,12 @@ public class Goods_ServicesService  extends BaseRESTapiService{
             appFieldReadable = "Filing Basis Pending Foreign Application Option";
 
         }
+        // class level equivalent
+
+
+
+
+
 
         if(fbField.equals("gs-pfr-option")){
             // ptoUser.setState(param); // sets state code
@@ -374,7 +520,21 @@ public class Goods_ServicesService  extends BaseRESTapiService{
         if(fbField.equals("gs-pfa-country")){
             // ptoUser.setState(param); // sets state code
 
+
+            if(gsID.equals("all")){
+
+                for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+
+                    GoodAndService current = iter.next();
+                    current.setFaCountry(fbValue);
+                }
+            }
+            else {
                 baseTrademarkApplication.findGSbyInternalID(gsID).setFaCountry(fbValue);
+
+            }
+
+
 
             appFieldReadable = "Filing Basis Pending Foreign Application Country";
 
@@ -384,7 +544,20 @@ public class Goods_ServicesService  extends BaseRESTapiService{
         if(fbField.equals("gs-pfa-app-Number")){
             // ptoUser.setState(param); // sets state code
 
-            baseTrademarkApplication.findGSbyInternalID(gsID).setFaRegistrationNumber(fbValue);
+            if(gsID.equals("all")){
+
+                for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+
+                    GoodAndService current = iter.next();
+                    current.setFaRegistrationNumber(fbValue);
+                }
+            }
+            else {
+                baseTrademarkApplication.findGSbyInternalID(gsID).setFaRegistrationNumber(fbValue);
+
+            }
+
+
 
             appFieldReadable = "Filing Basis Pending Foreign Application Number";
 
@@ -392,20 +565,39 @@ public class Goods_ServicesService  extends BaseRESTapiService{
 
 
         if(fbField.equals("gs-pfa-filing-date")){
-            // ptoUser.setState(param); // sets state code
+            if(gsID.equals("all")){
 
-           // baseTrademarkApplication.findGSbyInternalID(gsID).setFaRegistrationNumber(fbValue);
+                for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
 
-            try {
-                DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
-                Date date = format.parse(fbValue);
-                baseTrademarkApplication.findGSbyInternalID(gsID).setFaFilingDate(date);
+                    GoodAndService current = iter.next();
+
+                    try {
+                        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                        Date date = format.parse(fbValue);
+                        current.setFaFilingDate(date);
+
+                    }
+                    catch(Exception ex){
+                        return buildResponseEnity("420", "ERROR: Could not save Date, invalid Date format");
+
+                    }
+                }
+            }
+            else {
+                try {
+                    DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                    Date date = format.parse(fbValue);
+                    baseTrademarkApplication.findGSbyInternalID(gsID).setFaFilingDate(date);
+
+                }
+                catch(Exception ex){
+                    return buildResponseEnity("420", "ERROR: Could not save Date, invalid Date format");
+
+                }
 
             }
-            catch(Exception ex){
-                return buildResponseEnity("420", "ERROR: Could not save Date, invalid Date format");
 
-            }
+
             appFieldReadable = "Filing Basis  Pending Foreign Application Filing Date";
 
         }
@@ -413,7 +605,19 @@ public class Goods_ServicesService  extends BaseRESTapiService{
         if(fbField.equals("gs-pfr-country")){
             // ptoUser.setState(param); // sets state code
 
-            baseTrademarkApplication.findGSbyInternalID(gsID).setFrCountry(fbValue);
+            if(gsID.equals("all")){
+
+                for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+
+                    GoodAndService current = iter.next();
+                    current.setFrCountry(fbValue);
+                }
+            }
+            else {
+                baseTrademarkApplication.findGSbyInternalID(gsID).setFrCountry(fbValue);
+            }
+
+
 
             appFieldReadable = "Filing Basis Foreign Registration Country";
 
@@ -421,28 +625,96 @@ public class Goods_ServicesService  extends BaseRESTapiService{
 
         if(fbField.equals("gs-pfr-reg-Number")){
             // ptoUser.setState(param); // sets state code
+            if(gsID.equals("all")){
 
-            baseTrademarkApplication.findGSbyInternalID(gsID).setFrRegistartionNumber(fbValue);
+                for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+
+                    GoodAndService current = iter.next();
+                    current.setFrRegistartionNumber(fbValue);
+                }
+            }
+            else {
+                baseTrademarkApplication.findGSbyInternalID(gsID).setFrRegistartionNumber(fbValue);
+            }
+
+
 
             appFieldReadable = "Filing Basis Foreign Registration Number";
 
         }
 
+        if(fbField.equals("gs-pfr-reg-date")){
+            if(gsID.equals("all")){
+
+                for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+
+                    GoodAndService current = iter.next();
+
+                    try {
+                        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                        Date date = format.parse(fbValue);
+                        current.setFrRegistrationDate(date);
+
+                    }
+                    catch(Exception ex){
+                        return buildResponseEnity("420", "ERROR: Could not save Date, invalid Date format");
+
+                    }
+                }
+            }
+            else {
+                try {
+                    DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                    Date date = format.parse(fbValue);
+                    baseTrademarkApplication.findGSbyInternalID(gsID).setFrRegistrationDate(date);
+
+                }
+                catch(Exception ex){
+                    return buildResponseEnity("420", "ERROR: Could not save Date, invalid Date format");
+
+                }
+
+            }
+
+
+            appFieldReadable = "Filing Basis Foreign Registration Date";
+
+        }
+
+
         if(fbField.equals("gs-pfr-exp-date")){
-            // ptoUser.setState(param); // sets state code
+            if(gsID.equals("all")){
 
-            // baseTrademarkApplication.findGSbyInternalID(gsID).setFaRegistrationNumber(fbValue);
+                for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
 
-            try {
-                DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
-                Date date = format.parse(fbValue);
-                baseTrademarkApplication.findGSbyInternalID(gsID).setFrExpirationDate(date);
+                    GoodAndService current = iter.next();
+                    try {
+                        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                        Date date = format.parse(fbValue);
+                        current.setFrExpirationDate(date);
 
+                    }
+                    catch(Exception ex){
+                        return buildResponseEnity("420", "ERROR: Could not save Date, invalid Date format");
+
+                    }
+                }
             }
-            catch(Exception ex){
-                return buildResponseEnity("420", "ERROR: Could not save Date, invalid Date format");
+            else {
+                try {
+                    DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                    Date date = format.parse(fbValue);
+                    baseTrademarkApplication.findGSbyInternalID(gsID).setFrExpirationDate(date);
 
+                }
+                catch(Exception ex){
+                    return buildResponseEnity("420", "ERROR: Could not save Date, invalid Date format");
+
+                }
             }
+
+
+
             appFieldReadable = "Filing Basis Foreign Registration Expiration Date";
 
         }
@@ -453,7 +725,7 @@ public class Goods_ServicesService  extends BaseRESTapiService{
             // baseTrademarkApplication.findGSbyInternalID(gsID).setFaRegistrationNumber(fbValue);
 
             try {
-                DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+                DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
                 Date date = format.parse(fbValue);
                 baseTrademarkApplication.findGSbyInternalID(gsID).setFrRenewlDate(date);
 
@@ -504,6 +776,561 @@ public class Goods_ServicesService  extends BaseRESTapiService{
             appFieldReadable = "Class Specimen Description";
 
         }
+
+
+        if(ccField.equals("cc-in-use-one")){
+            // ptoUser.setState(param); // sets state code
+            if(ccValue.equals("yes")){
+
+                for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                    GoodAndService current = iter.next();
+
+                    if(current.getClassNumber().equals(ccNumber)){
+                       current.setAtLeastOneGoodInCommerceClassFlag(true);
+                       current.setAtLeastOneGoodInCommerceClassFlagSet(true);
+                        current.setMarkInUse(false);
+                        current.setMarkInUseSet(false);
+
+
+
+                    }
+                }
+
+            }
+            else {
+                for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                    GoodAndService current = iter.next();
+
+                    if(current.getClassNumber().equals(ccNumber)){
+                        current.setAtLeastOneGoodInCommerceClassFlag(false);
+                        current.setAtLeastOneGoodInCommerceClassFlagSet(true);
+                        current.setProvideSpecimenForAllGS(false);
+                        current.setProvideSpecimenForAllGSSet(false);
+                        current.setMarkInUse(false);
+                        current.setMarkInUseSet(true);
+
+
+                    }
+                }
+
+            }
+
+            // we need to loop through each goods and services and update its in use flag
+
+
+
+
+            appFieldReadable = "Class level option";
+
+        }
+
+        if(ccField.equals("cc-specimen-class-opt")){
+            // ptoUser.setState(param); // sets state code
+            if(ccValue.equals("yes")){
+
+                for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                    GoodAndService current = iter.next();
+
+                    if(current.getClassNumber().equals(ccNumber)){
+                        current.setProvideSpecimenForAllGS(true);
+                        current.setProvideSpecimenForAllGSSet(true);
+
+
+                    }
+                }
+
+            }
+            else {
+                for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                    GoodAndService current = iter.next();
+
+                    if(current.getClassNumber().equals(ccNumber)){
+                        current.setProvideSpecimenForAllGS(false);
+                        current.setProvideSpecimenForAllGSSet(true);
+
+                    }
+                }
+
+            }
+
+
+            appFieldReadable = "Class level option";
+
+        }
+
+
+        if(ccField.equals("cc-specimen-class-opt")){
+            // ptoUser.setState(param); // sets state code
+            if(ccValue.equals("yes")){
+
+                for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                    GoodAndService current = iter.next();
+
+                    if(current.getClassNumber().equals(ccNumber)){
+                        current.setProvideSpecimenForAllGS(true);
+                        current.setProvideSpecimenForAllGSSet(true);
+
+
+                    }
+                }
+
+            }
+            else {
+                for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                    GoodAndService current = iter.next();
+
+                    if(current.getClassNumber().equals(ccNumber)){
+                        current.setProvideSpecimenForAllGS(false);
+                        current.setProvideSpecimenForAllGSSet(true);
+
+
+                    }
+                }
+
+            }
+
+
+            appFieldReadable = "Class level option";
+
+        }
+
+
+        if(ccField.equals("cc-pfa-option")) {
+
+            //baseTrademarkApplication.findGSbyInternalID(gsID).setPendingFA(true);
+            if (ccValue.equals("yes")) {
+
+                for (Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                    GoodAndService current = iter.next();
+
+                    if (current.getClassNumber().equals(ccNumber)) {
+                        current.setPendingFA(true);
+                        current.setPendingFAAllGS(true);
+                        current.setMarkInUse(true);
+                        current.setMarkInUseSet(true);
+
+
+
+                    }
+                }
+
+
+            }
+            if (ccValue.equals("no")) {
+
+                for (Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                    GoodAndService current = iter.next();
+
+                    if (current.getClassNumber().equals(ccNumber)) {
+                        //current.setPendingFA(false);
+                        current.setPendingFAAllGS(false);
+
+
+                    }
+                }
+
+
+            }
+
+            appFieldReadable = "Filing basis pending foreign application class level option";
+        }
+
+
+            if(ccField.equals("cc-pfr-option")) {
+
+                //baseTrademarkApplication.findGSbyInternalID(gsID).setPendingFA(true);
+                if (ccValue.equals("yes")) {
+
+                    for (Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                        GoodAndService current = iter.next();
+
+                        if (current.getClassNumber().equals(ccNumber)) {
+                            current.setForeignRegistration(true);
+                            current.setForenginRegistrationAllGS(true);
+                            current.setMarkInUse(true);
+                            current.setMarkInUseSet(true);
+
+
+                        }
+                    }
+
+
+                }
+                if (ccValue.equals("no")) {
+
+                    for (Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                        GoodAndService current = iter.next();
+
+                        if (current.getClassNumber().equals(ccNumber)) {
+                            current.setForeignRegistration(false);
+                            current.setForenginRegistrationAllGS(false);
+
+
+                        }
+                    }
+
+
+                }
+
+                appFieldReadable = "Filing basis pending foreign registration Class level Option";
+            }
+
+
+        if(ccField.equals("cc-pna-option")) {
+
+            //baseTrademarkApplication.findGSbyInternalID(gsID).setPendingFA(true);
+            if (ccValue.equals("yes")) {
+
+                for (Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                    GoodAndService current = iter.next();
+
+                    if (current.getClassNumber().equals(ccNumber)) {
+                        current.setForeignAR_NA(true);
+                        current.setNA_AllGS(true);
+                        current.setMarkInUse(true);
+                        current.setMarkInUseSet(true);
+
+
+                    }
+                }
+
+
+            }
+            if (ccValue.equals("no")) {
+
+                for (Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                    GoodAndService current = iter.next();
+
+                    if (current.getClassNumber().equals(ccNumber)) {
+                        current.setForeignAR_NA(false);
+                        current.setNA_AllGS(false);
+
+
+                    }
+                }
+
+
+            }
+
+            appFieldReadable = "Filing basis pending foreign registration Class level Option";
+        }
+
+
+        if(ccField.equals("cc-pfa-country")) {
+
+            //baseTrademarkApplication.findGSbyInternalID(gsID).setPendingFA(true);
+
+
+            for (Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                GoodAndService current = iter.next();
+
+                if (current.getClassNumber().equals(ccNumber)) {
+                    current.setFaCountryCC(ccValue);
+                    current.setFaCountry(ccValue);
+
+
+
+
+                }
+            }
+
+
+
+
+
+            appFieldReadable = "Filing basis foreign application country Class level Option";
+        }
+
+
+        if(ccField.equals("cc-pfa-app-Number")) {
+
+            //baseTrademarkApplication.findGSbyInternalID(gsID).setPendingFA(true);
+
+
+            for (Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                GoodAndService current = iter.next();
+
+                if (current.getClassNumber().equals(ccNumber)) {
+                    current.setFaRegistrationNumber(ccValue);
+                    current.setFaAppNumberCC(ccValue);
+
+
+                }
+            }
+
+
+
+
+
+            appFieldReadable = "Filing basis foreign application number Class level Option";
+        }
+
+
+        if(ccField.equals("cc-pfa-filing-date")) {
+
+            //baseTrademarkApplication.findGSbyInternalID(gsID).setPendingFA(true);
+
+
+            for (Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                GoodAndService current = iter.next();
+
+                if (current.getClassNumber().equals(ccNumber)) {
+                   //current.setFaFilingDate(ccValue);
+
+                    try {
+                        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                        Date date = format.parse(ccValue);
+                        current.setFaFilingDate(date);
+                        current.setFaFilingDateCC(date);
+
+                    }
+                    catch(Exception ex){
+                        return buildResponseEnity("420", "ERROR: Could not save Date, invalid Date format");
+
+                    }
+
+
+
+
+                }
+            }
+
+
+            appFieldReadable = "Filing basis foreign application filing date Class level Option";
+        }
+
+
+        if(ccField.equals("cc-pfr-country")) {
+
+            //baseTrademarkApplication.findGSbyInternalID(gsID).setPendingFA(true);
+
+
+            for (Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                GoodAndService current = iter.next();
+
+                if (current.getClassNumber().equals(ccNumber)) {
+                    current.setFrCountry(ccValue);
+                    current.setFrCountryCC(ccValue);
+
+
+                }
+            }
+
+
+
+
+
+            appFieldReadable = "Filing basis foreign registration country Class level Option";
+        }
+
+
+        if(ccField.equals("cc-pfr-reg-Number")) {
+
+            //baseTrademarkApplication.findGSbyInternalID(gsID).setPendingFA(true);
+
+
+            for (Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                GoodAndService current = iter.next();
+
+                if (current.getClassNumber().equals(ccNumber)) {
+                     current.setFrRegistartionNumber(ccValue);
+                     current.setFrRegistrationNumberCC(ccValue);
+
+
+                }
+            }
+
+
+
+
+
+            appFieldReadable = "Filing basis foreign registration number Class level Option";
+        }
+
+
+
+        if(ccField.equals("cc-pfr-reg-date")) {
+
+            //baseTrademarkApplication.findGSbyInternalID(gsID).setPendingFA(true);
+
+
+            for (Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                GoodAndService current = iter.next();
+
+                if (current.getClassNumber().equals(ccNumber)) {
+                    //current.setFaFilingDate(ccValue);
+
+                    try {
+                        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                        Date date = format.parse(ccValue);
+                        current.setFrRegistrationDate(date);
+                        current.setFrRegistrationDateCC(date);
+
+                    }
+                    catch(Exception ex){
+                        return buildResponseEnity("420", "ERROR: Could not save Date, invalid Date format");
+
+                    }
+
+
+
+
+                }
+            }
+
+
+            appFieldReadable = "Filing basis foreign registration date Class level Option";
+        }
+
+        if(ccField.equals("cc-pfr-exp-date")) {
+
+            //baseTrademarkApplication.findGSbyInternalID(gsID).setPendingFA(true);
+
+
+            for (Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                GoodAndService current = iter.next();
+
+                if (current.getClassNumber().equals(ccNumber)) {
+                    //current.setFaFilingDate(ccValue);
+
+                    try {
+                        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                        Date date = format.parse(ccValue);
+                        current.setFrExpirationDate(date);
+                        current.setFrExpireDateCC(date);
+
+                    }
+                    catch(Exception ex){
+                        return buildResponseEnity("420", "ERROR: Could not save Date, invalid Date format");
+
+                    }
+
+
+
+
+                }
+            }
+
+
+            appFieldReadable = "Filing basis foreign registration  expire date Class level Option";
+        }
+
+
+        if(ccField.equals("cc-pfr-renew-date")) {
+
+            //baseTrademarkApplication.findGSbyInternalID(gsID).setPendingFA(true);
+
+
+            for (Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                GoodAndService current = iter.next();
+
+                if (current.getClassNumber().equals(ccNumber)) {
+                    //current.setFaFilingDate(ccValue);
+
+                    try {
+                        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                        Date date = format.parse(ccValue);
+                        current.setFrRenewlDate(date);
+                        current.setFrRenewalDateCC(date);
+
+                    }
+                    catch(Exception ex){
+                        return buildResponseEnity("420", "ERROR: Could not save Date, invalid Date format");
+
+                    }
+
+
+
+
+                }
+            }
+
+
+            appFieldReadable = "Filing basis foreign registration  expire date Class level Option";
+        }
+
+
+        if(ccField.equals("cc-gs-date")) {
+
+            //baseTrademarkApplication.findGSbyInternalID(gsID).setPendingFA(true);
+
+
+            for (Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                GoodAndService current = iter.next();
+
+
+                System.out.println("class number : "+ccNumber);
+
+                if (current.getClassNumber().equals(ccNumber)) {
+                    //current.setFaFilingDate(ccValue);
+
+                    try {
+                        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                        Date date = format.parse(ccValue);
+                        //current.setFaFilingDate(date);
+                        current.setFirstGSDate(date);
+                        current.setFirstGSDateSet(true);
+                        // need to create the new class level fields
+                        // and update the copy construstuctor process to copy over the new fields
+
+                        //current.setFaFilingDateCC(date);
+                        current.setFirstGSDateCC(date);
+
+                    }
+                    catch(Exception ex){
+                        return buildResponseEnity("420", "ERROR: Could not save Date, invalid Date format");
+
+                    }
+
+
+
+
+                }
+            }
+
+
+            appFieldReadable = "Filing basis first goods and services date Class level Option";
+        }
+
+        if(ccField.equals("cc-mark-date")) {
+
+            //baseTrademarkApplication.findGSbyInternalID(gsID).setPendingFA(true);
+
+
+            for (Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                GoodAndService current = iter.next();
+
+                if (current.getClassNumber().equals(ccNumber)) {
+                    //current.setFaFilingDate(ccValue);
+
+                    try {
+                        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                        Date date = format.parse(ccValue);
+                        //current.setFaFilingDate(date);
+                        current.setFirstCommerceDate(date);
+                        current.setFirstCommerceDateSet(true);
+                        // need to create the new class level fields
+                        // and update the copy construstuctor process to copy over the new fields
+
+                        //current.setFaFilingDateCC(date);
+                        current.setFirstMarkDateCC(date);
+
+                    }
+                    catch(Exception ex){
+                        return buildResponseEnity("420", "ERROR: Could not save Date, invalid Date format");
+
+                    }
+
+
+
+
+                }
+            }
+
+
+            appFieldReadable = "Filing basis first use mark in commerce date Class level Option";
+        }
+
 
 
 

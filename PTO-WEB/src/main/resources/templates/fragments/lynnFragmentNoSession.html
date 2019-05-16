@@ -1,6 +1,5 @@
 <!doctype html>
-<html th:fragment="layout (template, menu)"
-      xmlns:th="http://www.w3.org/1999/xhtml">
+<html th:fragment="layout (template, menu)" lang="en" xml:lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -9,60 +8,57 @@
 
     <link rel="shortcut icon" style="-moz-border-radius: 0px;-webkit-border-radius: 0px;border-radius: 0px;" type="image/x-icon" th:href="@{/resources/images/nav_banner.png}">
 
-    <title>USPTO.gov :: webapp prototype :: Select Mark</title>
+    <title>USPTO.gov :: webapp prototype :: Attorney Information</title>
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
 
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
-
-    <!--<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script> -->
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!--<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">-->
-    <link rel="stylesheet" th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.theme.css}"/>
-
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <!--    <link rel="stylesheet" th:href="@{/resources/css/usPTO.css}"/>
+     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+
     -->
-    <!--<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">-->
     <link rel="stylesheet" th:href="@{/webjars/datatables/1.10.15/css/jquery.dataTables.css}"/>
 
-
-    <!--<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">-->
-
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">-->
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap-theme.min.css}"/>
-
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--<link rel="stylesheet" href="css/reset.css">-->
+
     <link rel="stylesheet" th:href="@{/resources/css/reset.css}"/>
     <!--<link rel="stylesheet" href="css/lynnstyles.css">-->
     <link rel="stylesheet" th:href="@{/resources/css/lynnstyles.css}"/>
 
-
-    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-    <!--<script type="application/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
-    <script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
-
-
     <!--jquery and web jars -->
-
-    <!--<script type="application/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script> -->
-    <script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
-    <!--<script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>-->
+    <!--<script th:src="@{/webjars/jquery/jquery.min.js}"></script>-->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous"></script>
+    <!--<script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <!--<script src="../resources/js/jquery.dataTables.min.js"></script>-->
-    <!--<script type="application/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>-->
-    <script th:src="@{/webjars/datatables/1.10.15/js/jquery.dataTables.js}"></script>
-
-    <!--<script type="application/javascript"  th:src="@{/resources/js/lynnjqueryscript.js}"></script>-->
-    <!--<script type="application/javascript" src="js/accordion.js"></script>-->
+    <!--<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>-->
+    <script type="application/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <!--<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="application/javascript"  th:src="@{/resources/js/lynnjqueryscript.js}"></script>
+    <script type="application/javascript"  th:src="@{/resources/js/tab_panels.js}"></script>
     <script type="application/javascript"  th:src="@{/resources/js/accordion.js}"></script>
     <!--<script type="application/javascript" src="js/checkbox.js"></script>-->
     <script type="application/javascript"  th:src="@{/resources/js/checkbox.js}"></script>
+    <script type="application/javascript"  th:src="@{/resources/js/btn_checkbox.js}"></script>
+
+    <script type="application/javascript"  th:src="@{/resources/js/checkboxids.js}"></script>
+
+
 
 
 </head>
 
-<body style="background-color: white;">
+<body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -80,15 +76,16 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/accounts/dashboard">Home</a></li>
+
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="http://www.uspto.gov/learning-resources">FAQs</a></li>
+                        <li><a href="https://www.uspto.gov/learning-and-resources/account-faqss">FAQs</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="http://www.uspto.gov/about-us/contact-us">Contact Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
                     </ul>
                 </li>
-                <li><a href="#" data-target="#sign-in-modal" data-toggle="modal">Sign In</a></li>
+                <li><a href="#" data-target="#loginmodal" data-toggle="modal">Sign In</a></li>
                 <li><a href="https://my.uspto.gov/" class="orange">MyUSPTO</a></li>
             </ul>
 
@@ -97,7 +94,7 @@
             <ul class="nav navbar-nav navbar-right" id="lowernav">
                 <li style="position: fixed; left:30px; ">
 
-                    <div class="autoSaveMessageArea" style="color: white; ">
+                    <div class="autoSaveMessageArea" style="color: white; position: relative; bottom: -7px; ">
                         <b><span  th:text ="${message}" style="">&nbsp;&nbsp;</span></b>
 
                     </div>
@@ -115,123 +112,19 @@
                         <li><a href="#">Tutorial</a></li>
                     </ul>
                 </li>
+
+
             </ul>
             <br style="clear:both">
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
 
-
-<div class="container-fluid" style="position:relative; bottom: -200px;background-color: white; min-height: 800px;">
-
+<div class="container-fluid">
     <th:block th:include="${template}"/>
     <br/>
     <br/>
-
-</div><!--END row div-->
-
-
-<script>
-    $(document).ready(function() {
-        setTimeout(function() {
-            // after 1000 ms we add the class animated to the login/register card
-            $('.content').fadeIn(500);
-        }, 500);
-        ///////////////////////////////////////////////////////////////////////////////////////////
-        // password modal update actions
-        // passowrd update on click
-        ////////////////////////////////////////////////////////////////////////////////////////////
-
-        //////////////////////////////////////////////////////////////////////////
-    });
-</script>
-<!--login modal -->
-<div id="sign-in-modal" class="modal fade modal-lg" role="dialog" tabindex="-1"  style="min-width: 1500px;" >
-    <div class="modal-dialog" id="sign-in-modal-dialog"  style="position: relative; left:130px; right:-130px;">
-
-        <!-- Modal content-->
-        <div class="modal-content" style="max-width:900px; max-height: 900px; background-color: rgb(246, 246, 246); border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;">
-            <div class="modal-header" style="background-color: #383A3C; color: whitesmoke; border-top-left-radius: 20px; border-top-right-radius: 20px;">
-                <button type="button" class="close" data-dismiss="modal" style="color: whitesmoke;">&times;</button>
-                <h4 class="modal-title" style="color: whitesmoke;"><b>USPTO.gov | eFile <i>Reimagined</i></b> </h4>
-            </div>
-            <div class="modal-body">
-
-                <div class="container-fluid" >
-                    <form id="login-form" th:action="@{/login}" method="post" class="form form-check-input form-control-sm"  >
-                        <div class="card card-login" style="margin: auto; color: #383A3C; background-color: white; min-height: 250px; margin-left: 20px;  max-width: 90%;   border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;"  >
-                            <div class=" card-header-blue text-center" style="padding-top: 10px;position:relative;top: 20px; right:-30%;">
-                                <b class="card-title" style=""><a style="margin-top: 50px; font-weight: bold;" href="/registration">New User?</a></b>
-                            </div>
-
-                            <div class="card-body " style="padding-top: 20px;position:relative;top: 20px;  min-height: 200px; border: none;">
-                                <span class="card-description" style="position: relative; right:-33%; top:-10px; ;"><h5><b style="font-weight: bold;">Sign In</b></h5></span>
-
-                                <span class="bmd-form-group" style="position: relative; top:-10%;" >
-                                  <div class="input-group">
-                                    <div class="input-group-prepend">
-                                      <span class="input-group-text" style="margin:auto; position:relative; left:40%; right:40%; margin-bottom: 10px">
-                                          <i class="material-icons">face</i><b style="padding-left: 10px; position: relative; top:-5px; font-weight: bold;">Email Address</b>
-                                      </span>
-                                    </div>
-                                    <input style="margin: auto; min-width: 265px; position:relative; left:40%; right:40%; margin-top: 10px; margin-bottom: 10px; border-top-right-radius: 2px; border-top-left-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px;" type="email" class="form-control" name="username" placeholder="">
-                                  </div>
-                                </span>
-                                <span class="bmd-form-group" style="margin:auto;">
-                                  <div class="input-group" >
-                                    <div class="input-group-prepend">
-                                      <span class="input-group-text" style="margin:auto; position:relative; left:40%; right :40%; margin-bottom: 10px; margin-top: 10px;">
-                                          <i class="material-icons">vpn_key</i><b style="padding-left: 10px; position: relative; top:-5px;font-weight: bold;">Password</b>
-                                      </span>
-                                    </div>
-                                    <input  style="margin:auto; min-width: 265px; position:relative; left:40%; margin-top: 10px; border-top-right-radius: 2px; border-top-left-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px;" type="password" class="form-control" name="password" placeholder="">
-                                  </div>
-                                </span>
-
-                                <span class="bmd-form-group" style="margin:auto; position: relative; bottom: -40px;">
-                                     <div class="input-group" >
-                                        <button style="min-width: 265px; margin:auto; position:relative; right:-107px; border-top-right-radius: 5px; border-top-left-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;background-color: #004c97; color: whitesmoke; " class="btn" type="submit" form="login-form" value="Sign In"><i class="material-icons" style="padding-right: 70px; ">input</i><b style="position: relative; left:-45px; top:-5px; font-weight: bold;"> &nbsp;  Sign In&nbsp;</b>
-                                        </button>
-                                     </div>
-                                </span>
-                            </div>
-                            <div class="card-footer justify-content-center" style=" padding-bottom:50px; margin-bottom: 10px; background-color: white; border-top: none; position:relative;top: 12px;  border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; z-index: -1;">
-
-
-
-
-                                <!-- Login Form -->
-                                <div  style="color: red; position: relative; top:20%; right:-22%;" th:if="${param.error}">
-                                    <b>Invalid username and password.</b>
-                                </div>
-                                <div  style="color: green; position: relative; top:20%; right:-22%;" th:if="${param.logout}">
-                                    You have been logged out.
-                                </div>
-
-
-                            </div>
-
-
-
-                        </div>
-
-
-
-                    </form>
-                </div>
-
-            </div>
-            <div class="modal-footer" style="  background-color: rgb(246, 246, 246); color: whitesmoke; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;">
-
-
-
-
-            </div>
-
-        </div>
-    </div>
-</div>
-<!-- end of login modal -->
+</div><!--END container-fluid-->
 
 
 
@@ -244,10 +137,13 @@
                         <div class="footer-brand" role="img" aria-label="United States Office of Patent and Trademarks"></div>
                     </a>
                 </div>
+                <div class="col-xs-4">
+                    <p>Version 1.0.0</p>
+                </div>
             </div>
             <div class="col-xs-8 col-sm-4 col-md-3">
                 <div class="col-xs-6">
-                    <span id="webPolicy"><p>Website Policy</p></span>
+                    <p><span id="webPolicy">Website Policy</span></p>
                 </div>
                 <div class="col-xs-6">
                     <p>Privacy Policy</p>
@@ -256,7 +152,48 @@
         </div>
     </div>
 </footer>
-
 <script type="text/javascript" src="https://nebula-cdn.kampyle.com/wu/451129/onsite/embed.js" async></script>
+<script>
+    "use strict";
+
+    !function() {
+        var t = window.driftt = window.drift = window.driftt || [];
+        if (!t.init) {
+            if (t.invoked) return void (window.console && console.error && console.error("Drift snippet included twice."));
+            t.invoked = !0, t.methods = [ "identify", "config", "track", "reset", "debug", "show", "ping", "page", "hide", "off", "on" ],
+                t.factory = function(e) {
+                    return function() {
+                        var n = Array.prototype.slice.call(arguments);
+                        return n.unshift(e), t.push(n), t;
+                    };
+                }, t.methods.forEach(function(e) {
+                t[e] = t.factory(e);
+            }), t.load = function(t) {
+                var e = 3e5, n = Math.ceil(new Date() / e) * e, o = document.createElement("script");
+                o.type = "text/javascript", o.async = !0, o.crossorigin = "anonymous", o.src = "https://js.driftt.com/include/" + n + "/" + t + ".js";
+                var i = document.getElementsByTagName("script")[0];
+                i.parentNode.insertBefore(o, i);
+            };
+        }
+    }();
+    drift.SNIPPET_VERSION = '0.3.1';
+    drift.load('b5xdchmzc38b');
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-130047127-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130047127-1');
+</script>
+
+<script>
+
+    $('.dropdown-menu').click();
+
+</script>
 </body>
 </html>

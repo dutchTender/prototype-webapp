@@ -112,7 +112,7 @@
                         <li role="separator" class="divider"></li>
                         <li><a href="/accounts/userHome">Account</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="/logout">Sign Out</a></li>
+                        <li><a href="/logout">Log Out</a></li>
                     </ul>
                 </li>
 
@@ -134,9 +134,9 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle fees" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true" th:text="${baseTrademarkApplication.getTotalFeeString()}" id="fee-display">Fees $725<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li>Basic Fee <span th:text="${baseTrademarkApplication.getBasicFeeCalculationString()}" id="basic-fee-calc"></span> </li>
+                        <li>Filing fee per class <span th:text="${baseTrademarkApplication.getBasicFeeCalculationString()}" id="basic-fee-calc"></span> </li>
                         <li role="separator" class="divider"></li>
-                        <li>Additional Classes <span th:text="${baseTrademarkApplication.getExtraFeeCalculationString()}"id="extra-fee-calc"></span> </li>
+                        <li>Number of classes <span th:text="${baseTrademarkApplication.getTotalNumberOfclasses()}"id="extra-fee-calc"></span> </li>
                         <li role="separator" class="divider"></li>
                         <li id="lastli" style="font-weight: bold;">Total <span th:text="${baseTrademarkApplication.getTotalFeeString()}" id="total-fees">Fees $725</span></li>
                     </ul>
@@ -248,6 +248,42 @@
 </footer>
 
 <script type="text/javascript" src="https://nebula-cdn.kampyle.com/wu/451129/onsite/embed.js" async></script>
+<script>
+    "use strict";
+
+    !function() {
+        var t = window.driftt = window.drift = window.driftt || [];
+        if (!t.init) {
+            if (t.invoked) return void (window.console && console.error && console.error("Drift snippet included twice."));
+            t.invoked = !0, t.methods = [ "identify", "config", "track", "reset", "debug", "show", "ping", "page", "hide", "off", "on" ],
+                t.factory = function(e) {
+                    return function() {
+                        var n = Array.prototype.slice.call(arguments);
+                        return n.unshift(e), t.push(n), t;
+                    };
+                }, t.methods.forEach(function(e) {
+                t[e] = t.factory(e);
+            }), t.load = function(t) {
+                var e = 3e5, n = Math.ceil(new Date() / e) * e, o = document.createElement("script");
+                o.type = "text/javascript", o.async = !0, o.crossorigin = "anonymous", o.src = "https://js.driftt.com/include/" + n + "/" + t + ".js";
+                var i = document.getElementsByTagName("script")[0];
+                i.parentNode.insertBefore(o, i);
+            };
+        }
+    }();
+    drift.SNIPPET_VERSION = '0.3.1';
+    drift.load('b5xdchmzc38b');
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-130047127-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130047127-1');
+</script>
+
 </body>
 
 

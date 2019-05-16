@@ -36,7 +36,7 @@
     <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <!--<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>-->
     <script type="application/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script type="application/javascript"  th:src="@{/resources/js/lynnjqueryscriptDashboard.js}"></script>
+    <script type="application/javascript"  th:src="@{/resources/js/lynnjqueryscript.js}"></script>
     <script type="application/javascript"  th:src="@{/resources/js/tab_panels.js}"></script>
 </head>
 
@@ -75,7 +75,7 @@
                         <li role="separator" class="divider"></li>
                         <li><a href="/accounts/userHome">Account</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="/logout">Sign Out</a></li>
+                        <li><a href="/logout">Log Out</a></li>
                     </ul>
                 </li>
                 <li><a href="https://my.uspto.gov/" class="orange">MyUSPTO</a></li>
@@ -183,7 +183,7 @@
                                                         <table id="dashboardtabletwo" class="table DataTable row-border display responsive text-center" style="width:100%" role="grid" aria-describedby="filings">
                                                             <thead>
                                                             <tr role="row">
-                                                                <th colspan="7" scope="colgroup">Upcoming Action Due</th>
+                                                                <th colspan="7" scope="colgroup">Upcoming Action(s) Due</th>
                                                             </tr>
                                                             <tr role="row">
                                                                 <th scope="col" class="sorting_asc" tabindex="0" aria-controls="dashboardtabletwo" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Select: activate to sort column descending">Serial#</th>
@@ -196,33 +196,50 @@
                                                             </tr>
                                                             </thead>
                                                             <tbody>
-                                                            <tr>
-                                                                <td>87697840</td>
-                                                                <td>87697834</td>
-                                                                <td><img th:src="@{/resources/images/caps.png}" style="max-width: 55px; max-height: 33px;"></td>
-                                                                <td>Jackie Babos</td>
-                                                                <td>12/21/2019</td>
-                                                                <td>Abandoned</td>
-                                                                <td>Resubmit</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>87697899</td>
-                                                                <td>87697823</td>
-                                                                <td><img th:src="@{/resources/images/nats.png}" style="max-width: 55px; max-height: 33px;"></td>
-                                                                <td>Li Zhang</td>
-                                                                <td>12/21/2019</td>
-                                                                <td>Draft</td>
-                                                                <td>Filing Basis, Additional Information, Confirm and Pay</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>87697248</td>
-                                                                <td>87697235</td>
-                                                                <td><img th:src="@{/resources/images/wizards.png}" style="max-width: 55px; max-height: 33px;"></td>
-                                                                <td>Jacob Goldstein</td>
-                                                                <td>None</td>
-                                                                <td>Completed</td>
-                                                                <td>None</td>
-                                                            </tr>
+
+                                                            <th:block th:each="filing : ${user.getMyApplications()}">
+                                                                <th:block th:each="action : ${filing.getOfficeActions()}">
+                                                                    <th:block th:if="${action.isActiveAction() == true}">
+                                                                        <tr>
+                                                                            <td><a th:text="${action.getParentSerialNumber()}">87697840</a></td>
+                                                                            <td>N/A</td>
+                                                                            <td><img th:src="${action.getParentMarkImagePath()}" style="max-width: 55px; max-height: 33px;"></td>
+                                                                            <td th:text="${action.getParentMarkOwnerName()}">Pittsburgh Penguins LP</td>
+                                                                            <td th:text="${action.returnSomeDate()}">2/20/2019</td>
+                                                                            <td > <a th:text="${action.getOfficeActionCode()}">Abandoned</a></td>
+                                                                            <td STYLE="color: red"><a>Respond</a></td>
+                                                                        </tr>
+
+                                                                    </th:block>
+
+
+                                                                </th:block>
+
+
+                                                            </th:block>
+
+
+                                                            <th:block th:each="filing2 : ${user.getMyApplications()}">
+                                                                <th:block th:each="petition : ${filing2.getPetitions()}">
+                                                                    <th:block th:if="${petition.isActivePetition() == true}">
+                                                                        <tr>
+                                                                            <td><a th:text="${petition.getParentSerialNumber()}">87697840</a></td>
+                                                                            <td>N/A</td>
+                                                                            <td><img th:src="${petition.getParentMarkImagePath()}" style="max-width: 55px; max-height: 33px;"></td>
+                                                                            <td th:text="${petition.getParentMarkOwnerName()}">Pittsburgh Penguins LP</td>
+                                                                            <td th:text="${petition.returnSomeDate()}">2/20/2019</td>
+                                                                            <td > <a th:text="${petition.getOfficeActionCode()}">Abandoned</a></td>
+                                                                            <td STYLE="color: red"><a th:href="${petition.getPetitionsLink()}">Revive</a></td>
+                                                                        </tr>
+
+                                                                    </th:block>
+
+
+                                                                </th:block>
+
+
+                                                            </th:block>
+
 
 
                                                             </tbody>
@@ -318,6 +335,34 @@
         </div>
     </div>
 </footer>
+<script type="text/javascript" src="https://nebula-cdn.kampyle.com/wu/451129/onsite/embed.js" async></script>
+<script>
+    "use strict";
+
+    !function() {
+        var t = window.driftt = window.drift = window.driftt || [];
+        if (!t.init) {
+            if (t.invoked) return void (window.console && console.error && console.error("Drift snippet included twice."));
+            t.invoked = !0, t.methods = [ "identify", "config", "track", "reset", "debug", "show", "ping", "page", "hide", "off", "on" ],
+                t.factory = function(e) {
+                    return function() {
+                        var n = Array.prototype.slice.call(arguments);
+                        return n.unshift(e), t.push(n), t;
+                    };
+                }, t.methods.forEach(function(e) {
+                t[e] = t.factory(e);
+            }), t.load = function(t) {
+                var e = 3e5, n = Math.ceil(new Date() / e) * e, o = document.createElement("script");
+                o.type = "text/javascript", o.async = !0, o.crossorigin = "anonymous", o.src = "https://js.driftt.com/include/" + n + "/" + t + ".js";
+                var i = document.getElementsByTagName("script")[0];
+                i.parentNode.insertBefore(o, i);
+            };
+        }
+    }();
+    drift.SNIPPET_VERSION = '0.3.1';
+    drift.load('b5xdchmzc38b');
+</script>
+
 </body>
 
 <script>

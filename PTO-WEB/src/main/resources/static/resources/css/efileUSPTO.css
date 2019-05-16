@@ -75,25 +75,10 @@ object#selected {
     margin-left:.5em;
     margin-right:.5em;
 }
-ul#lowernav li a.glyphed:hover {
-    background-color: transparent!important;
-    color:#F3D54E;
-}
-ul#lowernav li a.glyphed {
-    color:#9BB8D3!important;
-}
-ul#lowernav li a.glyphed:hover, ul#lowernav li a.glyphed:active {
-    color:#EEEEEE!important;
-}
-ul#lowernav li a.glyphed:focus {
-    color:#F3D54E!important;
-}
+
 ul#lowernav li a.glyphed span {
-    color:#9BB8D3!important;
     margin-right:.45em;
-}
-ul#lowernav li a.glyphed span.kerned {
-    margin-right:.2em;
+    top: 1px;
 }
 /* PROGRESS tracker */
 section .breadcrumb-steps {
@@ -257,10 +242,14 @@ ul#lowernav .dropdown-menu>li>a  {
 #firstli  {
     padding-top:3px!important;
 }
-#lastli  {
-    padding-bottom:3px!important;
+ul#lowernav li.dropdown ul.dropdown-menu li#lastli  {
+    padding-bottom:1px;
+    padding-top:1px;
+    border-bottom:0;
+    font-weight:600;
+    background-color:#009CDE!important;
 }
-ul#lowernav .dropdown-menu>li  {
+ul#lowernav .dropdown-menu li  {
     color: #333;
     display: block;
     padding: 0 20px;
@@ -269,7 +258,18 @@ ul#lowernav .dropdown-menu>li  {
     line-height: 3.7em;
     white-space: nowrap;
 }
+ul#lowernav li.dropdown ul.dropdown-menu li  {
+    color: #fff;
+    background-color: #9BB8D3!important;
+    border-bottom:1px solid #ddd;
+    border-top: none;
+}
+ul#lowernav li.dropdown ul.dropdown-menu {
+    -webkit-box-shadow: 0 0 0 0 rgba(0,0,0,0)!important;
+    box-shadow: 0 0 0 0 rgba(0,0,0,0)!important;
+}
 /* end dropdown no links (fees)*/
+
 ul#lowernav .dropdown-menu>li>a:hover  {
     color: #333;
     background-color: transparent!important;
@@ -1477,9 +1477,19 @@ input[type="radio"]:focus + label span.checkmark::after {
     font-size:.75em;
     line-height: .8em;
 }
-.upload-drop-zone span.glyphicon-upload {
+.upload-drop-zone span.glyphicon-upload, .upload-drop-zone span.glyphicon-check {
     font-size:3em;
     line-height: .8em;
+}
+.upload-drop-zone span.glyphicon-check {
+    line-height: 1.42em;
+}
+#fileDisplayArea img {
+    overflow:hidden;
+}
+.fileDisplayArea img {
+    max-width:50%;
+    overflow:hidden;
 }
 .alert-warning {
     background-image: none;
@@ -1487,7 +1497,21 @@ input[type="radio"]:focus + label span.checkmark::after {
 .filename {
     font-size:.8em;
     display: inline-block;
-    padding: 0 7px;
+    padding: 3px 7px;
+    display: -webkit-flex;
+    -webkit-flex-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-wrap: break-word;
+    word-wrap:break-word;
+    -webkit-columns: 1;
+    -moz-columns: 1;
+    columns: 1;
+    -webkit-column-width: 100px;
+    -moz-column-width: 100px;
+    word-break:break-all;
+    width:60%;
+    float: left;
 }
 .alert-success {
     background-image:none!important;
@@ -1979,4 +2003,109 @@ p#showmarktxt {
     -moz-column-width: 100px;
     column-width: 100px;
     word-break:break-all;
+}
+
+/*toggle button*/
+#designwithtext .required {
+    vertical-align: text-bottom;
+    margin-right:1em;
+}
+.instructions {
+    display:inline-block;
+    vertical-align: text-bottom;
+    margin-right: .4em;
+    font-weight:400;
+}
+div[role="switch"] {
+    display:inline-block;
+}
+#on, #off {
+    color:#fff;
+    font-size: 13px;
+}
+#on {
+    margin-left: 18px;
+}
+#off {
+    margin-left: 5px;
+}
+#costsavingoptions {
+    color:#808080;
+}
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 90px;
+    height: 38px;
+    margin-bottom:0;
+    margin-top:1.5em;
+}
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #aaa;
+    -webkit-transition: .4s;
+    transition: .4s;
+    padding-top: 7px;
+    border-radius: 19px;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 28px;
+    width: 28px;
+    left: 5px;
+    bottom: 5px;
+    background-color: #fff;
+    -webkit-transition: .2s;
+    transition: .2s;
+    border-radius: 14px;
+}
+input:checked + .slider {
+    background-color: #004C97;
+}
+input:checked + .slider:before {
+    -webkit-transform: translateX(52px);
+    -ms-transform: translateX(52px);
+    transform: translateX(52px);
+}
+input:checked + .slider #off {
+    color: #004C97;
+}
+.subtle{
+    margin-left:5px;
+    margin-bottom: 5px;
+}
+
+
+
+.tooltip-inner {
+    max-width: 222px;
+    /* If max-width does not work, try using width instead */
+    width: 222px;
+    min-with:222px;
+}
+
+
+span#filingsheader {
+    line-height: 39px;
+}
+
+#on{
+    position: relative;
+    left:-3px;
+}
+
+button.close:hover{
+    position: relative;
+    right:-5px;
 }

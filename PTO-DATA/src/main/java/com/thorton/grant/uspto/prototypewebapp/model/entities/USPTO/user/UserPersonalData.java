@@ -1,19 +1,23 @@
 package com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.user;
 
+import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.tradeMark.application.actions.OfficeActions;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.base.BaseEntity;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.security.UserCredentials;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
 
 
 @Entity
 @Table(name = "user_personal_data")
 public class UserPersonalData extends BaseEntity {
 
+    public UserPersonalData() {
+        phoneNumbers = new ArrayList<>();
+    }
 
-        @Column(name = "first_name")
+    @Column(name = "first_name")
 
         private String firstName;
 
@@ -52,8 +56,11 @@ public class UserPersonalData extends BaseEntity {
 
 
 
-        @Column(name="phoneNumber")
-        private String[] phoneNumber;
+
+
+        @OneToMany(cascade =  CascadeType.ALL)
+        @Nullable
+        private List<PhoneNumber> phoneNumbers;
 
 
 
@@ -152,15 +159,24 @@ public class UserPersonalData extends BaseEntity {
             this.primaryPhonenumber = primaryPhonenumber;
         }
 
-        public String[] getPhoneNumber() {
-            return phoneNumber;
-        }
+    @Nullable
+    public List<PhoneNumber> getPhoneNumbers() {
+        return phoneNumbers;
+    }
 
-        public void setPhoneNumber(String[] phoneNumber) {
-            this.phoneNumber = phoneNumber;
-        }
+    public void setPhoneNumbers(@Nullable List<PhoneNumber> phoneNumbers) {
+        this.phoneNumbers = phoneNumbers;
+    }
 
-        public String getEmail() {
+
+    public void addPhoneNumber( PhoneNumber phoneNumber){
+            phoneNumbers.add(phoneNumber);
+    }
+    public void removePhoneNumber(PhoneNumber phoneNumber){
+            phoneNumbers.remove(phoneNumber);
+    }
+
+    public String getEmail() {
             return email;
         }
 
@@ -192,35 +208,10 @@ public class UserPersonalData extends BaseEntity {
                 Objects.equals(zipcode, that.zipcode) &&
                 Objects.equals(country, that.country) &&
                 Objects.equals(primaryPhonenumber, that.primaryPhonenumber) &&
-                Arrays.equals(phoneNumber, that.phoneNumber) &&
+
                 Objects.equals(email, that.email) &&
                 Objects.equals(alertnateEmail, that.alertnateEmail);
     }
 
-    @Override
-    public int hashCode() {
-        int result = Objects.hash(firstName, lastName, midlleName, title, suffix, address, city, state, zipcode, country, primaryPhonenumber, email, alertnateEmail);
-        result = 31 * result + Arrays.hashCode(phoneNumber);
-        return result;
-    }
 
-    @Override
-    public String toString() {
-        return "UserPersonalData{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", midlleName='" + midlleName + '\'' +
-                ", title='" + title + '\'' +
-                ", suffix='" + suffix + '\'' +
-                ", address='" + address + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", zipcode='" + zipcode + '\'' +
-                ", country='" + country + '\'' +
-                ", primaryPhonenumber='" + primaryPhonenumber + '\'' +
-                ", phoneNumber=" + Arrays.toString(phoneNumber) +
-                ", email='" + email + '\'' +
-                ", alertnateEmail='" + alertnateEmail + '\'' +
-                '}';
-    }
 }

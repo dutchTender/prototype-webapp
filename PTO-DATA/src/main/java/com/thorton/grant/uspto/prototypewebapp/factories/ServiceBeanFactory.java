@@ -5,6 +5,7 @@ import com.thorton.grant.uspto.prototypewebapp.interfaces.USPTO.PTOUserService;
 import com.thorton.grant.uspto.prototypewebapp.interfaces.Secruity.UserCredentialsService;
 import com.thorton.grant.uspto.prototypewebapp.interfaces.Secruity.UserRoleService;
 import com.thorton.grant.uspto.prototypewebapp.interfaces.USPTO.tradeMark.application.actions.OfficeActionsService;
+import com.thorton.grant.uspto.prototypewebapp.interfaces.USPTO.tradeMark.application.actions.PetitionService;
 import com.thorton.grant.uspto.prototypewebapp.interfaces.USPTO.tradeMark.application.participants.LawyerService;
 import com.thorton.grant.uspto.prototypewebapp.interfaces.USPTO.tradeMark.application.participants.OwnerService;
 import com.thorton.grant.uspto.prototypewebapp.interfaces.USPTO.tradeMark.application.types.BaseTradeMarkApplicationService;
@@ -29,7 +30,9 @@ public class ServiceBeanFactory {
     private final AuthenticationTokenService authenticationTokenService;
     private final GoodsAndServicesService goodsAndServicesService;
 
-    public ServiceBeanFactory(com.thorton.grant.uspto.prototypewebapp.interfaces.USPTO.PTOUserService PTOUserService, UserCredentialsService userCredentialsService, UserRoleService userRoleService, VerificationTokenService verificationTokenService, LawyerService lawyerService, OwnerService ownerService, OfficeActionsService officeActionsService, TradeMarkService tradeMarkService, BaseTradeMarkApplicationService baseTradeMarkApplicationService, AuthenticationTokenService authenticationTokenService, GoodsAndServicesService goodsAndServicesService) {
+    private final PetitionService petitionService;
+
+    public ServiceBeanFactory(com.thorton.grant.uspto.prototypewebapp.interfaces.USPTO.PTOUserService PTOUserService, UserCredentialsService userCredentialsService, UserRoleService userRoleService, VerificationTokenService verificationTokenService, LawyerService lawyerService, OwnerService ownerService, OfficeActionsService officeActionsService, TradeMarkService tradeMarkService, BaseTradeMarkApplicationService baseTradeMarkApplicationService, AuthenticationTokenService authenticationTokenService, GoodsAndServicesService goodsAndServicesService, PetitionService petitionService) {
         this.PTOUserService = PTOUserService;
         this.userCredentialsService = userCredentialsService;
         this.userRoleService = userRoleService;
@@ -41,8 +44,8 @@ public class ServiceBeanFactory {
         this.baseTradeMarkApplicationService = baseTradeMarkApplicationService;
         this.authenticationTokenService = authenticationTokenService;
         this.goodsAndServicesService = goodsAndServicesService;
+        this.petitionService = petitionService;
     }
-
 
     public com.thorton.grant.uspto.prototypewebapp.interfaces.USPTO.PTOUserService getPTOUserService() {
         return PTOUserService;
@@ -86,5 +89,9 @@ public class ServiceBeanFactory {
 
     public GoodsAndServicesService getGoodsAndServicesService() {
         return goodsAndServicesService;
+    }
+
+    public PetitionService getPetitionService() {
+        return petitionService;
     }
 }

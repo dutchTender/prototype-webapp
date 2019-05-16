@@ -4,8 +4,9 @@ import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.tradeMark.ap
 import com.thorton.grant.uspto.prototypewebapp.model.entities.base.BaseEntity;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import java.util.Objects;
+import java.util.Date;
 
 
 @Entity
@@ -14,10 +15,44 @@ public class OfficeActions extends BaseEntity {
 
     private String officeAction;
 
-    private String oficeActionCode;
+    private String officeActionCode;
 
-    @OneToOne
+
+    private Date  dueDate;
+
+
+    private String parentSerialNumber;
+
+    private String  parentMarkImagePath;
+
+    private String parentMarkOwnerName;
+
+
+
+    private boolean activeAction;
+
+
+
+    public String getDueDateDisplay(){
+
+        return  dueDate.toString().substring(0,10);
+    }
+
+
+    public String returnSomeDate(){
+
+        return  "2/20/2020";
+
+    }
+
+
+
+
+    @ManyToOne
     private BaseTrademarkApplication trademarkApplication;
+
+
+
 
 
 
@@ -30,12 +65,12 @@ public class OfficeActions extends BaseEntity {
         this.officeAction = officeAction;
     }
 
-    public String getOficeActionCode() {
-        return oficeActionCode;
+    public String getOfficeActionCode() {
+        return officeActionCode;
     }
 
-    public void setOficeActionCode(String oficeActionCode) {
-        this.oficeActionCode = oficeActionCode;
+    public void setOfficeActionCode(String officeActionCode) {
+        this.officeActionCode = officeActionCode;
     }
 
     public BaseTrademarkApplication getTrademarkApplication() {
@@ -47,28 +82,51 @@ public class OfficeActions extends BaseEntity {
     }
 
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OfficeActions that = (OfficeActions) o;
-        return Objects.equals(officeAction, that.officeAction) &&
-                Objects.equals(oficeActionCode, that.oficeActionCode) &&
-                Objects.equals(trademarkApplication, that.trademarkApplication);
+
+    public Date getDueDate() {
+        return dueDate;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(officeAction, oficeActionCode, trademarkApplication);
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public String getParentSerialNumber() {
+        return parentSerialNumber;
+    }
+
+    public void setParentSerialNumber(String parentSerialNumber) {
+        this.parentSerialNumber = parentSerialNumber;
+    }
+
+    public String getParentMarkImagePath() {
+        return parentMarkImagePath;
+    }
+
+    public void setParentMarkImagePath(String parentMarkImagePath) {
+        this.parentMarkImagePath = parentMarkImagePath;
+    }
+
+    public String getParentMarkOwnerName() {
+        return parentMarkOwnerName;
+    }
+
+    public void setParentMarkOwnerName(String parentMarkOwnerName) {
+        this.parentMarkOwnerName = parentMarkOwnerName;
+    }
+
+    public String getInternalID(){
+        return String.valueOf(this.getId());
+    }
+
+    public boolean isActiveAction() {
+        return activeAction;
+    }
+
+    public void setActiveAction(boolean activeAction) {
+        this.activeAction = activeAction;
     }
 
 
-    @Override
-    public String toString() {
-        return "OfficeActions{" +
-                "officeAction='" + officeAction + '\'' +
-                ", oficeActionCode='" + oficeActionCode + '\'' +
-                ", trademarkApplication=" + trademarkApplication +
-                '}';
-    }
+
 }

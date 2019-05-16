@@ -125,7 +125,14 @@
             <version>5.5.10</version>
         </dependency>
 
+        <!--word document thumb nail generation -->
 
+        <!-- https://mvnrepository.com/artifact/org.jodconverter/jodconverter-local -->
+        <dependency>
+            <groupId>org.jodconverter</groupId>
+            <artifactId>jodconverter-local</artifactId>
+            <version>4.1.0</version>
+        </dependency>
 
         <!-- enable spring security -->
         <!-- spring security

@@ -82,7 +82,13 @@
                 <!--START goods and services table-->
                 <div class="row">
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6  img-fluid">
-                       <embed th:src="@{/resources/video/GS-services.mp4}" autostart="false" width="333" height="222">
+
+
+                        <video width="333" height="222" controls >
+                            <source th:src="@{/resources/video/GS-services.mp4}" type="video/mp4">
+
+                            Your browser does not support the video tag.
+                        </video>
 
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -123,15 +129,21 @@
 
 
     var host = host_name+":"+host_port;
-    var markType = /*[[${baseTrademarkApplication.tradeMark.trademarkDesignType}]]*/ 'User Name';
-
     var  image_path = /*[[${markImagePath}]]*/ 'User Name';
+
 
     var  image_pathBW = /*[[${markImagePathBW}]]*/ 'User Name';
 
     var colorClaim = /*[[${markColorClaim}]]*/ 'User Name';
 
     var acceptBW = /*[[${markColorClaimBW}]]*/ 'User Name';
+    var colorClaimSet = /*[[${colorClaimSet}]]*/ 'User Name';
+
+
+    var markType = /*[[${baseTrademarkApplication.tradeMark.trademarkDesignType}]]*/ 'User Name';
+    var markText = /*[[${baseTrademarkApplication.tradeMark.trademarkStandardCharacterText}]]*/ 'User Name';
+
+
     var searchDB = /*[[${searchDB}]]*/ 'User Name';
 
 
@@ -157,7 +169,7 @@
     var bsLink1 = "../../application/OwnerSetView/?trademarkID="+appInternalID;
 
     var bsLink2_active =  "../../application/MarkDetails/?trademarkID="+appInternalID;
-    var bsLink2_done =  "../../mark/designWithTextDisclaimer/?trademarkID="+appInternalID;
+    var bsLink2_done =  "../../application/MarkDetails/?trademarkID="+appInternalID;
 
     var bsLink3_active =  "../../application/goodsAndServicesStart/?trademarkID="+appInternalID;
     var bsLink3_done =  "../../application/goodsAndServicesReview/?trademarkID="+appInternalID;
@@ -211,6 +223,10 @@
         });
 
 
+        // expand fee drop down
+        $('a.dropdown-toggle').click();
+
+
 
 
         $('[data-toggle="tooltip"]').tooltip();
@@ -219,7 +235,7 @@
 
         $('#bs-link1').click(function () {
             var url = $(this).attr("href");
-            if(url != "undefined"){
+            if(url != undefined){
                 location.href=url;
             }
 
@@ -227,7 +243,7 @@
 
         $('#bs-link2').click(function () {
             var url = $(this).attr("href");
-            if(url != "undefined"){
+            if(url != undefined){
                 location.href=url;
             }
 
@@ -235,7 +251,7 @@
 
         $('#bs-link3').click(function () {
             var url = $(this).attr("href");
-            if(url != "undefined"){
+            if(url != undefined){
                 //location.href=url;
             }
 
@@ -243,7 +259,7 @@
 
         $('#bs-link4').click(function () {
             var url = $(this).attr("href");
-            if(url != "undefined"){
+            if(url != undefined){
                 location.href=url;
             }
 
@@ -251,7 +267,7 @@
 
         $('#bs-link5').click(function () {
             var url = $(this).attr("href");
-            if(url != "undefined"){
+            if(url != undefined){
                 location.href=url;
             }
 
@@ -259,7 +275,7 @@
 
         $('#bs-link6').click(function () {
             var url = $(this).attr("href");
-            if(url != "undefined"){
+            if(url != undefined){
                 location.href=url;
             }
 
@@ -289,85 +305,77 @@
 
 
 
-        if(markType == "Standard Character"){
-            $('[data-toggle="popover"]').popover({
-                title : false,
-                html : true,
-                content : '<div class="media"><span id="showmarktxt" style="min-width:77px;width:80px;margin:0 auto;font-family: Palatino, Garamond, Bookman, Avant Garde; font-size:.9em;text-align:center;margin-bottom:0;" class="media-object" alt="my trademark">'+markText+'</span></div>'
-            });
 
+        if(markType == "Standard Character"){
+
+            if(markText  != null && markText != ""){
+
+                $( '#togglepop' ).attr('data-content', '<div class="media"><span id="showmarktxt" style="min-width:77px;width:80px;margin:0 auto;font-family: Palatino, Garamond, Bookman, Avant Garde; font-size:.9em;text-align:center;margin-bottom:0;" class="media-object" alt="my trademark">'+markText+'</span></div>');
+            }
+            else{
+                $( '#togglepop' ).attr('data-content', '<div class="media"><span class="glyphicon glyphicon-picture" aria-hidden="true"  style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></span></div>');
+            }
 
         }
         else {
 
-            //////////////////////////////////////////////////////////////////////
-            // set mark image widget based on persisted values
-            //////////////////////////////////////////////////////////////////////
-            if(colorClaim == null){
+            if(colorClaimSet == false){
+
                 if(image_path != null){
-                    $('[data-toggle="popover"]').popover({
-                        title : false,
-                        html : true,
-                        content : '<div class="media"><img src="'+image_path+'" style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>'
-                    });
+
+                    $( '#togglepop' ).attr('data-content', '<div class="media"><img src='+image_path+' style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>');
 
                 }
-            }
-
-            if(colorClaim == false){
-
-                if(acceptBW == true){
-                    $('#inlineRadio2').click();
-                    $('#bwmark').click();
-
-                    $('[data-toggle="popover"]').popover({
-                        title : false,
-                        html : true,
-                        content : '<div class="media"><img src="'+image_pathBW+'" style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>'
-                    });
-
-
-                }
+                // set color claim to true be default when its not set yet
                 else{
+                    $( '#togglepop' ).attr('data-content', '<div class="media"><span class="glyphicon glyphicon-picture" aria-hidden="true"  style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></span></div>');
+                }
+
+            }
+            else {
+
+                if(colorClaim == false){
+
+                    if(acceptBW == true){
+                        // $('#inlineRadio2').click();
+                        // $('#bwmark').click();
+
+                        $( '#togglepop' ).attr('data-content', '<div class="media"><img src='+image_pathBW+' style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>');
+
+
+                    }
+                    else{
+                        if(image_path != null){
+
+                            $( '#togglepop' ).attr('data-content', '<div class="media"><img src='+image_path+' style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>');
+
+
+
+                        }
+
+                    }
+
+                }
+                if(colorClaim == true){
+                    // $('#inlineRadio1').click();
                     if(image_path != null){
 
-                        $('[data-toggle="popover"]').popover({
-                            title : false,
-                            html : true,
-                            content : '<div class="media"><img src="'+image_path+'" style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>'
-                        });
+                        $( '#togglepop' ).attr('data-content', '<div class="media"><img src='+image_path+' style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>');
 
 
 
                     }
                 }
 
+
             }
-            if(colorClaim == true){
-                $('#inlineRadio1').click();
-                if(image_path != null){
-
-                    $('[data-toggle="popover"]').popover({
-                        title : false,
-                        html : true,
-                        content : '<div class="media"><img src="'+image_path+'" style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>'
-                    });
 
 
-                }
-            }
 
 
         }
 
 
-        // listener for mark image widget popover
-        $( '#togglepop' ).click(function() {
-            $( this ).toggleClass( 'focus' );
-            $(this).html() === '<span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Hide My Mark'
-                ? $(this).html('<span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Show My Mark')
-                : $(this).html('<span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Hide My Mark');
-        });
 
         if(searchDB == true){
 

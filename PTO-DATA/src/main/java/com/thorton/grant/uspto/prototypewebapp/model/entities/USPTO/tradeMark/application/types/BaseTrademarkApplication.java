@@ -2,6 +2,7 @@ package com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.tradeMark.a
 
 
 import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.tradeMark.application.actions.OfficeActions;
+import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.tradeMark.application.actions.Petition;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.tradeMark.application.participants.Lawyer;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.tradeMark.application.participants.Owner;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.tradeMark.assets.GSClassCategory;
@@ -25,8 +26,9 @@ public class BaseTrademarkApplication  {
     public BaseTrademarkApplication() {
 
         availableLawyers = new HashSet<>();
-        actions = new HashSet<>();
+
         owners = new HashSet<>();
+        officeActions = new HashSet<>();
 
 
         goodAndServices = new HashSet<>();
@@ -107,7 +109,13 @@ public class BaseTrademarkApplication  {
 
 
 
+    @OneToMany(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
+    @Nullable
+    private Set<OfficeActions> officeActions; // default owner   PTO user
 
+    @OneToMany(fetch = FetchType.EAGER ,cascade =  CascadeType.ALL)
+    @Nullable
+    private Set<Petition>  petitions;
     /////////////////////////////////////////////////////////////////////
     // stage 2
     /////////////////////////////////////////////////////////////////////
@@ -118,10 +126,13 @@ public class BaseTrademarkApplication  {
     private boolean tradeMarkUploaded;
 
 
-    @OneToMany(cascade =  CascadeType.ALL)
-    @Nullable
-    private Set<OfficeActions> actions;
-    ////////////////////////////////////////////////////////
+
+
+
+
+
+
+
 
 
     private String ownerType;
@@ -164,8 +175,156 @@ public class BaseTrademarkApplication  {
 
 
     //additional info fields
+    private boolean provideMiscInfo;
+    private boolean provideMiscInfoFlagSet;
+
+
+
+
+
     private String miscInformation;
     private String miscInfoImagePath;
+    private String miscInfoImageName;
+    private boolean miscInfoImageTypeWord;
+
+    public boolean  miscInfoImageUploaded;
+
+
+
+    // concurrent use fields
+    private boolean concurrentUse;
+    private boolean concurrentUseSet;
+
+    private boolean concurrentTypeCourtDecree;
+    private boolean concurrentTypeCourtDecreeSet;
+
+
+    private boolean concurrentTypePriorDecision;
+    private boolean concurrentTypePriorDecisionSet;
+
+    private boolean concurrentTypeWrittenConsent;
+    private boolean concurrentTypeWrittenConsentSet;
+
+
+    private boolean concurrentTypeEarlierFirstUse;
+    private boolean concurrentTypeEarlierFirstUseSet;
+
+
+
+    private boolean concurrentTypeSet;
+
+
+
+    private String concurrentUseEvidenceFilePath;
+
+    private String concurrentUseEvidenceFileName;
+
+    private boolean concurrentEvidentFileTypeWord;
+    private boolean concurrentUseEvidenceFileUploaded;
+
+
+
+    private String concurentEvidenceDescription;
+
+
+
+
+    private String GeoAreaMarkInCommerce;
+
+    private String modeOfUse;
+
+    private String ttabProceedingNumber;
+
+    private String concurrentUserRegistrationNumber;
+
+    private boolean concurrentUserNoRegistrationClaim;
+    private boolean concurrentUserNoRegistrationClaimSet;
+
+
+    private String concurrentUserName;
+
+    private String concurrentUserCountry;
+
+    private String concurrentUserAddress1;
+    private String concurrentUserCity;
+
+    private String concurrentUserState;
+    private String concurrentUserZipcode;
+
+    private String concurrentUserGoodsAndService;
+
+    private String GeoAreaConcurrentUser;
+    private String modeOfuseConcurrentUser;
+
+    private String timePeriodConcurrentUser;
+
+
+
+
+    // 2f claim fields
+
+    private  boolean claimDistinctiveness;
+
+    private boolean inheritantlyDistinctive;
+    private boolean inheritantlyDistinctiveSet;
+
+    private boolean inheritantlyWhole;
+    private boolean inheritantlyPart;
+    private boolean wholePartSet;
+
+    private String inPartClaimDescription;
+
+    private boolean distinctClaimBasedEvidence;
+    private String distinctiveEvidenceFilePath;
+
+    private String distinctiveEvidenceFileName;
+
+    private boolean distinctClaimBasedPriorReg;
+    private String distinctClaimBasedPriorRegNumber;
+
+
+    private boolean distinctClaimBasedFiveYOU;
+
+
+
+
+
+
+
+
+
+
+    // type of register fields
+    private boolean principalRegister = true;
+
+    private boolean supplementalRegister = false;
+
+    private boolean registerTypeSet;
+
+
+
+    // use in another form fields
+
+    private boolean useInAnotherForm;
+    private boolean useInAnotherFormCurrent;
+    private boolean useInAnotherFormCurrentSet;
+
+    private boolean userInAnotherFormWhole;
+    private boolean useInAnotherFormPart;
+    private boolean userInAnotherFormWholePartSet;
+
+    private String userInAnotherFormMarkpart;
+
+    private Date  useInAnotherFormFirstUseDate;
+    private Date useInAnotherFormFirstCommerceDate;
+
+
+
+
+
+
+
+
 
 
 
@@ -195,14 +354,103 @@ public class BaseTrademarkApplication  {
 
     // declaration fields
 
+    private boolean declarationAll;
+
     private boolean declarationApplicantIsOwner;  // check box 1
+    private boolean declarationApplicantIsOwnerSet;
+
     private boolean declarationMarkInUse;   // check box 2
-    private boolean declarationMarkInUseSpecimen; // check box 3
+    private boolean declarationMarkInUseSet;
+
+    private boolean declarationSpecimen; // check box 3
+    private boolean declarationSpecimenSet;
+
     private boolean declarationConcurrentUser; // check box 4
-    private boolean declarationEvidenceSupport;  // check box 5
-    private boolean declarationWarningFalseStatement; // check box 6
+    private boolean declarationConcurrentUserSet;
+
+    private boolean declarationNoOtherHasRight; // check box 5
+    private boolean declarationNoOtherHasRightSet;
 
 
+
+    private boolean declarationEvidenceSupport;  // check box 6
+    private boolean declarationEvidenceSupportSet;
+
+
+    private boolean declarationWarningFalseStatement; // check box 7
+    private boolean declarationWarningFalseStatementSet;
+
+
+    // fee variables
+
+    private Integer baseFee = 275;
+
+
+    // TEAS fields
+    private boolean validateTEASFields = false;
+
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////
+    // initial black out period date
+    // initial black out period interval
+
+    // user can file petitions to ammend at this time frame
+    // no office actions can be issued at this time
+    // status : "Black Out"
+
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////
+    // first office action window start date
+    // first office action wiondow interval
+
+    // this is a time when an office action can be initated by the system or our lawyers
+    // we will automatically issue an abandoned status based on our validation class
+    // which will return abandoned every instance for now. we can update the logic of this module
+    // later when that becomes clear
+
+    // status "Office Action 1"
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////
+    // we will not response to any office action (As that module is not built)
+    // we will simply allow the office action to expire and allow user to file a petition to revive
+    /////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////
+    // date fields and flags to support petitions and amendments workflow
+    // with time expiration
+    // filing application statuses should be well defined
+    //////////////////////////////////////////////////////////////////////////
+
+    private Date applicationFilingDate;
+
+
+
+    private boolean claimDidNotRecieveOfficeAction; // this can only be claimed once. once it is set to true, you can not make that claim any more  // this is actually a filed that needs to be on the filing object
+
+    ///////////////////////////////////////////////////////////////
+
+    public boolean isClaimDidNotRecieveOfficeAction() {
+        return claimDidNotRecieveOfficeAction;
+    }
+
+    public void setClaimDidNotRecieveOfficeAction(boolean claimDidNotRecieveOfficeAction) {
+        this.claimDidNotRecieveOfficeAction = claimDidNotRecieveOfficeAction;
+    }
+
+
+    public Date getApplicationFilingDate() {
+        return applicationFilingDate;
+    }
+
+    public void setApplicationFilingDate(Date applicationFilingDate) {
+        this.applicationFilingDate = applicationFilingDate;
+    }
 
     public boolean isAttorneyPoolEmpty() {
 
@@ -253,6 +501,24 @@ public class BaseTrademarkApplication  {
         return availableLawyers;
     }
 
+
+
+    public Set<Lawyer> getAvailableLawyersExcludePrimary() {
+
+      Set<Lawyer> lawyerPool = new HashSet<>();
+        Lawyer lawyer = null;
+        for(Iterator<Lawyer> iter = availableLawyers.iterator(); iter.hasNext(); ) {
+            Lawyer current = iter.next();
+
+            if(current.isPrimary() == false){
+                lawyerPool.add(current);
+            }
+        }
+
+
+        return lawyerPool;
+    }
+
     public void setAvailableLawyers(@Nullable Set<Lawyer> availableLawyers) {
 
         this.availableLawyers = availableLawyers;
@@ -279,17 +545,6 @@ public class BaseTrademarkApplication  {
         return lawyer;
     }
 
-    public Lawyer findAttorneyContactByDisplayName(String name){
-        Lawyer lawyer = null;
-        for(Iterator<Lawyer> iter = availableLawyers.iterator(); iter.hasNext(); ) {
-            Lawyer current = iter.next();
-
-            if((current.getFirstName()+" "+current.getLastName()).equals(name)){
-                lawyer = current;
-            }
-        }
-        return lawyer;
-    }
 
 
     @Nullable
@@ -347,6 +602,57 @@ public class BaseTrademarkApplication  {
         return ownerSet;
      }
 
+
+    @Nullable
+    public Set<OfficeActions> getOfficeActions() {
+        return officeActions;
+    }
+
+    public void setOfficeActions(@Nullable Set<OfficeActions> officeActions) {
+        this.officeActions = officeActions;
+    }
+
+
+    public OfficeActions addOfficeAction( OfficeActions officeAction){
+        this.officeActions.add(officeAction);
+
+        return officeAction;
+    }
+
+
+    public Petition addPetition( Petition petition){
+        this.petitions.add(petition);
+
+        return petition;
+    }
+
+
+
+    public OfficeActions findOfficeActionById(String id){
+        OfficeActions action = null;
+        for(Iterator<OfficeActions> iter = officeActions.iterator(); iter.hasNext(); ) {
+            OfficeActions current = iter.next();
+
+            if(current.getInternalID().equals(id)){
+                action = current;
+            }
+        }
+        return action;
+    }
+
+
+    public Petition findPetitionById(String id){
+        Petition petition = null;
+        for(Iterator<Petition> iter = petitions.iterator(); iter.hasNext(); ) {
+            Petition current = iter.next();
+
+            if(current.getInternalID().equals(id)){
+                petition = current;
+            }
+        }
+        return petition;
+    }
+
     public boolean isAttorneyFiling() {
         return isAttorneyFiling;
     }
@@ -373,26 +679,10 @@ public class BaseTrademarkApplication  {
     }
 
 
-    public Set<OfficeActions> getActions() {
-        return actions;
-    }
-
-    public void setActions(@Nullable Set<OfficeActions> actions) {
-        this.actions = actions;
-    }
-
 
 
     public Long getId() {
         return id;
-    }
-
-    public void copyAvailableLawyers(Set<Lawyer> availableLawyers){
-
-        for(Iterator<Lawyer> iter = availableLawyers.iterator(); iter.hasNext(); ) {
-           this.availableLawyers.add(new Lawyer( iter.next() ));
-        }
-
     }
 
 
@@ -605,7 +895,38 @@ public class BaseTrademarkApplication  {
                 if(gsClassCategory.getClassCategoryNumber() == Integer.valueOf(current.getClassNumber())){
                     gsClassCategory.addGoodAndService(current);
                     gsClassCategory.setClassCategoryImagePath(current.getClassSpecimenImgPath());
+                    gsClassCategory.setClassCategoryImageName(current.getSampleImageName());
                     gsClassCategory.setClassCategoryDescr(current.getClassSpecimenDescr());
+                    gsClassCategory.setAtLeastOneGoodInCommerce(current.isAtLeastOneGoodInCommerceClassFlag());
+                    gsClassCategory.setAtLeastOneGoodInCommerceSet(current.isAtLeastOneGoodInCommerceClassFlagSet());
+                    gsClassCategory.setProvideSpecimenForAll(current.isProvideSpecimenForAllGS());
+                    gsClassCategory.setProvideSpecimenForAllset(current.isProvideSpecimenForAllGSSet());
+
+
+                    // new class level options and fields
+                    gsClassCategory.setPendingFACC(current.isPendingFAAllGS());
+                    gsClassCategory.setForeignRegistrationCC(current.isForeignRegistration());
+                    gsClassCategory.setForeignAR_NACC(current.isNA_AllGS());
+                    gsClassCategory.setFaCountryCC(current.getFaCountryCC());
+                    gsClassCategory.setFaRegistrationNumberCC(current.getFaAppNumberCC());
+                    gsClassCategory.setFaFilingDateCC(current.getFaFilingDateCC());
+                    gsClassCategory.setFrCountryCC(current.getFrCountryCC());
+                    gsClassCategory.setFrRegistartionNumberCC(current.getFrRegistrationNumberCC());
+                    gsClassCategory.setFrRegistrationDateCC(current.getFrRegistrationDateCC());
+                    gsClassCategory.setFrExpirationDateCC(current.getFrExpireDateCC());
+                    gsClassCategory.setFrRenewlDateCC(current.getFrRenewalDateCC());
+                    gsClassCategory.setFrCertImagePathCC(current.getFrCertImagePathCC());
+                    gsClassCategory.setFrCertImageNameCC(current.getFrCertImageNameCC());
+                    gsClassCategory.setFrCertCCuploaded(current.isFrCertUploadedCC());
+
+
+                    gsClassCategory.setFirstGSDateCC(current.getFirstGSDateCC());
+                    gsClassCategory.setFirstMarkDateCC(current.getFirstMarkDateCC());
+
+
+
+
+
                 }
             }
             Collections.sort(gsClassCategory.getGoodAndServices(), new CustomComparator());
@@ -712,7 +1033,7 @@ public class BaseTrademarkApplication  {
     public String getExtraFeeCalculationString(){
 
         if(getUniqueClassNumberforGS().size() > 0){
-            return"("+ (getUniqueClassNumberforGS().size()-1)+")$"+((getUniqueClassNumberforGS().size()-1)*275);
+            return"("+ (getUniqueClassNumberforGS().size()-1)+")$"+((getUniqueClassNumberforGS().size()-1)*baseFee);
         }
         else {
             return "(0)$0";
@@ -725,7 +1046,7 @@ public class BaseTrademarkApplication  {
     public String getBasicFeeCalculationString(){
 
 
-            return "$275";
+            return "$"+String.valueOf(baseFee);
 
 
 
@@ -744,16 +1065,20 @@ public class BaseTrademarkApplication  {
 
 
     public String getTotalNumberOfclasses(){
+
+        if(getUniqueClassNumberforGS().size() == 0){
+            return "1";
+        }
         return getUniqueClassNumberforGS().size()+"";
     }
 
     public String getTotalFeeString(){
         String val = "";
                 if(getUniqueClassNumberforGS().size() > 0){
-                  val=  (275+Integer.valueOf(getUniqueClassNumberforGS().size()-1)*275)+"";
+                  val=  (baseFee+Integer.valueOf(getUniqueClassNumberforGS().size()-1)*baseFee)+"";
                 }
                 else{
-                    val = "275";
+                    val = String.valueOf(baseFee);
 
                 }
 
@@ -763,10 +1088,10 @@ public class BaseTrademarkApplication  {
     public String getTotalFeeAmount(){
         String val = "";
         if(getUniqueClassNumberforGS().size() > 0){
-            val=  (275+Integer.valueOf(getUniqueClassNumberforGS().size()-1)*275)+"";
+            val=  (baseFee+Integer.valueOf(getUniqueClassNumberforGS().size()-1)*baseFee)+"";
         }
         else{
-            val = "275";
+            val = String.valueOf(baseFee);
 
         }
 
@@ -894,14 +1219,6 @@ public class BaseTrademarkApplication  {
         this.declarationMarkInUse = declarationMarkInUse;
     }
 
-    public boolean isDeclarationMarkInUseSpecimen() {
-        return declarationMarkInUseSpecimen;
-    }
-
-    public void setDeclarationMarkInUseSpecimen(boolean declarationMarkInUseSpecimen) {
-        this.declarationMarkInUseSpecimen = declarationMarkInUseSpecimen;
-    }
-
     public boolean isDeclarationConcurrentUser() {
         return declarationConcurrentUser;
     }
@@ -926,47 +1243,625 @@ public class BaseTrademarkApplication  {
         this.declarationWarningFalseStatement = declarationWarningFalseStatement;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BaseTrademarkApplication that = (BaseTrademarkApplication) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(trademarkName, that.trademarkName) &&
-                Objects.equals(applicationInternalID, that.applicationInternalID) &&
-                Objects.equals(ownerEmail, that.ownerEmail) &&
-                Objects.equals(availableLawyers, that.availableLawyers) &&
-                Objects.equals(ownerType, that.ownerType) &&
-                Objects.equals(ownerSubType, that.ownerSubType);
+    public Integer getBaseFee() {
+        return baseFee;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, trademarkName, applicationInternalID, ownerEmail, availableLawyers, ownerType, ownerSubType);
+    public void setBaseFee(Integer baseFee) {
+        this.baseFee = baseFee;
     }
 
-    @Override
-    public String toString() {
-        return "BaseTrademarkApplication{" +
-                "id=" + id +
-                ", trademarkName='" + trademarkName + '\'' +
-                ", applicationInternalID='" + applicationInternalID + '\'' +
-                ", isAttorneySet=" + isAttorneySet +
-                ", isAttorneyFiling=" + isAttorneyFiling +
-                ", isForeignEnityFiling=" + isForeignEnityFiling +
-                ", currentStage='" + currentStage + '\'' +
-                ", lastViewModel='" + lastViewModel + '\'' +
-                ", ownerEmail='" + ownerEmail + '\'' +
-                ", ptoUser=" + ptoUser +
-                ", primaryLawyer=" + primaryLawyer +
-                ", availableLawyers=" + availableLawyers +
-                ", owners=" + owners +
-                ", tradeMark=" + tradeMark +
-                ", actions=" + actions +
-                ", ownerType='" + ownerType + '\'' +
-                ", ownerSubType='" + ownerSubType + '\'' +
-                '}';
+    public String getConcurrentUseEvidenceFilePath() {
+        return concurrentUseEvidenceFilePath;
     }
+
+    public void setConcurrentUseEvidenceFilePath(String concurrentUseEvidenceFilePath) {
+        this.concurrentUseEvidenceFilePath = concurrentUseEvidenceFilePath;
+    }
+
+    public boolean isConcurrentUse() {
+        return concurrentUse;
+    }
+
+    public void setConcurrentUse(boolean concurrentUse) {
+        this.concurrentUse = concurrentUse;
+    }
+
+    public boolean isConcurrentTypeCourtDecree() {
+        return concurrentTypeCourtDecree;
+    }
+
+    public void setConcurrentTypeCourtDecree(boolean concurrentTypeCourtDecree) {
+        this.concurrentTypeCourtDecree = concurrentTypeCourtDecree;
+    }
+
+    public boolean isConcurrentTypePriorDecision() {
+        return concurrentTypePriorDecision;
+    }
+
+    public void setConcurrentTypePriorDecision(boolean concurrentTypePriorDecision) {
+        this.concurrentTypePriorDecision = concurrentTypePriorDecision;
+    }
+
+    public boolean isConcurrentTypeWrittenConsent() {
+        return concurrentTypeWrittenConsent;
+    }
+
+    public void setConcurrentTypeWrittenConsent(boolean concurrentTypeWrittenConsent) {
+        this.concurrentTypeWrittenConsent = concurrentTypeWrittenConsent;
+    }
+
+    public boolean isConcurrentTypeEarlierFirstUse() {
+        return concurrentTypeEarlierFirstUse;
+    }
+
+    public void setConcurrentTypeEarlierFirstUse(boolean concurrentTypeEarlierFirstUse) {
+        this.concurrentTypeEarlierFirstUse = concurrentTypeEarlierFirstUse;
+    }
+
+    public boolean isConcurrentTypeSet() {
+        return concurrentTypeSet;
+    }
+
+    public void setConcurrentTypeSet(boolean concurrentTypeSet) {
+        this.concurrentTypeSet = concurrentTypeSet;
+    }
+
+    public boolean isValidateTEASFields() {
+        return validateTEASFields;
+    }
+
+    public void setValidateTEASFields(boolean validateTEASFields) {
+        this.validateTEASFields = validateTEASFields;
+    }
+
+    public boolean isDeclarationApplicantIsOwnerSet() {
+        return declarationApplicantIsOwnerSet;
+    }
+
+    public void setDeclarationApplicantIsOwnerSet(boolean declarationApplicantIsOwnerSet) {
+        this.declarationApplicantIsOwnerSet = declarationApplicantIsOwnerSet;
+    }
+
+    public boolean isDeclarationMarkInUseSet() {
+        return declarationMarkInUseSet;
+    }
+
+    public void setDeclarationMarkInUseSet(boolean declarationMarkInUseSet) {
+        this.declarationMarkInUseSet = declarationMarkInUseSet;
+    }
+
+    public boolean isDeclarationSpecimen() {
+        return declarationSpecimen;
+    }
+
+    public void setDeclarationSpecimen(boolean declarationSpecimen) {
+        this.declarationSpecimen = declarationSpecimen;
+    }
+
+    public boolean isDeclarationSpecimenSet() {
+        return declarationSpecimenSet;
+    }
+
+    public void setDeclarationSpecimenSet(boolean declarationSpecimenSet) {
+        this.declarationSpecimenSet = declarationSpecimenSet;
+    }
+
+    public boolean isDeclarationConcurrentUserSet() {
+        return declarationConcurrentUserSet;
+    }
+
+    public void setDeclarationConcurrentUserSet(boolean declarationConcurrentUserSet) {
+        this.declarationConcurrentUserSet = declarationConcurrentUserSet;
+    }
+
+    public boolean isDeclarationEvidenceSupportSet() {
+        return declarationEvidenceSupportSet;
+    }
+
+    public void setDeclarationEvidenceSupportSet(boolean declarationEvidenceSupportSet) {
+        this.declarationEvidenceSupportSet = declarationEvidenceSupportSet;
+    }
+
+    public boolean isDeclarationWarningFalseStatementSet() {
+        return declarationWarningFalseStatementSet;
+    }
+
+    public void setDeclarationWarningFalseStatementSet(boolean declarationWarningFalseStatementSet) {
+        this.declarationWarningFalseStatementSet = declarationWarningFalseStatementSet;
+    }
+
+    public boolean isProvideMiscInfo() {
+        return provideMiscInfo;
+    }
+
+    public void setProvideMiscInfo(boolean provideMiscInfo) {
+        this.provideMiscInfo = provideMiscInfo;
+    }
+
+    public boolean isProvideMiscInfoFlagSet() {
+        return provideMiscInfoFlagSet;
+    }
+
+    public void setProvideMiscInfoFlagSet(boolean provideMiscInfoFlagSet) {
+        this.provideMiscInfoFlagSet = provideMiscInfoFlagSet;
+    }
+
+    public boolean isConcurrentUseSet() {
+        return concurrentUseSet;
+    }
+
+    public void setConcurrentUseSet(boolean concurrentUseSet) {
+        this.concurrentUseSet = concurrentUseSet;
+    }
+
+    public boolean isConcurrentTypeCourtDecreeSet() {
+        return concurrentTypeCourtDecreeSet;
+    }
+
+    public void setConcurrentTypeCourtDecreeSet(boolean concurrentTypeCourtDecreeSet) {
+        this.concurrentTypeCourtDecreeSet = concurrentTypeCourtDecreeSet;
+    }
+
+    public boolean isConcurrentTypePriorDecisionSet() {
+        return concurrentTypePriorDecisionSet;
+    }
+
+    public void setConcurrentTypePriorDecisionSet(boolean concurrentTypePriorDecisionSet) {
+        this.concurrentTypePriorDecisionSet = concurrentTypePriorDecisionSet;
+    }
+
+    public boolean isConcurrentTypeWrittenConsentSet() {
+        return concurrentTypeWrittenConsentSet;
+    }
+
+    public void setConcurrentTypeWrittenConsentSet(boolean concurrentTypeWrittenConsentSet) {
+        this.concurrentTypeWrittenConsentSet = concurrentTypeWrittenConsentSet;
+    }
+
+    public boolean isConcurrentTypeEarlierFirstUseSet() {
+        return concurrentTypeEarlierFirstUseSet;
+    }
+
+    public void setConcurrentTypeEarlierFirstUseSet(boolean concurrentTypeEarlierFirstUseSet) {
+        this.concurrentTypeEarlierFirstUseSet = concurrentTypeEarlierFirstUseSet;
+    }
+
+    public String getConcurentEvidenceDescription() {
+        return concurentEvidenceDescription;
+    }
+
+    public void setConcurentEvidenceDescription(String concurentEvidenceDescription) {
+        this.concurentEvidenceDescription = concurentEvidenceDescription;
+    }
+
+    public String getGeoAreaMarkInCommerce() {
+        return GeoAreaMarkInCommerce;
+    }
+
+    public void setGeoAreaMarkInCommerce(String geoAreaMarkInCommerce) {
+        GeoAreaMarkInCommerce = geoAreaMarkInCommerce;
+    }
+
+    public String getModeOfUse() {
+        return modeOfUse;
+    }
+
+    public void setModeOfUse(String modeOfUse) {
+        this.modeOfUse = modeOfUse;
+    }
+
+    public String getTtabProceedingNumber() {
+        return ttabProceedingNumber;
+    }
+
+    public void setTtabProceedingNumber(String ttabProceedingNumber) {
+        this.ttabProceedingNumber = ttabProceedingNumber;
+    }
+
+    public String getConcurrentUserRegistrationNumber() {
+        return concurrentUserRegistrationNumber;
+    }
+
+    public void setConcurrentUserRegistrationNumber(String concurrentUserRegistrationNumber) {
+        this.concurrentUserRegistrationNumber = concurrentUserRegistrationNumber;
+    }
+
+    public String getConcurrentUserName() {
+        return concurrentUserName;
+    }
+
+    public void setConcurrentUserName(String concurrentUserName) {
+        this.concurrentUserName = concurrentUserName;
+    }
+
+    public String getConcurrentUserCountry() {
+        return concurrentUserCountry;
+    }
+
+    public void setConcurrentUserCountry(String concurrentUserCountry) {
+        this.concurrentUserCountry = concurrentUserCountry;
+    }
+
+    public String getConcurrentUserAddress1() {
+        return concurrentUserAddress1;
+    }
+
+    public void setConcurrentUserAddress1(String concurrentUserAddress1) {
+        this.concurrentUserAddress1 = concurrentUserAddress1;
+    }
+
+    public String getConcurrentUserCity() {
+        return concurrentUserCity;
+    }
+
+    public void setConcurrentUserCity(String concurrentUserCity) {
+        this.concurrentUserCity = concurrentUserCity;
+    }
+
+    public String getConcurrentUserState() {
+        return concurrentUserState;
+    }
+
+    public void setConcurrentUserState(String concurrentUserState) {
+        this.concurrentUserState = concurrentUserState;
+    }
+
+    public String getConcurrentUserZipcode() {
+        return concurrentUserZipcode;
+    }
+
+    public void setConcurrentUserZipcode(String concurrentUserZipcode) {
+        this.concurrentUserZipcode = concurrentUserZipcode;
+    }
+
+    public String getConcurrentUserGoodsAndService() {
+        return concurrentUserGoodsAndService;
+    }
+
+    public void setConcurrentUserGoodsAndService(String concurrentUserGoodsAndService) {
+        this.concurrentUserGoodsAndService = concurrentUserGoodsAndService;
+    }
+
+    public String getGeoAreaConcurrentUser() {
+        return GeoAreaConcurrentUser;
+    }
+
+    public void setGeoAreaConcurrentUser(String geoAreaConcurrentUser) {
+        GeoAreaConcurrentUser = geoAreaConcurrentUser;
+    }
+
+    public String getModeOfuseConcurrentUser() {
+        return modeOfuseConcurrentUser;
+    }
+
+    public void setModeOfuseConcurrentUser(String modeOfuseConcurrentUser) {
+        this.modeOfuseConcurrentUser = modeOfuseConcurrentUser;
+    }
+
+    public String getTimePeriodConcurrentUser() {
+        return timePeriodConcurrentUser;
+    }
+
+    public void setTimePeriodConcurrentUser(String timePeriodConcurrentUser) {
+        this.timePeriodConcurrentUser = timePeriodConcurrentUser;
+    }
+
+    public boolean isDeclarationNoOtherHasRight() {
+        return declarationNoOtherHasRight;
+    }
+
+    public void setDeclarationNoOtherHasRight(boolean declarationNoOtherHasRight) {
+        this.declarationNoOtherHasRight = declarationNoOtherHasRight;
+    }
+
+    public boolean isDeclarationNoOtherHasRightSet() {
+        return declarationNoOtherHasRightSet;
+    }
+
+    public void setDeclarationNoOtherHasRightSet(boolean declarationNoOtherHasRightSet) {
+        this.declarationNoOtherHasRightSet = declarationNoOtherHasRightSet;
+    }
+
+    public boolean isPrincipalRegister() {
+        return principalRegister;
+    }
+
+    public void setPrincipalRegister(boolean principalRegister) {
+        this.principalRegister = principalRegister;
+    }
+
+    public boolean isSupplementalRegister() {
+        return supplementalRegister;
+    }
+
+    public boolean isRegisterTypeSet() {
+        return registerTypeSet;
+    }
+
+    public void setRegisterTypeSet(boolean registerTypeSet) {
+        this.registerTypeSet = registerTypeSet;
+    }
+
+    public void setSupplementalRegister(boolean supplementalRegister) {
+        this.supplementalRegister = supplementalRegister;
+    }
+
+    public String getDistinctiveEvidenceFilePath() {
+        return distinctiveEvidenceFilePath;
+    }
+
+    public void setDistinctiveEvidenceFilePath(String distinctiveEvidenceFilePath) {
+        this.distinctiveEvidenceFilePath = distinctiveEvidenceFilePath;
+    }
+
+    public boolean isClaimDistinctiveness() {
+        return claimDistinctiveness;
+    }
+
+    public void setClaimDistinctiveness(boolean claimDistinctiveness) {
+        this.claimDistinctiveness = claimDistinctiveness;
+    }
+
+    public boolean isInheritantlyDistinctive() {
+        return inheritantlyDistinctive;
+    }
+
+    public void setInheritantlyDistinctive(boolean inheritantlyDistinctive) {
+        this.inheritantlyDistinctive = inheritantlyDistinctive;
+    }
+
+    public boolean isInheritantlyDistinctiveSet() {
+        return inheritantlyDistinctiveSet;
+    }
+
+    public void setInheritantlyDistinctiveSet(boolean inheritantlyDistinctiveSet) {
+        this.inheritantlyDistinctiveSet = inheritantlyDistinctiveSet;
+    }
+
+    public boolean isInheritantlyWhole() {
+        return inheritantlyWhole;
+    }
+
+    public void setInheritantlyWhole(boolean inheritantlyWhole) {
+        this.inheritantlyWhole = inheritantlyWhole;
+    }
+
+    public boolean isInheritantlyPart() {
+        return inheritantlyPart;
+    }
+
+    public void setInheritantlyPart(boolean inheritantlyPart) {
+        this.inheritantlyPart = inheritantlyPart;
+    }
+
+    public boolean isWholePartSet() {
+        return wholePartSet;
+    }
+
+    public void setWholePartSet(boolean wholePartSet) {
+        this.wholePartSet = wholePartSet;
+    }
+
+    public String getInPartClaimDescription() {
+        return inPartClaimDescription;
+    }
+
+    public void setInPartClaimDescription(String inPartClaimDescription) {
+        this.inPartClaimDescription = inPartClaimDescription;
+    }
+
+    public boolean isDistinctClaimBasedEvidence() {
+        return distinctClaimBasedEvidence;
+    }
+
+    public void setDistinctClaimBasedEvidence(boolean distinctClaimBasedEvidence) {
+        this.distinctClaimBasedEvidence = distinctClaimBasedEvidence;
+    }
+
+    public boolean isDistinctClaimBasedPriorReg() {
+        return distinctClaimBasedPriorReg;
+    }
+
+    public void setDistinctClaimBasedPriorReg(boolean distinctClaimBasedPriorReg) {
+        this.distinctClaimBasedPriorReg = distinctClaimBasedPriorReg;
+    }
+
+    public String getDistinctClaimBasedPriorRegNumber() {
+        return distinctClaimBasedPriorRegNumber;
+    }
+
+    public void setDistinctClaimBasedPriorRegNumber(String distinctClaimBasedPriorRegNumber) {
+        this.distinctClaimBasedPriorRegNumber = distinctClaimBasedPriorRegNumber;
+    }
+
+    public boolean isDistinctClaimBasedFiveYOU() {
+        return distinctClaimBasedFiveYOU;
+    }
+
+    public void setDistinctClaimBasedFiveYOU(boolean distinctClaimBasedFiveYOU) {
+        this.distinctClaimBasedFiveYOU = distinctClaimBasedFiveYOU;
+    }
+
+    public boolean isConcurrentEvidentFileTypeWord() {
+        return concurrentEvidentFileTypeWord;
+    }
+
+    public void setConcurrentEvidentFileTypeWord(boolean concurrentEvidentFileTypeWord) {
+        this.concurrentEvidentFileTypeWord = concurrentEvidentFileTypeWord;
+    }
+
+    public String getConcurrentUseEvidenceFileName() {
+        return concurrentUseEvidenceFileName;
+    }
+
+    public void setConcurrentUseEvidenceFileName(String concurrentUseEvidenceFileName) {
+        this.concurrentUseEvidenceFileName = concurrentUseEvidenceFileName;
+    }
+
+    public String getDistinctiveEvidenceFileName() {
+        return distinctiveEvidenceFileName;
+    }
+
+    public void setDistinctiveEvidenceFileName(String distinctiveEvidenceFileName) {
+        this.distinctiveEvidenceFileName = distinctiveEvidenceFileName;
+    }
+
+    public boolean isMiscInfoImageTypeWord() {
+        return miscInfoImageTypeWord;
+    }
+
+    public void setMiscInfoImageTypeWord(boolean miscInfoImageTypeWord) {
+        this.miscInfoImageTypeWord = miscInfoImageTypeWord;
+    }
+
+    public String getMiscInfoImageName() {
+        return miscInfoImageName;
+    }
+
+    public void setMiscInfoImageName(String miscInfoImageName) {
+        this.miscInfoImageName = miscInfoImageName;
+    }
+
+    public boolean isMiscInfoImageUploaded() {
+        return miscInfoImageUploaded;
+    }
+
+    public void setMiscInfoImageUploaded(boolean miscInfoImageUploaded) {
+        this.miscInfoImageUploaded = miscInfoImageUploaded;
+    }
+
+    public boolean isConcurrentUserNoRegistrationClaim() {
+        return concurrentUserNoRegistrationClaim;
+    }
+
+    public void setConcurrentUserNoRegistrationClaim(boolean concurrentUserNoRegistrationClaim) {
+        this.concurrentUserNoRegistrationClaim = concurrentUserNoRegistrationClaim;
+    }
+
+    public boolean isConcurrentUserNoRegistrationClaimSet() {
+        return concurrentUserNoRegistrationClaimSet;
+    }
+
+    public void setConcurrentUserNoRegistrationClaimSet(boolean concurrentUserNoRegistrationClaimSet) {
+        this.concurrentUserNoRegistrationClaimSet = concurrentUserNoRegistrationClaimSet;
+    }
+
+    public boolean isConcurrentUseEvidenceFileUploaded() {
+        return concurrentUseEvidenceFileUploaded;
+    }
+
+    public void setConcurrentUseEvidenceFileUploaded(boolean concurrentUseEvidenceFileUploaded) {
+        this.concurrentUseEvidenceFileUploaded = concurrentUseEvidenceFileUploaded;
+    }
+
+    public boolean isUseInAnotherForm() {
+        return useInAnotherForm;
+    }
+
+    public void setUseInAnotherForm(boolean useInAnotherForm) {
+        this.useInAnotherForm = useInAnotherForm;
+    }
+
+    public boolean isUseInAnotherFormCurrent() {
+        return useInAnotherFormCurrent;
+    }
+
+    public void setUseInAnotherFormCurrent(boolean useInAnotherFormCurrent) {
+        this.useInAnotherFormCurrent = useInAnotherFormCurrent;
+    }
+
+    public boolean isUseInAnotherFormCurrentSet() {
+        return useInAnotherFormCurrentSet;
+    }
+
+    public void setUseInAnotherFormCurrentSet(boolean useInAnotherFormCurrentSet) {
+        this.useInAnotherFormCurrentSet = useInAnotherFormCurrentSet;
+    }
+
+    public boolean isUserInAnotherFormWhole() {
+        return userInAnotherFormWhole;
+    }
+
+    public void setUserInAnotherFormWhole(boolean userInAnotherFormWhole) {
+        this.userInAnotherFormWhole = userInAnotherFormWhole;
+    }
+
+    public boolean isUseInAnotherFormPart() {
+        return useInAnotherFormPart;
+    }
+
+    public void setUseInAnotherFormPart(boolean useInAnotherFormPart) {
+        this.useInAnotherFormPart = useInAnotherFormPart;
+    }
+
+    public boolean isUserInAnotherFormWholePartSet() {
+        return userInAnotherFormWholePartSet;
+    }
+
+    public void setUserInAnotherFormWholePartSet(boolean userInAnotherFormWholePartSet) {
+        this.userInAnotherFormWholePartSet = userInAnotherFormWholePartSet;
+    }
+
+    public String getUserInAnotherFormMarkpart() {
+        return userInAnotherFormMarkpart;
+    }
+
+    public void setUserInAnotherFormMarkpart(String userInAnotherFormMarkpart) {
+        this.userInAnotherFormMarkpart = userInAnotherFormMarkpart;
+    }
+
+    public Date getUseInAnotherFormFirstUseDate() {
+        return useInAnotherFormFirstUseDate;
+    }
+
+    public void setUseInAnotherFormFirstUseDate(Date useInAnotherFormFirstUseDate) {
+        this.useInAnotherFormFirstUseDate = useInAnotherFormFirstUseDate;
+    }
+
+    public Date getUseInAnotherFormFirstCommerceDate() {
+        return useInAnotherFormFirstCommerceDate;
+    }
+
+    public void setUseInAnotherFormFirstCommerceDate(Date useInAnotherFormFirstCommerceDate) {
+        this.useInAnotherFormFirstCommerceDate = useInAnotherFormFirstCommerceDate;
+    }
+
+    public String  getUseInAnotherFormFirstUseDateDisplay(){
+        if(useInAnotherFormFirstUseDate != null) {
+            return useInAnotherFormFirstUseDate.toString().substring(0, 10);
+        }
+        else {
+            return "";
+        }
+    }
+
+    public String  getUseInAnotherFormFirstCommerceDateDisplay(){
+        if(useInAnotherFormFirstCommerceDate != null) {
+            return useInAnotherFormFirstCommerceDate.toString().substring(0, 10);
+        }
+        else {
+            return "";
+        }
+    }
+
+    public boolean isDeclarationAll() {
+        return declarationAll;
+    }
+
+    public void setDeclarationAll(boolean declarationAll) {
+        this.declarationAll = declarationAll;
+    }
+
+    @Nullable
+    public Set<Petition> getPetitions() {
+        return petitions;
+    }
+
+    public void setPetitions(@Nullable Set<Petition> petitions) {
+        this.petitions = petitions;
+    }
+
 
     public Set<Integer> getUniqueClassNumberforGS(){
 

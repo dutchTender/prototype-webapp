@@ -32,11 +32,15 @@ public class FileSystemStorageService implements StorageService {
 
     private final Path rootLocation;
 
+    private String rootPath;
+
     private int fileCounter = 0;
 
     @Autowired
     public FileSystemStorageService(StorageProperties properties) {
         this.rootLocation = Paths.get(properties.getLocation());
+
+        this.rootPath = properties.getLocation();
     }
 
     @Override
@@ -178,5 +182,14 @@ public class FileSystemStorageService implements StorageService {
         } catch (IOException e) {
             throw new StorageException("Could not initialize storage", e);
         }
+    }
+
+    public void setRootPath(String rootPath) {
+        this.rootPath = rootPath;
+    }
+
+    @Override
+    public String getRootPath() {
+        return this.rootPath;
     }
 }

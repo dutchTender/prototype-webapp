@@ -26,7 +26,7 @@
 
                 <div class="row" style="margin-bottom: 15px;">
                     <div class="col-xs-12">
-                        <p>We received your application and assigned serial number ########. <b style="font-weight: bold">A <a th:attr="href=${baseTrademarkApplication.getRecieptFilePath()}">PDF</a> version of your filing opened in a new window, you are able to save it for your records.</b> This PDF file serve as your official confirmation copy. For electronically submitted applications, we do not mail paper filing receipts.</p>
+                        <p>We received your application and assigned serial number <span  style="font-weight: bold;" th:text="${baseTrademarkApplication.getTrademarkName()}">########</span>. <b style="font-weight: bold">A <a th:attr="href=${baseTrademarkApplication.getRecieptFilePath()}">PDF</a> version of your filing opened in a new window, you are able to save it for your records.</b> This PDF file serve as your official confirmation copy. For electronically submitted applications, we do not mail paper filing receipts.</p>
                     </div>
                 </div>
 

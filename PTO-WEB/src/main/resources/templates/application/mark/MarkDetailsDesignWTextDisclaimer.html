@@ -91,6 +91,13 @@
             <div class="row" style="position: relative;right:-15px; ">
                 <div class="col-xs-12">
                     <h1  th:text="${baseTrademarkApplication.tradeMark.getTradeMarkPageTitle()}"></h1>
+                    <p class="instructions" id="costsavingoptions">Reduced Fee Mode</p>
+                    <div role="switch" aria-describedby="#costsavingoptions" aria-label="turn reduce fee labels on or off">
+                        <label class="switch">
+                            <input class="togglesavemore" type="checkbox">
+                            <span class="slider"><span class="visuallyhidden" id="on">On</span> <span id="off">Off</span></span>
+                        </label>
+                    </div>
 
                 </div>
             </div>
@@ -122,22 +129,43 @@
 
                                                         <label for="inlineRadio09" class="radio-inline radiocontainer">Yes<input type="radio" name="disclaimradio" id="inlineRadio09" value="yes"><span class="checkmark"></span></label>
                                                         <label for="inlineRadio010" class="radio-inline radiocontainer">No<input type="radio" name="disclaimradio" id="inlineRadio010" value="no"><span class="checkmark"></span></label>
-
-
-
                                                     </div><!--END radiogroup-->
                                                     <div id="yesdisclaimer" class="form-group form-group-md form-horizontal" style="display: none;"><!--toggle 'yes' radio-->
-                                                        <div class="col-xs-12 control-label">
-                                                            <p>No claim is made to the exclusive right to use</p>
+
+                                                        <div class="row disclaim">
+
+                                                            <div class="form-group form-group-md col-xs-9" style="margin-left: 15px;">
+                                                                <div class="control-label">
+                                                                    <p>No claim is made to the exclusive right to use</p>
+                                                                </div>
+
+                                                                <label class="sr-only">No claim is made to the exclusive right to use this part of the mark apart from the mark as shown</label>
+                                                                <input type="text" class="form-control disclaimer-input"  disclaimer-index="new" aria-label="Enter the portion of your mark that you wish to disclaim." th:value="${baseTrademarkApplication.tradeMark.disclaimerDeclaration}">
+
+                                                                <div class="control-label">
+                                                                    <p>apart from the mark as shown.</p>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group form-group-md visuallyremoved resetdisclaim col-xs-3" style="position: relative; bottom:-33px;" >
+                                                                <button type="button" class="btn btn-sm close resetdisclaimbtn" value="" aria-label="remove this number"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></button>
+                                                            </div>
+
                                                         </div>
-                                                        <div class="col-xs-12">
-                                                            <label for="yesdisclaim" class="sr-only">No claim is made to the exclusive right to use this part of the mark apart from the mark as shown</label>
-                                                            <input type="text" class="form-control" id="yesdisclaim" aria-label="Enter the portion of your mark that you wish to disclaim." th:value="${baseTrademarkApplication.tradeMark.disclaimerDeclaration}">
-                                                        </div>
-                                                        <div class="col-xs-12 control-label">
-                                                            <p>apart from the mark as shown.</p>
+
+                                                        <div class="appenddisclaim"></div>
+                                                        <div class="form-group form-group-md col-xs-12">
+                                                            <div class="row">
+                                                                <div class="inlinebuttons btn-group btn-group-justified">
+                                                                    <div class="btn-group col-xs-6">
+                                                                        <button type="button" class="btn btn-sm btn-success addinitial" id="addisclaimer" aria-label="add additional disclaimer">Add Additional Disclaimer</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
+
+
                                                 </th:block>
                                                 <th:block th:if="${baseTrademarkApplication.tradeMark.isDisclaimerSet() == true}">
                                                     <th:block th:if="${baseTrademarkApplication.tradeMark.isActvieDisclaimer() == true}">
@@ -146,17 +174,61 @@
                                                             <label for="inlineRadio010" class="radio-inline radiocontainer">No<input type="radio" name="disclaimradio" id="inlineRadio010" value="no"><span class="checkmark"></span></label>
                                                         </div><!--END radiogroup-->
                                                         <div id="yesdisclaimer" class="form-group form-group-md form-horizontal"><!--toggle 'yes' radio-->
-                                                            <div class="col-xs-12 control-label">
-                                                                <p>No claim is made to the exclusive right to use</p>
-                                                            </div>
-                                                            <div class="col-xs-12">
-                                                                <label for="yesdisclaim" class="sr-only">No claim is made to the exclusive right to use this part of the mark apart from the mark as shown</label>
-                                                                <input type="text" class="form-control" id="yesdisclaim" aria-label="Enter the portion of your mark that you wish to disclaim." th:value="${baseTrademarkApplication.tradeMark.disclaimerDeclaration}">
-                                                            </div>
-                                                            <div class="col-xs-12 control-label">
-                                                                <p>apart from the mark as shown.</p>
+
+
+                                                            <th:block th:each="discliamer, iter: ${baseTrademarkApplication.tradeMark.getDisclaimerDeclarationList()}">
+                                                                <div class="row disclaim">
+
+                                                                    <div class="form-group form-group-md col-xs-9" style="margin-left: 15px;">
+                                                                        <div class="control-label">
+                                                                            <p>No claim is made to the exclusive right to use</p>
+                                                                        </div>
+
+                                                                        <label class="sr-only">No claim is made to the exclusive right to use this part of the mark apart from the mark as shown</label>
+                                                                        <input type="text" class="form-control disclaimer-input"  th:attr="disclaimer-index=${iter.index}" aria-label="Enter the portion of your mark that you wish to disclaim." th:value="${discliamer}">
+
+                                                                        <div class="control-label">
+                                                                            <p>apart from the mark as shown.</p>
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    <th:block th:if="${iter.index == 0}">
+                                                                        <div class="form-group form-group-md visuallyremoved resetdisclaim col-xs-3"  style="position: relative; bottom:-33px;" >
+                                                                            <button type="button" class="btn btn-sm close resetdisclaimbtn" value="" aria-label="remove this number"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></button>
+                                                                        </div>
+
+                                                                    </th:block>
+                                                                    <th:block th:unless="${iter.index == 0}">
+                                                                        <div class="form-group form-group-md visuallyadded resetdisclaim col-xs-3"  style="position: relative; bottom:-33px;" >
+                                                                            <button type="button" class="btn btn-sm close resetdisclaimbtn" value="" aria-label="remove this number"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></button>
+                                                                        </div>
+
+                                                                    </th:block>
+
+
+
+
+                                                                </div>
+                                                            </th:block>
+
+
+
+
+
+                                                            <div class="appenddisclaim"></div>
+                                                            <div class="form-group form-group-md col-xs-12">
+                                                                <div class="row">
+                                                                    <div class="inlinebuttons btn-group btn-group-justified">
+                                                                        <div class="btn-group col-xs-6">
+                                                                            <button type="button" class="btn btn-sm btn-success addinitial" id="addisclaimer" aria-label="add additional disclaimer">Add Additional Disclaimer</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
+
+
                                                     </th:block>
                                                     <th:block th:if="${baseTrademarkApplication.tradeMark.isActvieDisclaimer() == false}">
                                                         <div role="radiogroup" aria-labelledby="disclaim">
@@ -164,20 +236,43 @@
                                                             <label for="inlineRadio010" class="radio-inline radiocontainer">No<input type="radio" name="disclaimradio" id="inlineRadio010" value="no" checked><span class="checkmark"></span></label>
                                                         </div><!--END radiogroup-->
                                                         <div id="yesdisclaimer" class="form-group form-group-md form-horizontal" style="display: none;"><!--toggle 'yes' radio-->
-                                                            <div class="col-xs-12 control-label">
-                                                                <p>No claim is made to the exclusive right to use</p>
+
+                                                            <div class="row disclaim">
+
+                                                                <div class="form-group form-group-md col-xs-9" style="margin-left: 15px;">
+                                                                    <div class="control-label">
+                                                                        <p>No claim is made to the exclusive right to use</p>
+                                                                    </div>
+
+                                                                    <label  class="sr-only">No claim is made to the exclusive right to use this part of the mark apart from the mark as shown</label>
+                                                                    <input type="text" class="form-control disclaimer-input"  disclaimer-index="new" aria-label="Enter the portion of your mark that you wish to disclaim." th:value="${baseTrademarkApplication.tradeMark.disclaimerDeclaration}">
+
+                                                                    <div class="control-label">
+                                                                        <p>apart from the mark as shown.</p>
+                                                                    </div>
+
+                                                                </div>
+
+                                                                <div class="form-group form-group-md visuallyremoved resetdisclaim col-xs-3"  style="position: relative; bottom:-33px;">
+                                                                    <button type="button" class="btn btn-sm close resetdisclaimbtn" value="" aria-label="remove this number"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></button>
+                                                                </div>
+
                                                             </div>
-                                                            <div class="col-xs-12">
-                                                                <label for="yesdisclaim" class="sr-only">No claim is made to the exclusive right to use this part of the mark apart from the mark as shown</label>
-                                                                <input type="text" class="form-control" id="yesdisclaim" aria-label="Enter the portion of your mark that you wish to disclaim." th:value="${baseTrademarkApplication.tradeMark.disclaimerDeclaration}">
-                                                            </div>
-                                                            <div class="col-xs-12 control-label">
-                                                                <p>apart from the mark as shown.</p>
+
+                                                            <div class="appenddisclaim"></div>
+                                                            <div class="form-group form-group-md col-xs-12">
+                                                                <div class="row">
+                                                                    <div class="inlinebuttons btn-group btn-group-justified">
+                                                                        <div class="btn-group col-xs-6">
+                                                                            <button type="button" class="btn btn-sm btn-success addinitial" id="addisclaimer" aria-label="add additional disclaimer">Add Additional Disclaimer</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
+
                                                     </th:block>
                                                 </th:block>
-
 
 
                                             </div>
@@ -186,10 +281,10 @@
                                 </div><!--END Disclaimer-->
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <section aria-label="Active Prior US Registration">
+                                        <section aria-label="Active Prior U.S. Registration">
                                             <div class="card-text">
                                                 <div role="heading" aria-level="2">
-                                                    <button type="button" class="btn btn-link Accordion-trigger" data-toggle="collapse" data-target="#prior" aria-controls="prior" aria-expanded="false" id="priorbtn"><span class="glyphicon glyphicon-triangle-right"></span><span id="toggleglyph" class="glyphicon glyphicon-triangle-bottom visuallyremoved"></span> Active Prior US Registration</button>
+                                                    <button type="button" class="btn btn-link Accordion-trigger" data-toggle="collapse" data-target="#prior" aria-controls="prior" aria-expanded="false" id="priorbtn"><span class="glyphicon glyphicon-triangle-right"></span><span id="toggleglyph" class="glyphicon glyphicon-triangle-bottom visuallyremoved"></span> Active Prior U.S. Registration</button>
                                                 </div>
                                             </div>
                                             <div id="prior" class="collapse Accordion-panel" role="region" aria-labelledby="priorbtn">
@@ -207,7 +302,7 @@
                                                     </div><!--END radiogroup-->
                                                     <div id="yespriordiv" role="region" aria-labelledby="prioreg" class="form-group form-group-md" style="display: none;">
                                                         <div class="col-xs-12 col-md-9">
-                                                            <label for="yesprior">Enter prior U.S. registration numbers.</label>
+                                                            <label for="yesprior">Enter prior U.S. registration numbers. <span class="label label-info subtle visuallyremoved">Reduced Fee</span></label>
                                                             <input type="text" class="form-control" id="yesprior" th:value="${baseTrademarkApplication.tradeMark.priorRegistrationNumber}" >
                                                         </div>
                                                         <div class="col-xs-12 col-md-3">
@@ -227,7 +322,7 @@
                                                         </div><!--END radiogroup-->
                                                         <div id="yespriordiv" role="region" aria-labelledby="prioreg" class="form-group form-group-md" style="">
                                                             <div class="col-xs-12 col-md-9">
-                                                                <label for="yesprior">Enter prior U.S. registration numbers.</label>
+                                                                <label for="yesprior">Enter prior U.S. registration numbers. <span class="label label-info subtle visuallyremoved">Reduced Fee</span></label>
                                                                 <input type="text" class="form-control" id="yesprior" th:value="${baseTrademarkApplication.tradeMark.priorRegistrationNumber}" >
                                                             </div>
                                                             <div class="col-xs-12 col-md-3">
@@ -246,7 +341,7 @@
                                                         </div><!--END radiogroup-->
                                                         <div id="yespriordiv" role="region" aria-labelledby="prioreg" class="form-group form-group-md" style="display: none;">
                                                             <div class="col-xs-12 col-md-9">
-                                                                <label for="yesprior">Enter prior U.S. registration numbers.</label>
+                                                                <label for="yesprior">Enter prior U.S. registration numbers. <span class="label label-info subtle visuallyremoved">Reduced Fee</span></label>
                                                                 <input type="text" class="form-control" id="yesprior" th:value="${baseTrademarkApplication.tradeMark.priorRegistrationNumber}" >
                                                             </div>
                                                             <div class="col-xs-12 col-md-3">
@@ -393,11 +488,7 @@
     var colorClaim = /*[[${markColorClaim}]]*/ 'User Name';
 
     var acceptBW = /*[[${markColorClaimBW}]]*/ 'User Name';
-
-    var activeDisclaimer = /*[[${activeDisclaimer}]]*/ 'User Name';
-
-    var priorRegistration = /*[[${priorRegistration}]]*/ 'User Name';
-    var markHasMeaning = /*[[${markHasMeaning}]]*/ 'User Name';
+    var colorClaimSet = /*[[${colorClaimSet}]]*/ 'User Name';
 
 
 
@@ -406,7 +497,7 @@
 
     var breadCrumbStatus = /*[[${breadCrumbStatus}]]*/ 'User Name';
 
-
+    var validateTEAS =  /*[[${baseTrademarkApplication.isValidateTEASFields()}]]*/ 'User Name';
 
     /*]]>*/
 </script>
@@ -424,6 +515,15 @@
         prevLinkURL = "../../mark/standard/?trademarkID="+appInternalID;
 
     }
+
+
+    if(markType == 'Trademark Details - Stylized'){
+        prevLinkURL = "../../mark/designStylizedDetails/?trademarkID="+appInternalID;
+    }
+    if(markType == 'Trademark Details - Design Only' ){
+        prevLinkURL = "../../mark/designOnlyDetails/?trademarkID="+appInternalID;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////
     // bred crumb links
     ////////////////////////////////////////////////////////////////////////////////////
@@ -484,74 +584,76 @@
         }, 500);
 
 
+        // expand fee drop down
+        $('a.dropdown-toggle').click();
+
+
+
+
         if(markType == "Standard Character"){
 
-            $('[data-toggle="popover"]').popover({
-                title : false,
-                html : true,
-                content : '<div class="media"><span id="showmarktxt" style="min-width:77px;width:80px;margin:0 auto;font-family: Palatino, Garamond, Bookman, Avant Garde; font-size:.9em;text-align:center;margin-bottom:0;" class="media-object" alt="my trademark">'+markText+'</span></div>'
-            });
+            if(markText  != null && markText != ""){
 
+                $( '#togglepop' ).attr('data-content', '<div class="media"><span id="showmarktxt" style="min-width:77px;width:80px;margin:0 auto;font-family: Palatino, Garamond, Bookman, Avant Garde; font-size:.9em;text-align:center;margin-bottom:0;" class="media-object" alt="my trademark">'+markText+'</span></div>');
+            }
+            else{
+                $( '#togglepop' ).attr('data-content', '<div class="media"><span class="glyphicon glyphicon-picture" aria-hidden="true"  style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></span></div>');
+            }
 
         }
         else {
 
-            //////////////////////////////////////////////////////////////////////
-            // set mark image widget based on persisted values
-            //////////////////////////////////////////////////////////////////////
-            if(colorClaim == null){
+            if(colorClaimSet == false){
                 if(image_path != null){
-                    $('[data-toggle="popover"]').popover({
-                        title : false,
-                        html : true,
-                        content : '<div class="media"><img src="'+image_path+'" style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>'
-                    });
+
+                    $( '#togglepop' ).attr('data-content', '<div class="media"><img src='+image_path+' style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>');
 
                 }
-            }
-
-            if(colorClaim == false){
-
-                if(acceptBW == true){
-                    $('#inlineRadio2').click();
-                    $('#bwmark').click();
-
-                    $('[data-toggle="popover"]').popover({
-                        title : false,
-                        html : true,
-                        content : '<div class="media"><img src="'+image_pathBW+'" style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>'
-                    });
-
-
-                }
+                // set color claim to true be default when its not set yet
                 else{
+                    $( '#togglepop' ).attr('data-content', '<div class="media"><span class="glyphicon glyphicon-picture" aria-hidden="true"  style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></span></div>');
+                }
+
+            }
+            else {
+
+                if(colorClaim == false){
+
+                    if(acceptBW == true){
+                        // $('#inlineRadio2').click();
+                        // $('#bwmark').click();
+
+                        $( '#togglepop' ).attr('data-content', '<div class="media"><img src='+image_pathBW+' style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>');
+
+
+                    }
+                    else{
+                        if(image_path != null){
+
+                            $( '#togglepop' ).attr('data-content', '<div class="media"><img src='+image_path+' style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>');
+
+
+
+                        }
+
+                    }
+
+                }
+                if(colorClaim == true){
+                    // $('#inlineRadio1').click();
                     if(image_path != null){
 
-                        $('[data-toggle="popover"]').popover({
-                            title : false,
-                            html : true,
-                            content : '<div class="media"><img src="'+image_path+'" style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>'
-                        });
+                        $( '#togglepop' ).attr('data-content', '<div class="media"><img src='+image_path+' style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>');
 
 
 
                     }
                 }
 
+
             }
-            if(colorClaim == true){
-                $('#inlineRadio1').click();
-                if(image_path != null){
-
-                    $('[data-toggle="popover"]').popover({
-                        title : false,
-                        html : true,
-                        content : '<div class="media"><img src="'+image_path+'" style="min-width:77px;width:80px;margin:0 auto;" class="media-object img-responsive" alt="my trademark"></div>'
-                    });
 
 
-                }
-            }
 
 
         }
@@ -560,44 +662,16 @@
 
 
 
-
-
-
-
-        // listener for mark image widget popover
-        $( '#togglepop' ).click(function() {
-            $( this ).toggleClass( 'focus' );
-            $(this).html() === '<span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Hide My Mark'
-                ? $(this).html('<span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Show My Mark')
-                : $(this).html('<span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Hide My Mark');
-        });
-
-
-
-
-
-
-
-        //////////////////////////////////////////////////////////////////////
-        // added for integration
-        // right triang\le accodian toggle
-        //////////////////////////////////////////////////////////////////////
-        $('.glyphicon').click(function () {
-            $(this).toggleClass("glyphicon-triangle-right").toggleClass("glyphicon-triangle-bottom");
-        });
         //////////////////////////////////////////////////////////////////////
         // activate tool tip
         //////////////////////////////////////////////////////////////////////
-        $('[data-toggle="tooltip"]').tooltip();
-
-
         $('[data-toggle="tooltip"]').tooltip();
 
         setBreadCrumb(breadCrumbStatus);
 
         $('#bs-link1').click(function () {
             var url = $(this).attr("href");
-            if(url != "undefined"){
+            if(url != undefined){
                 location.href=url;
             }
 
@@ -605,7 +679,7 @@
 
         $('#bs-link2').click(function () {
             var url = $(this).attr("href");
-            if(url != "undefined"){
+            if(url != undefined){
                 //location.href=url;
             }
 
@@ -613,7 +687,7 @@
 
         $('#bs-link3').click(function () {
             var url = $(this).attr("href");
-            if(url != "undefined"){
+            if(url != undefined){
                 location.href=url;
             }
 
@@ -621,7 +695,7 @@
 
         $('#bs-link4').click(function () {
             var url = $(this).attr("href");
-            if(url != "undefined"){
+            if(url != undefined){
                 location.href=url;
             }
 
@@ -629,7 +703,7 @@
 
         $('#bs-link5').click(function () {
             var url = $(this).attr("href");
-            if(url != "undefined"){
+            if(url != undefined){
                 location.href=url;
             }
 
@@ -637,11 +711,23 @@
 
         $('#bs-link6').click(function () {
             var url = $(this).attr("href");
-            if(url != "undefined"){
+            if(url != undefined){
                 location.href=url;
             }
 
         });
+        //////////////////////////////////////////////////////////////////
+        // persistence rendering logic for TEAS plus field labels
+        //////////////////////////////////////////////////////////////////
+        if(validateTEAS == true){
+            $('input.togglesavemore').attr("checked",true);
+            $( document ).find('span.subtle').removeClass('visuallyremoved');
+            $( document ).find('#on').removeClass('visuallyhidden');
+
+        }
+        else{
+            $( document ).find('span.subtle').addClass( 'visuallyremoved' );
+        }
 
 
 
@@ -694,13 +780,40 @@
             saveMarkTextdetails("mark-active-disclaimer", "no", appInternalID);
 
         });
+        ///////////////////////////////////////////////////////////////////////
+        // add additional disclaimer js
+        ///////////////////////////////////////////////////////////////////////
+        $( document ).on('focusout','input.disclaimer-input',function(){
 
 
-        $('#yesdisclaim').focusout(function () {
             var declaration = $(this).val();
 
-            saveMarkTextdetails("mark-disclaimer-declaration", declaration, appInternalID);
+            var index = $(this).attr('disclaimer-index');
+
+            if(index == null){
+                index = "new";
+            }
+
+            var currentInput = $(this);
+
+            saveMarkTextdetailsAdditional("mark-disclaimer-declaration-additional", declaration, index, appInternalID,currentInput);
         });
+
+        $( document ).on('click','.resetdisclaimbtn',function(){
+
+            var index = $(this).parent().prev().find('input').attr("disclaimer-index");
+            var value = "xxxxx";
+
+            var input = $(this);
+            if(index >= 0 || index != "new"){
+                var newIndex = saveMarkTextdetailsAdditional("mark-disclaimer-declaration-remove", value,index,appInternalID,input);
+            }
+            $( this ).parent().parent().hide(500);
+
+            //$( this ).parent().parent().remove();
+        });
+        ///////////////////////////////////////////////////////////////////////
+
 
         $('#yesIndustry').focusout(function () {
             var declaration = $(this).val();
@@ -877,6 +990,99 @@
         ////////////////////////////////////////////////////////////////////////////////
 
 
+    }
+
+    function saveMarkTextdetailsAdditional(field_name_prefix, field_value, index, appInternalID, input) {
+
+
+
+
+
+        //alert(field_name_prefix);
+        // send state, and token to server
+        // token will be generated in the controller and added to the view
+        // similar to how access token works ...a token is tied to a user
+        // access token will be passed in through model
+        //
+        // var tokenValue = '${token}';  // token is the model attribute name
+        // we are not using secured tokens for the prototype
+        // we will secure it by adding ssl and https support
+
+        //var field_value = $(this).val();
+        //alert(field_value);
+
+        $.ajax({
+            url: "../../REST/apiGateway/mark/update/additional/"+field_name_prefix+"/"+field_value+"/"+index+"/"+appInternalID,
+            type: 'GET',
+            success: function(data){
+
+                // parse out status msg:
+                var newIndex= parseIndexValueFromResponse(data);
+
+                var serverMessage = parseMessageFromResponse(data)
+
+
+                    //if(data.contains("status: 200")){
+                    // show confirmation check mark on form
+                    //$('#toggle').delay(1000).click();
+                    $(".autoSaveMessageArea span").fadeOut(500);
+                    setTimeout(function() {
+                        // after 1000 ms we add the class animated to the login/register card
+                        $(".autoSaveMessageArea span").text(serverMessage);
+                        $(".autoSaveMessageArea span").fadeIn(1000);
+                    }, 500);
+
+                    if(newIndex != index){  // we are adding a new row
+                        $(input).attr('disclaimer-index', newIndex)
+                    }
+
+            },
+            error: function(data) {
+
+                //$('.circle-loader').fadeOut(100);
+                //$('.x-mark').fadeIn(500);
+
+                console.log(data);
+                // set message to div area ...fields can not be left null
+                //$(".validationMsgArea span").text("You can not leave any fields empty.");
+                //$(".validationMsgArea span").css('color','red');
+            }
+
+        });
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////
+        // end of contact information 'State' auto save ////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+
+
+    }
+
+
+
+    function parseIndexValueFromResponse(response){
+
+        var index = response.indexOf("index:");
+        index = index+6;
+        response = response.substring(index);
+
+
+        var index2 = response.indexOf("}");
+        response = response.substring(0, index2);
+        return response;
+    }
+
+    function parseMessageFromResponse(response){
+
+        var index = response.indexOf("message:");
+        index = index+8;
+        response = response.substring(index);
+
+
+        var index2 = response.indexOf("}");
+        response = response.substring(0, index2);
+        return response;
     }
 
     function setBreadCrumb(bsStatusArrayList){

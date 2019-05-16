@@ -12,7 +12,7 @@ public class AuthenticationController {
     @RequestMapping({"/login"})
     public ModelAndView login(){
 
-        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+        System.out.println("forwarded to login page : ");
         //return "login";
 
         UserCredentialsDTO accountDto = new UserCredentialsDTO();

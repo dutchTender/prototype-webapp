@@ -1,84 +1,244 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+<!doctype html>
+<html th:fragment="layout (template, menu)" lang="en" xml:lang="en">
 
-      th:replace="~{fragments/lynnFragmentNoSession :: layout (~{::body},'login')}"
-
->
 <head>
-    <title>USPTO.gov eFile Sign In </title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" style="-moz-border-radius: 0px;-webkit-border-radius: 0px;border-radius: 0px;" type="image/x-icon" th:href="@{/resources/images/nav_banner.png}">
+
+    <title>USPTO.gov :: webapp prototype :: USPTO Trademark Application Login</title>
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <!--    <link rel="stylesheet" th:href="@{/resources/css/usPTO.css}"/>
+    --> <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--<link rel="stylesheet" href="usPTO.css">-->
+    <link rel="stylesheet" th:href="@{/resources/css/reset.css}"/>
+    <!--<link rel="stylesheet" href="css/lynnstyles.css">-->
+    <link rel="stylesheet" th:href="@{/resources/css/lynnstyles.css}"/>
+
+    <script type="application/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <!--<script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>-->
+    <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <!--<script src="../resources/js/jquery.dataTables.min.js"></script>-->
+    <script type="application/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <!--<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>-->
+    <script type="application/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="application/javascript"  th:src="@{/resources/js/lynnjqueryscriptDashboard.js}"></script>
+    <script type="application/javascript"  th:src="@{/resources/js/tab_panels.js}"></script>
 </head>
-<body>
 
+<body class="loginform">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://www.uspto.gov"><img th:src="@{/resources/images/logo_top.png}"  alt="US Trade and Patent Office logo"></a>
+        </div>
 
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/home">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="https://www.uspto.gov/learning-and-resources/account-faqss">FAQs</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" data-toggle="modal" data-target="#loginmodal" class="weight600">Log In</a>
+                </li>
+                <li><a href="https://my.uspto.gov/" class="orange">MyUSPTO</a></li>
+            </ul>
 
-                 <div class="container" style="position: relative; top:-155px; bottom:20%; min-height: 800px; display: none;">
+            <ul class="nav navbar-nav navbar-right" id="lowernav">
+                <li style="position: fixed; left:30px; ">
 
-                    <form th:action="@{/login}" method="post" class="form form-check-input form-control-sm "  >
-                        <div class="card card-login" style="margin: auto; position: relative;top:200px; background-color: whitesmoke; min-height: 350px; margin-left: 200px;  max-width: 55%;   border-top-left-radius: 20px; border-bottom-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px;"  >
-                            <div class=" card-header-blue text-center" style="padding-top: 10px;position:relative;top: 20px; right:-30%;">
-                                <b class="card-title" style=""><a style="font-weight: bold;margin-top: 50px;" href="/registration">New User</a></b>
-                            </div>
-
-                            <div class="card-body " style="padding-top: 20px;position:relative;top: 20px; min-height: 200px; border: none;">
-                                <!-- Login Form -->
-
-
-                                <span class="card-description" style="position: relative; right:-35%;"><b style="font-weight: bold;">Sign In</b></span>
-
-                                <span class="bmd-form-group" style="position: relative; top:10%; bottom: -10px; right:-10%;" >
-                                  <div class="input-group">
-                                    <div class="input-group-prepend">
-                                      <span class="input-group-text" style="margin:auto; position:relative; left:38%; right:40%;">
-                                         <i class="material-icons">face</i><b style="padding-left: 10px; position: relative; top:-5px;font-weight: bold">Email Address</b>
-                                      </span>
-                                    </div>
-                                    <input style="min-width:200px; margin: auto; position:relative; left:40%; right:40%; border-top-right-radius: 2px; border-top-left-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px;" type="email" class="form-control" name="username" placeholder="">
-                                  </div>
-                                </span>
-                                <span class="bmd-form-group" style="margin:auto; position: relative; bottom: -20px; right:-10%;">
-                                  <div class="input-group" >
-                                    <div class="input-group-prepend">
-                                      <span class="input-group-text" style="margin:auto; position:relative; left:40%; right :40%;">
-                                          <i class="material-icons">vpn_key</i><b style="padding-left: 10px; position: relative; top:-5px;font-weight: bold;">Password</b>
-                                      </span>
-                                    </div>
-                                    <input  style="min-width:200px; margin:auto; position:relative; left:39.6%; border-top-right-radius: 2px; border-top-left-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px;" type="password" class="form-control" name="password" placeholder="">
-                                  </div>
-                                </span>
-
-                                <span class="bmd-form-group" style="margin:auto; position: relative; bottom: -40px; right:-10%;">
-                                     <div class="input-group" >
-                                        <button style="min-width:200px; margin:auto; position:relative; left:80px; border-top-right-radius: 5px; border-top-left-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;background-color: #004c97; color: whitesmoke; " class="btn" type="submit" value="Sign In"><i class="material-icons" style="padding-right: 70px; ">input</i><b style="position: relative; left:-45px; top:-5px; font-weight: bold;"> &nbsp;  Sign In&nbsp;</b>
-                                        </button>
-                                     </div>
-                                </span>
-                            </div>
-
-                            </div>
-                            <div class="card-footer justify-content-center" style="border-top-color:white;  padding-top: 20px; padding-bottom:50px; max-width:60%; min-width: 60%; position:relative;left:33px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px;">
-
-
-
-
-                            </div>
-
-
-
-
-
-
-
-                    </form>
+                    <div class="autoSaveMessageArea" style="color: white; font-weight: bold; ">
+                        <b><span  th:text ="${message}" style="font-size: 15px;">&nbsp;&nbsp;</span></b>
 
                     </div>
-                <script>
-                    $(document).ready(function() {
-                        $('.container').hide();
-                        setTimeout(function() {
-                            // after 1000 ms we add the class animated to the login/register card
-                            $('.container').fadeIn('slow');
-                        }, 500);
-                    });
-                </script>
+
+                </li>
+
+                <li><a href="https://efile-reimagined.com/whatsnew">What&#8217;s new</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My USPTO help<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="http://usptoglobalsignon.ideascale.com/">Feedback</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="https://www.uspto.gov/learning-and-resources/account-faqss">FAQs</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Tutorial</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container-fluid">
+    <div class="row content"  style="display: none;">
+        <main class="col-xs-12 col-sm-6 col-md-6 col-lg-4" id="loginform">
+            <!--START Content Div-->
+            <div>
+                <form id="login-form-main" th:action="@{/login}" method="post" >
+                    <fieldset aria-label="login">
+                        <div class="headlinecontainer">
+                            <h1><img th:src="@{/resources/images/logo_top.png}" alt="USPTO eFile Reimagined"> &#124; eFile Reimagined</h1>
+                            <h2 class="weight600">Log In</h2>
+                        </div>
+                        <div class="maincontainer">
+                            <div class="form-group form-group-md">
+                                <label for="uname"><b>Email Address</b></label>
+                                <input type="email" class="form-control" placeholder="" name="username" required>
+                            </div>
+                            <div class="form-group form-group-md">
+                                <label for="psw"><b>Password</b></label>
+                                <input   type="password" class="form-control" name="password" placeholder="" required>
+                            </div>
+                            <button type="submit" form="login-form-main" class="btn btn-md btn-primary">Login</button>
+                        </div>
+
+                        <div class="maincontainer bottom">
+                            <div class="psw">
+                                <p><a style="border-bottom: 1px solid; " href="/registration">New user?</a>   <a style="border-bottom: 1px solid; " href="/recovery">Forgot password?</a> </p>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="loginmodal" tabindex="0" role="dialog" aria-labelledby="loginmodaltwo">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="login-form" th:action="@{/login}" method="post" >
+                                <fieldset aria-label="login">
+                                    <div class="headlinecontainer">
+                                        <h1><img th:src="@{/resources/images/usptologo.png}" alt="USPTO eFile Reimagined"> &#124; eFile Reimagined</h1>
+                                        <h2 class="weight600">Log In</h2>
+                                    </div>
+                                    <div class="maincontainer">
+                                        <div class="form-group form-group-md">
+                                            <label for="uname"><b>Email Address</b></label>
+                                            <input type="email" class="form-control" placeholder="" name="username" required>
+                                        </div>
+                                        <div class="form-group form-group-md">
+                                            <label for="psw"><b>Password</b></label>
+                                            <input   type="password" class="form-control" name="password" placeholder="" required>
+                                        </div>
+                                        <button type="submit" form="login-form" class="btn btn-md btn-primary">Login</button>
+                                    </div>
+
+                                    <div class="maincontainer bottom">
+                                        <div class="psw">
+                                            <p><a style="border-bottom: 1px solid;" href="/registration">New user? </a>   <a style="border-bottom: 1px solid;" href="/recovery">Forgot password?</a> </p>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </main>
+    </div><!--END div content-->
+</div><!--END div container-->
+
+<footer>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="uspto-footer-top col-xs-4 col-sm-8 col-md-9 col-lg-9">
+                <div class="uspto-footer-logo col-sm-8">
+                    <a href="http://www.uspto.gov">
+                        <div class="footer-brand" role="img" aria-label="United States Office of Patent and Trademarks"></div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-8 col-sm-4 col-md-3">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><span id="webPolicy">Website Policy</span></p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p>Privacy Policy</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
 </body>
+
+<script type="text/javascript" src="https://nebula-cdn.kampyle.com/wu/451129/onsite/embed.js" async></script>
+
+<!-- Start of Async Drift Code -->
+<script>
+    "use strict";
+
+    !function() {
+        var t = window.driftt = window.drift = window.driftt || [];
+        if (!t.init) {
+            if (t.invoked) return void (window.console && console.error && console.error("Drift snippet included twice."));
+            t.invoked = !0, t.methods = [ "identify", "config", "track", "reset", "debug", "show", "ping", "page", "hide", "off", "on" ],
+                t.factory = function(e) {
+                    return function() {
+                        var n = Array.prototype.slice.call(arguments);
+                        return n.unshift(e), t.push(n), t;
+                    };
+                }, t.methods.forEach(function(e) {
+                t[e] = t.factory(e);
+            }), t.load = function(t) {
+                var e = 3e5, n = Math.ceil(new Date() / e) * e, o = document.createElement("script");
+                o.type = "text/javascript", o.async = !0, o.crossorigin = "anonymous", o.src = "https://js.driftt.com/include/" + n + "/" + t + ".js";
+                var i = document.getElementsByTagName("script")[0];
+                i.parentNode.insertBefore(o, i);
+            };
+        }
+    }();
+    drift.SNIPPET_VERSION = '0.3.1';
+    drift.load('b5xdchmzc38b');
+</script>
+<!-- End of Async Drift Code -->
+<script>
+    // next link url to enable  for u.s individual href="http://localhost:8080/application/owner/info"
+    $(document).ready(function() {
+
+
+        setTimeout(function () {
+            $('.content').fadeIn(500);
+        }, 500);
+    });
+</script>
+
 </html>

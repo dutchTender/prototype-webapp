@@ -28,7 +28,14 @@ public class USPTOUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
 
-        UserCredentials userCredentials = userCredentialsService.findByEmail(email);
+        System.out.println("11111111111111111111111111111111111111111111111111");
+        System.out.println(email);
+        System.out.println("11111111111111111111111111111111111111111111111111");
+        System.out.println(email.toLowerCase());
+
+
+
+        UserCredentials userCredentials = userCredentialsService.findByEmail(email.toLowerCase());
         if (userCredentials == null) {
             throw new UsernameNotFoundException(
                     "No user found with username: "+ email);

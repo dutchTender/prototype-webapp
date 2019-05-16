@@ -5,12 +5,13 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+
 import com.thorton.grant.uspto.prototypewebapp.config.host.bean.endPoint.HostBean;
 import com.thorton.grant.uspto.prototypewebapp.factories.ServiceBeanFactory;
 import com.thorton.grant.uspto.prototypewebapp.interfaces.Secruity.UserCredentialsService;
 import com.thorton.grant.uspto.prototypewebapp.interfaces.USPTO.PTOUserService;
 import com.thorton.grant.uspto.prototypewebapp.interfaces.USPTO.tradeMark.application.types.BaseTradeMarkApplicationService;
-import com.thorton.grant.uspto.prototypewebapp.interfaces.USPTO.tradeMark.asset.GoodsAndServicesService;
+
 import com.thorton.grant.uspto.prototypewebapp.model.entities.DTO.application.ContactsDisplayDTO;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.DTO.application.form.NewAttorneyContactFormDTO;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.DTO.application.form.NewOwnerContactFormDTO;
@@ -23,10 +24,15 @@ import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.tradeMark.as
 import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.tradeMark.assets.GoodAndService;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.user.ManagedContact;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.user.PTOUser;
+import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.user.PhoneNumber;
 import com.thorton.grant.uspto.prototypewebapp.model.entities.security.UserCredentials;
-import com.thorton.grant.uspto.prototypewebapp.service.REST.Goods_ServicesService;
+
 import com.thorton.grant.uspto.prototypewebapp.service.storage.StorageService;
 import com.thorton.grant.uspto.prototypewebapp.service.storage.error.StorageException;
+import org.jodconverter.LocalConverter;
+import org.jodconverter.filter.text.PageSelectorFilter;
+import org.jodconverter.office.LocalOfficeManager;
+import org.jodconverter.office.LocalOfficeUtils;
 import org.springframework.context.ApplicationContext;
 
 import org.springframework.http.HttpHeaders;
@@ -100,19 +106,12 @@ public class ApplicationObjectCreationController {
         UserCredentialsService userCredentialsService = serviceBeanFactory.getUserCredentialsService();
         UserCredentials credentials = userCredentialsService.findByEmail(authentication.getName());
 
-        System.out.println("1111111111111111111111111111111111111111111111111111111111111111111111111111111");
-        System.out.println("app internal id : "+newAttorneyContactFormDTO.getAppInternalID());
-        System.out.println("1111111111111111111111111111111111111111111111111111111111111111111111111111111");
         String tempAppId = newAttorneyContactFormDTO.getAppInternalID();
         if(tempAppId.contains(",")){
             int index = tempAppId.indexOf(",");
             tempAppId = tempAppId.substring(0, index);
             newAttorneyContactFormDTO.setAppInternalID(tempAppId);
         }
-
-        System.out.println("22222222222222222222222222222222222222222222222222222222222222222222222222222222");
-        System.out.println("app internal id : "+newAttorneyContactFormDTO.getAppInternalID());
-        System.out.println("222222222222222222222222222222222222222222222222222222222222222222222222222222222");
 
 
         BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
@@ -217,10 +216,22 @@ public class ApplicationObjectCreationController {
 
         if(file != null){
 
+            // check file type and set if uploaded image is a pdf file
+
+
+
+
+
+
               if(file.isEmpty() == false) {
-                  lawyer.setBarCertificateImageKey("/files/"+storageService.getCounter()+file.getOriginalFilename());
+
+                  String fileName = file.getOriginalFilename();
+                  String imagePath = "";
+
                   try {
-                      storageService.store(file);
+                      imagePath = storageService.store(file);
+                      lawyer.setBarCertificateImageUploaded(true);
+                      lawyer.setBarCertificateImageFileName(file.getOriginalFilename());
 
                   }
                   catch ( StorageException ex){
@@ -228,19 +239,114 @@ public class ApplicationObjectCreationController {
                       return "forward:/application/start/?trademarkID="+trademarkInternalID;
 
                   }
+
+
+
+                  if(fileName.endsWith(".pdf") || fileName.endsWith(".PDF")){
+                      lawyer.setBarCertificateImageKey("/files-pdf/"+imagePath);
+                      lawyer.setBarCertifcatePDF(true);
+                  }
+                  else {
+                      lawyer.setBarCertificateImageKey("/files/"+imagePath);
+                  }
+
+
+
               }
 
         }
 
-        if(newAttorneyContactFormDTO.getAttorneyPhone() != null){
+        if(newAttorneyContactFormDTO.getAttorneyPhone() != null && newAttorneyContactFormDTO.getAttorneyPhone().equals("") == false){
             lawyer.setPrimaryPhonenumber(newAttorneyContactFormDTO.getAttorneyPhone());
+
+            // create new phone object and add it to attorney, also get type and extension values
+            // make sure form DTO supports type and extension values
+            PhoneNumber phoneNumber = new PhoneNumber();
+            phoneNumber.setPhoneNumber(newAttorneyContactFormDTO.getAttorneyPhone());
+            //phoneNumber.setPhoneType(newAttorneyContactFormDTO.);
+            phoneNumber.setPhoneType(newAttorneyContactFormDTO.getAttorneyPhoneType());
+            phoneNumber.setExtension(newAttorneyContactFormDTO.getAttorneyPhoneExtension());
+
+            lawyer.addPhoneNumber(phoneNumber);
+
         }
-        if(newAttorneyContactFormDTO.getAttorneyDocketNumber()!= null){
-            lawyer.setDocketNumber(newAttorneyContactFormDTO.getAttorneyDocketNumber());
+
+        if(newAttorneyContactFormDTO.getAttorneyPhone2() != null && newAttorneyContactFormDTO.getAttorneyPhone2().equals("") == false){
+
+
+            // create new phone object and add it to attorney, also get type and extension values
+            // make sure form DTO supports type and extension values
+            PhoneNumber phoneNumber = new PhoneNumber();
+            phoneNumber.setPhoneNumber(newAttorneyContactFormDTO.getAttorneyPhone2());
+            //phoneNumber.setPhoneType(newAttorneyContactFormDTO.);
+            phoneNumber.setPhoneType(newAttorneyContactFormDTO.getAttorneyPhoneType2());
+            phoneNumber.setExtension(newAttorneyContactFormDTO.getAttorneyPhoneExtension2());
+
+            lawyer.addPhoneNumber(phoneNumber);
+
         }
-        if(newAttorneyContactFormDTO.getAttorneyAffiliation()!= null){
+        if(newAttorneyContactFormDTO.getAttorneyPhone3() != null && newAttorneyContactFormDTO.getAttorneyPhone3().equals("") == false){
+
+
+            // create new phone object and add it to attorney, also get type and extension values
+            // make sure form DTO supports type and extension values
+            PhoneNumber phoneNumber = new PhoneNumber();
+            phoneNumber.setPhoneNumber(newAttorneyContactFormDTO.getAttorneyPhone3());
+            //phoneNumber.setPhoneType(newAttorneyContactFormDTO.);
+            phoneNumber.setPhoneType(newAttorneyContactFormDTO.getAttorneyPhoneType3());
+            phoneNumber.setExtension(newAttorneyContactFormDTO.getAttorneyPhoneExtension3());
+
+            lawyer.addPhoneNumber(phoneNumber);
+
+        }
+
+        if(newAttorneyContactFormDTO.getAttorneyDocketNumber()!= null && newAttorneyContactFormDTO.getAttorneyDocketNumber().equals("") == false){
+           // lawyer.setDocketNumber(newAttorneyContactFormDTO.getAttorneyDocketNumber());
+
+            System.out.println("docket number 1 :"+newAttorneyContactFormDTO.getAttorneyDocketNumber()+"/");
+            lawyer.addDocketNumber(newAttorneyContactFormDTO.getAttorneyDocketNumber());
+        }
+
+        if(newAttorneyContactFormDTO.getAttorneyDocketNumber2()!= null && newAttorneyContactFormDTO.getAttorneyDocketNumber2().equals("") == false){
+
+
+            // lawyer.setDocketNumber(newAttorneyContactFormDTO.getAttorneyDocketNumber());
+            System.out.println("docket number 2 :"+newAttorneyContactFormDTO.getAttorneyDocketNumber2()+"/");
+            lawyer.addDocketNumber(newAttorneyContactFormDTO.getAttorneyDocketNumber2());
+        }
+        if(newAttorneyContactFormDTO.getAttorneyDocketNumber3()!= null && newAttorneyContactFormDTO.getAttorneyDocketNumber3().equals("") == false){
+            // lawyer.setDocketNumber(newAttorneyContactFormDTO.getAttorneyDocketNumber());
+            System.out.println("docket number 3 :"+newAttorneyContactFormDTO.getAttorneyDocketNumber3()+"/");
+            lawyer.addDocketNumber(newAttorneyContactFormDTO.getAttorneyDocketNumber3());
+        }
+        if(newAttorneyContactFormDTO.getAttorneyAffiliation()!= null && newAttorneyContactFormDTO.getAttorneyAffiliation().equals("") == false){
             lawyer.setAffiliationStatus(newAttorneyContactFormDTO.getAttorneyAffiliation());
+            lawyer.setAffiliationStatusSet(true);
+            if(newAttorneyContactFormDTO.getAttorneyAffiliation().contains("usaffiliation")){
+                    lawyer.setAffliationUS(true);
+            }
+            else {
+                lawyer.setAffliationUS(false);
+            }
+
+            if(newAttorneyContactFormDTO.getUsCertifyCheckbox().equals("check") ){
+
+                lawyer.setUsCertifyCheck(true);
+            }
+            else{
+                lawyer.setUsCertifyCheck(false);
+
+            }
+
+
         }
+
+
+
+
+
+
+
         if(newAttorneyContactFormDTO.getAttorneyBarJurisdiction()!= null){
             lawyer.setBarJurisdiction(newAttorneyContactFormDTO.getAttorneyBarJurisdiction());
         }
@@ -253,10 +359,9 @@ public class ApplicationObjectCreationController {
 
             String string = newAttorneyContactFormDTO.getAttorneyBarAdmissionDate();
 
-            System.out.println("Date value : "+string);
-            if(string.length() < 10){
+
                 try {
-                    DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+                    DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
                     Date date = format.parse(string);
 
                     lawyer.setBarAdmissionDate(date);
@@ -265,7 +370,7 @@ public class ApplicationObjectCreationController {
 
                     model.addAttribute("message", "ERROR: Could not save Bar Admission Date, invalid Date format.");
                 }
-            }
+
 
         }
 
@@ -308,6 +413,11 @@ public class ApplicationObjectCreationController {
         baseTradeMarkApplicationService.save(baseTrademarkApplication);
 
         return "forward:/application/AttorneySet/?trademarkID="+trademarkInternalID;
+
+        // try forwarding to the attorney edit page
+        //return "forward:/application/attorney/edit/" +lawyer.getEmail() + "/?trademarkID="+trademarkInternalID;
+
+
     }
     ///////////////////////////////////////////////////////////////////////////////
      // end of attorney add
@@ -332,9 +442,6 @@ public class ApplicationObjectCreationController {
         UserCredentialsService userCredentialsService = serviceBeanFactory.getUserCredentialsService();
         UserCredentials credentials = userCredentialsService.findByEmail(authentication.getName());
 
-        System.out.println("1111111111111111111111111111111111111111111111111111111111111111111111111111111");
-        System.out.println("app internal id : "+newOwnerContactFormDTO.getAppInternalID());
-        System.out.println("1111111111111111111111111111111111111111111111111111111111111111111111111111111");
         String tempAppId = newOwnerContactFormDTO.getAppInternalID();
         if(tempAppId.contains(",")){
             int index = tempAppId.indexOf(",");
@@ -342,9 +449,6 @@ public class ApplicationObjectCreationController {
             newOwnerContactFormDTO.setAppInternalID(tempAppId);
         }
 
-        System.out.println("22222222222222222222222222222222222222222222222222222222222222222222222222222222");
-        System.out.println("app internal id : "+newOwnerContactFormDTO.getAppInternalID());
-        System.out.println("222222222222222222222222222222222222222222222222222222222222222222222222222222222");
 
 
         BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
@@ -365,7 +469,6 @@ public class ApplicationObjectCreationController {
         baseTrademarkApplication.setOwnerSubType(null);
         baseTrademarkApplication.setOwnerType(null);
 
-        System.out.println("OWNER SUB TYPE : "+owner.getOwnersubType());
         // transfer and reset owner type and subtype
 
         if(newOwnerContactFormDTO.getFirstName()!= null){
@@ -374,6 +477,7 @@ public class ApplicationObjectCreationController {
 
             owner.setOwnerDisplayname(newOwnerContactFormDTO.getFirstName()+ " "+newOwnerContactFormDTO.getLastName());
             owner.setFirstName(newOwnerContactFormDTO.getFirstName());
+            owner.setPersonTypeOwner(true);
 
 
 
@@ -390,7 +494,14 @@ public class ApplicationObjectCreationController {
         if(newOwnerContactFormDTO.getOwnerType() != null){
             owner.setOwnerType(newOwnerContactFormDTO.getOwnerType());
         }
+
+        if(newOwnerContactFormDTO.getOwnerAdditionalName()!= null && newOwnerContactFormDTO.getOwnerAdditionalName().equals("") == false) {
+            owner.setOwnerAdditionalName(newOwnerContactFormDTO.getOwnerAdditionalName());
+            owner.setAlternameSet(true);
+        }
+
         if(newOwnerContactFormDTO.getOwnerCitizenShip()!= null){
+
             owner.setCitizenShip(newOwnerContactFormDTO.getOwnerCitizenShip());
         }
         owner.setCountry(newOwnerContactFormDTO.getOwnerAddressCountry());
@@ -491,17 +602,35 @@ public class ApplicationObjectCreationController {
 
             owner.setOwnerName(newOwnerContactFormDTO.getOwnerName());
             owner.setOwnerDisplayname(newOwnerContactFormDTO.getOwnerName());
+
+            // added this logic to prevent citizenship output on review screen
+            //owner.setGoverningEntitiesTypeOwner(true);
+
+        }
+        if(newOwnerContactFormDTO.getSolpFirstName() !=  null){
+            owner.setOwnerSolpFirstName(newOwnerContactFormDTO.getSolpFirstName());
         }
 
-        if(newOwnerContactFormDTO.getOwnerAdditionalName() !=  null){
-            owner.setOwnerAdditionalName(newOwnerContactFormDTO.getOwnerAdditionalName());
+        if(newOwnerContactFormDTO.getSolpLAstName()!=  null){
+            owner.setOwnerSolpLastName(newOwnerContactFormDTO.getSolpLAstName());
         }
+
+        if(newOwnerContactFormDTO.getSolpMiddleName()!=  null){
+            owner.setOwnerSolpMiddleName(newOwnerContactFormDTO.getSolpMiddleName());
+        }
+
+
         if(newOwnerContactFormDTO.getOwnerOrganizationState() != null){
             owner.setOwnerOrganizationState(newOwnerContactFormDTO.getOwnerOrganizationState());
         }
 
+        if(baseTrademarkApplication.isForeignEnityFiling()){
+            owner.setOwnerOrganizationState("BAHAMAS");
+        }
+
 
         // crate partner if partner fields are not null
+        // process primary partner
         List<partnerDTO> partnerDTOS = newOwnerContactFormDTO.getPartnerDTOs();
         if(partnerDTOS.size() > 0){
 
@@ -510,16 +639,25 @@ public class ApplicationObjectCreationController {
             partnerDTO partner = partnerDTOS.get(0);
 
             GoverningEntity governingEntity = new GoverningEntity();
+            governingEntity.setPrimaryGoverningEntity(true);
+            owner.setGoverningEntitiesTypeOwner(true);
+
+            // will update this logic later
+            owner.setGoverningEntitiesDisplayName("General partners");
+
+            governingEntity.setGoverningEntityType(partner.getPartnerType());
 
             if(partner.getPartnerName() != ""){
                 governingEntity.setEntityName(partner.getPartnerName());
                 governingEntity.setDisplayName(partner.getPartnerName());
                 governingEntity.setCollapseID(partner.getPartnerName().replaceAll("[^A-Za-z0-9]", ""));
+                governingEntity.setPersonEntity(false);
             }
             if(partner.getFirstName() != "" ){
                 governingEntity.setFirstName(partner.getFirstName());
                 governingEntity.setDisplayName(partner.getFirstName()+" "+partner.getLastName());
                 governingEntity.setCollapseID((partner.getFirstName()+partner.getLastName()).replaceAll("[^A-Za-z0-9]", ""));
+                governingEntity.setPersonEntity(true);
             }
             if(partner.getLastName() != ""){
                 governingEntity.setLastName(partner.getLastName());
@@ -538,13 +676,86 @@ public class ApplicationObjectCreationController {
                 governingEntity.setOrganizationState(partner.getState());
             }
             if(partner.getType() != ""){
-                governingEntity.setEntityType(partner.getType());
+                governingEntity.setEntityAlternateNameType(partner.getType());
             }
+            if(partner.getAlternateName() != ""){
+                governingEntity.setEntityAlternateName(partner.getAlternateName());
+            }
+
 
             owner.addGoverningEnity(governingEntity);
             // }
 
         }
+
+        if(newOwnerContactFormDTO.getPartner_first_name2() != null && newOwnerContactFormDTO.getPartner_last_name2() != null && newOwnerContactFormDTO.getPartner_citizen2() != null){
+            if(newOwnerContactFormDTO.getPartner_first_name2().equals("") == false && newOwnerContactFormDTO.getPartner_last_name2().equals("") == false && newOwnerContactFormDTO.getPartner_citizen2().equals("") == false){
+                GoverningEntity governingEntity = new GoverningEntity();
+                governingEntity.setFirstName(newOwnerContactFormDTO.getPartner_first_name2());
+                governingEntity.setLastName(newOwnerContactFormDTO.getPartner_last_name2());
+                governingEntity.setMiddleName(newOwnerContactFormDTO.getPartner_middle_name2());
+                governingEntity.setSuffix(newOwnerContactFormDTO.getPartner_suffix2());
+                governingEntity.setEntityCitizenship(newOwnerContactFormDTO.getPartner_citizen2());
+                governingEntity.setPersonEntity(true);
+                governingEntity.setGoverningEntityType(newOwnerContactFormDTO.getPartnerType2());
+                owner.addGoverningEnity(governingEntity);
+            }
+
+        }
+
+        if(newOwnerContactFormDTO.getPartner_name2() != null && newOwnerContactFormDTO.getPartner_state_org2() != null){
+
+            if(newOwnerContactFormDTO.getPartner_name2().equals("") == false && newOwnerContactFormDTO.getPartner_state_org2().equals("") == false){
+                GoverningEntity governingEntity = new GoverningEntity();
+                governingEntity.setEntityName(newOwnerContactFormDTO.getPartner_name2());
+                governingEntity.setOrganizationState(newOwnerContactFormDTO.getPartner_state_org2());
+                governingEntity.setEntityAlternateNameType(newOwnerContactFormDTO.getPartner_alt_type2());
+                governingEntity.setEntityAlternateName(newOwnerContactFormDTO.getPartner_alt_name2());
+                governingEntity.setGoverningEntityType(newOwnerContactFormDTO.getPartnerType2());
+                governingEntity.setPersonEntity(false);
+
+                owner.addGoverningEnity(governingEntity);
+            }
+
+        }
+
+        if(newOwnerContactFormDTO.getPartner_first_name3() != null && newOwnerContactFormDTO.getPartner_last_name3() != null && newOwnerContactFormDTO.getPartner_citizen3() != null){
+            if(newOwnerContactFormDTO.getPartner_first_name3().equals("") == false && newOwnerContactFormDTO.getPartner_last_name3().equals("") == false && newOwnerContactFormDTO.getPartner_citizen3().equals("") == false){
+                GoverningEntity governingEntity = new GoverningEntity();
+                governingEntity.setFirstName(newOwnerContactFormDTO.getPartner_first_name3());
+                governingEntity.setLastName(newOwnerContactFormDTO.getPartner_last_name3());
+                governingEntity.setMiddleName(newOwnerContactFormDTO.getPartner_middle_name3());
+                governingEntity.setSuffix(newOwnerContactFormDTO.getPartner_suffix3());
+                governingEntity.setEntityCitizenship(newOwnerContactFormDTO.getPartner_citizen3());
+                governingEntity.setGoverningEntityType(newOwnerContactFormDTO.getPartnerType3());
+                governingEntity.setPersonEntity(true);
+                owner.addGoverningEnity(governingEntity);
+            }
+
+        }
+
+        if(newOwnerContactFormDTO.getPartner_name3() != null && newOwnerContactFormDTO.getPartner_state_org3() != null){
+
+            if(newOwnerContactFormDTO.getPartner_name3().equals("") == false && newOwnerContactFormDTO.getPartner_state_org3().equals("") == false){
+                GoverningEntity governingEntity = new GoverningEntity();
+                governingEntity.setEntityName(newOwnerContactFormDTO.getPartner_name3());
+                governingEntity.setOrganizationState(newOwnerContactFormDTO.getPartner_state_org3());
+                governingEntity.setEntityAlternateNameType(newOwnerContactFormDTO.getPartner_alt_type3());
+                governingEntity.setEntityAlternateName(newOwnerContactFormDTO.getPartner_alt_name3());
+                governingEntity.setGoverningEntityType(newOwnerContactFormDTO.getPartnerType3());
+                governingEntity.setPersonEntity(false);
+
+                owner.addGoverningEnity(governingEntity);
+            }
+
+        }
+
+
+
+
+        // process additoanl partners
+
+
 
 
         if(baseTrademarkApplication.getOwners().size() == 0){
@@ -836,6 +1047,8 @@ public class ApplicationObjectCreationController {
                     String file_path = storageService.store(file);
 
                     baseTrademarkApplication.getTradeMark().setTrademarkConsentFilePath("/files/"+file_path);
+                    baseTrademarkApplication.getTradeMark().setTrademarkConsentDownLoadPath("/files-server/"+file_path);
+                    baseTrademarkApplication.getTradeMark().setTrademarkConsentFileName(file.getOriginalFilename());
                     baseTrademarkApplication.getTradeMark().setConsentFileUploaded(true);
                     boolean colorClaim = baseTrademarkApplication.getTradeMark().isMarkColorClaim();
                     boolean acceptBW = baseTrademarkApplication.getTradeMark().isMarkColorClaimBW();
@@ -848,6 +1061,8 @@ public class ApplicationObjectCreationController {
                     boolean isSignature = baseTrademarkApplication.getTradeMark().isSignature();
                     boolean isPortrait =  baseTrademarkApplication.getTradeMark().isPortrait();
                     boolean isNPSLivingPerson =  baseTrademarkApplication.getTradeMark().isNPSLivingPerson();
+                    boolean isNPSLivingPersonSet = baseTrademarkApplication.getTradeMark().isNPSLivingPersonSet();
+
 
                     model.addAttribute("markColorClaim", colorClaim);
                     model.addAttribute("markColorClaimBW", acceptBW);
@@ -858,6 +1073,7 @@ public class ApplicationObjectCreationController {
                     model.addAttribute("isSignature", isSignature );
                     model.addAttribute("isPortrait", isPortrait );
                     model.addAttribute("isNPSLivingPerson", isNPSLivingPerson );
+                    model.addAttribute("isNPSLivingPersonSet", isNPSLivingPersonSet);
                 }
                 catch ( StorageException ex){
                     model.addAttribute("message", "ERROR: Mark Image upload failed due to error: "+ex );
@@ -873,6 +1089,9 @@ public class ApplicationObjectCreationController {
             }
 
         }
+
+
+
         model.addAttribute("breadCrumbStatus",baseTrademarkApplication.getSectionStatus());
         return "application/mark/MarkDetailsDesignWText";
         //return "application/MarkDetailsUpload";
@@ -922,7 +1141,12 @@ public class ApplicationObjectCreationController {
 
                         if(current.getClassNumber().equals(classCategoryNumber)){
                             current.setClassSpecimenImgPath(filePath);
-                            //goods_servicesService.save(current);
+                            current.setClassSpecimenImgName(file.getOriginalFilename());
+                            current.setSampleImagePath(filePath);
+                            current.setSampleImageName(file.getOriginalFilename());
+                            current.setSampleUploaded(true);
+                            current.setRootStoragePath(storageService.getRootPath());
+
                         }
                     }
                     model.addAttribute("markImagePath",baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
@@ -942,9 +1166,9 @@ public class ApplicationObjectCreationController {
         }
 
 
-        return buildResponseEnity("200", "{image-url:" +filePath+"}");
+        //return buildResponseEnity("200", "{image-url:" +filePath+"}");
 
-        //return ResponseEntity.ok().build();
+        return buildResponseEnity("200", "{image-url:" +filePath+"}, {image-name:" +file.getOriginalFilename()+"}");
 
     }
 
@@ -986,9 +1210,13 @@ public class ApplicationObjectCreationController {
                     // baseTrademarkApplication.getc("/files/"+image_path);
                     filePath = "/files/"+image_path;
 
-                    baseTrademarkApplication.findGSbyInternalID(gsID).setSampleImagePath(filePath);
-                    baseTrademarkApplication.findGSbyInternalID(gsID).setSampleUploaded(true);
 
+
+
+                    baseTrademarkApplication.findGSbyInternalID(gsID).setSampleImagePath(filePath);
+                    baseTrademarkApplication.findGSbyInternalID(gsID).setSampleImageName(file.getOriginalFilename());
+                    baseTrademarkApplication.findGSbyInternalID(gsID).setSampleUploaded(true);
+                    baseTrademarkApplication.findGSbyInternalID(gsID).setRootStoragePath(storageService.getRootPath());
                     model.addAttribute("markImagePath",baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
                 }
                 catch ( StorageException ex){
@@ -1006,8 +1234,8 @@ public class ApplicationObjectCreationController {
         }
 
 
-        return buildResponseEnity("200", "{image-url:" +filePath+"}");
-
+        //return buildResponseEnity("200", "{image-url:" +filePath+"}");
+        return buildResponseEnity("200", "{image-url:" +filePath+"}, {image-name:" +file.getOriginalFilename()+"}");
         //return ResponseEntity.ok().build();
 
     }
@@ -1050,6 +1278,7 @@ public class ApplicationObjectCreationController {
                     filePath = "/files/"+image_path;
 
                     baseTrademarkApplication.findGSbyInternalID(gsID).setFrCertImagePath(filePath);
+                    baseTrademarkApplication.findGSbyInternalID(gsID).setFrCertImageName(file.getOriginalFilename());
 
 
 
@@ -1069,24 +1298,23 @@ public class ApplicationObjectCreationController {
         }
 
 
-        return buildResponseEnity("200", "{image-url:" +filePath+"}");
-
+        //return buildResponseEnity("200", "{image-url:" +filePath+"}");
+        return buildResponseEnity("200", "{image-url:" +filePath+"}, {image-name:" +file.getOriginalFilename()+"}");
         //return ResponseEntity.ok().build();
 
     }
     ////////////////////////////////////////////////
 
-
-
     // hopefully just a redirect here, we won't need to add the applicaiton and credentials to the model
-    @PostMapping(value = "/misc/specimen/add")
-    public ResponseEntity addMiscInfoImg(
+    @PostMapping(value = "/cc/foreignReg/add")
+    public ResponseEntity addCCSfrRegCertImg(
             @RequestParam(name="file", required=false) MultipartFile file,
             @RequestParam (name="appID")String AppInternalID,
+            @RequestParam (name="ccID")String ccID,
             Model model
     ) {
 
-        System.out.println("Misc Specimen file upload!!!! ");
+        System.out.println("GS FR registrton certifcate file upload!!!! ");
 
         BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
         BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID( AppInternalID);
@@ -1113,10 +1341,321 @@ public class ApplicationObjectCreationController {
                     // baseTrademarkApplication.getc("/files/"+image_path);
                     filePath = "/files/"+image_path;
 
+
+
+                    for (Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                        GoodAndService current = iter.next();
+
+                        if (current.getClassNumber().equals(ccID)) {
+                            current.setFrCertImagePath(filePath);
+                            current.setFrCertImageName(file.getOriginalFilename());
+                            current.setFrCertImagePathCC(filePath);
+                            current.setFrCertImageNameCC(file.getOriginalFilename());
+                            current.setFrCertUploadedCC(true);
+
+
+
+
+                        }
+                    }
+
+
+
+                }
+                catch ( StorageException ex){
+                    model.addAttribute("message", "ERROR: Mark Image upload failed due to error: "+ex );
+                    // return "forward:/mark/designWithText/?trademarkID="+trademarkInternalID;
+                    return buildResponseEnity("420", "ERROR: Mark Image upload failed due to error: "+ex);
+
+                }
+                baseTradeMarkApplicationService.save(baseTrademarkApplication);
+            }
+
+        }
+        else{
+            System.out.println("file object is null");
+        }
+
+
+        //return buildResponseEnity("200", "{image-url:" +filePath+"}");
+        return buildResponseEnity("200", "{image-url:" +filePath+"}, {image-name:" +file.getOriginalFilename()+"}");
+        //return ResponseEntity.ok().build();
+
+    }
+    ////////////////////////////////////////////////
+
+
+
+    // hopefully just a redirect here, we won't need to add the applicaiton and credentials to the model
+    @PostMapping(value = "/application/frCert/add")
+    public ResponseEntity addApplicationfrRegCertImg(
+            @RequestParam(name="file", required=false) MultipartFile file,
+            @RequestParam (name="appID")String AppInternalID,
+
+            Model model
+    ) {
+
+        System.out.println("GS FR registrton certifcate file upload!!!! ");
+
+        BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
+        BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID( AppInternalID);
+
+        String filePath ="";
+        if(file != null){
+            System.out.println("file is not null");
+
+            if(file.isEmpty() == false) {
+                System.out.println("file is not empty !!!!!!!!!!!!!!!");
+
+
+                try {
+                    String image_path = storageService.store(file);
+
+                    // this will be store for each good and service that matches this
+
+                    // on building class categoreis, this value is then copied over
+                    // file path returned to client in response
+
+                    // server redraw should render the image file path from category object
+
+
+                    // baseTrademarkApplication.getc("/files/"+image_path);
+                    filePath = "/files/"+image_path;
+
+                    for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+
+                        GoodAndService current = iter.next();
+                        current.setFrCertImagePath(filePath);
+                    }
+
+
+
+                }
+                catch ( StorageException ex){
+                    model.addAttribute("message", "ERROR: Mark Image upload failed due to error: "+ex );
+                    // return "forward:/mark/designWithText/?trademarkID="+trademarkInternalID;
+                    return buildResponseEnity("420", "ERROR: Mark Image upload failed due to error: "+ex);
+
+                }
+                baseTradeMarkApplicationService.save(baseTrademarkApplication);
+            }
+
+        }
+        else{
+            System.out.println("file object is null");
+        }
+
+
+       // return buildResponseEnity("200", "{image-url:" +filePath+"}");
+        return buildResponseEnity("200", "{image-url:" +filePath+"}, {image-name:" +file.getOriginalFilename()+"}");
+
+        //return ResponseEntity.ok().build();
+
+    }
+    ////////////////////////////////////////////////
+
+
+
+    // hopefully just a redirect here, we won't need to add the applicaiton and credentials to the model
+    @PostMapping(value = "/misc/specimen/add")
+    public ResponseEntity addMiscInfoImg(
+            @RequestParam(name="file", required=false) MultipartFile file,
+            @RequestParam (name="appID")String AppInternalID,
+            Model model
+    ) {
+
+        System.out.println("Misc Specimen file upload!!!! ");
+
+        BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
+        BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID( AppInternalID);
+
+        String filePath ="";
+        String fileType="";
+        if(file != null){
+            System.out.println("file is not null");
+
+            if(file.isEmpty() == false) {
+                System.out.println("file is not empty !!!!!!!!!!!!!!!");
+
+
+                try {
+                    String image_path = storageService.store(file);
+
+                    // this will be store for each good and service that matches this
+
+                    // on building class categoreis, this value is then copied over
+                    // file path returned to client in response
+
+                    // server redraw should render the image file path from category object
+                    if(file.getOriginalFilename().contains(".doc") || file.getOriginalFilename().contains(".DOC")){
+                        fileType = "word";
+                        baseTrademarkApplication.setMiscInfoImageTypeWord(true);
+                    }
+                    else {
+                        fileType = "pdf";
+                        baseTrademarkApplication.setMiscInfoImageTypeWord(false);
+                    }
+
+
+                    // baseTrademarkApplication.getc("/files/"+image_path);
+                    filePath = "/files-server/"+image_path;
+
                     baseTrademarkApplication.setMiscInfoImagePath(filePath);
+                    baseTrademarkApplication.setMiscInfoImageName(file.getOriginalFilename());
+                    baseTrademarkApplication.setMiscInfoImageUploaded(true);
+                    //baseTrademarkApplication.setProvideMiscInfo(true);
 
 
                    // model.addAttribute("markImagePath",baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
+                }
+                catch ( StorageException ex){
+                    model.addAttribute("message", "ERROR: Mark Image upload failed due to error: "+ex );
+                    // return "forward:/mark/designWithText/?trademarkID="+trademarkInternalID;
+                    return buildResponseEnity("420", "ERROR: Mark Image upload failed due to error: "+ex);
+
+                }
+                baseTradeMarkApplicationService.save(baseTrademarkApplication);
+            }
+
+        }
+        else{
+            System.out.println("file object is null");
+        }
+
+
+        //return buildResponseEnity("200", "{image-url:" +filePath+"}");
+        return buildResponseEnity("200", "{image-url:" +filePath+"}, {image-name:" +file.getOriginalFilename()+"}, {image-type:" +fileType+"}");
+        //return ResponseEntity.ok().build();
+
+    }
+
+
+    // hopefully just a redirect here, we won't need to add the applicaiton and credentials to the model
+    @PostMapping(value = "/concurrent/specimen/add")
+    public ResponseEntity addConcurrentInfoEvidence(
+            @RequestParam(name="file", required=false) MultipartFile file,
+            @RequestParam (name="appID")String AppInternalID,
+            Model model
+    ) {
+
+        System.out.println("Misc Specimen file upload!!!! ");
+
+        BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
+        BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID( AppInternalID);
+
+        String filePath ="";
+        String fileType="";
+        if(file != null){
+            System.out.println("file is not null");
+
+            if(file.isEmpty() == false) {
+                System.out.println("file is not empty !!!!!!!!!!!!!!!");
+
+
+                try {
+                    String image_path = storageService.store(file);
+
+                    // this will be store for each good and service that matches this
+
+                    // on building class categoreis, this value is then copied over
+                    // file path returned to client in response
+
+                    // server redraw should render the image file path from category object
+                    if(file.getOriginalFilename().contains(".doc") || file.getOriginalFilename().contains(".DOC")){
+                        fileType = "word";
+                        baseTrademarkApplication.setConcurrentEvidentFileTypeWord(true);
+                    }
+                    else {
+                        fileType = "pdf";
+                        baseTrademarkApplication.setConcurrentEvidentFileTypeWord(false);
+                    }
+
+
+                    // baseTrademarkApplication.getc("/files/"+image_path);
+                    filePath = "/files-server/"+image_path;
+
+                    baseTrademarkApplication.setConcurrentUseEvidenceFilePath(filePath);
+                    baseTrademarkApplication.setConcurrentUseEvidenceFileName(file.getOriginalFilename());
+                    baseTrademarkApplication.setDeclarationEvidenceSupport(true);
+                    baseTrademarkApplication.setDeclarationEvidenceSupportSet(true);
+
+                    baseTrademarkApplication.setConcurrentUseEvidenceFileUploaded(true);
+
+
+                    // model.addAttribute("markImagePath",baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
+                }
+                catch ( StorageException ex){
+                    model.addAttribute("message", "ERROR: Mark Image upload failed due to error: "+ex );
+                    // return "forward:/mark/designWithText/?trademarkID="+trademarkInternalID;
+                    return buildResponseEnity("420", "ERROR: Mark Image upload failed due to error: "+ex);
+
+                }
+                baseTradeMarkApplicationService.save(baseTrademarkApplication);
+            }
+
+        }
+        else{
+            System.out.println("file object is null");
+        }
+
+
+        //return buildResponseEnity("200", "{image-url:" +filePath+"}");
+        return buildResponseEnity("200", "{image-url:" +filePath+"}, {image-name:" +file.getOriginalFilename()+"}, {image-type:" +fileType+"}");
+        //return ResponseEntity.ok().build();
+
+    }
+
+
+    // hopefully just a redirect here, we won't need to add the applicaiton and credentials to the model
+    @PostMapping(value = "/application/specimen/add")
+    public ResponseEntity addApplicationSpecimenImg(
+            @RequestParam(name="file", required=false) MultipartFile file,
+            @RequestParam (name="appID")String AppInternalID,
+            Model model
+    ) {
+
+        System.out.println("Application Specimen file upload!!!! ");
+
+        BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
+        BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID( AppInternalID);
+
+        String filePath ="";
+        if(file != null){
+            System.out.println("file is not null");
+
+            if(file.isEmpty() == false) {
+                System.out.println("file is not empty !!!!!!!!!!!!!!!");
+
+
+                try {
+                    String image_path = storageService.store(file);
+
+                    // this will be store for each good and service that matches this
+
+                    // on building class categoreis, this value is then copied over
+                    // file path returned to client in response
+
+                    // server redraw should render the image file path from category object
+
+
+                    // baseTrademarkApplication.getc("/files/"+image_path);
+                    filePath = "/files/"+image_path;
+
+
+                    for(Iterator<GoodAndService> iter = baseTrademarkApplication.getGoodAndServices().iterator(); iter.hasNext(); ) {
+                        GoodAndService current = iter.next();
+                        current.setSampleUploaded(true);
+                        current.setSampleImagePath(filePath);
+                        current.setClassSpecimenImgPath(filePath);
+                        current.setProvideSample(true);
+                        current.setRootStoragePath(storageService.getRootPath());
+
+                    }
+
+
+
+
+                    // model.addAttribute("markImagePath",baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
                 }
                 catch ( StorageException ex){
                     model.addAttribute("message", "ERROR: Mark Image upload failed due to error: "+ex );
@@ -1138,6 +1677,7 @@ public class ApplicationObjectCreationController {
         //return ResponseEntity.ok().build();
 
     }
+
 
 
     // hopefully just a redirect here, we won't need to add the applicaiton and credentials to the model
@@ -1165,7 +1705,12 @@ public class ApplicationObjectCreationController {
                     String image_path = storageService.store(file);
                     filePath = "/files/"+image_path;
 
+
+                    System.out.println("storage root:"+storageService.getRootPath());
+                    System.out.println("file path server :"+filePath);
+
                     baseTrademarkApplication.getTradeMark().setTrademarkImagePath("/files/"+image_path);
+                    baseTrademarkApplication.getTradeMark().setBaseStoragePath(storageService.getRootPath());
                     //model.addAttribute("markImagePath",baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
                 }
                 catch ( StorageException ex){
@@ -1192,7 +1737,6 @@ public class ApplicationObjectCreationController {
                 }
                 baseTrademarkApplication.setTradeMarkUploaded(true);
                 baseTradeMarkApplicationService.save(baseTrademarkApplication);
-                baseTradeMarkApplicationService.save(baseTrademarkApplication);
             }
 
         }
@@ -1207,6 +1751,194 @@ public class ApplicationObjectCreationController {
 
     }
 
+    // hopefully just a redirect here, we won't need to add the applicaiton and credentials to the model
+    @PostMapping(value = "/distinctive/evidence/add")
+    public ResponseEntity addDistinctiveEvidenceFile(
+            @RequestParam(name="file", required=false) MultipartFile file,
+            @RequestParam (name="appID")String AppInternalID,
+            Model model
+    ) {
+
+        System.out.println("Application Specimen file upload!!!! ");
+
+        BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
+        BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID( AppInternalID);
+
+        String filePath ="";
+        if(file != null){
+            System.out.println("file is not null");
+
+            if(file.isEmpty() == false) {
+                System.out.println("file is not empty !!!!!!!!!!!!!!!");
+
+
+                try {
+                    String image_path = storageService.store(file);
+
+
+
+                    // baseTrademarkApplication.getc("/files/"+image_path);
+                    filePath = "/files/"+image_path;
+
+                     baseTrademarkApplication.setDistinctiveEvidenceFilePath(filePath);
+                     baseTrademarkApplication.setDistinctiveEvidenceFileName(file.getOriginalFilename());
+
+
+
+                    // model.addAttribute("markImagePath",baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
+                }
+                catch ( StorageException ex){
+                    model.addAttribute("message", "ERROR: Mark Image upload failed due to error: "+ex );
+                    // return "forward:/mark/designWithText/?trademarkID="+trademarkInternalID;
+                    return buildResponseEnity("420", "ERROR: Mark Image upload failed due to error: "+ex);
+
+                }
+                baseTradeMarkApplicationService.save(baseTrademarkApplication);
+            }
+
+        }
+        else{
+            System.out.println("file object is null");
+        }
+
+
+       // return buildResponseEnity("200", "{image-url:" +filePath+"}");
+        return buildResponseEnity("200", "{image-url:" +filePath+"}, {image-name:" +file.getOriginalFilename()+"}");
+        //return ResponseEntity.ok().build();
+
+    }
+
+
+    // hopefully just a redirect here, we won't need to add the applicaiton and credentials to the model
+    @PostMapping(value = "/Mark/consent/js/add")
+    public ResponseEntity npsConsentJSupload(
+            @RequestParam(name="file", required=false) MultipartFile file,
+            @RequestParam (name="appID")String AppInternalID,
+            Model model
+    ) {
+
+
+
+        BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
+        BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID( AppInternalID);
+
+        String filePath ="";
+        if(file != null){
+            System.out.println("file is not null");
+
+            if(file.isEmpty() == false) {
+                System.out.println("file is not empty !!!!!!!!!!!!!!!");
+
+
+
+                try {
+                    String file_path = storageService.store(file);
+
+                    baseTrademarkApplication.getTradeMark().setTrademarkConsentFilePath("/files/"+file_path);
+                    baseTrademarkApplication.getTradeMark().setTrademarkConsentDownLoadPath("/files-server/"+file_path);
+
+                    filePath="/files-server/"+file_path;
+                    baseTrademarkApplication.getTradeMark().setTrademarkConsentFileName(file.getOriginalFilename());
+                    baseTrademarkApplication.getTradeMark().setConsentFileUploaded(true);
+
+                }
+                catch ( StorageException ex){
+
+
+
+                }
+
+
+                baseTradeMarkApplicationService.save(baseTrademarkApplication);
+
+            }
+
+        }
+        else{
+            System.out.println("file object is null");
+        }
+
+
+
+
+        return buildResponseEnity("200", "{image-url:" +filePath+"}, {image-name:" +file.getOriginalFilename()+"}");
+
+        //return ResponseEntity.ok().build();
+
+    }
+
+
+    // hopefully just a redirect here, we won't need to add the applicaiton and credentials to the model
+    @PostMapping(value = "/attorney/cert/update")
+    public ResponseEntity addAttorneyCertFile(
+            @RequestParam(name="file", required=false) MultipartFile file,
+            @RequestParam (name="appID")String AppInternalID,
+            @RequestParam (name="email")String email,
+            Model model
+    ) {
+
+        System.out.println("Application Specimen file upload!!!! ");
+
+        BaseTradeMarkApplicationService baseTradeMarkApplicationService = serviceBeanFactory.getBaseTradeMarkApplicationService();
+        BaseTrademarkApplication baseTrademarkApplication = baseTradeMarkApplicationService.findByInternalID( AppInternalID);
+
+        String filePath ="";
+        if(file != null){
+            System.out.println("file is not null");
+
+            if(file.isEmpty() == false) {
+                System.out.println("file is not empty !!!!!!!!!!!!!!!");
+
+
+                try {
+                    String image_path = storageService.store(file);
+
+
+
+                    System.out.println("image path : "+image_path);
+
+                    String fileName = file.getOriginalFilename();
+
+                    if(fileName.endsWith(".pdf") || fileName.endsWith(".PDF")){
+                        filePath = "/files-pdf/"+image_path;
+                    }
+                    else {
+                        filePath = "/files/"+image_path;
+                    }
+
+
+
+
+                    baseTrademarkApplication.findContactByEmail(email).setBarCertificateImageKey(filePath);
+
+
+                    // need to also send over attorney email as part of email update
+                    baseTrademarkApplication.findContactByEmail(email).setBarCertificateImageFileName(file.getOriginalFilename());
+
+
+
+                    // model.addAttribute("markImagePath",baseTrademarkApplication.getTradeMark().getTrademarkImagePath());
+                }
+                catch ( StorageException ex){
+                    model.addAttribute("message", "ERROR: Mark Image upload failed due to error: "+ex );
+                    // return "forward:/mark/designWithText/?trademarkID="+trademarkInternalID;
+                    return buildResponseEnity("420", "ERROR: Mark Image upload failed due to error: "+ex);
+
+                }
+                baseTradeMarkApplicationService.save(baseTrademarkApplication);
+            }
+
+        }
+        else{
+            System.out.println("file object is null");
+        }
+
+
+        // return buildResponseEnity("200", "{image-url:" +filePath+"}");
+        return buildResponseEnity("200", "{image-url:" +filePath+"}, {image-name:" +file.getOriginalFilename()+"}");
+        //return ResponseEntity.ok().build();
+
+    }
 
 
 
@@ -1244,7 +1976,18 @@ public class ApplicationObjectCreationController {
         baseTrademarkApplication.setSectionStatus(sectionStatus);
 
 
-        if(baseTrademarkApplication.getFilingStatus() != "Filed"){
+
+
+
+        if(baseTrademarkApplication.getFilingStatus().equals( "Draft")){
+
+            // set filing date for filing
+
+            baseTrademarkApplication.setApplicationFilingDate(new Date());
+
+
+
+
             Document document = new Document();
 
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -1252,6 +1995,8 @@ public class ApplicationObjectCreationController {
             Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
             Font boldFontSmall = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
             Font normalFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL);
+
+            Font standardCharacterFont = new Font(Font.FontFamily.ZAPFDINGBATS, 36, Font.NORMAL);
 
             try {
                 PdfWriter.getInstance(document, byteArrayOutputStream);
@@ -1380,9 +2125,24 @@ public class ApplicationObjectCreationController {
                 table.addCell("MARK INFORMATION");
                 table.addCell("");
                 table.addCell("MARK");
-                table.addCell(baseTrademarkApplication.getTradeMark().getMarkDescription());
+                // create image file
+
+                if(baseTrademarkApplication.getTradeMark().getTrademarkDesignType().equals("Standard Character") == false){
+
+                    String markImagePath = baseTrademarkApplication.getTradeMark().getMarkImagePhysicalPath();
+
+                    Image markImg = Image.getInstance(markImagePath);
+                    table.addCell(markImg);
+                }
+                else {
+
+                    table.addCell(baseTrademarkApplication.getTradeMark().getTrademarkStandardCharacterText());
+
+                }
+
+
                 table.addCell("STANDARD CHARACTERS");
-                if(baseTrademarkApplication.getTradeMark().getTrademarkDesignType().equals("Standard Characters")){
+                if(baseTrademarkApplication.getTradeMark().getTrademarkDesignType().equals("Standard Character")){
                     table.addCell("YES");
                     table.addCell("USPTO-GENERATED IMAGE");
                     table.addCell("YES");
@@ -1396,8 +2156,8 @@ public class ApplicationObjectCreationController {
                 table.addCell(baseTrademarkApplication.getTradeMark().getMarkLiteral());
 
 
-                table.addCell("MARK STATEMENT");
-                table.addCell("The mark consists of "+baseTrademarkApplication.getTradeMark().getTrademarkDesignType()+","+colorClaimString +" claim of any particular font style, size, or color.");
+                table.addCell("Mark Description");
+                table.addCell(baseTrademarkApplication.getTradeMark().getMarkDescription());
 
                 table.addCell("APPLICATION INFORMATION");
                 table.addCell("");
@@ -1445,6 +2205,11 @@ public class ApplicationObjectCreationController {
                         table.addCell(current2.getClassDescription());
                         table.addCell("FILING BASIS");
                         table.addCell(current2.getIdentification());
+                        if(current2.getSampleImagePath() != null){
+                            table.addCell("Specimen Sample");
+                            Image specimenImg = Image.getInstance(current2.getSampleImagePhysicalPath());
+                            table.addCell(specimenImg);
+                        }
 
                     }
 
@@ -1467,8 +2232,14 @@ public class ApplicationObjectCreationController {
                     table.addCell(baseTrademarkApplication.getPrimaryOwner().getOwnerEntityCountryOfOrigin());
                     table.addCell("ZIP/POSTAL CODE");
                     table.addCell(baseTrademarkApplication.getPrimaryLawyer().getZipcode());
-                    table.addCell("PHONE");
-                    table.addCell(baseTrademarkApplication.getPrimaryLawyer().getPrimaryPhonenumber());
+
+                    for(int a =0; a < baseTrademarkApplication.getPrimaryLawyer().getPhoneNumbers().size(); a++){
+                        table.addCell("PHONE");
+                        table.addCell(baseTrademarkApplication.getPrimaryLawyer().getPhoneNumbers().get(a).getPhoneType()+" "+baseTrademarkApplication.getPrimaryLawyer().getPhoneNumbers().get(a).getPhoneNumber()+" - "+baseTrademarkApplication.getPrimaryLawyer().getPhoneNumbers().get(a).getExtension());
+                    }
+
+
+
                     table.addCell("FAX");
                     table.addCell("");
                     table.addCell("EMAIL ADDRESS");
@@ -1514,16 +2285,36 @@ public class ApplicationObjectCreationController {
                 }
 
 
+                // add fee type information and signture information
+                table.addCell("FEE INFORMATION");
+                table.addCell("");
+                table.addCell("APPLICATOIN FILING OPTION");
+                if(baseTrademarkApplication.getBaseFee() == 225){
+                    table.addCell("TEAS PLUS");
 
+                }
+                else {
+                    table.addCell("TEAS RF");
+                }
+                table.addCell("NUMBER OF CLASSES");
+                table.addCell(baseTrademarkApplication.getTotalNumberOfclasses());
+                table.addCell("APPLICATION FOR REGISTRATION PER CLASS");
+                table.addCell(String.valueOf(baseTrademarkApplication.getBaseFee()));
+                table.addCell("*TOTAL FEE DUE");
+                table.addCell(String.valueOf(baseTrademarkApplication.getBaseFee()*Integer.valueOf(baseTrademarkApplication.getTotalNumberOfclasses())));
 
-
-
-
-
-
-
-
-
+                table.addCell("SIGNATURE INFORMATION");
+                table.addCell("");
+                table.addCell("SIGNATURE");
+                table.addCell(baseTrademarkApplication.getApplicationSignature());
+                table.addCell("SIGNATORY'S NAME");
+                table.addCell(baseTrademarkApplication.getAppSignatoryName());
+                table.addCell("SIGNATORY'S POSITION");
+                table.addCell(baseTrademarkApplication.getAppSignatoryPosition());
+                table.addCell("SIGNATORY's PHONE NUMBER");
+                table.addCell(baseTrademarkApplication.getAppSignatoryPhone());
+                table.addCell("DATE SIGNED");
+                table.addCell(baseTrademarkApplication.getApplicationDateSignedDisplay());
 
 
                 document.add(table);
@@ -1575,7 +2366,7 @@ public class ApplicationObjectCreationController {
             recieptFilePath  = "/files-pdf/"+recieptFilePath;
 
             baseTrademarkApplication.setRecieptFilePath(recieptFilePath);
-            baseTrademarkApplication.setFilingStatus("Filed");
+            baseTrademarkApplication.setFilingStatus("Submitted");
             baseTradeMarkApplicationService.save(baseTrademarkApplication);
 
         }

@@ -4,16 +4,14 @@ import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.tradeMark.ap
 import com.thorton.grant.uspto.prototypewebapp.model.entities.USPTO.user.PTOUser;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Owner extends Contact{
 
     public Owner() {
 
-       governingEntities = new HashSet<>();
+       governingEntities = new ArrayList<>();
 
 
     }
@@ -27,13 +25,26 @@ public class Owner extends Contact{
 
 
     @OneToMany(cascade = CascadeType.ALL)
-    private Set<GoverningEntity> governingEntities;
+    private List<GoverningEntity> governingEntities;
+
+    private boolean governingEntitiesTypeOwner;
+
+    private String governingEntitiesDisplayName;
+
+
+    private boolean personTypeOwner;
 
 
 
     private String ownerType;
 
     private String ownerEnityType;
+
+    private boolean foreignEntityOwner;
+
+
+
+
 
     private String ownersubType;
 
@@ -56,8 +67,17 @@ public class Owner extends Contact{
 
     private String ownerOrganizationState;
 
+    private String ownerSolpFirstName;
+
+    private String ownerSolpLastName;
+
+    private String ownerSolpMiddleName;
+
 
     private String ownerDisplayname;
+
+
+    boolean alternameSet;
 
     @OneToOne
     private BaseTrademarkApplication primaryApplication;
@@ -145,11 +165,11 @@ public class Owner extends Contact{
     }
 
 
-    public Set<GoverningEntity> getGoverningEntities() {
+    public List<GoverningEntity> getGoverningEntities() {
         return governingEntities;
     }
 
-    public void setGoverningEntities(Set<GoverningEntity> governingEntities) {
+    public void setGoverningEntities(List<GoverningEntity> governingEntities) {
         this.governingEntities = governingEntities;
     }
 
@@ -189,7 +209,14 @@ public class Owner extends Contact{
     }
 
     public String getOwnerDisplayname() {
-        return ownerDisplayname;
+
+        if(getFirstName() == null || getLastName() == null){
+            return getOwnerName();
+        }
+        else {
+            return getFirstName() + " " + getLastName();
+        }
+
     }
 
     public void setOwnerDisplayname(String ownerDisplayname) {
@@ -215,6 +242,89 @@ public class Owner extends Contact{
 
     public void setPrimaryApplication(BaseTrademarkApplication primaryApplication) {
         this.primaryApplication = primaryApplication;
+    }
+
+    public String getOwnerSolpFirstName() {
+        return ownerSolpFirstName;
+    }
+
+    public void setOwnerSolpFirstName(String ownerSolpFirstName) {
+        this.ownerSolpFirstName = ownerSolpFirstName;
+    }
+
+    public String getOwnerSolpLastName() {
+        return ownerSolpLastName;
+    }
+
+    public void setOwnerSolpLastName(String ownerSolpLastName) {
+        this.ownerSolpLastName = ownerSolpLastName;
+    }
+
+    public String getOwnerSolpMiddleName() {
+        return ownerSolpMiddleName;
+    }
+
+    public void setOwnerSolpMiddleName(String ownerSolpMiddleName) {
+        this.ownerSolpMiddleName = ownerSolpMiddleName;
+    }
+
+    public boolean isGoverningEntitiesTypeOwner() {
+        return governingEntitiesTypeOwner;
+    }
+
+    public void setGoverningEntitiesTypeOwner(boolean governingEntitiesTypeOwner) {
+        this.governingEntitiesTypeOwner = governingEntitiesTypeOwner;
+    }
+
+    public String getGoverningEntitiesDisplayName() {
+        return governingEntitiesDisplayName;
+    }
+
+    public void setGoverningEntitiesDisplayName(String governingEntitiesDisplayName) {
+        this.governingEntitiesDisplayName = governingEntitiesDisplayName;
+    }
+
+    public boolean isForeignEntityOwner() {
+        return foreignEntityOwner;
+    }
+
+    public String getLegalLanguaguePartner(){
+
+        String partnerList ="";
+        for(int a =0; a < governingEntities.size(); a++){
+            if(governingEntities.get(a).isPersonEntity() == true){
+                partnerList = partnerList + governingEntities.get(a).getFirstName()+" "+governingEntities.get(a).getLastName()+", "+governingEntities.get(a).getGoverningEntityType()+", Citizen of "+governingEntities.get(a).getEntityCitizenship();
+
+            }
+            else {
+                partnerList = partnerList + governingEntities.get(a).getEntityName()+", "+governingEntities.get(a).getGoverningEntityType()+", state legally organized : "+governingEntities.get(a).getOrganizationState();
+            }
+            if(a != governingEntities.size() -1){
+                partnerList = partnerList + ", ";
+            }
+
+        }
+        return  ownerDisplayname+", a partnership organized under the laws of "+ownerOrganizationState+", composed of "+partnerList+".";
+    }
+
+    public boolean isPersonTypeOwner() {
+        return personTypeOwner;
+    }
+
+    public void setPersonTypeOwner(boolean personTypeOwner) {
+        this.personTypeOwner = personTypeOwner;
+    }
+
+    public void setForeignEntityOwner(boolean foreignEntityOwner) {
+        this.foreignEntityOwner = foreignEntityOwner;
+    }
+
+    public boolean isAlternameSet() {
+        return alternameSet;
+    }
+
+    public void setAlternameSet(boolean alternameSet) {
+        this.alternameSet = alternameSet;
     }
 
     @Override

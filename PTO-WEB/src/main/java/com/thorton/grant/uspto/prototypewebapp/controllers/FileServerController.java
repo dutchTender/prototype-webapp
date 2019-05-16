@@ -53,6 +53,10 @@ public class FileServerController {
 
     }
 
+
+
+
+
     @GetMapping("/files-server/{filename:.+}")
     @ResponseBody
     public ResponseEntity<Resource> serveFileDownload(@PathVariable String filename) {

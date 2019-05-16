@@ -22,6 +22,9 @@ public interface StorageService {
 
     Resource loadAsResource(String filename);
 
+
+    String getRootPath();
+
     void deleteAll();
 
     int getCounter();
