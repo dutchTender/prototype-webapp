@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/lynnFragmentNoSession :: layout (~{::body},'registration')}" xmlns="http://www.w3.org/1999/html">
+<head >
+    <meta charset="UTF-8">
+    <title>Registration Home Page</title>
+</head>
+<body>
+
+<!-- End Navbar -->
+<div class="content" style="display: none;" >
+    <div class="container-fluid" >
+        <div class="row content">
+            <main class="col-xs-12 col-sm-8 col-md-8 col-lg-7">
+                <!--START Content Div-->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h1>Enter Email Address</h1>
+                        <p class="required">Recover your account with your registered email. </p>
+                        <p class="required"><span class="weight600">&#42; = Required</span></p>
+                        <form method="post" action="/recovery/recoverAccount" id="recovery-form" name="recovery-form" aria-labelledby="passwordetails" th:object="${userCredentialsDTO}" >
+                            <fieldset class="form-group form-group-md" aria-label="enter and confirm new password" id="newpsw">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-8 col-md-6 col-lg-5 form-group form-group-md">
+                                        <label for="email">Email address<span class="weight600"> &#42;</span></label>
+                                        <input type="email" class="form-control" th:field="*{email}" placeholder="" name="email" id="email" required>
+                                    </div>
+                                    <div class="col-xs-12 form-group form-group-md">
+                                        <button type="submit" class="btn btn-md btn-primary registrationSubmit">Submit</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div><!--END Content Div-->
+                </div>
+            </main><!--MAIN-->
+        </div><!--END container div-->
+
+
+
+    </div>
+</div>
+
+
+
+<!-- Disclaimer Modal -->
+
+
+<!-- end of disclaimer modal -->
+
+
+
+<script>
+    $(document).ready(function() {
+        //$('.content').hide();
+        setTimeout(function() {
+            // after 1000 ms we add the class animated to the login/register card
+            $('.content').fadeIn('slow');
+        }, 600);
+        //////////////////////////////////////////////////////////////
+        // show tooltip
+        //////////////////////////////////////////////////////////////
+        $('[data-toggle="tooltip"]').tooltip();
+
+
+
+        $('#email').focusout(function () {
+
+            if($(this).val() != ""){
+                $('.registrationSubmit').prop('disabled', false);
+            }
+        });
+
+
+
+
+    });
+</script>
+
+</body>
+</html>
