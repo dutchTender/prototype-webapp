@@ -11316,7 +11316,7 @@
 
 
         // first doos and services date
-        $('input.gs-date').change(function () {
+        $('input.gs-date').focusout(function () {
 
             var gsID= $(this).attr("gs-id");
             var divID = $(this).attr("div-id");
@@ -11330,7 +11330,7 @@
         });
 
         // first doos and services date
-        $('input.gs-date-cc').change(function () {
+        $('input.gs-date-cc').focusout(function () {
 
             var ccID= $(this).attr("cc-id");
             var divID = $(this).attr("div-id");
@@ -11347,7 +11347,7 @@
 
         // first mark in commerce date
 
-        $('input.mark-date').change(function () {
+        $('input.mark-date').focusout(function () {
             var gsID= $(this).attr("gs-id");
             var divID = $(this).attr("div-id");
             var msgID = $(this).attr("message-id");
@@ -11360,7 +11360,7 @@
 
         });
 
-        $('input.mark-date-cc').change(function () {
+        $('input.mark-date-cc').focusout(function () {
             var ccID= $(this).attr("cc-id");
             var divID = $(this).attr("div-id");
             var msgID = $(this).attr("message-id");
