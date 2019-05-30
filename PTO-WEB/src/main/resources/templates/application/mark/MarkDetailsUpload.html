@@ -93,29 +93,41 @@
 
                                     <span id="mark-img-container" style=""><img th:src="@{/resources/images/image_placeholder_icon.png}" style="position: relative; left:-5px; min-width: 555px; max-width: 555px; max-height: 333px; min-height: 333px;"  id="markImage" /></span></p>
 
-                                <!--Start Dropzone-->
-                                <div class="col-xs-12 form-group form-group-md"><!--toggle 'yes' radio-->
-                                    <div class="col-xs-12">
-                                        <p id="upimagetwo">Provide an image of your specimen:</p>
-                                        <form method="post"  target="hidden-iframe" id="addNewMark"  action="/mark/js/add"   enctype="multipart/form-data"  aria-labelledby="title">
-                                            <div>
-                                                <label class="small upload-drop-zone" for="file" id="upimgtwo"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> <br>Click here to select file to upload.</label>
-                                                <input type="file" id="file" name="file" class="form-control" aria-labelledby="upimgtwo upimagetwo">
-                                            </div><!-- Drop Zone -->
-                                        </form>
-                                    </div>
+
+                                <form method="post"  target="hidden-iframe" id="addNewMark"  action="/mark/js/add"   enctype="multipart/form-data"  aria-labelledby="title">
+                                    <div class="form-group form-group-md">
+
+
+                                        <div>
+                                            <label class="small long upload-drop-zone" for="file"><span class="glyphicon glyphicon-upload"></span> <br>
+                                                Upload Mark Image. Allowed file types .jpg, .tiff, .png, .pdf</label>
+                                            <input type="file" id="file" name="file" class="form-control" accept=".jpg,.tiff,.png,.pdf">
+                                        </div><!-- Drop Zone -->
 
 
 
-                                    <div class="col-xs-12">
-                                        <div class="center">
+                                        <div class="row">
+                                            <div class="js-upload-finished col-xs-12">
+                                                <p id="uploadedfile">Selected files</p>
+                                                <div class="list-group" id="filedata">
+                                                    <div class="list-group-item list-group-item-success fileholder col-xs-12" role="alert"></div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                            <div type="button" form="addNewMark"  file-id="file", img-id="markImage" spinner-id="mark-spinner" class="btn btn-sm submitMark" style="background-color: darkgreen; color: white; font-weight: bold;"><i class="material-icons" style="margin-right: 5px; margin-top: 5px;">cloud_upload</i><b style="position: relative; top:-5px;">Upload Mark</b><span><i class="fa fa-spinner fa-spin"  id="mark-spinner" style="font-size:24px; margin-left: 11px; display: none;"></i></span></div>
+
+
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="col-xs-12 form-group form-group-md">
+                                                    <button type="submit" class="btn-sm btn-success add ctr submitMark"  form="addNewMark"  file-id="file", img-id="markImage" spinner-id="mark-spinner"  aria-label="submit selected images"><i class="material-icons" style="margin-right: 5px; margin-top: 5px;">cloud_upload</i><b style="position: relative; top:-5px;">Upload Mark</b><span><i class="fa fa-spinner fa-spin"  id="mark-spinner" style="font-size:24px; margin-left: 11px; display: none;"></i></span></button>
+                                                </div>
+                                            </div>
                                         </div>
 
                                     </div>
 
-                                </div>
+                                </form>
 
 
 
@@ -481,6 +493,101 @@
 
             return false; // avoid to execute the actual submit of the form.
         });
+
+
+
+        //file upload inputs
+        $(document).on('change', 'input[type="file"]', function(e) {
+            var fileDisplayArea = $(this).siblings('label').children( 'div.fileDisplayArea' );
+            //var fileDisplayArea = ('.fileDisplayArea');
+            var file = e.target.files[0];
+            var name = e.target.files[0].name;
+            var type = e.target.files[0].type;
+            var listlength = $(this).parent().next().children('js-upload-finished').children('list-group').children('div.fileholder div.row').length + 1;
+            var holdata = $(this).parent().parent().find('div.fileholder');
+            var hidethis = $(this).parent().contents();
+            //var fileName = e.target.files[0].name;
+            var imageType = /image.*/;
+            if (file.type.match(imageType)) {
+                if ((listlength) < 2)  {
+                    //console.log(listlength);
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $(fileDisplayArea).addClass('loader').html("");
+                        // Create an image
+                        var img = new Image();
+                        // Set the img src
+                        img.src = reader.result;
+
+
+                        var imgSrc = img.src;
+
+                        // display the image on the page
+                        $(fileDisplayArea).removeClass('loader').append(img);
+                        $( '.upload-drop-zone' ).css('height','115px');
+                        $( '.upload-drop-zone img' ).css('height','64px');
+                        $( '.thumbnail img' ).css('height','20px');
+                        $(holdata).append('<div class="row"><div class="col-xs-2"><button type="button" class="btn btn-sm close" aria-label="remove file selection"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></button></div><div class="col-xs-4 linkholder"><a href="'+ imgSrc + '" aria-labelledby="uploadedfile" download>' + name + '</a></div><div class="col-xs-2"><img src="' + imgSrc + '" class="img-thumbnail"></div><div class="col-xs-4"><span class="badge alert-success pull-right">Selected File</span></div></div>');
+                        //console.log(holdata);
+                    }
+                    if ((listlength) == 1)  {
+                        $( hidethis ).hide();
+                    }
+                    //if ((listlength) == 0)  {
+                    //$( '.upload-drop-zone' ).show();
+                    //}
+                    if (file) {
+                        reader.readAsDataURL(file);
+                    }
+                }
+            }
+            else
+            {
+
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    if (( listlength ) < 2)  {
+                        $( fileDisplayArea ).addClass( 'loader' ).html("");
+                        // Create a file
+                        var dataURL = reader.result;
+
+                        var imgSrc;
+
+                        if(name.indexOf(".pdf") > 0 || name.indexOf(".PDF") > 0){
+                            imgSrc = "../../resources/images/pdf-icon.png"
+                        }
+                        $( fileDisplayArea ).removeClass( 'loader' );
+                        $( fileDisplayArea ).html( '<span class="glyphicon glyphicon-check"></span>' );
+                        $(holdata).append('<div class="row"><div class="col-xs-2"><button type="button" class="btn btn-sm close" aria-label="remove file selection"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></button></div><div class="col-xs-4 linkholder"><a href="'+ imgSrc + '" aria-labelledby="uploadedfile" download>' + name + '</a></div><div class="col-xs-2"><img src="' + imgSrc + '" class="img-thumbnail"></div><div class="col-xs-4"><span class="badge alert-success pull-right">Selected File</span></div></div>');
+                        //console.log(dataURL);
+                    }
+                    if ((listlength) == 1)  {
+                        $( hidethis ).hide();
+                    }
+//					if ((listlength) == 0)  {
+//						$( '.upload-drop-zone' ).show();
+//					}
+                }
+                if (file) {
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
+
+
+
+        //START remove selected file
+        $(document).on('click', '.js-upload-finished button.close', function() {
+            $( '.hidethis' ).contents().css('display','block');
+            //$( '.upload-drop-zone' ).css('height','115px');
+            $( '.upload-drop-zone' ).css('height','175px');
+            $( '.upload-drop-zone' ).css('display','block');
+            $( this ).parent().parent().remove();
+            $( 'div.fileDisplayArea img' ).remove();
+            $( 'div.fileDisplayArea' ).html('<div class="fileDisplayArea"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> <br>Select File</div>');
+        });
+
+
 
     });
 
