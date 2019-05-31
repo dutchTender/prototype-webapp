@@ -2302,7 +2302,13 @@ button[type=submit] {
 	margin:0 auto;
 	float:none;
 }
-.fileholder .linkholder {
+
+.js-upload-finished .linkholder a {
+	text-decoration:underline;
+}
+
+
+.fileholder .linkholder, .fileholder .iconholder {
 	/*overflow-wrap: break-word;
 	word-wrap: break-word;
 	-ms-word-break: break-all;
@@ -2317,18 +2323,34 @@ button[type=submit] {
 	text-overflow: ellipsis;
 	/*max-height: 38px;*/
 }
+.fileholder .linkholder a, .fileholder i {
+	display: table-cell!important;
+	vertical-align: middle;
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+}
+
+
 .fileholder div {
 	padding: 1em 0;
 }
 .fileholder div.row {
 	padding: 0;
 }
-.fileholder div img, .fileholder div button, .fileholder span, .fileholder a {
+.fileholder div img, .fileholder div button, .fileholder span, .fileholder a, .fileholder i, #petitions1 div img, #petitions2 div img, #responseamend div img {
 	float: none!important;
 	height:38px;
 	font-size:.8em;
 }
-.fileholder div img, .fileholder span {
+.fileholder div img {
+	height:auto;
+	max-width:80%;
+}
+
+
+
+.fileholder div img, .fileholder i, .fileholder span, #petitions1 div img, #petitions2 div img, #responseamend div img {
 	margin:0 auto;
 	display:block;
 }
@@ -2341,9 +2363,15 @@ button[type=submit] {
 .fileholder span.glyphicon {
 	line-height: 1.4em;
 }
-.fileholder a {
+.fileholder a, .fileholder i {
 	color:#fff;
 }
+
+.fileholder i {
+	font-size: 1.4em;
+}
+
+
 .fileholder {
 	padding:0 1.5em;
 	min-height: 38px;
@@ -2373,7 +2401,7 @@ button[type=submit] {
 	padding: .5em 1em!important;
 	display: table!important;
 	height:auto!important;
-	margin-top: .4em!important;
+	margin-top: .47em!important;
 }
 .js-upload-finished .list-group-item-success {
 	display: inline-block;
@@ -2399,6 +2427,17 @@ button[type=submit] {
 	min-height:400px;
 	max-width: 100%;
 }
+
+@media (min-width: 990px) {
+	.matchlabelheight, .matchlabelheighttwo {
+		min-height:48px;
+	}
+	.callout, #responseamend .callout .panel-body {
+		padding:4em;
+		padding-bottom:3.1em;
+	}
+}
+
 /* START GSselected, Dashboard, Editowner, Reviewattorney panels */
 #gsselected .panel-heading h4, #gsselected .panel-heading p, #dashboardmain .panel-heading h4, #dashboardmain .panel-heading p, #editowner .panel-heading h4, #editowner .panel-heading p, #reviewattorney .panel-heading h4, #reviewattorney .panel-heading p, #userprofilepage .panel-heading p, #userprofilepage .panel-body p {
 	display:inline-block;
@@ -2724,6 +2763,10 @@ footer #megamenu ul {
 		width:100%!important;
 		margin-top:1em!important;
 	}
+	.js-upload-finished .badge {
+		margin-top: 1em!important;
+		font-size: .6em;
+	}
 }
 @media (min-width: 768px){
 	.navbar-nav#lowernav>li {
@@ -3036,10 +3079,11 @@ footer #megamenu ul {
 	#userprofilepage .panel-body {
 		min-height: 22em;
 	}
-	.js-upload-finished, .upload-drop-zone {
-		width:50%;
+	#responseamend .js-upload-finished, .upload-drop-zone {
+		width:100%;
 	}
 }
+
 
 #on{
 	position: relative;
@@ -3081,4 +3125,9 @@ a.disabled, a.disabled span {
 a.disabled:hover, a.disabled:active, a.disabled span:hover,  a.disabled span:active {
 	text-decoration: none;
 	color: #cdd8dc!important;
+}
+
+.fileholder div img {
+	height:auto;
+	max-width:80%;
 }
